@@ -68,7 +68,7 @@ local.properties
 # Spring Boot Tooling
 .sts4-cache/
 
-###BJPARK add (2020 1129)
+###BJPARK add (2020 1129, 1202)
 target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 target/m2e-wtp/web-resources/META-INF/maven/a.b/c/pom.properties
 
