@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<h1>Login Push Test</h1>
-
+<h1>Test</h1>
 </body>
 </html>
