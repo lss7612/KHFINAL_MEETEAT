@@ -16,15 +16,21 @@ public class LoginInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-
-		logger.info("+ + + LoginInterceptor started + + +");
 		
+		logger.info("+ + + PayInterceptor started + + +");
+		logger.info("	Request URI : " + request.getRequestURI());
 		HttpSession session = request.getSession();
 		
+		
 		if(session.getAttribute("isLogin") == null) {
+			logger.info("로그인안함");
+			response.sendRedirect("/interceptor/loginfail");
 			return false;
-		}
+		} 
+		
+		logger.info("로그인회원임");
 		return true;
+		
 	}
 	
 	@Override

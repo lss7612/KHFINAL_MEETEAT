@@ -18,15 +18,25 @@ public class PayInterceptor implements HandlerInterceptor {
 			throws Exception {
 		
 		logger.info("+ + + PayInterceptor started + + +");
-		
+		logger.info("	Request URI : " + request.getRequestURI());
 		HttpSession session = request.getSession();
-		int user_grade = (int)session.getAttribute("user_grade");
+		
 		
 		if(session.getAttribute("isLogin") == null) {
+			logger.info("로그인안함");
+			response.sendRedirect("/interceptor/loginfail");
 			return false;
-		} else if (user_grade!=2) {
-			return false;
+		} else if (session.getAttribute("user_grade")!=null) {
+			
+			int user_grade = (int) session.getAttribute("user_grade");
+			
+			if(user_grade!=1) {
+				logger.info("결제회원이아님");
+				response.sendRedirect("/interceptor/payfail");
+				return false;
+			}
 		}
+		logger.info("결제회원임");
 		return true;
 		
 	}
