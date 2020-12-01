@@ -9,9 +9,6 @@
 <body>
 <h1>PushTest</h1>
 <hr>
-두번째 commit 진행합니다.<br>
-pull하고 정상적으로 서버 동작합니다.
-<hr>
 
 </body>
 </html>
