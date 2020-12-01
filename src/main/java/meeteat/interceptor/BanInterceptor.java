@@ -17,16 +17,25 @@ public class BanInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		logger.info("+ + + AdminInterceptor started + + +");
-		
+		logger.info("+ + + PayInterceptor started + + +");
+		logger.info("	Request URI : " + request.getRequestURI());
 		HttpSession session = request.getSession();
-		int user_grade = (int)session.getAttribute("user_grade");
+		
 		
 		if(session.getAttribute("isLogin") == null) {
+			logger.info("로그인안함");
+			response.sendRedirect("/interceptor/loginfail");
 			return false;
-		} else if (user_grade==3) {
-			return false;
+		} else if (session.getAttribute("user_grade")!=null) {
+			int user_grade = (int) session.getAttribute("user_grade");
+
+			if(user_grade==3) {
+				logger.info("영정유저임");
+				response.sendRedirect("/interceptor/banfail");
+				return false;
+			}
 		}
+		logger.info("영정유저아님");
 		return true;
 		
 	}
