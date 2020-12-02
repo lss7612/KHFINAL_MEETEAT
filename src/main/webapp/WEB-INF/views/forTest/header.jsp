@@ -18,8 +18,7 @@
 <!-- FontAwsome -->
 <script src="https://kit.fontawesome.com/2dc2c9d106.js" crossorigin="anonymous"></script>
 
-<!-- 적용css -->
-<link rel="stylesheet" href="/resources/css/recruitboard/write.css">
+
 
 <!-- 스마트에디터 -->
 <script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>

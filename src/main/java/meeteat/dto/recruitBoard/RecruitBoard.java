@@ -9,18 +9,20 @@ public class RecruitBoard {
 	private String article_content;
 	private String party_location;
 	private	int user_no;
+	private int board_no;
 	private	Date create_date;
 	private Date revision_date;
 	private int file_no;
 	private int is_delete;
 	private int article_hit;
-	private Date meet_time;
+	private String meet_time;
 	@Override
 	public String toString() {
 		return "RecruitBoard [article_no=" + article_no + ", article_title=" + article_title + ", article_content="
-				+ article_content + ", party_location=" + party_location + ", user_no=" + user_no + ", create_date="
-				+ create_date + ", revision_date=" + revision_date + ", file_no=" + file_no + ", is_delete=" + is_delete
-				+ ", article_hit=" + article_hit + ", meet_time=" + meet_time + "]";
+				+ article_content + ", party_location=" + party_location + ", user_no=" + user_no + ", board_no="
+				+ board_no + ", create_date=" + create_date + ", revision_date=" + revision_date + ", file_no="
+				+ file_no + ", is_delete=" + is_delete + ", article_hit=" + article_hit + ", meet_time=" + meet_time
+				+ "]";
 	}
 	public int getArticle_no() {
 		return article_no;
@@ -52,6 +54,12 @@ public class RecruitBoard {
 	public void setUser_no(int user_no) {
 		this.user_no = user_no;
 	}
+	public int getBoard_no() {
+		return board_no;
+	}
+	public void setBoard_no(int board_no) {
+		this.board_no = board_no;
+	}
 	public Date getCreate_date() {
 		return create_date;
 	}
@@ -82,13 +90,12 @@ public class RecruitBoard {
 	public void setArticle_hit(int article_hit) {
 		this.article_hit = article_hit;
 	}
-	public Date getMeet_time() {
+	public String getMeet_time() {
 		return meet_time;
 	}
-	public void setMeet_time(Date meet_time) {
+	public void setMeet_time(String meet_time) {
 		this.meet_time = meet_time;
-	}
-	
+	}	
 	
 	
 }
