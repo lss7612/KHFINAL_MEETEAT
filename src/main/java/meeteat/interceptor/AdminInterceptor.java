@@ -17,16 +17,26 @@ public class AdminInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		logger.info("+ + + AdminInterceptor started + + +");
-		
+		logger.info("+ + + PayInterceptor started + + +");
+		logger.info("	Request URI : " + request.getRequestURI());
 		HttpSession session = request.getSession();
-		int user_grade = (int)session.getAttribute("user_grade");
+		
 		
 		if(session.getAttribute("isLogin") == null) {
+			logger.info("로그인안함");
+			response.sendRedirect("/interceptor/loginfail");
 			return false;
-		} else if (user_grade!=2) {
-			return false;
+		} else if (session.getAttribute("user_grade")!=null) {
+			
+			int user_grade = (int) session.getAttribute("user_grade");
+			
+			if(user_grade!=0) {
+				logger.info("관리자아님");
+				response.sendRedirect("/interceptor/adminfail");
+				return false;
+			}
 		}
+		logger.info("관리자임");
 		return true;
 		
 	}

@@ -34,8 +34,8 @@
 		</interceptor>
 	 	<!-- 결제유저인터셉터 등록 -->
 		<interceptor>
-			<mapping path=""/>
-			<exclude-mapping path=""/>
+			<mapping path="/recruitboard/**"/>
+			<exclude-mapping path="/interceptor/payfail"/>
 			<beans:bean class="meeteat.interceptor.PayInterceptor"/>
 		</interceptor>
 	</interceptors>
