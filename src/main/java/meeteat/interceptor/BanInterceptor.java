@@ -1,3 +1,4 @@
+
 package meeteat.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,3 +50,4 @@ public class BanInterceptor implements HandlerInterceptor{
 	}
 	
 }
+
