@@ -1,5 +1,9 @@
 package meeteat.service.recruitBoard.impl;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import meeteat.dao.recruitBoard.face.RecruitBoardDao;
 import meeteat.dto.recruitBoard.RecruitBoard;
+import meeteat.dto.recruitBoard.SearchParam;
 import meeteat.service.recruitBorad.face.RecruitBoardService;
+import meeteat.util.Paging;
 
 @Service
 public class RecruitSerivceImpl implements RecruitBoardService{
@@ -29,5 +35,44 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		recruitBoardDao.insertRecruitBoard(param);
 		
 	}
+
+	
+	@Override
+	public Paging getPaging(String curPage_str, SearchParam searchParam) {
+	
+		int curPage = 0;
+		if(curPage_str!=null || ("").equals(curPage_str))
+			curPage = Integer.parseInt(curPage_str);
+
+		searchParam.setSearchBoard_no(3);//검색form에 invisible로 3을 submit해주는 태그 만들어줘야함
+		int totalCnt = recruitBoardDao.selectCntListAll(searchParam);
+		
+		logger.info("****totalCnt = "+totalCnt +"****");
+		logger.info("searchParam : "+ searchParam);
+		return new Paging(totalCnt, curPage, 10);
+	}
+	
+	
+	@Override
+	public List<LinkedHashMap<String,String>> list(Paging paging, SearchParam searchParam) {
+
+		HashMap<String, Object> param = new HashMap<>();
+		
+		//보드클래스정보와, 삭제여부
+		param.put("board_no", 3);
+		param.put("is_delete", 0);
+		
+		//페이징 starNo, endNo
+		param.put("startNo", paging.getStartNo());
+		param.put("endNo", paging.getEndNo());
+		
+		//
+		param.put("searchCategory", searchParam.getSearchCategory());
+		param.put("searchKeyword", searchParam.getSearchKeyword());
+		
+		return recruitBoardDao.getRecruitBoardList(param);
+		
+	}
+
 
 }

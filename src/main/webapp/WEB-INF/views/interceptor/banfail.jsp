@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-영구정지유저는 접속불가능합니다.
+<div style="text-align:center; width:50%; margin:0 auto;" id="searchMsg" >
+	<br>
+	<img alt="" src="/resources/img/error.jpg">
+	<h4>영정유저는 접속이 불가능합니다...</h4>
+	<a href="#"><span>풀어주세요..</span></a>
+</div>
 </body>
 </html>

@@ -8,12 +8,51 @@
 	<insert id="insertRecruitBoard" parameterType="meeteat.dto.recruitBoard.RecruitBoard">
 		INSERT INTO tb_board (
 			article_no, article_title, article_content, party_location
-			, user_no, create_date, file_no, is_delete, article_hit
-			, meet_time, board_no)
+			, user_no, create_date, file_no, is_delete, article_hit, board_no
+			, meet_time)
 		VALUES (
 			tb_recruitBoard_seq.nextval, #{article_title},#{article_content}, #{party_location, jdbcType=VARCHAR}
-			, #{user_no}, sysdate, #{file_no}, #{is_delete}, #{article_hit}
-			, to_date(#{meet_time},'YYYY-MM-DDHH24MI'), #{board_no})
+			, #{user_no}, sysdate, #{file_no}, #{is_delete}, #{article_hit}, #{board_no}
+			, to_date(#{meet_time},'YYYY-MM-DDHH24MI'))
 	</insert>
+	
+	<select id="getRecruitBoardList" parameterType="hashmap" resultType="hashmap">
+		
+		SELECT * FROM
+		(SELECT rownum rnum, list.* FROM 
+		(SELECT user_no, article_no, article_title, article_content, create_date, meet_time, article_hit, is_delete,board_no
+		    ,(SELECT user_nick FROM tb_user u WHERE u.user_no = b.user_no) user_nick
+		FROM tb_board b) list
+		<where> 
+		<if test="true">
+			AND board_no = #{board_no}
+		</if>
+		<if test="true">
+			AND is_delete = #{is_delete}
+		</if>
+		<if test="(searchCategory!=null and !searchCategory.equals('')) and (searchKeyword!=null and !searchKeyword.equals(''))">
+			AND ${searchCategory} LIKE '%${searchKeyword}%'
+		</if>
+		</where>
+		ORDER BY article_no DESC
+		) WHERE rnum BETWEEN #{startNo} AND #{endNo}
+	</select>
+	
+	<select id="selectCntListAll" parameterType="meeteat.dto.recruitBoard.SearchParam" resultType="int">
+		SELECT count(*) FROM
+		(SELECT  
+    		b.*
+    	,(SELECT user_nick FROM tb_user u WHERE b.user_no = u.user_no) user_nick
+    	FROM tb_board b)
+		<where>
+		<!-- 검색기능 -->
+		<if test="searchBoard_no!=0">
+			AND board_no = #{searchBoard_no}		
+		</if>
+		<if test="(searchCategory!=null and !searchCategory.equals('')) and (searchKeyword!=null and !searchKeyword.equals(''))">
+			AND ${searchCategory} LIKE '%${searchKeyword}%'
+		</if>
+		</where>
+	</select>
 
 </mapper>
