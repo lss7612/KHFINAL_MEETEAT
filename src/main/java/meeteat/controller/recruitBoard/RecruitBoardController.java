@@ -1,14 +1,21 @@
 package meeteat.controller.recruitBoard;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import meeteat.dto.recruitBoard.RecruitBoard;
+import meeteat.dto.recruitBoard.SearchParam;
 import meeteat.service.recruitBorad.face.RecruitBoardService;
+import meeteat.util.Paging;
 
 @Controller
 public class RecruitBoardController {
@@ -16,6 +23,7 @@ public class RecruitBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(RecruitBoardController.class);
 	@Autowired private RecruitBoardService recruitBoardService;
 	
+	//글쓰기페이지
 	@RequestMapping(value = "/recruitboard/write", method = RequestMethod.GET)
 	public void recruitBoardWrite() {}
 
@@ -25,7 +33,9 @@ public class RecruitBoardController {
 			,String meet_time_date
 			,String meet_time_clock
 			,String meet_time_min
-			,String meet_time_area) {
+			,String meet_time_area
+//			,Model model
+			) {
 
 		//전달받은 연월일 시간 하나의 스트링으로 바꿔주고 meet_time으로 넣기
 		if(meet_time_area.equals("pm") && meet_time_clock.equals("12")) {
@@ -48,8 +58,27 @@ public class RecruitBoardController {
 		
 		recruitBoardService.write(param);
 		
-		return "/forTest/makeSession";
+//		model.addAttribute("listMsg", "글이 등록되었습니다.");
+		
+		return "redirect:/recruitboard/list";
 		
 	}
+	
+	@RequestMapping(value = "/recruitboard/list")
+	public void recruitBoardList(
+			Model model
+			,String curPage
+			,SearchParam searchParam) {
+		
+		Paging paging = recruitBoardService.getPaging(curPage, searchParam);
+		model.addAttribute("paging", paging);
+		
+		List<LinkedHashMap<String,String>> list = recruitBoardService.list(paging, searchParam);
+		model.addAttribute("list",list);
+		
+		model.addAttribute("searchParam",searchParam);
+		
+	}
+	
 	
 }

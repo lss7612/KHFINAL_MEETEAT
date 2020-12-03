@@ -15,7 +15,7 @@ function validateAndSubmit() {
 	$('form').submit()
 }
 
-//**********[form validation]**********//
+//**********[모든 폼 빈칸 검사]**********//
 function validationAll() {
   //console.log('validating');
 
@@ -40,8 +40,8 @@ function validationAll() {
   return true;
 }
 
+//**********[ 각각 폼 빈칸 검사 ]**********//
 function validationEach(form){
-	console.log(form.val())
 	if (form.val() == vacancy 
 			|| form.val() == nbsp 
 			|| form.val() ==pnbsp 
@@ -49,18 +49,14 @@ function validationEach(form){
 			|| form.val() == undefined
 			|| form.val() == '<p><br></p>') 
 	{
-	    alert('필수사항을 입력하세요.');
+	    alert(form.attr('alertComment')+'을 입력하세요.');
 	    form.focus();
 	    return false;
 	}
 	return true;
 }
 
-function submitContents(elClickedObj) {
-    // 에디터의 내용이 textarea에 적용된다.
-    oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-
-    try {
-        elClickedObj.form.submit();
-    } catch(e) {}
+//**********[text에 스마트에디터 값 적용하기]**********//
+function putOnRealTextArea(){
+	oEditors.getById["form_article_content"].exec("UPDATE_CONTENTS_FIELD", []);
 }
