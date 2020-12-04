@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import meeteat.dto.recruitBoard.RecruitBoard;
 import meeteat.dto.recruitBoard.SearchParam;
@@ -34,7 +35,7 @@ public class RecruitBoardController {
 			,String meet_time_clock
 			,String meet_time_min
 			,String meet_time_area
-//			,Model model
+			,Model model
 			) {
 
 		//전달받은 연월일 시간 하나의 스트링으로 바꿔주고 meet_time으로 넣기
@@ -58,7 +59,7 @@ public class RecruitBoardController {
 		
 		recruitBoardService.write(param);
 		
-//		model.addAttribute("listMsg", "글이 등록되었습니다.");
+		model.addAttribute("writeSuccess",true);
 		
 		return "redirect:/recruitboard/list";
 		
@@ -68,7 +69,8 @@ public class RecruitBoardController {
 	public void recruitBoardList(
 			Model model
 			,String curPage
-			,SearchParam searchParam) {
+			,SearchParam searchParam
+			) {
 		
 		Paging paging = recruitBoardService.getPaging(curPage, searchParam);
 		model.addAttribute("paging", paging);
@@ -77,6 +79,18 @@ public class RecruitBoardController {
 		model.addAttribute("list",list);
 		
 		model.addAttribute("searchParam",searchParam);
+		
+	}
+	
+	@RequestMapping(value = "/recruitboard/view")
+	public void recruitBoardView(
+			Model model
+			,int board_no
+			,int article_no) {
+		
+		HashMap<String,Object> result = recruitBoardService.getBoardView(board_no, article_no);
+		
+		model.addAttribute("result", result);
 		
 	}
 	

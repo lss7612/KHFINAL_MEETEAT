@@ -54,5 +54,22 @@
 		</if>
 		</where>
 	</select>
+	
+	<select id="getBoardView" parameterType="hashmap" resultType="hashmap">
+		SELECT 
+		    article_no
+		    ,board_no
+		    ,article_title
+		    ,article_content
+		    ,meet_time
+		    ,article_hit
+		    ,create_date
+		    ,(SELECT user_nick FROM tb_user u WHERE u.user_no = b.user_no) user_nick
+		    ,(SELECT count(*) FROM tb_comment c WHERE c.board_no = #{board_no} AND #{article_no } = 58) cnt_comment
+		FROM tb_board b
+		WHERE board_no = #{board_no}
+   			AND article_no = #{article_no}
+	</select>
+
 
 </mapper>

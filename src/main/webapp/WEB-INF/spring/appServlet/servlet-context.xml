@@ -22,7 +22,7 @@
 		</interceptor>
 	 	<!-- 영정인터셉터 등록 -->
 		<interceptor>
-			<mapping path=""/>
+			<mapping path="/recruitboard/**"/>
 			<exclude-mapping path=""/>
 			<beans:bean class="meeteat.interceptor.BanInterceptor"/>
 		</interceptor>
