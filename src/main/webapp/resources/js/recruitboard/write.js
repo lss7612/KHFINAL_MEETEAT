@@ -1,6 +1,4 @@
-var vacancy = '';
-var nbsp = '&nbsp';
-var pnbsp = '<p>&nbsp;</p>'
+
 
 $(document).ready(function () {
   $('#btn_submit').click(function () {
@@ -40,11 +38,12 @@ function validationAll() {
   return true;
 }
 
+
 //**********[ 각각 폼 빈칸 검사 ]**********//
 function validationEach(form){
-	if (form.val() == vacancy 
-			|| form.val() == nbsp 
-			|| form.val() ==pnbsp 
+	if (form.val() == '' 
+			|| form.val() == '&nbsp' 
+			|| form.val() == '<p>&nbsp;</p>' 
 			|| form.val() == null 
 			|| form.val() == undefined
 			|| form.val() == '<p><br></p>') 

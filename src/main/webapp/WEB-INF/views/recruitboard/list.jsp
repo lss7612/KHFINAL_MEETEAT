@@ -13,6 +13,11 @@
 
 <div class="wrapper">
 
+<div class="none-height">
+	<input class="invisible" type="text" value="${searchParam.searchKeyword }" id="searchParam.searchKeyword">
+	<input class="invisible" type="text" value="${searchParam.searchCategory }" id="searchParam.searchCategory">
+</div>
+
 <c:set var="now" value="<%= new Date() %>"/>
 <fmt:formatDate var="fmt_now_second" value="${now }" pattern="yyyyMMddHHmmss"/>
 <fmt:formatDate var="fmt_now_minute" value="${now }" pattern="yyyyMMddHHmm"/>
@@ -21,7 +26,7 @@
 
 <hr>
 
-<!-- + + + + + + + + + + + + + + + + 알림메시지영역 + + + + + + + + + + + + + + + + + + + +  -->
+<%-- + + + + + + + + + + + + + + + + 알림메시지영역 + + + + + + + + + + + + + + + + + + + +  --%>
 
 <div id="loading" class="none-height invisible">
 	<img id="" alt="로딩" src="/resources/img/loading.gif">
@@ -29,10 +34,10 @@
 </div>
 <div id="board">
 
-<!-- - - - - - - - - - - - - - - - - 알림메시지영역끝! -- - - -  - - - - - - - - - - - - -->
+<%-- - - - - - - - - - - - - - - - - 알림메시지영역끝! -- - - -  - - - - - - - - - - - - --%>
 
 
-<!-- + + + + + + + + + + + + + + + + 지역영역 + + + + + + + + + + + + + + + + + + + +  -->
+<%-- + + + + + + + + + + + + + + + + 지역영역 + + + + + + + + + + + + + + + + + + + +  --%>
 <div id="location" class="">
 	<span>전체</span>
 	<span>서울</span>
@@ -44,10 +49,10 @@
 	<span>제주</span>
 </div>
 <div class="clearfix"></div>
-<!-- - - - - - - - - - - - - - - - - 지역영역끝! -- - - -  - - - - - - - - - - - - -->
+<%-- - - - - - - - - - - - - - - - - 지역영역끝! -- - - -  - - - - - - - - - - - - --%>
 
 
-<!-- + + + + + + + + + + + + + + + + 게시판영역 + + + + + + + + + + + + + + + + + + + +  -->
+<%-- + + + + + + + + + + + + + + + + 게시판영역 + + + + + + + + + + + + + + + + + + + +  --%>
 <table id="board_table" class="table table-striped table-hover" style="margin: 0 auto;">
 
 <thead>
@@ -61,7 +66,7 @@
 </tr>
 </thead>
 
-<!-- TBODY영역 -->
+<%-- TBODY영역 --%>
 <tbody>
 
 <c:forEach items="${list }" var="list">
@@ -71,14 +76,14 @@
 
 <tr>
 	
-	<!-- 글번호 -->
+	<%-- 글번호 --%>
 	<td>${list.ARTICLE_NO }</td>
 	
-	<!-- 추천수 -->
+	<%-- 추천수 --%>
 	<td>미구현</td>
 	
 	
-	<!-- 작성시간 -->
+	<%-- 작성시간 --%>
 	<td>
 	<c:choose>
 		<c:when test="${(fmt_now_second - fmt_creat_date_second) < 60 }">
@@ -97,20 +102,29 @@
 	</td>
 	
 	
+
+
+
 	
-	<!-- 글제목 -->
+	<%-- 글제목 --%>
 	<td class="td_article_title">
 	<c:if test="${(fmt_now_second - fmt_creat_date_second) < 600000 }">
 		<img class="" alt="새글" src="/resources/img/new_article_icon.jpg" style="width:10px">
 	</c:if>
-	<a href="/recruitboard/view?board_no=3&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
+	<a href="/recruitboard/view?board_no=3&article_no=${list.ARTICLE_NO }&searchCategory=${searchParam.searchCategory }&searchKeyword=${searchParam.searchKeyword }">
+	${list.ARTICLE_TITLE } 
+	</a>
+	<c:set var="commentURI" value="?board_no=3&article_no=${list.ARTICLE_NO }&searchCategory=${searchParam.searchCategory }&searchKeyword=${searchParam.searchKeyword }"  ></c:set>
+	<span class="pointer" 
+	onclick="window.open('/comment/list${commentURI }','window_name','width=600,height=800,location=no,status=no,scrollbars=yes,left=40,top=20');">
+	(${list.CNT_COMMENT })</span>
 	</td>
 	
-	<!-- 닉네임 -->
+	<%-- 닉네임 --%>
 	<td>${list.USER_NICK }</td>
 	
 	
-	<!-- 조회수 -->
+	<%-- 조회수 --%>
 	<td>${list.ARTICLE_HIT }</td>
 </tr>
 </c:forEach>
@@ -139,11 +153,11 @@
 
 </div>
 <hr>
-<!-- - - - - - - - - - - - - - - - -게시판영역끝! -- - - -  - - - - - - - - - - - - -->
+<%-- - - - - - - - - - - - - - - - -게시판영역끝! -- - - -  - - - - - - - - - - - - --%>
 
 
 
-<!-- + + + + + + + + + + + + + + + + 검색영역 + + + + + + + + + + + + + + + + + + -->
+<%-- + + + + + + + + + + + + + + + + 검색영역 + + + + + + + + + + + + + + + + + + --%>
 
 <div id="search_area">
 <form action="/recruitboard/list" method="GET"  id="searchFormWidth" class="form-inline">
@@ -180,18 +194,18 @@
 	 
 </form>
 </div>
-<!-- - - - - - - - - - - - - - - - -검색영역끝! -- - - -  - - - - - - - - - - - - -->
+<%-- - - - - - - - - - - - - - - - -검색영역끝! -- - - -  - - - - - - - - - - - - --%>
 
 
 
 
 
 
-<!-- + + + + + + + + + + + + + + + + 페이징영역 + + + + + + + + + + + + + + + + + + -->
+<%-- + + + + + + + + + + + + + + + + 페이징영역 + + + + + + + + + + + + + + + + + + --%>
 <div id="paging_area">
 <c:import url="list_paging.jsp"></c:import>
 </div>
-<!-- - - - - - - - - - - - - - - - -페이징영역끝! -- - - -  - - - - - - - - - - - - -->
+<%-- - - - - - - - - - - - - - - - -페이징영역끝! -- - - -  - - - - - - - - - - - - --%>
 
 
 

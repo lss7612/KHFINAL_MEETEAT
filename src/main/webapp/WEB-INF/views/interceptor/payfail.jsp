@@ -11,7 +11,7 @@
 	<br>
 	<img alt="" src="/resources/img/error.jpg">
 	<h4>결제하셔야 접속이 가능합니다...</h4>
-	<a href="#"><span>결제할래요..</span></a>
+	<a href="/"><span>결제할래요..</span></a>
 </div>
 </body>
 </html>

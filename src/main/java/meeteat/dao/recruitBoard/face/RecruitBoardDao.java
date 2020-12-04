@@ -12,7 +12,7 @@ public interface RecruitBoardDao {
 
 	public void insertRecruitBoard(RecruitBoard param);
 
-	public List<LinkedHashMap<String,String>> getRecruitBoardList(HashMap<String, Object> param);
+	public List<HashMap<String,String>> getRecruitBoardList(HashMap<String, Object> param);
 
 	public int selectCntListAll(SearchParam searchParam);
 

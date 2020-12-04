@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="/resources/css/recruitboard/write.css">
 <script type="text/javascript" src="/resources/js/recruitboard/write.js"></script>
 
-<div class="wrapper">
-<br>
-<h1>모집게시판/글쓰기</h1>
-<hr>
+<div id="write_wrapper">
 
-<form action="/recruitboard/write" method="POST">
+<h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
+<hr>
+<div class="border">
+<div class="base_bar_height color_primary light_padding">&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size:30px;" class="fas fa-pencil-alt"></i></i></div>
+<div class="horizontal_base_padding">
+<form class="" action="/recruitboard/write" method="POST">
 <!-- 글제목 인풋영역 -->
 	<input type="text" name="user_no" value="${user_no }" readonly="readonly" class="invisible"/>
 	<div class="form-group">
@@ -79,9 +81,12 @@
 		<label for="form_article_content">내용</label>
 		<textarea rows="10" id="form_article_content" name="article_content" style="min-width:550px; width:100%;" alertComment="내용"></textarea>
 	</div>
-<button id="btn_submit" type="button" class="pull-right btn btn-primary">글쓰기</button>
+
 	
 </form>
+<div class="base_bar_height light_padding"><button id="btn_submit" type="button" class="pull-right btn btn-primary">글쓰기</button></div>
+</div>
+</div>
 </div>
 
 

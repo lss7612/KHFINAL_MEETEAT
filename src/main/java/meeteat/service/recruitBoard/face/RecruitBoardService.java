@@ -1,4 +1,4 @@
-package meeteat.service.recruitBorad.face;
+package meeteat.service.recruitBoard.face;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -12,10 +12,10 @@ public interface RecruitBoardService {
 
 	public void write(RecruitBoard param);
 
-	public List<LinkedHashMap<String,String>> list(Paging paging, SearchParam searchParam);
+	public List<HashMap<String,String>> list(Paging paging, SearchParam searchParam);
 
 	public Paging getPaging(String curPage_str, SearchParam searchParam);
 
-	public HashMap<String,Object> getBoardView(int board_no, int article_no);
+	public HashMap<String,Object> getBoardView(int board_no, int article_no, SearchParam searchParam);
 
 }
