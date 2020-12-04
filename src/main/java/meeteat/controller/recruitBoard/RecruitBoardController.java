@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import meeteat.dto.recruitBoard.RecruitBoard;
 import meeteat.dto.recruitBoard.SearchParam;
-import meeteat.service.recruitBorad.face.RecruitBoardService;
+import meeteat.service.recruitBoard.face.RecruitBoardService;
 import meeteat.util.Paging;
 
 @Controller
@@ -75,7 +75,7 @@ public class RecruitBoardController {
 		Paging paging = recruitBoardService.getPaging(curPage, searchParam);
 		model.addAttribute("paging", paging);
 		
-		List<LinkedHashMap<String,String>> list = recruitBoardService.list(paging, searchParam);
+		List<HashMap<String,String>> list = recruitBoardService.list(paging, searchParam);
 		model.addAttribute("list",list);
 		
 		model.addAttribute("searchParam",searchParam);
@@ -86,11 +86,14 @@ public class RecruitBoardController {
 	public void recruitBoardView(
 			Model model
 			,int board_no
-			,int article_no) {
+			,int article_no
+			,SearchParam searchParam
+			) {
 		
-		HashMap<String,Object> result = recruitBoardService.getBoardView(board_no, article_no);
+		HashMap<String,Object> result = recruitBoardService.getBoardView(board_no, article_no, searchParam);
 		
 		model.addAttribute("result", result);
+		model.addAttribute("searchParam",searchParam);
 		
 	}
 	

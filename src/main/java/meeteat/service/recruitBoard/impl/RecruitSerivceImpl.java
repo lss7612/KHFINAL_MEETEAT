@@ -1,5 +1,6 @@
 package meeteat.service.recruitBoard.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 import meeteat.dao.recruitBoard.face.RecruitBoardDao;
 import meeteat.dto.recruitBoard.RecruitBoard;
 import meeteat.dto.recruitBoard.SearchParam;
-import meeteat.service.recruitBorad.face.RecruitBoardService;
+import meeteat.service.recruitBoard.face.RecruitBoardService;
 import meeteat.util.Paging;
 
 @Service
@@ -55,7 +56,7 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 	
 	
 	@Override
-	public List<LinkedHashMap<String,String>> list(Paging paging, SearchParam searchParam) {
+	public List<HashMap<String,String>> list(Paging paging, SearchParam searchParam) {
 
 		HashMap<String, Object> param = new HashMap<>();
 		
@@ -71,20 +72,90 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		param.put("searchCategory", searchParam.getSearchCategory());
 		param.put("searchKeyword", searchParam.getSearchKeyword());
 		
-		return recruitBoardDao.getRecruitBoardList(param);
+		List<HashMap<String,String>> result = new ArrayList<>();
+		
+		result = recruitBoardDao.getRecruitBoardList(param);
+		
+		logger.info("getSearchCategory : "+searchParam.getSearchCategory());
+		logger.info("getSearchKeyword : "+searchParam.getSearchKeyword());
+		
+		//검색결과 색깔 바꾸고 굵게 하는 코드
+		if(searchParam.getSearchCategory()!=null && !searchParam.getSearchCategory().equals("")) {
+			
+			if(searchParam.getSearchCategory().equals("article_title")) {
+				
+				if(searchParam.getSearchKeyword()!=null && !searchParam.getSearchKeyword().equals("")) {
+					
+					for(int i = 0; i < result.size(); i++) {
+						String before = result.get(i).get("ARTICLE_TITLE");
+						before = before.replace(
+								searchParam.getSearchKeyword()
+								,"<span style=\"color:tomato; font-weight:bold;\">"+searchParam.getSearchKeyword()+"</span>");
+						result.get(i).put("ARTICLE_TITLE", before);
+					}
+				}
+			}
+		}
+		
+		//검색결과 색깔 바꾸고 굵게 하는 코드		
+		if(searchParam.getSearchCategory()!=null && !searchParam.getSearchCategory().equals("")) {
+			
+			if(searchParam.getSearchCategory().equals("user_nick")) {
+				
+				if(searchParam.getSearchKeyword()!=null && !searchParam.getSearchKeyword().equals("")) {
+					
+					for(int i = 0; i < result.size(); i++) {
+						String before = result.get(i).get("USER_NICK");
+						before = before.replace(
+								searchParam.getSearchKeyword()
+								,"<span style=\"color:tomato; font-weight:bold;\">"+searchParam.getSearchKeyword()+"</span>");
+						result.get(i).put("USER_NICK", before);
+					}
+				}
+			}
+		}
+		
+		
+		
+		
+		return result;
 		
 	}
 
 
 	@Override
-	public HashMap<String, Object> getBoardView(int board_no, int article_no) {
+	public HashMap<String, Object> getBoardView(int board_no, int article_no, SearchParam searchParam) {
 
 		Map<String, Object> param = new HashMap<>();
 		
 		param.put("board_no", board_no);
 		param.put("article_no", article_no);
 		
-		return recruitBoardDao.getBoardView(param);
+		HashMap<String,Object> result = new HashMap<String, Object>() ;
+		
+		result = recruitBoardDao.getBoardView(param);
+		
+		//검색결과 색깔 바꾸고 굵게 하는 코드		
+				if(searchParam.getSearchCategory()!=null && !searchParam.getSearchCategory().equals("")) {
+					
+					logger.info("여기까지" );
+					
+					if(searchParam.getSearchCategory().equals("article_content")) {
+						logger.info("여기까지" );
+						
+						if(searchParam.getSearchKeyword()!=null && !searchParam.getSearchKeyword().equals("")) {
+							logger.info("여기까지" );
+							
+								String before = (String) result.get("ARTICLE_CONTENT");
+								before = before.replace(
+										searchParam.getSearchKeyword()
+										,"<span style=\"color:tomato; font-weight:bold;\">"+searchParam.getSearchKeyword()+"</span>");
+								result.put("ARTICLE_CONTENT", before);
+						}
+					}
+				}
+		
+		return result;
 	}
 
 

@@ -3,7 +3,11 @@ $(document).ready(function(){
 	/*검색한 카테고리에 따라 선택되어있는 카테고리를 바꿔준다*/
 	changeChecked()
 	
-	
+	$('openCommentPopUp').click(function(){
+		
+		popUpComment()
+		
+	})
 	
 	/*카테고리선택하는버튼을 클릭하면 카테고리div를 펼쳐준다*/
 	$('#categorySelectBtn').click(function(){
@@ -99,3 +103,36 @@ function validationEach(form){
 	}
 	return true;
 }
+
+/*키워드있는애 굵게하고 색깔주기*/
+function findSearchKeyword(){
+	
+	var keyword =$('searchParam.searchKeyword').val()
+	
+	
+	
+	if(
+		keyword==''
+		||keyword=='&nbsp'
+		||keyword==null
+		||keyword==undefined){
+		return
+	}
+	
+	if(tag.hasClass('invisible') && tag.hasClass('none-height')){
+		tag.removeClass('invisible')
+		tag.removeClass('none-height')
+	} else {
+		tag.addClass('invisible')
+		tag.addClass('none-height')
+	}
+}
+
+
+function popUpComment() { 
+	console.log('clicked')
+	window.open('www.naver.com','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');
+}
+
+
+

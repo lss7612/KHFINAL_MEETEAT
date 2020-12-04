@@ -13,9 +13,12 @@
 
 
 <div id="view_title_bar" class="border">
+	<div style="height:0;">
+		<input class="invisible" value="${result.ARTICLE_NO }" id="article_no"/>
+	</div>
 	<!-- 제목부분 -->
 	<div class="light_padding color_base bold_bar_height">
-		<h4 style="font-weight:bold;" class="">${result.ARTICLE_TITLE }</h4>
+		<h4 class="" style="font-weight:bold;" class="">${result.ARTICLE_TITLE }</h4>
 	</div>
 	
 	
@@ -43,7 +46,7 @@
 <!-- 코멘트작성 -->
 <c:if test="${isLogin }">
 	<div class="border" style="width:100%; margin:0 auto;">
-	<form action="" method="POST"></form>
+	<form action="/recruitboard/comment/write" method="POST">
 	
 		<!-- 안보이는 form태그부분 -->
 		<div style="height:0;">
@@ -62,11 +65,12 @@
 			댓글달기
 		</div>
 		<div style="width:100%; margin:0 auto" class="vertical_light_padding" >
-			<textarea style="width: 60%"id="form_comment_content" ></textarea>
+			<textarea style="width: 100%"id="form_comment_content" name="comment_content" alertComment="내용" ></textarea>
 		</div>
+	</form>
+	<div class="base_bar_height light_padding" style="width:100%; margin:0 auto">
+		<button type="button" id="commentSumitBtn" class="btn btn-primary pull-right" >댓글쓰기</button>							
 	</div>
-	<div class="light_bar_height" style="width:100%; margin:0 auto">
-		<button type="button" id="commentSumitBtn" class="btn btn-primary pull-right">댓글쓰기</button>							
 	</div>
 </c:if>
 <div>
@@ -81,7 +85,7 @@ nhn.husky.EZCreator.createInIFrame({
 })
 
 
-oEditors.getById["ir1"].exec("RESIZE_EDITING_AREA_BY", [0, 100]); 
+/* oEditors.getById["ir1"].exec("RESIZE_EDITING_AREA_BY", [0, 100]); */ 
 
 $('iframe').css('height','100px');
 
@@ -90,25 +94,23 @@ $('iframe').css('height','100px');
 
 </div>
 
-<!-- 댓글내용 -->
-<div class="border vertical_base_margin" >
-	<div class="light_padding color_base light_bar_height">
-		<div class=".col-md-4 pull-left">
-			<span>닉네임</span>
-		</div>
-		<div class=".col-md-4 pull-right" style="text-align:center;">
-			<span class="horizontal_light_margin">2020-12-04 09:25:30</span>
-		</div>
-	</div>
-	<div class='clearfix'></div>
-	<div class="base_padding">
-		댓글내용이 이렇습니다 ㅎㅎ;
-	</div>
+<div class="col-md-4 pull-right"style="margin:5px 0 0 0; padding:10px 10px 0; font-size:20px;text-align:right;"><i id="refrash_comment_botton"  style="cursor: pointer;" class="fas fa-sync-alt"></i></div>
+<div class="col-md-4 pull-left" style="margin:5px 0 0 0; padding:14px 10px 0; font-size:18px;text-align:left;">${result.CNT_COMMENT }개의 덧글</div>
+<div class="clearfix"></div>
+
+
+<!-- 댓글내용영역 -->
+<div id="commentList">
+<div style="text-align:center;"><img style="margin:0 auto;" alt="" src="/resources/img/loading.gif"></div>
 </div>
-</div>
+
+
+<!-- 게시판영역 -->
+<div></div>
 
 
 </div>
 
+</div>
 </body>
 </html>
