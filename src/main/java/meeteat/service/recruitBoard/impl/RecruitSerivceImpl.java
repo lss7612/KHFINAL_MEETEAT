@@ -3,6 +3,7 @@ package meeteat.service.recruitBoard.impl;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +73,18 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		
 		return recruitBoardDao.getRecruitBoardList(param);
 		
+	}
+
+
+	@Override
+	public HashMap<String, Object> getBoardView(int board_no, int article_no) {
+
+		Map<String, Object> param = new HashMap<>();
+		
+		param.put("board_no", board_no);
+		param.put("article_no", article_no);
+		
+		return recruitBoardDao.getBoardView(param);
 	}
 
 

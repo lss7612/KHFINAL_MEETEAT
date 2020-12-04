@@ -22,6 +22,7 @@
 <hr>
 
 <!-- + + + + + + + + + + + + + + + + 알림메시지영역 + + + + + + + + + + + + + + + + + + + +  -->
+
 <div id="loading" class="none-height invisible">
 	<img id="" alt="로딩" src="/resources/img/loading.gif">
 	<span>검색중입니다... 잠시만 기다려주세요</span>
@@ -102,7 +103,7 @@
 	<c:if test="${(fmt_now_second - fmt_creat_date_second) < 600000 }">
 		<img class="" alt="새글" src="/resources/img/new_article_icon.jpg" style="width:10px">
 	</c:if>
-	<a href="#">${list.ARTICLE_TITLE }</a>
+	<a href="/recruitboard/view?board_no=3&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
 	</td>
 	
 	<!-- 닉네임 -->
@@ -160,7 +161,7 @@
 				<div id="categorySelectBtn"class="input-group-addon" style="width:85px;">내용▼</div>
 			</c:if>
 			<c:if test="${searchParam.searchCategory eq 'user_nick' }">
-				<div id="categorySelectBtn"class="input-group-addon" style="width:85px;">내용▼</div>
+				<div id="categorySelectBtn"class="input-group-addon" style="width:85px;">닉네임▼</div>
 			</c:if>
 		<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="검색" alertComment="검색어" value="${searchParam.searchKeyword }">
 		<div id="searchFormSubmit" class="input-group-addon"><i class="fas fa-search"></i></div>

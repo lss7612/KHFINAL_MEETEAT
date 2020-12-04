@@ -16,4 +16,6 @@ public interface RecruitBoardService {
 
 	public Paging getPaging(String curPage_str, SearchParam searchParam);
 
+	public HashMap<String,Object> getBoardView(int board_no, int article_no);
+
 }

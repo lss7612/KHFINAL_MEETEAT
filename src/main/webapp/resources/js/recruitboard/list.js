@@ -3,10 +3,12 @@ $(document).ready(function(){
 	/*검색한 카테고리에 따라 선택되어있는 카테고리를 바꿔준다*/
 	changeChecked()
 	
+	
+	
 	/*카테고리선택하는버튼을 클릭하면 카테고리div를 펼쳐준다*/
 	$('#categorySelectBtn').click(function(){
 		
-		toggleVisible($('#categories'))
+		toggleVisible($('#categories')) 
 		
 	})
 	
@@ -23,13 +25,15 @@ $(document).ready(function(){
 	
 	/*검색버튼클릭*/
 	$('#searchFormSubmit').click(function(){
-		console.log('clicked')
-		if (validationAll()){ 
-			toggleVisible($('#loading'))
-			$('form').submit();
-		}
-		
+		search()
 	})
+	
+	$('#searchKeyword').keydown(function(key){
+		if(key.keyCode==13){
+			search()
+		}
+	})
+	
 	
 })
 
@@ -63,6 +67,14 @@ function changeCategoryName(changeText){
 	
 	$('#categorySelectBtn').html(changeText)
 	
+}
+
+function search(){
+	console.log('clicked')
+	if (validationAll()){ 
+		toggleVisible($('#loading'))
+		$('form').submit();
+	}
 }
 
 //**********[모든 폼 빈칸 검사]**********//
