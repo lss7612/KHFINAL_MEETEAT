@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-결제유저만 접속 가능합니다.
+<div style="text-align:center; width:50%; margin:0 auto;" id="searchMsg" >
+	<br>
+	<img alt="" src="/resources/img/error.jpg">
+	<h4>결제하셔야 접속이 가능합니다...</h4>
+	<a href="/"><span>결제할래요..</span></a>
+</div>
 </body>
 </html>

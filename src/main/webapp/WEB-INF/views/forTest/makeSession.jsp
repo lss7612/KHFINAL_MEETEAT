@@ -20,6 +20,7 @@
 <li><a href="/makesession/BannedUser">영정유저세션받기</a><br></li>
 <li><a href="/makesession/guestUser">세션삭제(로그인안한유저)</a><br></li>
 </ul>
+<h2><a href="/recruitboard/list">게시판으로!</a></h2>
 
 <hr>
 

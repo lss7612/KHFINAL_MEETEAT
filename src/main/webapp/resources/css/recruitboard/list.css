@@ -1,0 +1,100 @@
+.wrapper {
+	width:50%;
+	margin: 0 auto;
+}
+
+#location {
+	min-width: 600px;
+	margin-left: 40%;
+}
+
+#location span{
+	margin: 0 10px;
+	cursor:pointer;
+}
+
+#board_table {
+	min-width: 600px;
+	table-layout: fixed;
+}
+
+#board_table tbody tr td
+,#board_table thead tr th {
+	text-align: center;
+}
+
+#board_table tbody tr td:nth-child(4){
+	text-align: left;
+	padding-left:13px
+}
+
+#board_table tbody tr td:nth-child(1)
+,#board_table tbody tr td:nth-child(2)
+,#board_table tbody tr td:nth-child(3){
+	font-size:0.8em;
+	color: #484848;
+	padding:3px 0 0;
+}
+
+.td_article_title {
+	text-align: left;
+	white-space:nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+
+.none-height{
+	height:0;
+}
+
+.fa-search, .input-group-addon{
+	cursor:pointer;
+}
+
+/* 검색  */
+
+
+#search_area {
+	width: 70%;
+	margin:0 auto;
+}
+
+#categories {
+	width:100%;
+	padding: 10px;
+	background: #eee;
+	border-radius: 10px;
+	
+}
+
+#categories table{
+	width:100%;	
+}
+
+#categories table tr td, #categories table tr th{
+	font-size:0.9em;
+	text-align: left;
+	width:40%;
+}
+
+#categorySelectBtn{
+	
+}
+
+#searchFormWidth{
+	width: 300px;
+	margin: 0 auto;
+}
+
+.btn-primary{
+	color: black;
+	background:#ffa000 !important;
+	border-color:#ccc;
+}
+
+.pointer{
+	cursor:pointer;
+}
+
+
