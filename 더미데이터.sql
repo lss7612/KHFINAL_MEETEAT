@@ -123,6 +123,9 @@ insert into tb2_userreport (user_no, report_time, reason_no, report_content) val
 insert into tb2_userreport (user_no, report_time, reason_no, report_content) values(16, sysdate, 3, null);
 insert into tb2_userreport (user_no, report_time, reason_no, report_content) values(16, sysdate, 4, null);
 
+--신고처리내용 데이터
+insert into tb2_resultreportreason (report_result_content) values('영구 정지');
+select * from tb2_resultreportreason;
 
 
 --신고처리 더미데이터
@@ -131,4 +134,4 @@ insert into tb2_resultreport (user_no, report_result_date, report_result_detail_
 insert into tb2_resultreport (user_no, report_result_date, report_result_detail_no) values(12, sysdate, 1);
 
 select * from tb2_resultreport;
-
+commit;
