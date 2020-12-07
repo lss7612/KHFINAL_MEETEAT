@@ -7,10 +7,11 @@
 <link rel="stylesheet" href="/resources/css/recruitboard/view.css">
 <script type="text/javascript" src="/resources/js/recruitboard/view.js"></script>
 
+${result.ISRECOMMEND }
+
 <div id="view_wrapper">
 <h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
 <hr>
-
 
 <div id="view_title_bar" class="border">
 	<div style="height:0;">
@@ -34,8 +35,25 @@
 	</div>
 
 <%-- 내용영역 --%>
+	
 	<div id="view_content_bar" class="light_margin bold_padding vertical_bold_margin" style="padding:5px; text-align:left;">
+		
+	<h4 style="font-weight:bold">만날시간: ${result.MEET_TIME_DATE } ${result.MEET_TIME_CLOCK }:${result.MEET_TIME_MIN }</h4> 
+	<br>
 	${result.ARTICLE_CONTENT }
+	
+		<%--추천 영역 --%>
+		<div class="bolder_bar_height vertical_bold_margin" style="text-align:center;">
+			<div id="cnt_recommend" class="vertical_light_padding vertical_base_margin" style="width:50px; height:50px; margin:0 auto; border: 1px solid #ccc; border-radius: 10px;  font-size:1.5em;">
+			${result.CNT_RECOMMEND }
+			</div>
+			<i id="btn_recommend" style="font-size:2.5em; cursor:pointer;"class="far fa-thumbs-up"></i>
+			<div id="isRecommend" class="bold_bar_height vertical_bold_margin">
+				<c:if test="${result.ISRECOMMEND eq 1 }">
+				추천한 게시물입니다.
+				</c:if>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -44,13 +62,12 @@
 <div class="base_bar_height light_padding light_margin">
 	
 	<div class="invisible" style="height:0;">
-	<form id="deleteOrModify" action="" method="GET">
+	<form id="deleteOrModify" action="" method="">
 		<input type="text" name="user_nick" value="${result.USER_NICK }" >
 		<input type="text" name="board_no" value="3" >
 		<input type="text" name="article_no" value="${result.ARTICLE_NO }" >
 	</form>
 	</div>
-	
 	<button type="button" id="article_delete" class="btn btn-primary pull-right" style="float:center;">삭제</button>
 	<button type="button" id="article_modify" class="btn btn-primary pull-right" style="float:center;">수정</button>
 

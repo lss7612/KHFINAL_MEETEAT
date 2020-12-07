@@ -31,7 +31,10 @@ function validationAll() {
   
   //분검사
   if(!validationEach($('#form_time_minute'))) return false
-
+  
+  //지역검사
+  if(!validationEach($('#form_party_location'))) return false
+  
   //내용검사
   if(!validationEach($('#form_article_content'))) return false
   

@@ -19,12 +19,16 @@ public interface RecruitBoardService {
 
 	public Paging getPaging(String curPage_str, SearchParam searchParam);
 
-	public HashMap<String,Object> getBoardView(int board_no, int article_no, SearchParam searchParam);
+	public HashMap<String,Object> getBoardView(int board_no, int article_no, SearchParam searchParam, HttpSession session);
 
 	public Boolean isWriter(String user_nick, HttpSession session);
 
 	public Map<String, Object> getModifyParam(int board_no,int article_no);
 
 	public void modify(RecruitBoard param);
+
+	public void delete(int article_no, int board_no);
+
+	public int recommend(Map<String, Object> param);
 
 }

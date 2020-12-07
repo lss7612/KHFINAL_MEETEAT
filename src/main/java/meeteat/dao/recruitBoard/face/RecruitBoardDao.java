@@ -22,4 +22,14 @@ public interface RecruitBoardDao {
 
 	public void updateRecruitBoard(RecruitBoard param);
 
+	public void deleteRecruitBoard(Map<String, Object> param);
+
+	public int isRecommended(Map<String, Object> param);
+
+	public void increaseRecommendCnt(Map<String, Object> param);
+
+	public int getRecommendCnt(Map<String, Object> param);
+
+	public void decreaseRecommendCnt(Map<String, Object> param);
+
 }

@@ -1,5 +1,14 @@
 $(document).ready(function(){
 	
+	$('#location table tr td span').click(function(){
+		console.log('clicked')
+		console.log($(this).text())
+		$('#searchKeyword').val('')
+		if($(this).text()!='전체') $('#searchLocation').val($(this).text())
+		if($(this).text()=='전체') $('#searchLocation').val('')
+		$('form').submit();
+	})
+	
 	/*검색한 카테고리에 따라 선택되어있는 카테고리를 바꿔준다*/
 	changeChecked()
 	

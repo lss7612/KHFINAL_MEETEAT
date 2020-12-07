@@ -6,24 +6,31 @@ var tried = 0;
 $(document).ready(function(){
 	
 	//페이지 불러왔을 때 코멘트 가져오기
-	setTimeout(function() {
-		getCommentList()
-	}, 1000);
+	getCommentList()
+	
+	//추천눌렀을때 ajax동작
+	
+	$('#btn_recommend').click(function(){
+		console.log('clicked')
+		getCntRecommend()
+	})
+	
 	
 	//본문 수정 버튼 눌렀을 때
 	$('#article_modify').click(function(){
 		console.log('clicked')
 		if(!confirm('수정하시겠습니까?')) return 
 		$('#deleteOrModify').attr('action','/recruitboard/modify')
+		$('#deleteOrModify').attr('method','GET')
 		$('#deleteOrModify').submit();
-		
 	})
 	//본문 삭제 버튼 눌렀을 때 
 	$('#article_delete').click(function(){
 		console.log('clicked')
 		if(!confirm('삭제하시면 되돌릴 수 없습니다. 삭제하시겠습니까?')) return;
 		$('#deleteOrModify').attr('action','/recruitboard/delete')
-		
+		$('#deleteOrModify').attr('method','POST')
+		$('#deleteOrModify').submit();
 	})
 	
 	
@@ -137,6 +144,40 @@ function getCommentList() {
 				'</div>'
 				)
 			}
+			
+			
+		}
+	})
+}
+
+/*추천수 가져오기 function*/
+function getCntRecommend() {
+	console.log('geting CntRecommend')
+	$.ajax({
+		type: "get"
+		, url: "/recruitboard/recommend"
+		, data:{ board_no : 3, article_no : $('#article_no').val()}
+		, dataType:"html" //응답받은 데이터의 형식
+		, success: function( res ){
+			$('#cnt_recommend').html(res)
+			if(res==1)
+				$('#isRecommend').text('추천한 게시물입니다')
+			if(res==0)
+				$('#isRecommend').text('')
+		}
+		, error: function(){
+			
+			console.log('실패')
+			
+//			tried += 1
+//			if(tried<10) getCommentList()
+//			if(tried>10){
+//				$('#commentList').html(
+//				'<div style="text-align:center">'+
+//				'현재 서버의 응답이 느립니다.<br> 조금 있다가 시도해주세요'+
+//				'</div>'
+//				)
+//			}
 			
 			
 		}

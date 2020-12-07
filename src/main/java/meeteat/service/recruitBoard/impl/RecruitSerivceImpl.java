@@ -73,6 +73,7 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		//
 		param.put("searchCategory", searchParam.getSearchCategory());
 		param.put("searchKeyword", searchParam.getSearchKeyword());
+		param.put("searchLocation", searchParam.getSearchLocation());
 		
 		List<HashMap<String,String>> result = new ArrayList<>();
 		
@@ -80,6 +81,8 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		
 		logger.info("getSearchCategory : "+searchParam.getSearchCategory());
 		logger.info("getSearchKeyword : "+searchParam.getSearchKeyword());
+		
+		
 		
 		//검색결과 색깔 바꾸고 굵게 하는 코드
 		if(searchParam.getSearchCategory()!=null && !searchParam.getSearchCategory().equals("")) {
@@ -126,12 +129,13 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 
 
 	@Override
-	public HashMap<String, Object> getBoardView(int board_no, int article_no, SearchParam searchParam) {
+	public HashMap<String, Object> getBoardView(int board_no, int article_no, SearchParam searchParam, HttpSession session) {
 
 		Map<String, Object> param = new HashMap<>();
 		
 		param.put("board_no", board_no);
 		param.put("article_no", article_no);
+		param.put("user_no", session.getAttribute("user_no"));
 		
 		recruitBoardDao.updateHit(param);
 		
@@ -153,12 +157,13 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 								String before = (String) result.get("ARTICLE_CONTENT");
 								before = before.replace(
 										searchParam.getSearchKeyword()
-										,"<span style=\"color:tomato; font-weight:bold;\">"+searchParam.getSearchKeyword()+"</span>");
+										,"<span style=\"color:tomato; margin:0; font-weight:bold;\">"+searchParam.getSearchKeyword()+"</span>");
 								result.put("ARTICLE_CONTENT", before);
 						}
 					}
 				}
-		
+				
+				
 		return result;
 	}
 
@@ -236,6 +241,32 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		
 		recruitBoardDao.updateRecruitBoard(param);
 		
+	}
+
+
+	@Override
+	public void delete(int article_no, int board_no) {
+
+		Map<String, Object> param = new HashMap<>();
+		
+		param.put("board_no", board_no);
+		param.put("article_no", article_no);
+		
+		recruitBoardDao.deleteRecruitBoard(param);
+		
+	}
+
+
+	@Override
+	public int recommend(Map<String, Object> param) {
+
+		if(recruitBoardDao.isRecommended(param)==0) {
+			recruitBoardDao.increaseRecommendCnt(param);
+		} else {
+			recruitBoardDao.decreaseRecommendCnt(param);
+		}
+		
+		return recruitBoardDao.getRecommendCnt(param);
 	}
 
 

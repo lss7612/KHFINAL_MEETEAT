@@ -39,14 +39,19 @@
 
 <%-- + + + + + + + + + + + + + + + + 지역영역 + + + + + + + + + + + + + + + + + + + +  --%>
 <div id="location" class="">
-	<span>전체</span>
-	<span>서울</span>
-	<span>경기</span>
-	<span>경상</span>
-	<span>전라</span>
-	<span>충청</span>
-	<span>강원</span>
-	<span>제주</span>
+	<table>
+	<tr>
+		<td><span>전체</span></td>
+		<td><span>서울</span></td>
+		<td><span>인천</span></td>
+		<td><span>경기</span></td>
+		<td><span>경상</span></td>
+		<td><span>전라</span></td>
+		<td><span>충청</span></td>
+		<td><span>강원</span></td>
+		<td><span>제주</span></td>
+	</tr>
+	</table>
 </div>
 <div class="clearfix"></div>
 <%-- - - - - - - - - - - - - - - - - 지역영역끝! -- - - -  - - - - - - - - - - - - --%>
@@ -80,7 +85,7 @@
 	<td>${list.ARTICLE_NO }</td>
 	
 	<%-- 추천수 --%>
-	<td>미구현</td>
+	<td>${list.CNT_RECOMMEND }</td>
 	
 	
 	<%-- 작성시간 --%>
@@ -108,19 +113,27 @@
 	
 	<%-- 글제목 --%>
 	<td class="td_article_title">
-	<c:if test="${(fmt_now_second - fmt_creat_date_second) < 600000 }">
-		<img class="" alt="새글" src="/resources/img/new_article_icon.jpg" style="width:10px">
-	</c:if>
-	<a href="/recruitboard/view?board_no=3&article_no=${list.ARTICLE_NO }&searchCategory=${searchParam.searchCategory }&searchKeyword=${searchParam.searchKeyword }">
-	${list.ARTICLE_TITLE } 
-	</a>
-	<c:if test="${list.CNT_COMMENT > 0 }">
-	<c:set var="commentURI" value="?board_no=3&article_no=${list.ARTICLE_NO }&searchCategory=${searchParam.searchCategory }&searchKeyword=${searchParam.searchKeyword }"  ></c:set>
-	<span class="pointer" 
-	onclick="window.open('/comment/list${commentURI }','window_name','width=600,height=800,location=no,status=no,scrollbars=yes,left=40,top=20');">
-	(${list.CNT_COMMENT })
+	<span class="pull-left" style="max-width:85%">
+		<a href="/recruitboard/view?board_no=3&article_no=${list.ARTICLE_NO }&searchCategory=${searchParam.searchCategory }&searchKeyword=${searchParam.searchKeyword }">
+		<%--지역보여주기 --%>
+		<span style="font-weight:bold">[${list.PARTY_LOCATION }]</span>&nbsp;${list.ARTICLE_TITLE } 
+		</a>
 	</span>
+	
+	<%-- 글제목에 코멘트 개수 표시 --%>
+	<div class="pull-left" style="min-width:30px; width:10%;">
+		<c:if test="${list.CNT_COMMENT > 0 }">
+			<c:set var="commentURI" value="?board_no=3&article_no=${list.ARTICLE_NO }&searchCategory=${searchParam.searchCategory }&searchKeyword=${searchParam.searchKeyword }"  ></c:set>
+				<span class="pointer" 
+				onclick="window.open('/comment/list${commentURI }','window_name','width=600,height=800,location=no,status=no,scrollbars=yes,left=40,top=20');">
+				(${list.CNT_COMMENT })
+				</span>
+		</c:if>
+		<c:if test="${(fmt_now_second - fmt_creat_date_second) < 600000 }">
+			<img class="" alt="새글" src="/resources/img/new_article_icon.jpg" style="width:10px">
 	</c:if>
+	</div>
+	
 	</td>
 	
 	<%-- 닉네임 --%>
@@ -165,10 +178,12 @@
 <div id="search_area">
 <form action="/recruitboard/list" method="GET"  id="searchFormWidth" class="form-inline">
 	<div class="form-group">
-	
+		<%-- 보이지 않는 폼 영역 --%>	
 		<div class="none-height">
 		<input type="text" name="searchBoard_no" value="3" readonly="readonly" class="invisible" />
+		<input type="text" class="invisible" id="searchLocation" name="searchLocation" value="${searchParam.searchLocation }">
 		</div>
+		
 		<label class="sr-only" for="searchKeyword">Amount (in dollars)</label>
 		<div class="input-group">
 			<c:if test="${(searchParam.searchCategory eq 'article_title') || empty searchParam.searchCategory }">
@@ -180,6 +195,8 @@
 			<c:if test="${searchParam.searchCategory eq 'user_nick' }">
 				<div id="categorySelectBtn"class="input-group-addon" style="width:85px;">닉네임▼</div>
 			</c:if>
+			
+		<%-- 검색 input 영역 --%>
 		<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="검색" alertComment="검색어" value="${searchParam.searchKeyword }">
 		<div id="searchFormSubmit" class="input-group-addon"><i class="fas fa-search"></i></div>
 		</div>

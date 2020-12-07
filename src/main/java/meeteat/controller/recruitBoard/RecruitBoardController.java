@@ -75,6 +75,12 @@ public class RecruitBoardController {
 			,SearchParam searchParam
 			) {
 		
+		//처음 게시판에 들어오게 되면 Location이 null인데 그때 null을 ""로 바까줌
+		if(searchParam.getSearchLocation() == null)
+			searchParam.setSearchLocation("");
+		
+		logger.info(""+ searchParam);
+		
 		Paging paging = recruitBoardService.getPaging(curPage, searchParam);
 		model.addAttribute("paging", paging);
 		
@@ -90,10 +96,11 @@ public class RecruitBoardController {
 			Model model
 			,int board_no
 			,int article_no
+			,HttpSession session
 			,SearchParam searchParam
 			) {
 		
-		HashMap<String,Object> result = recruitBoardService.getBoardView(board_no, article_no, searchParam);
+		HashMap<String,Object> result = recruitBoardService.getBoardView(board_no, article_no, searchParam, session);
 		
 		model.addAttribute("result", result);
 		model.addAttribute("searchParam",searchParam);
@@ -164,11 +171,50 @@ public class RecruitBoardController {
 	}
 	
 	@RequestMapping(value = "/recruitboard/delete")
-	public String recruitBoardDelete(int article_no, int board_no, String user_nick) {
+	public String recruitBoardDelete(
+			int article_no
+			, int board_no
+			, String user_nick
+			, HttpSession session
+			, Model model) {
 		
+		Boolean isWriter = recruitBoardService.isWriter(user_nick, session);
+		if(!isWriter) {
+			model.addAttribute("errorMsg", "잘못된 접근입니다. 작성자만 수정이 가능합니다");
+			return "/common/errorpage";
+		}
 		
+		recruitBoardService.delete(article_no, board_no);
 		
 		return "redirect:/recruitboard/list";
 	}
+	
+	@RequestMapping(value = "/recruitboard/recommend")
+	public String recommend(
+			HttpSession session
+			,int article_no
+			,int board_no
+			,Model model
+			) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		
+		logger.info("영차"+article_no);
+		logger.info("영차"+board_no);
+		
+		param.put("article_no", article_no);
+		param.put("board_no", board_no);
+		param.put("user_no", session.getAttribute("user_no"));
+
+		int result = recruitBoardService.recommend(param);
+		model.addAttribute("result", result);
+		
+		logger.info("영차"+result);
+		
+		
+		return "/recruitboard/recommend_ajax";
+		
+	}
+	
 	
 }

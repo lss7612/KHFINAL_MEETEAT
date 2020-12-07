@@ -6,7 +6,7 @@
 <mapper namespace="meeteat.dao.recruitBoard.face.RecruitBoardDao">
 	
 	<insert id="insertRecruitBoard" parameterType="meeteat.dto.recruitBoard.RecruitBoard">
-		INSERT INTO tb_board (
+		INSERT INTO tb_board2 (
 			article_no, article_title, article_content, party_location
 			, user_no, create_date, file_no, is_delete, article_hit, board_no
 			, meet_time)
@@ -20,10 +20,12 @@
 		
 		SELECT * FROM
 		(SELECT rownum rnum, list.* FROM 
-		(SELECT user_no, article_no, article_title, article_content, create_date, meet_time, article_hit, is_delete,board_no
-		    ,(SELECT user_nick FROM tb_user u WHERE u.user_no = b.user_no) user_nick
-		    ,(SELECT count(*) FROM tb_comment c WHERE b.board_no = #{board_no} AND b.article_no = c.article_no ) cnt_comment
-		FROM tb_board b
+		(SELECT 
+			user_no, article_no, article_title, article_content, party_location, create_date, meet_time, article_hit, is_delete,board_no
+		    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
+		    ,(SELECT count(*) FROM tb_comment2 c WHERE b.board_no = #{board_no} AND b.article_no = c.article_no ) cnt_comment
+		    ,(SELECT count(*) FROM tb_recommend2 r WHERE b.board_no = #{board_no} AND b.article_no = r.article_no) cnt_recommend
+		FROM tb_board2 b
 		ORDER BY article_no DESC) list
 		<where> 
 		<if test="true">
@@ -35,6 +37,9 @@
 		<if test="(searchCategory!=null and !searchCategory.equals('')) and (searchKeyword!=null and !searchKeyword.equals(''))">
 			AND ${searchCategory} LIKE '%${searchKeyword}%'
 		</if>
+		<if test="searchLocation!=null and !searchLocation.equals('')">
+			AND party_location = #{searchLocation}
+		</if>
 		</where>
 		) WHERE rnum BETWEEN #{startNo} AND #{endNo}
 	</select>
@@ -43,8 +48,8 @@
 		SELECT count(*) FROM
 		(SELECT  
     		b.*
-    	,(SELECT user_nick FROM tb_user u WHERE b.user_no = u.user_no) user_nick
-    	FROM tb_board b)
+    	,(SELECT user_nick FROM tb_user2 u WHERE b.user_no = u.user_no) user_nick
+    	FROM tb_board2 b)
 		<where>
 		<!-- 검색기능 -->
 		<if test="searchBoard_no!=0">
@@ -53,11 +58,14 @@
 		<if test="(searchCategory!=null and !searchCategory.equals('')) and (searchKeyword!=null and !searchKeyword.equals(''))">
 			AND ${searchCategory} LIKE '%${searchKeyword}%'
 		</if>
+		<if test="searchLocation!=null and !searchLocation.equals('')">
+			AND party_location = #{searchLocation}
+		</if>
 		</where>
 	</select>
 	
 	<update id="updateHit" parameterType="hashmap">
-		UPDATE tb_board
+		UPDATE tb_board2
 		SET article_hit = article_hit + 1
 		WHERE board_no = #{board_no}
    			AND article_no = #{article_no}
@@ -76,15 +84,17 @@
 		    ,article_hit
 		    ,create_date
 		    ,party_location
-		    ,(SELECT user_nick FROM tb_user u WHERE u.user_no = b.user_no) user_nick
-		    ,(SELECT count(*) FROM tb_comment c WHERE c.board_no = #{board_no} AND c.article_no = #{article_no }) cnt_comment
-		FROM tb_board b
+		    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
+		    ,(SELECT count(*) FROM tb_comment2 c WHERE c.board_no = #{board_no} AND c.article_no = #{article_no }) cnt_comment
+		    ,(SELECT count(*) FROM tb_recommend2 r WHERE b.board_no = #{board_no} AND b.article_no = r.article_no) cnt_recommend
+		    ,(SELECT count(*) FROM tb_recommend2 r WHERE b.board_no = #{board_no} AND b.article_no = r.article_no AND user_no=#{user_no}) isRecommend
+		FROM tb_board2 b
 		WHERE board_no = #{board_no}
    			AND article_no = #{article_no}
 	</select>
 
 	<update id="updateRecruitBoard" parameterType="meeteat.dto.recruitBoard.SearchParam">
-		UPDATE tb_board
+		UPDATE tb_board2
 			SET article_title = #{article_title}
 			,article_content = #{article_content}
 			,party_location = #{party_location, jdbcType=VARCHAR}
@@ -94,5 +104,38 @@
 			article_no = #{article_no}
 			AND board_no = #{board_no}
 	</update>
+	
+	<update id="deleteRecruitBoard" parameterType="hashmap">
+		UPDATE tb_board2
+		SET is_delete = 1
+		WHERE
+			article_no = #{article_no}
+			AND board_no = #{board_no}
+	</update>
+	
+	<select id="isRecommended" parameterType="hashmap" resultType="int">
+		SELECT count(*) FROM tb_recommend2
+		WHERE article_no = #{article_no}
+			AND board_no = #{board_no}
+			AND user_no = #{user_no}
+	</select>
+
+	<insert id="increaseRecommendCnt" parameterType="hashmap">
+		INSERT INTO tb_recommend2 (article_no, board_no, user_no)
+		VALUES(#{article_no},#{board_no},#{user_no}) 
+	</insert>
+	
+	<delete id="decreaseRecommendCnt" parameterType="hashmap">
+		DELETE tb_recommend2
+		WHERE article_no = #{article_no}
+			AND board_no = #{board_no}
+			AND user_no = #{user_no}
+	</delete>
+	
+	<select id="getRecommendCnt" parameterType="hashmap" resultType="int">
+		SELECT count(*) FROM tb_recommend2
+		WHERE article_no = #{article_no}
+			AND board_no = #{board_no}
+	</select>
 
 </mapper>

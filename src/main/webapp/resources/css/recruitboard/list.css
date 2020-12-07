@@ -1,11 +1,17 @@
 .wrapper {
 	width:50%;
+	min-width:500px;
 	margin: 0 auto;
 }
 
 #location {
-	min-width: 600px;
-	margin-left: 40%;
+	text-align:center;
+	width: 100%;
+	margin-left: 20%;
+}
+
+#location table tr td {
+	min-width: 50px;
 }
 
 #location span{
@@ -36,7 +42,7 @@
 	padding:3px 0 0;
 }
 
-.td_article_title {
+.td_article_title > span:nth-child(1)  {
 	text-align: left;
 	white-space:nowrap;	
 	text-overflow: ellipsis;

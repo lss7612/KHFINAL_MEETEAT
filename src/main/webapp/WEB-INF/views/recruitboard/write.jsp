@@ -68,8 +68,18 @@
 	<div class='clearfix'></div>
 	<hr>
 	<div class="pull-left form-group small_form">
-		<label for="form_maxium_member" >위치</label>
-		<input type="text" id="form_party_location" name="party_location" class="form-control" alertComment="최대인원" placeholder="미구현"/>
+		<label for="form_party_location" >지역</label>
+		<select id="form_party_location" name="party_location" class="form-control" alertComment="지역">
+			<option value="">선택</option>
+			<option value="서울">서울</option>
+			<option value="인천">인천</option>
+			<option value="경기">경기</option>
+			<option value="경상">경상</option>
+			<option value="전라">전라</option>
+			<option value="충청">충청</option>
+			<option value="강원">강원</option>
+			<option value="제주">제주</option>
+		</select>
 	</div>
 	<div class="pull-left form-group small_form">
 		<label for="form_maxium_member" >최대인원</label>
