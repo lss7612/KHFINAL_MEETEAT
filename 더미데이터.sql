@@ -8,6 +8,29 @@ insert into tb_grade2 values(2, '비결제 유저');
 insert into tb_grade2 values(3, '영구정지 유저');
 select * from tb_grade2;
 
+-- 게시글 분류
+insert into tb_boardclass2 values(1, '공지사항');
+insert into tb_boardclass2 values(2, '메이트찾기게시판');
+insert into tb_boardclass2 values(3, '모집 게시판');
+insert into tb_boardclass2 values(4, '후기 게시판');
+insert into tb_boardclass2 values(5, '문의 게시판');
+insert into tb_boardclass2 values(6, '이벤트 등록 게시판');
+
+select * from tb_boardclass2;
+
+--신고사유테이블
+insert into tb_reportreason2 (reason_content) values ('욕설 신고');
+insert into tb_reportreason2 (reason_content) values ('스팸 및 광고 신고');
+insert into tb_reportreason2 (reason_content) values ('비매너(노쇼 등) 신고');
+insert into tb_reportreason2 (reason_content) values ('먹튀 신고');
+insert into tb_reportreason2 (reason_content) values ('기타 사유 신고');
+
+select * from tb_reportreason2;
+
+--신고처리내용테이블
+insert into tb_resultreportreason2 (report_result_content) values( '영구 정지');
+select * from tb_resultreportreason2;
+
 -- 회원 정보 더미데이터
 drop table tb_user2;
 select * from tb_user2
@@ -71,69 +94,42 @@ insert into tb_user2(user_id, user_pw, user_nick, user_gender, user_age, user_bl
 insert into tb_user2(user_id, user_pw, user_nick, user_gender, user_age, user_blockcnt, user_email, user_grade) values('asdf56', 'asdf56', 'asdf56', 'F', '75', 0, 'asdf56@a.com',1);
 
 
--- 게시글 분류
-delete tb_boardclass2
-where board_no =6;
-insert into tb_boardclass2 values(1, '공지사항');
-insert into tb_boardclass2 values(2, '메이트찾기게시판');
-insert into tb_boardclass2 values(3, '모집 게시판');
-insert into tb_boardclass2 values(4, '후기 게시판');
-insert into tb_boardclass2 values(5, '문의 게시판');
-insert into tb_boardclass2 values(6, '이벤트 등록 게시판');
-
-select * from tb_boardclass;
-
---신고사유테이블
-insert into tb_reportreason (reason_content) values ('욕설 신고');
-insert into tb_reportreason (reason_content) values ('스팸 및 광고 신고');
-insert into tb_reportreason (reason_content) values ('비매너(노쇼 등) 신고');
-insert into tb_reportreason (reason_content) values ('먹튀 신고');
-insert into tb_reportreason (reason_content) values ('기타 사유 신고');
-
-select * from tb_reportreason;
-
---신고처리내용테이블
-insert into tb_resultreportreason (report_result_content) values( '영구 정지');
-select * from tb_resultreportreason;
-
 --신고 테이블
-select * from tb_userreport
-order by user_no desc;
+select * from tb_userreport2
+order by user_no asc;
 
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(2, sysdate, 1, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(3, sysdate, 2, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(3, sysdate, 3, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(4, sysdate, 4, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(4, sysdate, 5, 'test');
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(4, sysdate, 1, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(6, sysdate, 2, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(7, sysdate, 3, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(7, sysdate, 4, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(8, sysdate, 5, 'test');
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(8, sysdate, 1, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(8, sysdate, 2, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(10, sysdate, 3, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(11, sysdate, 4, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(11, sysdate, 5, 'test');
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(12, sysdate, 1, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(12, sysdate, 2, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(12, sysdate, 3, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(14, sysdate, 4, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(15, sysdate, 5, 'test');
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(15, sysdate, 1, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(16, sysdate, 2, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(16, sysdate, 3, null);
-insert into tb_userreport (user_no, report_time, reason_no, report_content) values(16, sysdate, 4, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(2, sysdate, 1, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(3, sysdate, 2, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(3, sysdate, 3, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(4, sysdate, 4, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(4, sysdate, 5, 'test');
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(4, sysdate, 1, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(6, sysdate, 2, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(7, sysdate, 3, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(7, sysdate, 4, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(8, sysdate, 5, 'test');
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(8, sysdate, 1, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(8, sysdate, 2, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(10, sysdate, 3, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(11, sysdate, 4, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(11, sysdate, 5, 'test');
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(12, sysdate, 1, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(12, sysdate, 2, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(12, sysdate, 3, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(14, sysdate, 4, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(15, sysdate, 5, 'test');
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(15, sysdate, 1, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(16, sysdate, 2, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(16, sysdate, 3, null);
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content) values(16, sysdate, 4, null);
 
---신고처리내용 데이터
-insert into tb_resultreportreason (report_result_content) values('영구 정지');
-select * from tb_resultreportreason;
+
 
 
 --신고처리 더미데이터
-insert into tb_resultreport (user_no, report_result_date, report_result_detail_no) values(4, sysdate, 1);
-insert into tb_resultreport (user_no, report_result_date, report_result_detail_no) values(8, sysdate, 1);
-insert into tb_resultreport (user_no, report_result_date, report_result_detail_no) values(12, sysdate, 1);
+insert into tb_resultreport2 (user_no, report_result_date, report_result_detail_no) values(4, sysdate, 1);
+insert into tb_resultreport2 (user_no, report_result_date, report_result_detail_no) values(8, sysdate, 1);
+insert into tb_resultreport2 (user_no, report_result_date, report_result_detail_no) values(12, sysdate, 1);
 
-select * from tb_resultreport;
+select * from tb_resultreport2;
 commit;

@@ -28,7 +28,8 @@ CREATE TABLE TB_GRADE2
 
 CREATE SEQUENCE TB_GRADE2_SEQ
 START WITH 0
-INCREMENT BY 1;
+INCREMENT BY 1
+minvalue 0;
 /
 
 CREATE OR REPLACE TRIGGER TB_GRADE2_AI_TRG
@@ -564,7 +565,8 @@ CREATE TABLE TB_USERREPORT2
     report_time       DATE             NOT NULL, 
     reason_no         NUMBER           NOT NULL, 
     report_content    VARCHAR2(300)    NULL, 
-    board_url         VARCHAR2(200)    NULL, 
+    board_url         VARCHAR2(200)    NULL,
+    is_processed      number           default 0 not null ,
     CONSTRAINT TB_USERREPORT2_PK PRIMARY KEY (report_no)
 )
 /

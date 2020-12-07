@@ -50,32 +50,41 @@ public class ReportServiceImpl implements ReportService{
 	
 	@Override
 	public List<UserReport> getReportByReportReasonDESC(Paging paging) {
-		// TODO Auto-generated method stub
 		return reportDao.getReportByReportReasonDESC(paging);
 	}
 	
 	@Override
 	public List<UserReport> getReportListByReportDateASC(Paging paging) {
-		// TODO Auto-generated method stub
 		return reportDao.getReportByReportDateASC(paging);
 	}
 	
 	@Override
 	public List<UserReport> getReportListByReportDateDESC(Paging paging) {
-		// TODO Auto-generated method stub
 		return reportDao.getReportByReportDateDESC(paging);
 	}
 	
 	@Override
 	public List<UserReport> getReportListByUernoASC(Paging paging) {
-		// TODO Auto-generated method stub
 		return reportDao.getReportByUsernoASC(paging);
 	}
 	
 	@Override
 	public List<UserReport> getReportListByUsernoDESC(Paging paging) {
-		// TODO Auto-generated method stub
 		return reportDao.getReportByUsernoDESC(paging);
 	}
 	
+	@Override
+	public void reportResultSet(int user_no) {
+		reportDao.reportResultSet(user_no);
+	}
+	
+	@Override
+	public void userGradeSetReportResult(int user_no) {
+		reportDao.userGradeUpdate(user_no);
+	}
+	
+	@Override
+	public void setIsProcessed(int user_no) {
+		reportDao.setIsProcessedReportList(user_no);
+	}
 }

@@ -27,4 +27,10 @@ public interface ReportDao {
 
 	public List<UserReport> getReportByReportReasonDESC(Paging paging);
 
+	public void reportResultSet(int user_no);
+
+	public void userGradeUpdate(int user_no);
+
+	public void setIsProcessedReportList(int user_no);
+
 }

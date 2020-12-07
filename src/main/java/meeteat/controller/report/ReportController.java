@@ -1,7 +1,9 @@
 package meeteat.controller.report;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,26 +29,38 @@ public class ReportController {
 	
 	@RequestMapping(value="/list")
 	public String list(Paging curPage, Model model) {
+		
+		return "redirect:/report/list/sort?curPage="+curPage.getCurPage()
+				+"&sortType=0&sortPart=0";
+	}
+	
+	@RequestMapping(value="/list/sort")
+	public String listSort(Paging curPage, int sortType, int sortPart, Model model) {
+		logger.info("sort요청");
+		logger.info("sortPart : "+sortPart);
+		logger.info("sortType : "+sortType);
 		logger.info("curPage : "+curPage);
+		model.addAttribute("sortPart", sortPart);
+		model.addAttribute("sortType", sortType);
+		
 		//페이징 계산
 		Paging paging = reportService.getPaging(curPage);
 		model.addAttribute("paging", paging);
 		
-		//신고 목록 조회하기.
-		List<UserReport> list = reportService.getReportList(paging);
-		logger.info(""+list);
+		//신고 목록 정렬
+		List<UserReport> list = sortReport(sortPart, sortType, paging);
 		model.addAttribute("list", list);
 		
 		//정지사유 가져오기
 		ResultReportReason rrr = reportService.getResultReason();
 		model.addAttribute("resultReason", rrr);
 		
-		return "/report/list";
+		return "/report/list_sort";
 	}
 	
-	@RequestMapping(value="/list/sort")
-	public String listSort(Paging curPage, int sortType, int sortPart, Model model) {
-		logger.info("sort AJAX요청");
+	@RequestMapping(value="/list/sortajax")
+	public String sortAjax(Paging curPage, int sortType, int sortPart, Model model) {
+		logger.info("sort요청");
 		logger.info("sortPart : "+sortPart);
 		logger.info("sortType : "+sortType);
 		logger.info("curPage : "+curPage);
@@ -66,26 +80,9 @@ public class ReportController {
 		//sortType
 		//	0 : 오름차순ASC
 		//	1 : 내림차순DESC
-		List<UserReport> list;
-		if( sortPart == 0) {
-			if(sortType == 0) {
-				list = reportService.getReportListByReportDateASC(paging);
-			} else {
-				list = reportService.getReportListByReportDateDESC(paging);
-			}
-		} else if( sortPart ==1) {
-			if(sortType==0) {
-				list = reportService.getReportListByUernoASC(paging);
-			} else {
-				list = reportService.getReportListByUsernoDESC(paging);
-			}
-		} else {
-			if(sortType==0) {
-				list = reportService.getReportByReportReasonASC(paging);
-			} else {
-				list = reportService.getReportByReportReasonDESC(paging);
-			}
-		}
+		
+		//신고 목록 정렬
+		List<UserReport> list = sortReport(sortPart, sortType, paging);
 		
 		logger.info(""+list);
 		model.addAttribute("list", list);
@@ -94,15 +91,80 @@ public class ReportController {
 		ResultReportReason rrr = reportService.getResultReason();
 		model.addAttribute("resultReason", rrr);
 		
-		return "/report/list_sort";
+		//sort값 저장하기
+		model.addAttribute("sortPart", sortPart);
+		model.addAttribute("sortType", sortType);
+		
+		return "/report/list_sort_table";
 	}
 	
 	@RequestMapping(value="/result", method=RequestMethod.POST)
-	public String doReportResult(@RequestParam HashMap<Integer, Integer> map) {
+	public String doReportResult(@RequestParam HashMap<Object, Object> map) {//이거 안될껄? hashmap을 어케 requestparam으로 받아 이거 각각 string, int로 받고 put해야하는거아냐?
+		//'회원번호 = 0은 처리 안함 1은 정지'
 		logger.info("/report/result 전달값 : "+map);
+		logger.info(""+map.entrySet());
+
+		//신고 처리할 회원번호를 map에서 추출
+		List userList = new ArrayList();
+		for(Entry<Object, Object> entry : map.entrySet()) {
+			System.out.println("key : "+entry.getKey()+", value : "+entry.getValue());
+			int key_integer = Integer.parseInt((String) entry.getKey());
+			String key = ""+key_integer;
+			if( map.get(key).equals("1")) {
+				logger.info(" > > >정지할 회원 "+entry.getKey()+"< < <");
+				userList.add(entry.getKey());
+			}
+		}
 		
+		//추출한 회원번호 처리하기
+		for(int i=0; i<userList.size(); i++) {
+			//회원번호 확인
+			logger.info(" > > > 정지할 회원 번호 : "+userList.get(i)+" < < <");
+			
+			//신고 처리 테이블에 데이터 추가하기
+			reportService.reportResultSet(Integer.parseInt((String) userList.get(i)));
+			
+			//회원 등급을 정지 유저로 변경
+			reportService.userGradeSetReportResult(Integer.parseInt( (String) userList.get(i)) );
+			
+			//신고 목록에서 is_processed 값을 1로 변경
+			reportService.setIsProcessed( Integer.parseInt( (String) userList.get(i)) );
+			logger.info(" > > >회원번호 ["+userList.get(i)+"]가 영구정지 되었습니다. < < <");
+		}
 		
-		
+		logger.info("정지할 유저 : "+userList);
 		return "redirect:/report/list";
+	}
+	
+	
+	//신고 목록 정렬 메소드
+	public List<UserReport> sortReport(int sortPart, int sortType, Paging paging){
+		if( sortPart == 0) {
+			if(sortType == 0) {
+				logger.info(" > > >신고일시 정렬 : 오름차순 < < <");
+				return reportService.getReportListByReportDateASC(paging);
+			} else {
+				logger.info(" > > >신고일시 정렬 : 내림차순 < < <");
+				return reportService.getReportListByReportDateDESC(paging);
+			}
+		} else if( sortPart ==1) {
+			if(sortType==0) {
+				logger.info("> > > 회원번호 정렬 : 오름차순 < < <");
+				return reportService.getReportListByUernoASC(paging);
+			} else {
+				logger.info("> > > 회원번호 정렬 : 내림차순 < < <");
+				return reportService.getReportListByUsernoDESC(paging);
+			}
+		} else if(sortPart == 2 ){
+			if(sortType==0) {
+				logger.info(" > > > 신고 사유 정렬 : 오름차순 < < <");
+				return reportService.getReportByReportReasonASC(paging);
+			} else {
+				logger.info(" > > > 신고 사유 정렬 : 내림차순 < < <");
+				return reportService.getReportByReportReasonDESC(paging);
+			}
+		} else {
+			return null;
+		}
 	}
 }
