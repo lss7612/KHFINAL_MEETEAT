@@ -17,6 +17,7 @@
 		<interceptor>
 			<mapping path="/event/manage/**"/><!-- 이상성 : 이벤트관리 -->
 			<mapping path="/sitemanage/**"/><!-- 이상성: 메인이미지관리 -->
+			<mapping path="/admin/**" /><!-- 관리자 기능 url -->
 			<exclude-mapping path=""/>
 			<beans:bean class="meeteat.interceptor.AdminInterceptor"/>
 		</interceptor>
@@ -38,6 +39,7 @@
 			<exclude-mapping path="/interceptor/payfail"/>
 			<beans:bean class="meeteat.interceptor.PayInterceptor"/>
 		</interceptor>
+		
 	</interceptors>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
