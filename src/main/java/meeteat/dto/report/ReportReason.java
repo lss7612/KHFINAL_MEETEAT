@@ -1,4 +1,4 @@
-package meeteat.controller.report;
+package meeteat.dto.report;
 
 public class ReportReason {
 

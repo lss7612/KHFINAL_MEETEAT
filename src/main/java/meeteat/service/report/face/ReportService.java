@@ -26,4 +26,10 @@ public interface ReportService {
 
 	public List<UserReport> getReportByReportReasonDESC(Paging paging);
 
+	public void reportResultSet(int user_no);
+
+	public void userGradeSetReportResult(int user_no);
+
+	public void setIsProcessed(int user_no);
+
 }
