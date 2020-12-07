@@ -16,7 +16,7 @@
 
 	<!-- 첫페이지로 가기 -->
 	<c:if test="${paging.curPage != 1 }">
- 		<li><a href="/board/list?${searchQueryString }">&larr;</a></li>
+ 		<li><a href="/recruitboard/list?${searchQueryString }">&larr;</a></li>
 	</c:if>
 	
 	<!-- 이전페이지로 가기 -->

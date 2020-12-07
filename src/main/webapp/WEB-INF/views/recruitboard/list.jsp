@@ -114,10 +114,13 @@
 	<a href="/recruitboard/view?board_no=3&article_no=${list.ARTICLE_NO }&searchCategory=${searchParam.searchCategory }&searchKeyword=${searchParam.searchKeyword }">
 	${list.ARTICLE_TITLE } 
 	</a>
+	<c:if test="${list.CNT_COMMENT > 0 }">
 	<c:set var="commentURI" value="?board_no=3&article_no=${list.ARTICLE_NO }&searchCategory=${searchParam.searchCategory }&searchKeyword=${searchParam.searchKeyword }"  ></c:set>
 	<span class="pointer" 
 	onclick="window.open('/comment/list${commentURI }','window_name','width=600,height=800,location=no,status=no,scrollbars=yes,left=40,top=20');">
-	(${list.CNT_COMMENT })</span>
+	(${list.CNT_COMMENT })
+	</span>
+	</c:if>
 	</td>
 	
 	<%-- 닉네임 --%>

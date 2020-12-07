@@ -16,6 +16,10 @@ public interface RecruitBoardDao {
 
 	public int selectCntListAll(SearchParam searchParam);
 
+	public void updateHit(Map<String, Object> param);
+
 	public HashMap<String,Object> getBoardView(Map<String, Object> param);
+
+	public void updateRecruitBoard(RecruitBoard param);
 
 }

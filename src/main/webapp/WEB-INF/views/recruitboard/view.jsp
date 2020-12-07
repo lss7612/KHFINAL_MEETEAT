@@ -16,13 +16,13 @@
 	<div style="height:0;">
 		<input class="invisible" value="${result.ARTICLE_NO }" id="article_no"/>
 	</div>
-	<!-- 제목부분 -->
+	<%-- 제목부분 --%>
 	<div class="light_padding color_base bold_bar_height">
 		<h4 class="" style="font-weight:bold;" class="">${result.ARTICLE_TITLE }</h4>
 	</div>
 	
 	
-	<!-- 닉네임 조회수 덧글 시간 -->
+	<%-- 닉네임 조회수 덧글 시간 --%>
 	<div class="light_padding light_bar_height color-light">
 		<div  class="pull-left title_left" >
 			<span>${result.USER_NICK }</span>
@@ -33,22 +33,43 @@
 		</div>
 	</div>
 
-<!-- 내용영역 -->
-	<div id="view_content_bar" class="light_margin bold_padding vertical_bold_margin"style="padding:5px;">
+<%-- 내용영역 --%>
+	<div id="view_content_bar" class="light_margin bold_padding vertical_bold_margin" style="padding:5px; text-align:left;">
 	${result.ARTICLE_CONTENT }
 	</div>
 </div>
 
+<%-- 삭제, 수정 버튼영역 --%>
+<c:if test="${result.USER_NICK eq sessionScope.user_nick }">
+<div class="base_bar_height light_padding light_margin">
+	
+	<div class="invisible" style="height:0;">
+	<form id="deleteOrModify" action="" method="GET">
+		<input type="text" name="user_nick" value="${result.USER_NICK }" >
+		<input type="text" name="board_no" value="3" >
+		<input type="text" name="article_no" value="${result.ARTICLE_NO }" >
+	</form>
+	</div>
+	
+	<button type="button" id="article_delete" class="btn btn-primary pull-right" style="float:center;">삭제</button>
+	<button type="button" id="article_modify" class="btn btn-primary pull-right" style="float:center;">수정</button>
+
+	
+</div>
+</c:if>
+<div class="clearfix"></div>
+
+
 <hr>
-<!-- 코멘트영역 -->
+<%-- 코멘트영역 --%>
 <div id="view_comment" style="width:95%; margin:0 auto;">
 
-<!-- 코멘트작성 -->
+<%-- 코멘트작성 --%>
 <c:if test="${isLogin }">
 	<div class="border" style="width:100%; margin:0 auto;">
 	<form action="/recruitboard/comment/write" method="POST">
 	
-		<!-- 안보이는 form태그부분 -->
+		<%-- 안보이는 form태그부분 --%>
 		<div style="height:0;">
 			<input type="text" class="invisible"  name="user_no" value="${user_no }" readonly="readonly"><br>
 		</div>
@@ -58,7 +79,7 @@
 		<div style="height:0;">
 			<input type="text" class="invisible"  name="board_no" value="3" readonly="readonly"><br>
 		</div>
-		<!-- 안보이는 form태그부분 끝 -->
+		<%-- 안보이는 form태그부분 끝 --%>
 		
 		
 		<div class="light_padding color_base light_bar_height">
@@ -99,13 +120,12 @@ $('iframe').css('height','100px');
 <div class="clearfix"></div>
 
 
-<!-- 댓글내용영역 -->
+<%-- 댓글내용영역 --%>
 <div id="commentList">
-<div style="text-align:center;"><img style="margin:0 auto;" alt="" src="/resources/img/loading.gif"></div>
 </div>
 
 
-<!-- 게시판영역 -->
+<%-- 게시판영역 --%>
 <div></div>
 
 

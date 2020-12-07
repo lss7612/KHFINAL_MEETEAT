@@ -56,6 +56,13 @@
 		</where>
 	</select>
 	
+	<update id="updateHit" parameterType="hashmap">
+		UPDATE tb_board
+		SET article_hit = article_hit + 1
+		WHERE board_no = #{board_no}
+   			AND article_no = #{article_no}
+	</update>
+	
 	<select id="getBoardView" parameterType="hashmap" resultType="hashmap">
 		SELECT 
 		    article_no
@@ -63,8 +70,12 @@
 		    ,article_title
 		    ,article_content
 		    ,meet_time
+		    ,to_char(meet_time, 'YYYY-MM-DD') meet_time_date
+		    ,to_char(meet_time, 'HH24') meet_time_clock
+		    ,to_char(meet_time, 'MI') meet_time_min
 		    ,article_hit
 		    ,create_date
+		    ,party_location
 		    ,(SELECT user_nick FROM tb_user u WHERE u.user_no = b.user_no) user_nick
 		    ,(SELECT count(*) FROM tb_comment c WHERE c.board_no = #{board_no} AND c.article_no = #{article_no }) cnt_comment
 		FROM tb_board b
@@ -72,5 +83,16 @@
    			AND article_no = #{article_no}
 	</select>
 
+	<update id="updateRecruitBoard" parameterType="meeteat.dto.recruitBoard.SearchParam">
+		UPDATE tb_board
+			SET article_title = #{article_title}
+			,article_content = #{article_content}
+			,party_location = #{party_location, jdbcType=VARCHAR}
+			,revision_date = sysdate
+			,meet_time = to_date(#{meet_time}, 'YYYY-MM-DDHH24MI')
+		WHERE 
+			article_no = #{article_no}
+			AND board_no = #{board_no}
+	</update>
 
 </mapper>

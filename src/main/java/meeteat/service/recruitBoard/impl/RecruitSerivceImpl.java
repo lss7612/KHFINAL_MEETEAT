@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,6 +133,8 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		param.put("board_no", board_no);
 		param.put("article_no", article_no);
 		
+		recruitBoardDao.updateHit(param);
+		
 		HashMap<String,Object> result = new HashMap<String, Object>() ;
 		
 		result = recruitBoardDao.getBoardView(param);
@@ -156,6 +160,82 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 				}
 		
 		return result;
+	}
+
+
+	@Override
+	public Boolean isWriter(String user_nick, HttpSession session) {
+
+		if(session.getAttribute("user_nick").equals(user_nick)) return true;
+		
+		return false;
+		
+	}
+
+
+	@Override
+	public Map<String, Object> getModifyParam(int board_no,int article_no) {
+		
+		Map<String, Object> param = new HashMap<>();
+		
+		param.put("board_no", board_no);
+		param.put("article_no", article_no);
+		
+		Map<String, Object> result = new HashMap<>();
+		result = recruitBoardDao.getBoardView(param);
+		
+//		Integer.parseInt((String) result.get("MEET_TIME_DATE"));
+		int meet_time_clock = Integer.parseInt((String) result.get("MEET_TIME_CLOCK"));
+		String meet_time_area = null;
+		String meet_time_clock_str = null;
+		if(meet_time_clock >= 12) {
+			
+			if(meet_time_clock > 12) {
+				
+				meet_time_clock = meet_time_clock - 12;
+				meet_time_clock_str = "0" + meet_time_clock;
+				
+			}else {
+				
+				meet_time_clock_str = "" + meet_time_clock;
+				
+			}
+			
+			meet_time_area = "pm";
+			
+		} else {
+			if(meet_time_clock >=10) {
+				meet_time_clock_str=""+meet_time_clock;
+			} else if(meet_time_clock == 0) {
+				meet_time_clock_str="12";
+			} else {
+				meet_time_clock_str="0"+meet_time_clock;
+			}
+			meet_time_area = "am";
+		}
+		
+		logger.info(""+meet_time_clock_str);
+		
+		result.put("MEET_TIME_AREA", meet_time_area);
+		result.put("MEET_TIME_CLOCK", meet_time_clock_str);
+		
+		logger.info("영차"+result.get("MEET_TIME_DATE"));
+		logger.info("영차"+result.get("MEET_TIME_CLOCK"));
+		logger.info("영차"+result.get("MEET_TIME_MIN"));
+		
+		return result;
+	}
+	
+	
+
+
+	@Override
+	public void modify(RecruitBoard param) {
+
+		param.setBoard_no(3);
+		
+		recruitBoardDao.updateRecruitBoard(param);
+		
 	}
 
 

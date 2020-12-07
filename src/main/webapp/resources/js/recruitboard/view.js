@@ -5,15 +5,37 @@ var tried = 0;
 
 $(document).ready(function(){
 	
+	//페이지 불러왔을 때 코멘트 가져오기
 	setTimeout(function() {
 		getCommentList()
-	}, 1500);
+	}, 1000);
 	
+	//본문 수정 버튼 눌렀을 때
+	$('#article_modify').click(function(){
+		console.log('clicked')
+		if(!confirm('수정하시겠습니까?')) return 
+		$('#deleteOrModify').attr('action','/recruitboard/modify')
+		$('#deleteOrModify').submit();
+		
+	})
+	//본문 삭제 버튼 눌렀을 때 
+	$('#article_delete').click(function(){
+		console.log('clicked')
+		if(!confirm('삭제하시면 되돌릴 수 없습니다. 삭제하시겠습니까?')) return;
+		$('#deleteOrModify').attr('action','/recruitboard/delete')
+		
+	})
+	
+	
+	
+	
+	
+	//스크롤을 마지막으로 내렸을 때 펑션을 최대 2번까지만 가능하도록 만들기
 	if($(document).height()==$(window).height()){
 		console.log('loading')
 		isLoadList+=1;
 	}
-	
+	//코멘트 새로고침 버튼 클릭시 gif 파일을 한번 불러왔다가 코멘트리스트를 출력하기
 	$('#refrash_comment_botton').click(function(){
 		
 		$('#commentList').html(
@@ -25,12 +47,14 @@ $(document).ready(function(){
 		}, 1500);
 	})
 	
+	//코멘트 달기를 클릭했을때
 	$('#commentSumitBtn').click(function () {
 		putOnRealTextArea()
 		console.log($('#form_comment_content').val())
 	    validateAndSubmit()
 	});
 	
+	//스크롤 맨 아래로 내렸을때 게시판 불러오는 코드(미구현)
 	 $(window).scroll(function(){
 	        
 		if(isLoadList==2) return;
@@ -47,6 +71,7 @@ $(document).ready(function(){
 		    
 			console.log('loading')	
 			isLoadList += 1;
+			
 		}  
 	 })
 
