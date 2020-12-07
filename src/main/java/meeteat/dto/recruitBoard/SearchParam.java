@@ -5,10 +5,11 @@ public class SearchParam {
 	private int searchBoard_no;
 	private String searchCategory;
 	private String searchKeyword;
+	private String searchLocation;
 	@Override
 	public String toString() {
 		return "SearchParam [searchBoard_no=" + searchBoard_no + ", searchCategory=" + searchCategory
-				+ ", searchKeyword=" + searchKeyword + "]";
+				+ ", searchKeyword=" + searchKeyword + ", searchLocation=" + searchLocation + "]";
 	}
 	public int getSearchBoard_no() {
 		return searchBoard_no;
@@ -28,5 +29,13 @@ public class SearchParam {
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
 	}
+	public String getSearchLocation() {
+		return searchLocation;
+	}
+	public void setSearchLocation(String searchLocation) {
+		this.searchLocation = searchLocation;
+	}
+	
+	
 	
 }

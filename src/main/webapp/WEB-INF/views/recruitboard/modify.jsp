@@ -6,25 +6,36 @@
 <!-- 적용css, js -->
 <link rel="stylesheet" href="/resources/css/recruitboard/write.css">
 <script type="text/javascript" src="/resources/js/recruitboard/write.js"></script>
+<script type="text/javascript" src="/resources/js/recruitboard/modify.js"></script>
 
 <div id="write_wrapper">
+<div class="invisible" style="height:0">
+<input type="text" id="resultDate" value="${result.MEET_TIME_DATE }" >
+<input type="text" id="resultClock" value="${result.MEET_TIME_CLOCK }">
+<input type="text" id="resultMin" value="${result.MEET_TIME_MIN }">
+<input type="text" id="resultArea" value="${result.MEET_TIME_AREA }">
+<input type="text" id="resultArticleContent" value="${result.ARTICLE_CONTENT }">
+</div>
 
 <h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
 <hr>
 <div class="border">
 <div class="base_bar_height color_primary light_padding">&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size:30px;" class="fas fa-pencil-alt"></i></i></div>
 <div class="horizontal_base_padding">
-<form class="" action="/recruitboard/write" method="POST">
+<form class="" action="/recruitboard/modify" method="POST">
 <!-- 글제목 인풋영역 -->
+	<%-- 글쓴이 부분 --%>
 	<input type="text" name="user_no" value="${user_no }" readonly="readonly" class="invisible"/>
+	<input type="text" name="article_no" value="${result.ARTICLE_NO }" readonly="readonly" class="invisible"/>
+	
 	<div class="form-group">
-		<label id="labebforform_article_title"for="form_article_title">글제목</label>
-		<input type="text" id="form_article_title" name="article_title" class="form-control" alertComment="글제목"/>
+		<label id="labebforform_article_title" for="form_article_title">글제목</label>
+		<input type="text" id="form_article_title" name="article_title" class="form-control" value="${result.ARTICLE_TITLE }"  alertComment="글제목"/>
 	</div>
 	<hr>
 	<div class="pull-left form-group" style="min-width:155px; width:20%; margin:0 30px 0 0;">
 		<label for="form_meet_time">날짜</label>
-		<input type="date" id="form_meet_time" name="meet_time_date" class="form-control" alertComment="날짜"/>
+		<input type="date" id="form_meet_time" name="meet_time_date"  value="${result.MEET_TIME_DATE }" class="form-control" alertComment="날짜"/>
 	</div>
 	
 	<div class="pull-left form-group small_form">
@@ -39,7 +50,7 @@
 		<label for="form_time_time">시</label>
 		<select id="form_time_time" name="meet_time_clock" class="form-control" alertComment="만날시간(시각)">
 			<option value="">선택</option>
-			<option value="01">01시</option>
+			<option value="01" >01시</option>
 			<option value="02">02시</option>
 			<option value="03">03시</option>
 			<option value="04">04시</option>
@@ -68,18 +79,8 @@
 	<div class='clearfix'></div>
 	<hr>
 	<div class="pull-left form-group small_form">
-		<label for="form_party_location" >지역</label>
-		<select id="form_party_location" name="party_location" class="form-control" alertComment="지역">
-			<option value="">선택</option>
-			<option value="서울">서울</option>
-			<option value="인천">인천</option>
-			<option value="경기">경기</option>
-			<option value="경상">경상</option>
-			<option value="전라">전라</option>
-			<option value="충청">충청</option>
-			<option value="강원">강원</option>
-			<option value="제주">제주</option>
-		</select>
+		<label for="form_maxium_member" >위치</label>
+		<input type="text" id="form_party_location" name="party_location" class="form-control" alertComment="최대인원" placeholder="미구현"/>
 	</div>
 	<div class="pull-left form-group small_form">
 		<label for="form_maxium_member" >최대인원</label>
@@ -94,7 +95,7 @@
 
 	
 </form>
-<div class="base_bar_height light_padding"><button id="btn_submit" type="button" class="pull-right btn btn-primary">글쓰기</button></div>
+<div class="base_bar_height light_padding"><button id="btn_submit" type="button" class="pull-right btn btn-primary">글수정</button></div>
 </div>
 </div>
 </div>
@@ -109,7 +110,8 @@ nhn.husky.EZCreator.createInIFrame({
 	fCreator: "createSEditor2"
 })
 
-$('.se2_inputarea').css('min-width','550px');
+$('#form_article_content').html($('#resultArticleContent').val());
+oEditors[0].exec("LOAD_CONTENTS_FIELD");
 
 </script>
 

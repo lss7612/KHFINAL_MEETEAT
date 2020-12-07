@@ -31,9 +31,12 @@ function validationAll() {
   
   //분검사
   if(!validationEach($('#form_time_minute'))) return false
-
+  
+  //지역검사
+  if(!validationEach($('#form_party_location'))) return false
+  
   //내용검사
-  if(!validationEach($('#form_article_content'))) return false;
+  if(!validationEach($('#form_article_content'))) return false
   
   return true;
 }
@@ -48,14 +51,14 @@ function validationEach(form){
 			|| form.val() == undefined
 			|| form.val() == '<p><br></p>') 
 	{
-	    alert(form.attr('alertComment')+'을 입력하세요.');
-	    form.focus();
-	    return false;
+	    alert(form.attr('alertComment')+'을 입력하세요.')
+	    form.focus()
+	    return false
 	}
-	return true;
+	return true
 }
 
 //**********[text에 스마트에디터 값 적용하기]**********//
 function putOnRealTextArea(){
-	oEditors.getById["form_article_content"].exec("UPDATE_CONTENTS_FIELD", []);
+	oEditors.getById["form_article_content"].exec("UPDATE_CONTENTS_FIELD", [])
 }

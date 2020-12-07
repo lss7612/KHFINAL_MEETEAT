@@ -5,15 +5,44 @@ var tried = 0;
 
 $(document).ready(function(){
 	
-	setTimeout(function() {
-		getCommentList()
-	}, 1500);
+	//페이지 불러왔을 때 코멘트 가져오기
+	getCommentList()
 	
+	//추천눌렀을때 ajax동작
+	
+	$('#btn_recommend').click(function(){
+		console.log('clicked')
+		getCntRecommend()
+	})
+	
+	
+	//본문 수정 버튼 눌렀을 때
+	$('#article_modify').click(function(){
+		console.log('clicked')
+		if(!confirm('수정하시겠습니까?')) return 
+		$('#deleteOrModify').attr('action','/recruitboard/modify')
+		$('#deleteOrModify').attr('method','GET')
+		$('#deleteOrModify').submit();
+	})
+	//본문 삭제 버튼 눌렀을 때 
+	$('#article_delete').click(function(){
+		console.log('clicked')
+		if(!confirm('삭제하시면 되돌릴 수 없습니다. 삭제하시겠습니까?')) return;
+		$('#deleteOrModify').attr('action','/recruitboard/delete')
+		$('#deleteOrModify').attr('method','POST')
+		$('#deleteOrModify').submit();
+	})
+	
+	
+	
+	
+	
+	//스크롤을 마지막으로 내렸을 때 펑션을 최대 2번까지만 가능하도록 만들기
 	if($(document).height()==$(window).height()){
 		console.log('loading')
 		isLoadList+=1;
 	}
-	
+	//코멘트 새로고침 버튼 클릭시 gif 파일을 한번 불러왔다가 코멘트리스트를 출력하기
 	$('#refrash_comment_botton').click(function(){
 		
 		$('#commentList').html(
@@ -25,12 +54,14 @@ $(document).ready(function(){
 		}, 1500);
 	})
 	
+	//코멘트 달기를 클릭했을때
 	$('#commentSumitBtn').click(function () {
 		putOnRealTextArea()
 		console.log($('#form_comment_content').val())
 	    validateAndSubmit()
 	});
 	
+	//스크롤 맨 아래로 내렸을때 게시판 불러오는 코드(미구현)
 	 $(window).scroll(function(){
 	        
 		if(isLoadList==2) return;
@@ -47,6 +78,7 @@ $(document).ready(function(){
 		    
 			console.log('loading')	
 			isLoadList += 1;
+			
 		}  
 	 })
 
@@ -112,6 +144,40 @@ function getCommentList() {
 				'</div>'
 				)
 			}
+			
+			
+		}
+	})
+}
+
+/*추천수 가져오기 function*/
+function getCntRecommend() {
+	console.log('geting CntRecommend')
+	$.ajax({
+		type: "get"
+		, url: "/recruitboard/recommend"
+		, data:{ board_no : 3, article_no : $('#article_no').val()}
+		, dataType:"html" //응답받은 데이터의 형식
+		, success: function( res ){
+			$('#cnt_recommend').html(res)
+			if(res==1)
+				$('#isRecommend').text('추천한 게시물입니다')
+			if(res==0)
+				$('#isRecommend').text('')
+		}
+		, error: function(){
+			
+			console.log('실패')
+			
+//			tried += 1
+//			if(tried<10) getCommentList()
+//			if(tried>10){
+//				$('#commentList').html(
+//				'<div style="text-align:center">'+
+//				'현재 서버의 응답이 느립니다.<br> 조금 있다가 시도해주세요'+
+//				'</div>'
+//				)
+//			}
 			
 			
 		}
