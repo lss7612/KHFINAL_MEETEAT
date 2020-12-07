@@ -96,7 +96,8 @@ insert into tb2_resultreportreason (report_result_content) values( '영구 정지');
 select * from tb2_resultreportreason;
 
 --신고 테이블
-select * from tb2_userreport;
+select * from tb2_userreport
+order by user_no desc;
 
 insert into tb2_userreport (user_no, report_time, reason_no, report_content) values(2, sysdate, 1, null);
 insert into tb2_userreport (user_no, report_time, reason_no, report_content) values(3, sysdate, 2, null);
