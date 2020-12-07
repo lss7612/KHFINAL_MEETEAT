@@ -3,7 +3,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-sortPart :${sortPart }, sortType : ${sortType }
 <div class="paging text-center">
 	<ul class="pagination">
 

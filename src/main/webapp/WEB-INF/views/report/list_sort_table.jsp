@@ -6,7 +6,6 @@
 
 <div>
  정렬기준 
- sortPar : ${sortPart }
 <c:choose>
 <c:when test="${sortPart eq 0 }">
 <select id="sortPart" name ="part" onchange="selectValue(this.value)">
@@ -31,7 +30,6 @@
 </c:when>
 </c:choose>
 방향
-sortType : ${sortType }
 <c:choose>
 <c:when test="${sortType eq 0 }">
 <select id="sortType" name="sort" onchange="selectValue(this.value)">
