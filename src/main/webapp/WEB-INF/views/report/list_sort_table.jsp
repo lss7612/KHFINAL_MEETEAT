@@ -5,7 +5,7 @@
 
 
 <div>
- 정렬기준 
+정렬기준 
 <c:choose>
 <c:when test="${sortPart eq 0 }">
 <select id="sortPart" name ="part" onchange="selectValue(this.value)">
@@ -45,52 +45,58 @@
 </c:when>
 
 </c:choose>
+검색
+<input type="text" id="search">
+<input type="button" id="searchBtn" value="아이디검색"/>
 </div>
 
 <form action="/report/result" method="post">
 <button>유저 처리</button>
 <table border="1">
+<tr>
+	<th>회원번호</th>
+	<th>회원 아이디 </th>
+	<th>신고 일시</th>
+	<th>신고 사유</th>
+	<th>신고 항목</th>
+	<th>신고 내용</th>
+	<th>신고 글 보기</th>
+	<th>신고 처리</th>
+</tr>
+<c:forEach items="${list }" var="hashmap">
 	<tr>
-		<th></th>
-		<th>회원번호</th>
-		<th>신고 일시</th>
-		<th>신고 사유</th>
-		<th>신고 내용</th>
-		<th>신고 글 보기</th>
-		<th>신고 처리</th>
-	</tr>
-	<c:forEach items="${list }" var="list">
-	<tr>
-		<td><input type="checkbox" name="user_no" value="${list.user_no }"/></td>
-		<td>${list.user_no }</td>
+		<td>${hashmap.USER_NO }</td>
+		<td>${hashmap.USER_ID}</td>
 		<td>
-			<fmt:formatDate value="${list.report_time }" pattern="yy/MM/dd HH:mm:ss"/>
+			<fmt:formatDate value="${hashmap.REPORT_TIME }" pattern="yy/MM/dd HH:mm:ss"/>
 		</td>
-		<td>${list.reason_no }</td>
+		<td>${hashmap.REASON_NO }</td>
+		<td>${hashmap.REASON_CONTENT}</td>
 		<td>
-			<c:if test="${list.report_content eq null }">
+			<c:if test="${hashmap.REPORT_CONTENT eq null }">
 				-
 			</c:if>
-			<c:if test="${list.report_content ne null }">
-				${list.report_content }
+			<c:if test="${hashmap.REPORT_CONTENT ne null }">
+				${hashmap.REPORT_CONTENT }
 			</c:if>
 		</td>
 		<td>
-			<c:if test="${list.board_url eq null }">
+			<c:if test="${hashmap.BOARD_URL eq null }">
 				-
 			</c:if>
-			<c:if test="${list.board_url ne null }">
-				<a href="${list.board_url }" >${list.board_url }</a>
+			<c:if test="${hashmap.BOARD_URL ne null }">
+				<a href="${hashmap.BOARD_URL }" >${hashmap.BOARD_URL }</a>
 			</c:if>
 		</td>
 		<td>
-			<select name="${list.user_no }">
+			<select name="${hashmap.USRE_NO }">
 				<option value="0">선택암함</option>
 				<option value="1">${resultReason.report_result_content }</option>
 			</select>
 		</td>
 	</tr>
-	</c:forEach>
+</c:forEach>
 </table>
+
 </form>
-<jsp:include page="/WEB-INF/views/report/paging_sort.jsp"/>
+<jsp:include page="/WEB-INF/views/report/list_sort_paging.jsp"/>

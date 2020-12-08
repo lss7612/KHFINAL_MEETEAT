@@ -1,5 +1,6 @@
 package meeteat.service.report.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import meeteat.dto.report.ResultReportReason;
@@ -10,26 +11,33 @@ public interface ReportService {
 
 	public List<UserReport> getReportList(Paging paging);
 
-	public Paging getPaging(Paging curPage);
+	public Paging getPaging(Paging curPage, String user_id);
 
+	public Paging getReportResultPaging(Paging curPage, String user_id);
+	
 	public ResultReportReason getResultReason();
 
-	public List<UserReport> getReportListByReportDateASC(Paging paging);
+	public List<HashMap<String, String>> getReportListByReportDateASC(Paging paging);
 
-	public List<UserReport> getReportListByReportDateDESC(Paging paging);
+	public List<HashMap<String, String>> getReportListByReportDateDESC(Paging paging);
 
-	public List<UserReport> getReportListByUernoASC(Paging paging);
+	public List<HashMap<String, String>> getReportListByUernoASC(Paging paging);
 
-	public List<UserReport> getReportListByUsernoDESC(Paging paging);
+	public List<HashMap<String, String>> getReportListByUsernoDESC(Paging paging);
 
-	public List<UserReport> getReportByReportReasonASC(Paging paging);
+	public List<HashMap<String, String>> getReportByReportReasonASC(Paging paging);
 
-	public List<UserReport> getReportByReportReasonDESC(Paging paging);
+	public List<HashMap<String, String>> getReportByReportReasonDESC(Paging paging);
 
 	public void reportResultSet(int user_no);
 
 	public void userGradeSetReportResult(int user_no);
 
 	public void setIsProcessed(int user_no);
+
+	public List<HashMap<String, String>> getReportResultList(String user_id);
+
+	public List<HashMap<String, String>> getListByUserId(String user_id);
+
 
 }

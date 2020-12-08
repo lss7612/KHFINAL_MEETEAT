@@ -20,18 +20,54 @@
 		
 	</select> 	
 	
-	<select id="selectCntAll" parameterType="meeteat.util.Paging" resultType="int">
-		select count(*) from (select * from tb_userreport2)
+	<select id="selectCntAll" parameterType="String" resultType="int">
+		select count(*) from (
+			select * from tb_userreport2 ur
+		    inner join tb_user2 u
+		        on ur.user_no = u.user_no
+			where is_processed = 0
+			<if test='user_id != null and !user_id.equals("")'>
+				and user_id = #{user_id}
+			</if>
+			)
+	</select>
+	
+	<select id="selectCntAllReportResult" parameterType="String" resultType="int">
+		select count(*) from ( 
+		    select * from tb_resultreport2 rr
+		    inner join tb_user2 u
+		        on rr.user_no = u.user_no
+			<if test='user_id != null and !user_id.equals("")'>
+				where user_id = #{user_id}
+			</if>
+	    )
 	</select>
 	
 	<select id="getResultReasonList" parameterType="meeteat.util.Paging" resultType="meeteat.dto.report.ResultReportReason">
 		select * from tb_resultreportreason2
 	</select>
 	
-	<select id="getReportByUsernoASC" parameterType="meeteat.util.Paging" resultType="meeteat.dto.report.UserReport">
+	<select id="searchListByUserId" parameterType="String" resultType="hashmap">
+		select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
+		inner join tb_user2 u
+		    on ur.user_no = u.user_no
+		inner join tb_reportreason2 rr
+		    on ur.reason_no = rr.reason_no
+		where ur.is_processed = 0
+   			<if test='user_id != null and !user_id.equals("")'>
+				and user_id = #{user_id}
+			</if>
+		order by user_no
+	</select>
+	
+	<select id="getReportByUsernoASC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select * from tb_userreport2
+				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
+				inner join tb_user2 u
+				    on ur.user_no = u.user_no
+				inner join tb_reportreason2 rr
+				    on ur.reason_no = rr.reason_no
 				where is_processed = 0 
 				order by user_no
 			)B
@@ -39,10 +75,14 @@
 		)
 		where rnum between #{startNo} and #{endNo}
 	</select>
-	<select id="getReportByUsernoDESC" parameterType="meeteat.util.Paging" resultType="meeteat.dto.report.UserReport">
+	<select id="getReportByUsernoDESC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select * from tb_userreport2
+				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
+				inner join tb_user2 u
+				    on ur.user_no = u.user_no
+				inner join tb_reportreason2 rr
+				    on ur.reason_no = rr.reason_no
 				where is_processed = 0
 				order by user_no desc
 			)B
@@ -50,10 +90,14 @@
 		)
 		where rnum between #{startNo} and #{endNo}
 	</select>
-	<select id="getReportByReportDateASC" parameterType="meeteat.util.Paging" resultType="meeteat.dto.report.UserReport">
+	<select id="getReportByReportDateASC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select * from tb_userreport2
+				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
+				inner join tb_user2 u
+				    on ur.user_no = u.user_no
+				inner join tb_reportreason2 rr
+				    on ur.reason_no = rr.reason_no
 				where is_processed = 0 
 				order by report_time
 			)B
@@ -63,10 +107,14 @@
 		
 	</select>
 	
-	<select id="getReportByReportDateDESC" parameterType="meeteat.util.Paging" resultType="meeteat.dto.report.UserReport">
+	<select id="getReportByReportDateDESC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select * from tb_userreport2
+				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
+				inner join tb_user2 u
+				    on ur.user_no = u.user_no
+				inner join tb_reportreason2 rr
+				    on ur.reason_no = rr.reason_no
 				where is_processed = 0
 				order by report_time desc
 			)B
@@ -74,10 +122,14 @@
 		)
 		where rnum between #{startNo} and #{endNo}
 	</select>
-	<select id="getReportByReportReasonASC" parameterType="meeteat.util.Paging" resultType="meeteat.dto.report.UserReport">
+	<select id="getReportByReportReasonASC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select * from tb_userreport2
+				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
+				inner join tb_user2 u
+				    on ur.user_no = u.user_no
+				inner join tb_reportreason2 rr
+				    on ur.reason_no = rr.reason_no
 				where is_processed = 0
 				order by reason_no
 			)B
@@ -86,10 +138,14 @@
 		where rnum between #{startNo} and #{endNo}
 		
 	</select>
-	<select id="getReportByReportReasonDESC" parameterType="meeteat.util.Paging" resultType="meeteat.dto.report.UserReport">
+	<select id="getReportByReportReasonDESC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select * from tb_userreport2
+				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
+				inner join tb_user2 u
+				    on ur.user_no = u.user_no
+				inner join tb_reportreason2 rr
+				    on ur.reason_no = rr.reason_no
 				where is_processed = 0
 				order by reason_no desc
 			)B
@@ -113,4 +169,16 @@
 		update tb_userreport2 set is_processed = 1
 		where user_no = #{user_no}
 	</update>
+		
+	<select id="searchReportResultList" parameterType="String" resultType="hashmap">
+		select rr.report_result_no, u.user_id, rr.user_no, rr.report_result_date, rrr.report_result, rrr.report_result_content from tb_resultreport2 rr
+		inner join tb_resultreportreason2 rrr
+		    on rr.report_result_detail_no = rrr.report_result
+		inner join tb_user2 u
+		    on rr.user_no = u.user_no
+	    <if test='user_id != null and !user_id.equals("")'>
+	    where user_id = #{user_id}
+	    </if>
+		order by report_result_no desc
+	</select>
  </mapper>

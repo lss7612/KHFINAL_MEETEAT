@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import meeteat.dto.report.ResultReportReason;
-import meeteat.dto.report.UserReport;
 import meeteat.service.report.face.ReportService;
 import meeteat.util.Paging;
 
@@ -35,20 +34,35 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value="/list/sort")
-	public String listSort(Paging curPage, int sortType, int sortPart, Model model) {
+	public String listSort(Paging curPage, int sortType, int sortPart
+			, String search, Model model) {
 		logger.info("sort요청");
+		logger.info("curPage : "+curPage);
 		logger.info("sortPart : "+sortPart);
 		logger.info("sortType : "+sortType);
-		logger.info("curPage : "+curPage);
+		logger.info("user_id : "+search);
+		
+		if(search == null) {
+			search = "";
+		}
 		model.addAttribute("sortPart", sortPart);
 		model.addAttribute("sortType", sortType);
 		
 		//페이징 계산
-		Paging paging = reportService.getPaging(curPage);
+		Paging paging = reportService.getPaging(curPage, search);
 		model.addAttribute("paging", paging);
 		
 		//신고 목록 정렬
-		List<UserReport> list = sortReport(sortPart, sortType, paging);
+		List<HashMap<String, String>> list;
+		if( search.equals("")) {
+			logger.info(" > > >전체 목록 조회 < < <");
+			list = sortReport(sortPart, sortType, paging);
+		} else {
+			logger.info(" > > >회원 ID로 검색 ("+search+")< < <"); 
+			list = reportService.getListByUserId(search);
+		}
+		logger.info(" > > > 조회 결과 < < <");
+		logger.info(""+list);
 		model.addAttribute("list", list);
 		
 		//정지사유 가져오기
@@ -59,16 +73,18 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value="/list/sortajax")
-	public String sortAjax(Paging curPage, int sortType, int sortPart, Model model) {
+	public String sortAjax(Paging curPage, int sortType, int sortPart
+			,String search, Model model) {
 		logger.info("sort요청");
 		logger.info("sortPart : "+sortPart);
 		logger.info("sortType : "+sortType);
 		logger.info("curPage : "+curPage);
+		logger.info("search : "+search);
 		model.addAttribute("sortPart", sortPart);
 		model.addAttribute("sortType", sortType);
 		
 		//페이징 계산
-		Paging paging = reportService.getPaging(curPage);
+		Paging paging = reportService.getPaging(curPage, search);
 		
 		model.addAttribute("paging", paging);
 		
@@ -81,8 +97,8 @@ public class ReportController {
 		//	0 : 오름차순ASC
 		//	1 : 내림차순DESC
 		
-		//신고 목록 정렬
-		List<UserReport> list = sortReport(sortPart, sortType, paging);
+		//신고 목록 정렬 hashmap으로 변경하자.
+		List<HashMap<String,String>> list = sortReport(sortPart, sortType, paging);
 		
 		logger.info(""+list);
 		model.addAttribute("list", list);
@@ -136,9 +152,35 @@ public class ReportController {
 		return "redirect:/report/list";
 	}
 	
+	@RequestMapping(value="/result/list")
+	public String reportResultList(String search, Paging curPage, Model model) {
+		logger.info("");
+		logger.info(""+search);
+		
+		if(search == null) {
+			search = "";
+		}
+		//페이징 계산
+		Paging paging = reportService.getReportResultPaging(curPage, search);
+		model.addAttribute("paging", paging);
+		
+		
+		//신고 처리 목록 조회하기
+		List<HashMap<String,String>> list;
+		list = reportService.getReportResultList(search);
+		
+		logger.info(">> 조회 목록 <<< ");
+		logger.info(""+list);
+		model.addAttribute("list", list);
+		
+		
+		
+		return "/report/result_list";
+	}
+	
 	
 	//신고 목록 정렬 메소드
-	public List<UserReport> sortReport(int sortPart, int sortType, Paging paging){
+	public List<HashMap<String, String>> sortReport(int sortPart, int sortType, Paging paging){
 		if( sortPart == 0) {
 			if(sortType == 0) {
 				logger.info(" > > >신고일시 정렬 : 오름차순 < < <");
