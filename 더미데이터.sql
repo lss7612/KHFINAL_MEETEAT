@@ -375,8 +375,6 @@ insert into tb_userreport2 (user_no, report_time, reason_no, report_content) val
 
 
 
-
-
 select * from tb_user2;
 
 --신고처리 더미데이터

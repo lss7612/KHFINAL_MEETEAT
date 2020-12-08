@@ -35,7 +35,7 @@ public interface ReportService {
 
 	public void setIsProcessed(int user_no);
 
-	public List<HashMap<String, String>> getReportResultList(String user_id);
+	public List<HashMap<String, String>> getReportResultList(int startNo, int endNo, String user_id);
 
 	public List<HashMap<String, String>> getListByUserId(String user_id);
 

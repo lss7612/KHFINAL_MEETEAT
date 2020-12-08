@@ -10,13 +10,13 @@
 		<%-- 첫 페이지가 아닐 때 버튼 노출 --%>
 		<c:if test="${paging.curPage ne 1 }">
 <!-- 			<li><a href="/report/list/sort"> <span>&larr;</span></a></li> -->
-			<li><a href="/report/list?search=${param.search }"> <span>&larr;</span></a></li>
+			<li><a href="/admin/report/list?search=${param.search }"> <span>&larr;</span></a></li>
 		</c:if>
 		<%-- 이전 페이지 버튼 --%>
 		<%-- 첫 페이지면 금지 표시 --%>
 		<c:if test="${paging.curPage ne 1 }">
 <%-- 			<li><a href="/report/list/sort?curPage=${paging.curPage-1 }&sortPart=${sortPart}&sortType=${sortType}" aria-label="Previous"> <span>&laquo;</span></a></li> --%>
-			<li><a href="/report/list?curPage=${paging.curPage-1 }&search=${param.search }" aria-label="Previous"> <span>&laquo;</span></a></li>
+			<li><a href="/admin/report/list?curPage=${paging.curPage-1 }&search=${param.search }" aria-label="Previous"> <span>&laquo;</span></a></li>
 		</c:if>
 		<c:if test="${paging.curPage eq 1 }">
 			<li class="disabled"><span>&laquo;</span></li>
@@ -29,12 +29,12 @@
 			
 			<c:if test="${paging.curPage eq page }">
 <%-- 				<li class="active"><a href="/report/list/sort?curPage=${page }&sortPart=${sortPart}&sortType=${sortType}">${page }</a></li> --%>
-				<li class="active"><a href="/report/list?curPage=${page }&search=${param.search }">${page }</a></li>
+				<li class="active"><a href="/admin/report/list?curPage=${page }&search=${param.search }">${page }</a></li>
 			</c:if>
 			
 			<c:if test="${paging.curPage ne page }">
 <%-- 				<li><a href="/report/list/sort?curPage=${page }&sortPart=${sortPart}&sortType=${sortType}">${page }</a></li> --%>
-				<li><a href="/report/list?curPage=${page }&search=${param.search }">${page }</a></li>
+				<li><a href="/admin/report/list?curPage=${page }&search=${param.search }">${page }</a></li>
 			</c:if>
 			
 		</c:forEach>
@@ -43,7 +43,7 @@
 		<%-- 마지막 페이지면 동작 안함 --%>
 		<c:if test="${paging.curPage ne paging.totalPage }">
 <%-- 			<li><a href="/report/list/sort?curPage=${paging.curPage+1 }&sortPart=${sortPart}&sortType=${sortType}" aria-label="Next"> <span>&raquo;</span></a></li> --%>
-			<li><a href="/report/list?curPage=${paging.curPage+1 }&search=${param.search }" aria-label="Next"> <span>&raquo;</span></a></li>
+			<li><a href="/admin/report/list?curPage=${paging.curPage+1 }&search=${param.search }" aria-label="Next"> <span>&raquo;</span></a></li>
 		</c:if>
 		<c:if test="${paging.curPage eq paging.totalPage }">
 			<li class="disabled"><span>&raquo;</span></li>
@@ -55,7 +55,7 @@
 		<%-- 마지막 페이지가 아닐 때 버튼 노출 --%>
 		<c:if test="${paging.curPage ne paging.totalPage }">
 <%-- 			<li><a href="/report/list/sort?curPage=${paging.totalPage }&sortPart=${sortPart}&sortType=${sortType}"> <span>&rarr;</span></a></li> --%>
-			<li><a href="/report/list?curPage=${paging.totalPage }&search=${param.search }"> <span>&rarr;</span></a></li>
+			<li><a href="/admin/report/list?curPage=${paging.totalPage }&search=${param.search }"> <span>&rarr;</span></a></li>
 		</c:if>
 		
 	</ul>

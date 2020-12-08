@@ -19,7 +19,7 @@ $(document).ready(function(){
 	$("#searchBtn").click(function(){
 		var search = $('#search').val();
 		console.log(""+search);
-		location.href="/report/result/list?search="+search;
+		location.href="/admin/report/result/list?search="+search;
 	})
 })
 </script>
@@ -32,7 +32,7 @@ $(document).ready(function(){
 </style>
 </head>
 <body>
-<h1><a href="/report/result/list">신고 결과 처리 목록</a></h1>
+<h1><a href="/admin/report/result/list">신고 결과 처리 목록</a></h1>
 <hr>
 <div>
 <input type="text" id="search" class="form-control" /> 

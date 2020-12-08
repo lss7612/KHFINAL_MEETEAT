@@ -170,15 +170,21 @@
 		where user_no = #{user_no}
 	</update>
 		
-	<select id="searchReportResultList" parameterType="String" resultType="hashmap">
-		select rr.report_result_no, u.user_id, rr.user_no, rr.report_result_date, rrr.report_result, rrr.report_result_content from tb_resultreport2 rr
-		inner join tb_resultreportreason2 rrr
-		    on rr.report_result_detail_no = rrr.report_result
-		inner join tb_user2 u
-		    on rr.user_no = u.user_no
-	    <if test='user_id != null and !user_id.equals("")'>
-	    where user_id = #{user_id}
-	    </if>
-		order by report_result_no desc
+	<select id="searchReportResultList" parameterType="hashmap" resultType="hashmap">
+		select * from(
+			select rownum rnum, B.* from(
+				select rr.report_result_no, u.user_id, rr.user_no, rr.report_result_date, rrr.report_result, rrr.report_result_content from tb_resultreport2 rr
+				inner join tb_resultreportreason2 rrr
+				    on rr.report_result_detail_no = rrr.report_result
+				inner join tb_user2 u
+				    on rr.user_no = u.user_no
+			    <if test='user_id != null and !user_id.equals("")'>
+			    where user_id = #{user_id}
+			    </if>
+				order by report_result_no desc
+			)B
+			order by rnum
+		)
+		where rnum between #{startNo} and #{endNo}
 	</select>
  </mapper>

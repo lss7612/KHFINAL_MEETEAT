@@ -38,7 +38,8 @@ public interface ReportDao {
 
 	public void setIsProcessedReportList(int user_no);
 
-	public List<HashMap<String, String>> searchReportResultList(String user_id);
+	public List<HashMap<String, String>> searchReportResultList(@Param("startNo")int startNo
+			, @Param("endNo")int endNo, @Param("user_id")String user_id);
 
 	public List<HashMap<String, String>> searchListByUserId(String user_id);
 

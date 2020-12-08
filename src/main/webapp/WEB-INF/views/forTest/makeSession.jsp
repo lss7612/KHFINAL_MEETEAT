@@ -21,6 +21,8 @@
 <li><a href="/makesession/guestUser">세션삭제(로그인안한유저)</a><br></li>
 </ul>
 <h2><a href="/recruitboard/list">게시판으로!</a></h2>
+<h2><a href="/admin/report/list">신고목록으로!</a></h2>
+<h2><a href="/admin/report/result/list">신고 처리 목록으로!</a></h2>
 
 <hr>
 

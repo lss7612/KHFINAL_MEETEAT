@@ -20,7 +20,7 @@ import meeteat.util.Paging;
 
 
 @Controller
-@RequestMapping(value="/report")
+@RequestMapping(value="/admin/report")
 public class ReportController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ReportController.class);
@@ -29,7 +29,7 @@ public class ReportController {
 	@RequestMapping(value="/list")
 	public String list(Paging curPage, Model model) {
 		
-		return "redirect:/report/list/sort?curPage="+curPage.getCurPage()
+		return "redirect:/admin/report/list/sort?curPage="+curPage.getCurPage()
 				+"&sortType=0&sortPart=0";
 	}
 	
@@ -149,7 +149,7 @@ public class ReportController {
 		}
 		
 		logger.info("정지할 유저 : "+userList);
-		return "redirect:/report/list";
+		return "redirect:/admin/report/list";
 	}
 	
 	@RequestMapping(value="/result/list")
@@ -157,17 +157,18 @@ public class ReportController {
 		logger.info("");
 		logger.info(""+search);
 		
-		if(search == null) {
-			search = "";
-		}
-		//페이징 계산
 		Paging paging = reportService.getReportResultPaging(curPage, search);
 		model.addAttribute("paging", paging);
 		
+		List<HashMap<String,String>> list;
+		if(search == null) {
+			search = "";
+		}
+		list = reportService.getReportResultList(paging.getStartNo(), paging.getEndNo(), search);
+		//페이징 계산
+		
 		
 		//신고 처리 목록 조회하기
-		List<HashMap<String,String>> list;
-		list = reportService.getReportResultList(search);
 		
 		logger.info(">> 조회 목록 <<< ");
 		logger.info(""+list);

@@ -108,7 +108,7 @@ public class ReportServiceImpl implements ReportService{
 	}
 	
 	@Override
-	public List<HashMap<String, String>> getReportResultList(String user_id) {
-		return reportDao.searchReportResultList(user_id);
+	public List<HashMap<String, String>> getReportResultList(int startNo, int endNo, String user_id) {
+		return reportDao.searchReportResultList(startNo, endNo, user_id);
 	}
 }

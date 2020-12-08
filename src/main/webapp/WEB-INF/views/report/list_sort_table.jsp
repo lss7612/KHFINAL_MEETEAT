@@ -50,9 +50,10 @@
 <input type="button" id="searchBtn" value="아이디검색" placeholder = "id 검색" class="btn btn-primary"/>
 </div>
 <br>
-<form action="/report/result" method="post">
 
-<table class="table table-bordered table-hover">
+<form action="/admin/report/result" method="post">
+
+<table id="reportList" class="table table-bordered table-hover">
 <tr>
 	<th>회원번호</th>
 	<th>회원 아이디 </th>
@@ -99,6 +100,7 @@
 </table>
 <button id="doProcess" class="btn btn-danger">유저 처리</button>
 </form>
+<br>
 <jsp:include page="/WEB-INF/views/report/list_sort_paging.jsp"/>
 
 
