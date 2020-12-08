@@ -88,6 +88,17 @@ BEGIN
 END;
 /
 
+-- 신고목록 테이블에 insert작업시 회원정보의 blockcnt 횟수 증가 트리거
+CREATE OR REPLACE TRIGGER TB_USER2_blockcnt_AI_TRG
+BEFORE INSERT ON tb_userreport2
+    for each row
+begin 
+    update tb_user2 set user_blockcnt = user_blockcnt +1
+    where user_no = :new.user_no;
+end; 
+/
+
+drop trigger tb_user2_blockcnt_ai_trg;
 --DROP TRIGGER TB_USER2_AI_TRG;
 /
 
@@ -863,4 +874,14 @@ ALTER TABLE TB_RECOMMEND2
         REFERENCES TB_USER2 (user_id)
 /
 
+-- 신고목록 테이블에 insert작업시 회원정보의 blockcnt 횟수 증가 트리거
+CREATE OR REPLACE TRIGGER TB_USER2_blockcnt_AI_TRG
+BEFORE INSERT ON tb_userreport2
+    for each row
+begin 
+    update tb_user2 set user_blockcnt = user_blockcnt +1
+    where user_no = :new.user_no;
+end; 
+/
 
+--drop trigger tb_user2_blockcnt_ai_trg;
