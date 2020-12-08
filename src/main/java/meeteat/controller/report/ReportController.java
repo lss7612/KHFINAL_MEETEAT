@@ -115,7 +115,7 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value="/result", method=RequestMethod.POST)
-	public String doReportResult(@RequestParam HashMap<Object, Object> map) {//이거 안될껄? hashmap을 어케 requestparam으로 받아 이거 각각 string, int로 받고 put해야하는거아냐?
+	public String doReportResult(@RequestParam HashMap<Object, Object> map) {
 		//'회원번호 = 0은 처리 안함 1은 정지'
 		logger.info("/report/result 전달값 : "+map);
 		logger.info(""+map.entrySet());

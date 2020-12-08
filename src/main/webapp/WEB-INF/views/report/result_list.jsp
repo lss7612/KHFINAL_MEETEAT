@@ -8,6 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- 부트스트랩 3.3.2 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
@@ -19,15 +23,23 @@ $(document).ready(function(){
 	})
 })
 </script>
+
+<style type="text/css">
+#search{
+	display : inline;
+	width : 150px;
+}
+</style>
 </head>
 <body>
 <h1><a href="/report/result/list">신고 결과 처리 목록</a></h1>
 <hr>
 <div>
-<input type="text" id="search" /> 
-<input type="button" id="searchBtn" value="아이디검색"/>
+<input type="text" id="search" class="form-control" /> 
+<input type="button" id="searchBtn" value="아이디검색" class="btn btn-primary">
 </div>
-<table border="1">
+<br>
+<table class="table table-bordered table-hover">
 <tr>
 	<th>번호</th>
 	<th>회원 아이디</th>

@@ -88,6 +88,14 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE TRIGGER TB_USER2_blockcnt_AI_TRG
+BEFORE INSERT ON tb_userreport2
+    for each row
+begin 
+    dbms_output.put_line('['||:new.user_no||']'||'님이 신고목록에 추가되었습니다.');
+end; 
+/
+drop trigger tb_user2_blockcnt_ai_trg;
 --DROP TRIGGER TB_USER2_AI_TRG;
 /
 

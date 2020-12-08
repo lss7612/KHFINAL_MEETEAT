@@ -8,21 +8,21 @@
 정렬기준 
 <c:choose>
 <c:when test="${sortPart eq 0 }">
-<select id="sortPart" name ="part" onchange="selectValue(this.value)">
+<select id="sortPart" name ="part" onchange="selectValue(this.value)" class="form-control">
 	<option value="0" selected>신고일시</option> 	
 	<option value="1">회원번호 </option> 	
 	<option value="2">신고사유</option> 	
 </select>
 </c:when>
 <c:when test="${sortPart eq 1 }">
-<select id="sortPart" name ="part" onchange="selectValue(this.value)">
+<select id="sortPart" name ="part" onchange="selectValue(this.value)" class="form-control">
 	<option value="0">신고일시</option> 	
 	<option value="1" selected>회원번호 </option> 	
 	<option value="2">신고사유</option> 	
 </select>
 </c:when>
 <c:when test="${sortPart eq 2 }">
-<select id="sortPart" name ="part" onchange="selectValue(this.value)">
+<select id="sortPart" name ="part" onchange="selectValue(this.value)" class="form-control">
 	<option value="0">신고일시</option> 	
 	<option value="1">회원번호 </option> 	
 	<option value="2" selected>신고사유</option> 	
@@ -32,13 +32,13 @@
 방향
 <c:choose>
 <c:when test="${sortType eq 0 }">
-<select id="sortType" name="sort" onchange="selectValue(this.value)">
+<select id="sortType" name="sort" onchange="selectValue(this.value)" class="form-control">
 	<option value="0" selected>오름차순</option>
 	<option value="1">내림차순</option>
 </select> 
 </c:when>
 <c:when test="${sortType eq 1 }">
-<select id="sortType" name="sort" onchange="selectValue(this.value)">
+<select id="sortType" name="sort" onchange="selectValue(this.value)" class="form-control">
 	<option value="0">오름차순</option>
 	<option value="1" selected>내림차순</option>
 </select> 
@@ -46,13 +46,13 @@
 
 </c:choose>
 검색
-<input type="text" id="search">
-<input type="button" id="searchBtn" value="아이디검색"/>
+<input type="text" id="search" class="form-control" style="width : auto; dispaly : inline;">
+<input type="button" id="searchBtn" value="아이디검색" placeholder = "id 검색" class="btn btn-primary"/>
 </div>
-
+<br>
 <form action="/report/result" method="post">
-<button>유저 처리</button>
-<table border="1">
+
+<table class="table table-bordered table-hover">
 <tr>
 	<th>회원번호</th>
 	<th>회원 아이디 </th>
@@ -89,7 +89,7 @@
 			</c:if>
 		</td>
 		<td>
-			<select name="${hashmap.USRE_NO }">
+			<select name="${hashmap.USER_NO }">
 				<option value="0">선택암함</option>
 				<option value="1">${resultReason.report_result_content }</option>
 			</select>
@@ -97,6 +97,8 @@
 	</tr>
 </c:forEach>
 </table>
-
+<button id="doProcess" class="btn btn-danger">유저 처리</button>
 </form>
 <jsp:include page="/WEB-INF/views/report/list_sort_paging.jsp"/>
+
+
