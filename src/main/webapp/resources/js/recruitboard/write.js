@@ -1,16 +1,54 @@
 
 
 $(document).ready(function () {
+	$('#form_article_title').focus();
+	/*폼을 submit하는 코드*/
   $('#btn_submit').click(function () {
+	  /*textarea로 스마트에디터에 등록한것 옮김*/
 	putOnRealTextArea()
-	console.log($('#form_article_content').val())
     validateAndSubmit()
   });
+  
+  /*제목 40글자 제한*/
+  $('#form_article_title').focusout(function(){
+	  if($(this).val().length > 40) alert('제목은 40글자까지만 가능합니다.')
+	  $(this).val($(this).val().substring(0,39))
+	  
+  })
+  
+  /*img박스 누르면 form태그와 연결해줌*/
+  $('#imgBox1').click(function(){
+	  console.log('clicked')
+	  $('#form_img1').trigger("click")
+  })
+  $('#imgBox2').click(function(){
+	  console.log('clicked')
+	  $('#form_img2').trigger("click")
+  })
+  $('#imgBox3').click(function(){
+	  console.log('clicked')
+	  $('#form_img3').trigger("click")
+  })
+  
+  /*파일 등록 시*/
+  $('#form_img1').change(function(){
+	  imgFormSubmit();
+  })
+  $('#form_img2').change(function(){
+	  imgFormSubmit();
+  })
+  $('#form_img3').change(function(){
+	  imgFormSubmit();
+  })
 });
+
+
+
+
 
 function validateAndSubmit() {
 	if (validationAll()) if (confirm('작성내용을 게시하시겠습니까?')) 
-	$('form').submit()
+	$('#articleSubmitForm').submit()
 }
 
 //**********[모든 폼 빈칸 검사]**********//
@@ -61,4 +99,48 @@ function validationEach(form){
 //**********[text에 스마트에디터 값 적용하기]**********//
 function putOnRealTextArea(){
 	oEditors.getById["form_article_content"].exec("UPDATE_CONTENTS_FIELD", [])
+}
+
+
+/**/
+function imgFormSubmit(){
+	
+
+	var form = $('#imgForm')[0];
+    var formData = new FormData(form);
+	
+	console.log(formData)
+	$.ajax({
+		type: "POST"
+		, enctype: 'multipart/form-data'
+		, url: "/recruitboard/saveTmpFile_ajax"
+		, data: formData
+		, contentType: false
+		, processData: false
+		, dataType:"json" //응답받은 데이터의 형식
+		, success: function( res ){
+			console.log(res)
+			if(res.StoredPath01!=null){
+				$('#imgBox1').html(
+					'<img class="upload-image" alt="" src="'+ res.StoredPath01 +'">'		
+				)
+				$('#form_ext01').val(res.ext01)
+			}
+			if(res.StoredPath02!=null){
+				$('#imgBox2').html(
+						'<img class="upload-image" alt="" src="'+ res.StoredPath02 +'">'		
+				)
+				$('#form_ext02').val(res.ext02)
+			}
+			if(res.StoredPath03!=null){
+				$('#imgBox3').html(
+						'<img class="upload-image" alt="" src="'+ res.StoredPath03 +'">'		
+				)
+				$('#form_ext03').val(res.ext03)
+			}
+		}
+		, error: function(){
+			console.log('실패')
+		}
+	})
 }

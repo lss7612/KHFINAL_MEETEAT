@@ -8,6 +8,26 @@
 	min-width:83px; width:10%; margin: 0 20px 0 0;
 }
 
+.imgBox {
+	cursor:pointer;
+	overflow: hidden;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	width: 150px;
+	height: 150px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+}
+
+.upload-image {
+    width: 150px;
+}
+
+.none_height{
+	height:0;
+}
+
 .bolder_bar_height{
 	height: 70px;	
 }

@@ -26,7 +26,7 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 	@Autowired RecruitBoardDao recruitBoardDao;
 	
 	@Override
-	public void write(RecruitBoard param) {
+	public HashMap<String,Object> write(RecruitBoard param) {
 
 		//남은구현
 		//파일이 있으면 tb_file_seq.nextval받아오기
@@ -35,8 +35,15 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		//param에 fileno set하기
 		
 		param.setBoard_no(3);
+		int article_no = recruitBoardDao.getNextVal();
+		param.setArticle_no(article_no);
 		
 		recruitBoardDao.insertRecruitBoard(param);
+		
+		HashMap<String,Object> result = new HashMap<String, Object>();
+		result.put("article_no", article_no);
+		result.put("board_no", 3);
+		return result;
 		
 	}
 
@@ -144,25 +151,27 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		result = recruitBoardDao.getBoardView(param);
 		
 		//검색결과 색깔 바꾸고 굵게 하는 코드		
-				if(searchParam.getSearchCategory()!=null && !searchParam.getSearchCategory().equals("")) {
-					
+		if(searchParam.getSearchCategory()!=null && !searchParam.getSearchCategory().equals("")) {
+			
+			logger.info("여기까지" );
+			
+			if(searchParam.getSearchCategory().equals("article_content")) {
+				logger.info("여기까지" );
+				
+				if(searchParam.getSearchKeyword()!=null && !searchParam.getSearchKeyword().equals("")) {
 					logger.info("여기까지" );
 					
-					if(searchParam.getSearchCategory().equals("article_content")) {
-						logger.info("여기까지" );
-						
-						if(searchParam.getSearchKeyword()!=null && !searchParam.getSearchKeyword().equals("")) {
-							logger.info("여기까지" );
-							
-								String before = (String) result.get("ARTICLE_CONTENT");
-								before = before.replace(
-										searchParam.getSearchKeyword()
-										,"<span style=\"color:tomato; margin:0; font-weight:bold;\">"+searchParam.getSearchKeyword()+"</span>");
-								result.put("ARTICLE_CONTENT", before);
-						}
-					}
+						String before = (String) result.get("ARTICLE_CONTENT");
+						before = before.replace(
+								searchParam.getSearchKeyword()
+								,"<span style=\"color:tomato; margin:0; font-weight:bold;\">"+searchParam.getSearchKeyword()+"</span>");
+						result.put("ARTICLE_CONTENT", before);
 				}
+			}
+		}
 				
+		List<HashMap<String,Object>> imglist = recruitBoardDao.getImgList(param);
+		result.put("IMGLIST", imglist);
 				
 		return result;
 	}

@@ -32,4 +32,8 @@ public interface RecruitBoardDao {
 
 	public void decreaseRecommendCnt(Map<String, Object> param);
 
+	public int getNextVal();
+
+	public List<HashMap<String,Object>> getImgList(Map<String, Object> param);
+
 }

@@ -5,13 +5,17 @@
 
 <mapper namespace="meeteat.dao.recruitBoard.face.RecruitBoardDao">
 	
+	<select id="getNextVal" resultType="int">
+		SELECT tb_recruitBoard_seq.nextval FROM dual
+	</select>
+	
 	<insert id="insertRecruitBoard" parameterType="meeteat.dto.recruitBoard.RecruitBoard">
 		INSERT INTO tb_board2 (
 			article_no, article_title, article_content, party_location
 			, user_no, create_date, file_no, is_delete, article_hit, board_no
 			, meet_time)
 		VALUES (
-			tb_recruitBoard_seq.nextval, #{article_title},#{article_content}, #{party_location, jdbcType=VARCHAR}
+			#{article_no}, #{article_title},#{article_content}, #{party_location, jdbcType=VARCHAR}
 			, #{user_no}, sysdate, #{file_no}, #{is_delete}, #{article_hit}, #{board_no}
 			, to_date(#{meet_time},'YYYY-MM-DDHH24MI'))
 	</insert>
@@ -92,6 +96,13 @@
 		WHERE board_no = #{board_no}
    			AND article_no = #{article_no}
 	</select>
+	
+	<select id="getImgList" parameterType="hashmap" resultType="hashmap">
+		SELECT file_storedname FROM tb_file2
+		WHERE article_no = #{article_no}
+			AND board_no = #{board_no}
+	</select>
+	
 
 	<update id="updateRecruitBoard" parameterType="meeteat.dto.recruitBoard.SearchParam">
 		UPDATE tb_board2

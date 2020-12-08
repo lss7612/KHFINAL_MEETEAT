@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/forTest/header.jsp"/>
-<!-- 적용css, js -->
+<%-- 적용css, js --%>
 <link rel="stylesheet" href="/resources/css/recruitboard/write.css">
 <script type="text/javascript" src="/resources/js/recruitboard/write.js"></script>
 
@@ -14,19 +14,23 @@
 <div class="border">
 <div class="base_bar_height color_primary light_padding">&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size:30px;" class="fas fa-pencil-alt"></i></i></div>
 <div class="horizontal_base_padding">
-<form class="" action="/recruitboard/write" method="POST">
-<!-- 글제목 인풋영역 -->
+<form id="articleSubmitForm" class="" action="/recruitboard/write" method="POST" >
+<%-- 글제목 인풋영역 --%>
 	<input type="text" name="user_no" value="${user_no }" readonly="readonly" class="invisible"/>
+	
+	<%-- 글제목 --%>
 	<div class="form-group">
 		<label id="labebforform_article_title"for="form_article_title">글제목</label>
 		<input type="text" id="form_article_title" name="article_title" class="form-control" alertComment="글제목"/>
 	</div>
 	<hr>
+	<%-- 날짜 --%>
 	<div class="pull-left form-group" style="min-width:155px; width:20%; margin:0 30px 0 0;">
 		<label for="form_meet_time">날짜</label>
 		<input type="date" id="form_meet_time" name="meet_time_date" class="form-control" alertComment="날짜"/>
 	</div>
 	
+	<%-- 시간대 --%>
 	<div class="pull-left form-group small_form">
 		<label for="form_time_area">오전,오후</label>
 		<select id="form_time_area" name="meet_time_area" class="form-control" alertComment="만날시간(시간대)">
@@ -35,6 +39,8 @@
 			<option value="pm">오후</option>
 		</select>
 	</div>
+	
+	<%-- 시각 --%>
 	<div class="pull-left form-group small_form">
 		<label for="form_time_time">시</label>
 		<select id="form_time_time" name="meet_time_clock" class="form-control" alertComment="만날시간(시각)">
@@ -53,6 +59,8 @@
 			<option value="12">12시</option>
 		</select>
 	</div>
+	
+	<%-- 분 --%>
 	<div class="pull-left form-group small_form">
 		<label for="form_time_minute">분</label>
 		<select id="form_time_minute" name="meet_time_min" class="form-control" alertComment="만날시각(분)" >
@@ -65,8 +73,7 @@
 			<option value="50">50분</option>
 		</select>
 	</div>
-	<div class='clearfix'></div>
-	<hr>
+	<%-- 지역 --%>
 	<div class="pull-left form-group small_form">
 		<label for="form_party_location" >지역</label>
 		<select id="form_party_location" name="party_location" class="form-control" alertComment="지역">
@@ -81,12 +88,50 @@
 			<option value="제주">제주</option>
 		</select>
 	</div>
-	<div class="pull-left form-group small_form">
-		<label for="form_maxium_member" >최대인원</label>
-		<input type="text" id="form_maxium_member" name="maxium_member" class="form-control" alertComment="최대인원" placeholder="미구현"/>
-	</div>
-	<div class="clearfix"></div>
+	<div class='clearfix'></div>
 	<hr>
+	
+	
+	
+	
+	<%-- 파일첨부 --%>
+	<div style="width:510px; margin: 0 auto;" >
+	
+		<%-- 이미지박스1 아래의 이미지폼과 연결 --%>
+		<div id="imgBox1"class="light_margin imgBox none-image pull-left">
+		<img class="upload-image" alt="" src="/resources/img/upload-image.png">
+		</div>
+	
+		<%-- 이미지박스2 아래의 이미지폼과 연결--%>
+		<div id="imgBox2"class="light_margin imgBox none-image pull-left">
+		<img class="upload-image" alt="" src="/resources/img/upload-image.png">
+		</div>
+		
+		<%-- 이미지박스3 아래의 이미지폼과 연결--%>
+		<div id="imgBox3"class="light_margin imgBox none-image pull-left">
+		<img class="upload-image" alt="" src="/resources/img/upload-image.png">
+		</div>
+	
+	</div>
+		
+	<div class="clearfix" ></div>
+	
+	
+	
+	<%-- 파일확장자submit --%>
+	<div class=" form-group small_form invisible none_height">
+		<label for="form_ext01" >ext01</label>
+		<input type="text" id="form_ext01" name="ext01" class="form-control"  placeholder="미구현"/>
+		<label for="form_ext02" >ext02</label>
+		<input type="text" id="form_ext02" name="ext02" class="form-control"  placeholder="미구현"/>
+		<label for="form_ext03" >ext03</label>
+		<input type="text" id="form_ext03" name="ext03" class="form-control"  placeholder="미구현"/>
+	</div>
+	
+	<hr>
+	<div class="clearfix none_height"></div>
+	
+	<%-- 내용 --%>
 	<div class="form-group" style="min-width:550px;"> 
 		<label for="form_article_content">내용</label>
 		<textarea rows="10" id="form_article_content" name="article_content" style="min-width:550px; width:100%;" alertComment="내용"></textarea>
@@ -98,7 +143,6 @@
 </div>
 </div>
 </div>
-
 
 <script type="text/javascript">
 var oEditors = [];
@@ -112,6 +156,28 @@ nhn.husky.EZCreator.createInIFrame({
 $('.se2_inputarea').css('min-width','550px');
 
 </script>
+
+<form id="imgForm" method="POST" enctype="multipart/form-data" >
+	<%-- 이미지폼1 이미지박스1과 연결 --%>
+	<div class=" form-group invisible none_height">
+		<label for="form_img1" >이미지업로드</label>
+		<input type="file" id="form_img1" name="img1" accept="image/gif, image/jpeg, image/jpg, image/png" class="form-control" alertComment="최대인원" placeholder="미구현"/>
+	</div>
+	
+	<%-- 이미지폼2 이미지박스2와 연결 --%>
+	<div class=" form-group invisible none_height invisible">
+		<label for="form_img2" >이미지업로드</label>
+		<input type="file" id="form_img2" name="img2" accept="image/gif, image/jpeg, image/jpg, image/png" class="form-control" alertComment="최대인원" placeholder="미구현"/>
+	</div>
+	
+	<%-- 이미지폼3 이미지박스3와 연결 --%>
+	<div class=" form-group invisible none_height invisible">
+		<label for="form_img3" >이미지업로드</label>
+		<input type="file" id="form_img3" name="img3" accept="image/gif, image/jpeg, image/jpg, image/png" class="form-control" alertComment="최대인원" placeholder="미구현"/>
+	</div>
+</form>
+
+
 
 </body>
 </html>

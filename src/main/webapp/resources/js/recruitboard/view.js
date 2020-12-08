@@ -5,6 +5,8 @@ var tried = 0;
 
 $(document).ready(function(){
 	
+	console.log($('#searchCategory').val())
+	
 	//페이지 불러왔을 때 코멘트 가져오기
 	getCommentList()
 	
@@ -82,6 +84,17 @@ $(document).ready(function(){
 		}  
 	 })
 
+	 $('#viewList div').click(function(){
+		 $('#viewList').html(
+			'<div style="text-align:center;"><img style="margin:0 auto;" alt="" src="/resources/img/loading.gif"></div>'
+		 )		
+		
+		 setTimeout(() => {
+			 loadList()	
+		 }, 1100);
+		  
+	 })
+	 
 })
 
 
@@ -152,7 +165,6 @@ function getCommentList() {
 
 /*추천수 가져오기 function*/
 function getCntRecommend() {
-	console.log('geting CntRecommend')
 	$.ajax({
 		type: "get"
 		, url: "/recruitboard/recommend"
@@ -169,16 +181,30 @@ function getCntRecommend() {
 			
 			console.log('실패')
 			
-//			tried += 1
-//			if(tried<10) getCommentList()
-//			if(tried>10){
-//				$('#commentList').html(
-//				'<div style="text-align:center">'+
-//				'현재 서버의 응답이 느립니다.<br> 조금 있다가 시도해주세요'+
-//				'</div>'
-//				)
-//			}
+		}
+	})
+}
+
+
+function loadList() {
+	console.log('loding List')
+	console.log($('#searchLocation').val())
+	console.log($('#searchCategory').val())
+	console.log($('#searchKeyword').val())
+	
+	$.ajax({
+		type: "get"
+		, url: "/recruitboard/list_ajax"
+		, data:{ board_no : 3, article_no : $('#article_no').val(), curPage : $('#curPage').val()
+			, searchLocation : $('#searchLocation').val(), saarchCategory : $('#searchCategory').val()
+			, seachKeyword : $('#searchKeyword').val()}
+		, dataType:"html" //응답받은 데이터의 형식
+		, success: function( res ){
+			$('#viewList').html(res)
+		}
+		, error: function(){
 			
+			console.log('실패')
 			
 		}
 	})

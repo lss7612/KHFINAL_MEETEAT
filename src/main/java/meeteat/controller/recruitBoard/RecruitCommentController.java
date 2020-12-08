@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import meeteat.dto.commentForSSLEE.Comment;
-import meeteat.service.comment.face.CommentService;
+import meeteat.service.commentForSSLEE.face.CommentService;
 
 @Controller
 public class RecruitCommentController {

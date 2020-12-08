@@ -1,4 +1,4 @@
-package meeteat.service.comment.face;
+package meeteat.service.commentForSSLEE.face;
 
 import java.util.List;
 import java.util.Map;
