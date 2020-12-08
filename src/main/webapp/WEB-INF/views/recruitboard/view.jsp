@@ -7,8 +7,6 @@
 <link rel="stylesheet" href="/resources/css/recruitboard/view.css">
 <script type="text/javascript" src="/resources/js/recruitboard/view.js"></script>
 
-${result.ISRECOMMEND }
-
 <div id="view_wrapper">
 <h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
 <hr>
@@ -16,6 +14,10 @@ ${result.ISRECOMMEND }
 <div id="view_title_bar" class="border">
 	<div style="height:0;">
 		<input class="invisible" value="${result.ARTICLE_NO }" id="article_no"/>
+		<input class="invisible" value="${paging.curPage }" id="curPage"/>
+		<input class="invisible" value="${searchParam.searchLocation }" id="searchLocation"/>
+		<input class="invisible" value="${searchParam.searchCategory}" id="searchCategory"/>
+		<input class="invisible" value="${searchParam.searchKeyword}" id="searchKeyword"/>
 	</div>
 	<%-- 제목부분 --%>
 	<div class="light_padding color_base bold_bar_height">
@@ -34,6 +36,17 @@ ${result.ISRECOMMEND }
 		</div>
 	</div>
 
+
+	<%-- 이미지영역 --%>
+	<div id="imgList" style="width:510px; margin:0 auto;">
+		<c:set var="imgPath" value="/resources/file/recruitboard/save/"></c:set>
+		<c:forEach items="${result.IMGLIST }" var="imglist">
+		<div id="imgBox1"class="light_margin imgBox none-image pull-left">
+		<a href="${imgPath }${imglist.FILE_STOREDNAME }"><img class="upload-image" alt="" src="${imgPath }${imglist.FILE_STOREDNAME }"></a>
+		</div>
+		</c:forEach>
+	</div>
+	<div class="clearfix" style=""></div>
 <%-- 내용영역 --%>
 	
 	<div id="view_content_bar" class="light_margin bold_padding vertical_bold_margin" style="padding:5px; text-align:left;">
@@ -58,9 +71,12 @@ ${result.ISRECOMMEND }
 </div>
 
 <%-- 삭제, 수정 버튼영역 --%>
+<div class="base_bar_height light_padding light_margin pull-left" style="width:30%;">
+	<c:set var="QueryString" value="/recruitboard/list?searchBoard_no=3&searchKeyword=${searchParam.searchKeyword }&searchCategory=${searchParam.searchCategory}&searchLocation=${searchParam.searchLocation }&curPage=${paging.curPage }" />
+	<a href=${QueryString }><button type="button" id="back_to_list" class="btn btn-primary pull-left" >목록으로</button></a>
+</div>
 <c:if test="${result.USER_NICK eq sessionScope.user_nick }">
-<div class="base_bar_height light_padding light_margin">
-	
+<div class="base_bar_height light_padding light_margin pull-right" style="width:30%;">
 	<div class="invisible" style="height:0;">
 	<form id="deleteOrModify" action="" method="">
 		<input type="text" name="user_nick" value="${result.USER_NICK }" >
@@ -68,6 +84,7 @@ ${result.ISRECOMMEND }
 		<input type="text" name="article_no" value="${result.ARTICLE_NO }" >
 	</form>
 	</div>
+	
 	<button type="button" id="article_delete" class="btn btn-primary pull-right" style="float:center;">삭제</button>
 	<button type="button" id="article_modify" class="btn btn-primary pull-right" style="float:center;">수정</button>
 
@@ -80,6 +97,19 @@ ${result.ISRECOMMEND }
 <hr>
 <%-- 코멘트영역 --%>
 <div id="view_comment" style="width:95%; margin:0 auto;">
+
+
+
+</div>
+
+<div class="col-md-4 pull-right"style="margin:5px 0 0 0; padding:10px 10px 0; font-size:20px;text-align:right;"><i id="refrash_comment_botton"  style="cursor: pointer;" class="fas fa-sync-alt"></i></div>
+<div class="col-md-4 pull-left" style="margin:5px 0 0 0; padding:14px 10px 0; font-size:18px;text-align:left;">${result.CNT_COMMENT }개의 덧글</div>
+<div class="clearfix"></div>
+
+
+<%-- 댓글내용영역 --%>
+<div id="commentList">
+</div>
 
 <%-- 코멘트작성 --%>
 <c:if test="${isLogin }">
@@ -123,28 +153,18 @@ nhn.husky.EZCreator.createInIFrame({
 })
 
 
-/* oEditors.getById["ir1"].exec("RESIZE_EDITING_AREA_BY", [0, 100]); */ 
-
 $('iframe').css('height','100px');
 
 </script>
 
-
-</div>
-
-<div class="col-md-4 pull-right"style="margin:5px 0 0 0; padding:10px 10px 0; font-size:20px;text-align:right;"><i id="refrash_comment_botton"  style="cursor: pointer;" class="fas fa-sync-alt"></i></div>
-<div class="col-md-4 pull-left" style="margin:5px 0 0 0; padding:14px 10px 0; font-size:18px;text-align:left;">${result.CNT_COMMENT }개의 덧글</div>
-<div class="clearfix"></div>
-
-
-<%-- 댓글내용영역 --%>
-<div id="commentList">
-</div>
-
+<hr>
 
 <%-- 게시판영역 --%>
-<div></div>
-
+<%-- 미구현
+<div id="viewList">
+<div class="bold_margin base_padding bold_bar_height color_base" style="cursor:pointer;text-align:center; font-size:1.5em; font-weight:bold;width:100%; margin:0 auto;" class="base_padding">목록보기</div>
+</div>
+ --%>
 
 </div>
 

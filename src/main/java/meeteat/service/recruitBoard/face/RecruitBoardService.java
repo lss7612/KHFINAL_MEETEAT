@@ -13,7 +13,7 @@ import meeteat.util.Paging;
 
 public interface RecruitBoardService {
 
-	public void write(RecruitBoard param);
+	public HashMap<String,Object> write(RecruitBoard param);
 
 	public List<HashMap<String,String>> list(Paging paging, SearchParam searchParam);
 

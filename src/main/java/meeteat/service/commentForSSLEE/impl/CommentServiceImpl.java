@@ -1,4 +1,4 @@
-package meeteat.service.comment.impl;
+package meeteat.service.commentForSSLEE.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import meeteat.dao.commentForSSLEE.face.CommentDao;
 import meeteat.dto.commentForSSLEE.Comment;
-import meeteat.service.comment.face.CommentService;
+import meeteat.service.commentForSSLEE.face.CommentService;
 @Service
 public class CommentServiceImpl implements CommentService {
 

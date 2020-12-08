@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	
+	/*지역 선택 시 해당 지역으로 검색한다.*/
 	$('#location table tr td span').click(function(){
 		console.log('clicked')
 		console.log($(this).text())
@@ -50,6 +51,7 @@ $(document).ready(function(){
 	
 })
 
+/*보이는 카테고리의 글씨와 체크되어있는 radio버튼을 일치시킨다.*/
 function changeChecked(){
 	
 	
@@ -65,7 +67,15 @@ function changeChecked(){
 	
 }
 
+/*검색카테고리 선택에 따라 보이는 카테고리 글씨를 바까줌*/
+function changeCategoryName(changeText){
+	
+	$('#categorySelectBtn').html(changeText)
+	
+}
 
+
+/*보이는애는 안보이게, 안보이는애는 보이게하는 펑션*/
 function toggleVisible(tag){
 	if(tag.hasClass('invisible') && tag.hasClass('none-height')){
 		tag.removeClass('invisible')
@@ -76,22 +86,17 @@ function toggleVisible(tag){
 	}
 }
 
-function changeCategoryName(changeText){
-	
-	$('#categorySelectBtn').html(changeText)
-	
-}
-
+/*search버튼을 눌렀을 때*/
 function search(){
 	console.log('clicked')
-	if (validationAll()){ 
-		toggleVisible($('#loading'))
+	if (searchValidationAll()){ /*search폼 밸리데이팅*/
+		toggleVisible($('#loading')) /*로딩창띄우기*/
 		$('form').submit();
 	}
 }
 
 //**********[모든 폼 빈칸 검사]**********//
-function validationAll() {
+function searchValidationAll() {
   //console.log('validating');
   
   //검색어
@@ -113,12 +118,10 @@ function validationEach(form){
 	return true;
 }
 
-/*키워드있는애 굵게하고 색깔주기*/
+/*키워드있는애 굵게하고 색깔주기
 function findSearchKeyword(){
 	
 	var keyword =$('searchParam.searchKeyword').val()
-	
-	
 	
 	if(
 		keyword==''
@@ -136,12 +139,8 @@ function findSearchKeyword(){
 		tag.addClass('none-height')
 	}
 }
+*/
 
-
-function popUpComment() { 
-	console.log('clicked')
-	window.open('www.naver.com','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');
-}
 
 
 

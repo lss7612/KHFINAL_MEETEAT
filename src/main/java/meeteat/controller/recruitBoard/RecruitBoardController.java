@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import meeteat.dto.recruitBoard.RecruitBoard;
 import meeteat.dto.recruitBoard.SearchParam;
+import meeteat.service.recruitBoard.face.ImageService;
 import meeteat.service.recruitBoard.face.RecruitBoardService;
 import meeteat.util.Paging;
 
@@ -24,6 +25,7 @@ public class RecruitBoardController {
 
 	private static final Logger logger = LoggerFactory.getLogger(RecruitBoardController.class);
 	@Autowired private RecruitBoardService recruitBoardService;
+	@Autowired ImageService imageService;
 	
 	//글쓰기페이지
 	@RequestMapping(value = "/recruitboard/write", method = RequestMethod.GET)
@@ -37,6 +39,10 @@ public class RecruitBoardController {
 			,String meet_time_min
 			,String meet_time_area
 			,Model model
+			,HttpSession session
+			,String ext01
+			,String ext02
+			,String ext03
 			) {
 
 		//전달받은 연월일 시간 하나의 스트링으로 바꿔주고 meet_time으로 넣기
@@ -60,7 +66,11 @@ public class RecruitBoardController {
 		logger.info("meet_time : "+param.getMeet_time());
 		logger.info("+ + + + + + + + + + + + + +");
 		
-		recruitBoardService.write(param);
+		HashMap<String,Object> result = recruitBoardService.write(param);
+		String board_no = "" + result.get("board_no");
+		String article_no = "" + result.get("article_no");
+		
+		imageService.saveFile(session, ext01, ext02, ext03, board_no, article_no);
 		
 		model.addAttribute("writeSuccess",true);
 		
@@ -76,6 +86,7 @@ public class RecruitBoardController {
 			) {
 		
 		//처음 게시판에 들어오게 되면 Location이 null인데 그때 null을 ""로 바까줌
+		//안바꾸면 서비스에서 오류
 		if(searchParam.getSearchLocation() == null)
 			searchParam.setSearchLocation("");
 		
@@ -98,7 +109,11 @@ public class RecruitBoardController {
 			,int article_no
 			,HttpSession session
 			,SearchParam searchParam
+			,String curPage
 			) {
+		
+		Paging paging = recruitBoardService.getPaging(curPage, searchParam);
+		model.addAttribute("paging", paging);
 		
 		HashMap<String,Object> result = recruitBoardService.getBoardView(board_no, article_no, searchParam, session);
 		
@@ -214,6 +229,29 @@ public class RecruitBoardController {
 		
 		return "/recruitboard/recommend_ajax";
 		
+	}
+	
+	@RequestMapping(value = "/recruitboard/list_ajax")
+	public String recruitBoardVieAjax(
+			int board_no
+			,int article_no
+			,String curPage
+			,SearchParam searchParam
+			,Model model
+			) {
+		
+		Paging paging = recruitBoardService.getPaging(curPage, searchParam);
+		model.addAttribute("paging", paging);
+		
+		logger.info("후앗!"+searchParam);
+		
+		List<HashMap<String,String>> list = recruitBoardService.list(paging, searchParam);
+		model.addAttribute("list",list);
+		model.addAttribute("article_no",article_no);
+		model.addAttribute("searchParam",searchParam);
+		
+		
+		return "/recruitboard/list_ajax";
 	}
 	
 	

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="searchQueryString" value="searchBoard_no=3&searchKeyword=${searchParam.searchKeyword }&searchCategory=${searchParam.searchCategory}" />
+<c:set var="searchQueryString" value="searchBoard_no=3&searchKeyword=${searchParam.searchKeyword }&searchCategory=${searchParam.searchCategory}&searchLocation=${searchParam.searchLocation }" />
 
 <style>
 .active > a {

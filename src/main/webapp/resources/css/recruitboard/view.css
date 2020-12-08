@@ -4,6 +4,22 @@
 	margin: 0 auto;
 }
 
+.imgBox {
+	cursor:pointer;
+	overflow: hidden;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	width: 150px;
+	height: 150px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+}
+
+.upload-image {
+    width: 150px;
+}
+
 .bolder_bar_height{
 	height: 70px;	
 }

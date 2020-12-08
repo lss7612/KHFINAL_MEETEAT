@@ -1,62 +1,15 @@
 <%@page import="java.util.Date"%>
-<%@page import="java.util.GregorianCalendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
 <link rel="stylesheet" href="/resources/css/recruitboard/list.css">
 <script type="text/javascript" src="/resources/js/recruitboard/list.js"></script>
 
 
-<div class="wrapper">
-
-<div class="none-height">
-	<input class="invisible" type="text" value="${searchParam.searchKeyword }" id="searchParam.searchKeyword">
-	<input class="invisible" type="text" value="${searchParam.searchCategory }" id="searchParam.searchCategory">
-</div>
-
-<c:set var="now" value="<%= new Date() %>"/>
-<fmt:formatDate var="fmt_now_second" value="${now }" pattern="yyyyMMddHHmmss"/>
-<fmt:formatDate var="fmt_now_minute" value="${now }" pattern="yyyyMMddHHmm"/>
-
-<h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
-
-<hr>
-
-<%-- + + + + + + + + + + + + + + + + 알림메시지영역 + + + + + + + + + + + + + + + + + + + +  --%>
-
-<div id="loading" class="none-height invisible">
-	<img id="" alt="로딩" src="/resources/img/loading.gif">
-	<span>검색중입니다... 잠시만 기다려주세요</span>
-</div>
-<div id="board">
-
-<%-- - - - - - - - - - - - - - - - - 알림메시지영역끝! -- - - -  - - - - - - - - - - - - --%>
-
-
-<%-- + + + + + + + + + + + + + + + + 지역영역 + + + + + + + + + + + + + + + + + + + +  --%>
-<div id="location" class="">
-	<table>
-	<tr>
-		<td><span>전체</span></td>
-		<td><span>서울</span></td>
-		<td><span>인천</span></td>
-		<td><span>경기</span></td>
-		<td><span>경상</span></td>
-		<td><span>전라</span></td>
-		<td><span>충청</span></td>
-		<td><span>강원</span></td>
-		<td><span>제주</span></td>
-	</tr>
-	</table>
-</div>
-<div class="clearfix"></div>
-<%-- - - - - - - - - - - - - - - - - 지역영역끝! -- - - -  - - - - - - - - - - - - --%>
-
-
 <%-- + + + + + + + + + + + + + + + + 게시판영역 + + + + + + + + + + + + + + + + + + + +  --%>
+searchParam ${searchParam }
 <table id="board_table" class="table table-striped table-hover" style="margin: 0 auto;">
 
 <thead>
@@ -86,6 +39,10 @@
 	<%-- 추천수 --%>
 	<td>${list.CNT_RECOMMEND }</td>
 	
+	
+	<c:set var="now" value="<%= new Date() %>"/>
+	<fmt:formatDate var="fmt_now_second" value="${now }" pattern="yyyyMMddHHmmss"/>
+	<fmt:formatDate var="fmt_now_minute" value="${now }" pattern="yyyyMMddHHmm"/>
 	
 	<%-- 작성시간 --%>
 	<td>
@@ -125,7 +82,14 @@
 		<span style="font-weight:bold; color:tomato;">[${list.PARTY_LOCATION }]</span>
 		</c:if>
 		<%--글제목부분 --%>
+		<c:choose>
+		<c:when test="${article_no eq list.ARTICLE_NO }">
+		<span style="font-weight:bolder; color:orange;">&nbsp;${list.ARTICLE_TITLE }</span> 
+		</c:when>
+		<c:otherwise>
 		&nbsp;${list.ARTICLE_TITLE } 
+		</c:otherwise>
+		</c:choose>
 		</a>
 	</span>
 	
@@ -235,10 +199,3 @@
 <c:import url="list_paging.jsp"></c:import>
 </div>
 <%-- - - - - - - - - - - - - - - - -페이징영역끝! -- - - -  - - - - - - - - - - - - --%>
-
-
-
-<a href="/recruitboard/write"><button class="btn btn-primary pull-right">글쓰기</button></a>
-</div>
-</body>
-</html>
