@@ -11,7 +11,7 @@
 	<br>
 	<img alt="" src="/resources/img/error.jpg">
 	<h4>접근권한이 없습니다...</h4>
-	<a href="#"><span>이전페이지로..</span></a>
+	<a href="/"><span>이전페이지로..</span></a>
 </div>
 </body>
 </html>

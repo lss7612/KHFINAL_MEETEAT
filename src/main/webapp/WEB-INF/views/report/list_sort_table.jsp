@@ -46,8 +46,8 @@
 
 </c:choose>
 검색
-<input type="text" id="search" class="form-control" style="width : auto; dispaly : inline;">
-<input type="button" id="searchBtn" value="아이디검색" placeholder = "id 검색" class="btn btn-primary"/>
+<input type="text" id="search" class="form-control" style="width : auto; dispaly : inline;" placeholder = "id 검색">
+<input type="button" id="searchBtn" value="아이디검색"  class="btn btn-primary"/>
 </div>
 <br>
 

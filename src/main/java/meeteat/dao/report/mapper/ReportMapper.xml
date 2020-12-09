@@ -8,6 +8,13 @@
  		select * from tb_userreport2
  		order by report_time desc
  	</sql>
+ 	<sql id="joinReportList">
+ 		select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
+		inner join tb_user2 u
+		    on ur.user_no = u.user_no
+		inner join tb_reportreason2 rr
+		    on ur.reason_no = rr.reason_no
+ 	</sql>
  
 	<select id="getAllReportList" parameterType="meeteat.util.Paging" resultType="meeteat.dto.report.UserReport">
 		select * from(
@@ -48,11 +55,7 @@
 	</select>
 	
 	<select id="searchListByUserId" parameterType="String" resultType="hashmap">
-		select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
-		inner join tb_user2 u
-		    on ur.user_no = u.user_no
-		inner join tb_reportreason2 rr
-		    on ur.reason_no = rr.reason_no
+		<include refid="joinReportList"/>
 		where ur.is_processed = 0
    			<if test='user_id != null and !user_id.equals("")'>
 				and user_id = #{user_id}
@@ -63,11 +66,7 @@
 	<select id="getReportByUsernoASC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
-				inner join tb_user2 u
-				    on ur.user_no = u.user_no
-				inner join tb_reportreason2 rr
-				    on ur.reason_no = rr.reason_no
+				<include refid="joinReportList"/>
 				where is_processed = 0 
 				order by user_no
 			)B
@@ -78,11 +77,7 @@
 	<select id="getReportByUsernoDESC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
-				inner join tb_user2 u
-				    on ur.user_no = u.user_no
-				inner join tb_reportreason2 rr
-				    on ur.reason_no = rr.reason_no
+				<include refid="joinReportList"/>
 				where is_processed = 0
 				order by user_no desc
 			)B
@@ -93,11 +88,7 @@
 	<select id="getReportByReportDateASC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
-				inner join tb_user2 u
-				    on ur.user_no = u.user_no
-				inner join tb_reportreason2 rr
-				    on ur.reason_no = rr.reason_no
+				<include refid="joinReportList"/>
 				where is_processed = 0 
 				order by report_time
 			)B
@@ -110,11 +101,7 @@
 	<select id="getReportByReportDateDESC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
-				inner join tb_user2 u
-				    on ur.user_no = u.user_no
-				inner join tb_reportreason2 rr
-				    on ur.reason_no = rr.reason_no
+				<include refid="joinReportList"/>
 				where is_processed = 0
 				order by report_time desc
 			)B
@@ -125,11 +112,7 @@
 	<select id="getReportByReportReasonASC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
-				inner join tb_user2 u
-				    on ur.user_no = u.user_no
-				inner join tb_reportreason2 rr
-				    on ur.reason_no = rr.reason_no
+				<include refid="joinReportList"/>
 				where is_processed = 0
 				order by reason_no
 			)B
@@ -141,11 +124,7 @@
 	<select id="getReportByReportReasonDESC" parameterType="meeteat.util.Paging" resultType="hashmap">
 		select * from(
 			select rownum rnum, B.* from(
-				select ur.user_no, u.user_id, ur.report_time, ur.reason_no, rr.reason_content, ur.report_content, ur.board_url from tb_userreport2 ur
-				inner join tb_user2 u
-				    on ur.user_no = u.user_no
-				inner join tb_reportreason2 rr
-				    on ur.reason_no = rr.reason_no
+				<include refid="joinReportList"/>
 				where is_processed = 0
 				order by reason_no desc
 			)B
