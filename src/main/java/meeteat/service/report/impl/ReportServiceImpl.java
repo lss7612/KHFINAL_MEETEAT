@@ -63,33 +63,33 @@ public class ReportServiceImpl implements ReportService{
 	}
 	
 	@Override
-	public List<HashMap<String, String>> getReportByReportReasonASC(Paging paging) {
-		return reportDao.getReportByReportReasonASC(paging);
+	public List<HashMap<String, String>> getReportByReportReasonASC(Paging paging, String search) {
+		return reportDao.getReportByReportReasonASC(paging.getStartNo(), paging.getEndNo(), search);
 	}
 	
 	@Override
-	public List<HashMap<String, String>> getReportByReportReasonDESC(Paging paging) {
-		return reportDao.getReportByReportReasonDESC(paging);
+	public List<HashMap<String, String>> getReportByReportReasonDESC(Paging paging, String search) {
+		return reportDao.getReportByReportReasonDESC(paging.getStartNo(), paging.getEndNo(), search);
 	}
 	
 	@Override
-	public List<HashMap<String, String>> getReportListByReportDateASC(Paging paging) {
-		return reportDao.getReportByReportDateASC(paging);
+	public List<HashMap<String, String>> getReportListByReportDateASC(Paging paging, String search) {
+		return reportDao.getReportByReportDateASC(paging.getStartNo(), paging.getEndNo(), search);
 	}
 	
 	@Override
-	public List<HashMap<String, String>> getReportListByReportDateDESC(Paging paging) {
-		return reportDao.getReportByReportDateDESC(paging);
+	public List<HashMap<String, String>> getReportListByReportDateDESC(Paging paging, String search) {
+		return reportDao.getReportByReportDateDESC(paging.getStartNo(), paging.getEndNo(), search);
 	}
 	
 	@Override
-	public List<HashMap<String, String>> getReportListByUernoASC(Paging paging) {
-		return reportDao.getReportByUsernoASC(paging);
+	public List<HashMap<String, String>> getReportListByUernoASC(Paging paging, String search) {
+		return reportDao.getReportByUsernoASC(paging.getStartNo(), paging.getEndNo(), search);
 	}
 	
 	@Override
-	public List<HashMap<String, String>> getReportListByUsernoDESC(Paging paging) {
-		return reportDao.getReportByUsernoDESC(paging);
+	public List<HashMap<String, String>> getReportListByUsernoDESC(Paging paging, String search) {
+		return reportDao.getReportByUsernoDESC(paging.getStartNo(), paging.getEndNo(), search);
 	}
 	
 	@Override

@@ -20,17 +20,23 @@ public interface ReportDao {
 	
 	public ResultReportReason getResultReasonList();
 
-	public List<HashMap<String, String>> getReportByUsernoASC(Paging paging);
+	public List<HashMap<String, String>> getReportByUsernoASC(@Param("startNo")int startNo
+			, @Param("endNo")int endNo, @Param("user_id")String user_id);
 
-	public List<HashMap<String, String>> getReportByUsernoDESC(Paging paging);
+	public List<HashMap<String, String>> getReportByUsernoDESC(@Param("startNo")int startNo
+			, @Param("endNo")int endNo, @Param("user_id")String user_id);
 
-	public List<HashMap<String, String>> getReportByReportDateASC(Paging paging);
+	public List<HashMap<String, String>> getReportByReportDateASC(@Param("startNo")int startNo
+			, @Param("endNo")int endNo, @Param("user_id")String user_id);
 
-	public List<HashMap<String, String>> getReportByReportDateDESC(Paging paging);
+	public List<HashMap<String, String>> getReportByReportDateDESC(@Param("startNo")int startNo
+			, @Param("endNo")int endNo, @Param("user_id")String user_id);
 
-	public List<HashMap<String, String>> getReportByReportReasonASC(Paging paging);
+	public List<HashMap<String, String>> getReportByReportReasonASC(@Param("startNo")int startNo
+			, @Param("endNo")int endNo, @Param("user_id")String user_id);
 
-	public List<HashMap<String, String>> getReportByReportReasonDESC(Paging paging);
+	public List<HashMap<String, String>> getReportByReportReasonDESC(@Param("startNo")int startNo
+			, @Param("endNo")int endNo, @Param("user_id")String user_id);
 
 	public void reportResultSet(int user_no);
 

@@ -46,7 +46,16 @@
 
 </c:choose>
 검색
-<input type="text" id="search" class="form-control" style="width : auto; dispaly : inline;" placeholder = "id 검색">
+<c:choose>
+	<c:when test="${search eq null }">
+		<input type="text" id="search" class="form-control" 
+			style="width : auto; dispaly : inline;" placeholder = "id 검색">
+	</c:when>
+	<c:when test="${search ne null }">
+		<input type="text" id="search" class="form-control" 
+			style="width : auto; dispaly : inline;" placeholder = "id 검색" value="${search }">
+	</c:when>
+</c:choose>
 <input type="button" id="searchBtn" value="아이디검색"  class="btn btn-primary"/>
 </div>
 <br>

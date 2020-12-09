@@ -36,19 +36,18 @@ public class ReportController {
 	@RequestMapping(value="/list/sort")
 	public String listSort(Paging curPage, int sortPart, int sortType 
 			, String search, Model model) {
+		
+		//sortPart
+		//	0 : 신고일시 / 1 : 회원번호 / 2 : 신고사유
+		//sortType
+		//	0 : 오름차순ASC / 1 : 내림차순DESC
+
 		logger.info("sort요청");
 		logger.info("curPage : "+curPage);
 		logger.info("sortPart : "+sortPart);
 		logger.info("sortType : "+sortType);
 		logger.info("user_id : "+search);
 		
-		if(search == null) {
-			search = "";
-		} else {
-			model.addAttribute("search", search);
-		}
-		model.addAttribute("sortPart", sortPart);
-		model.addAttribute("sortType", sortType);
 		
 		//페이징 계산
 		Paging paging = reportService.getPaging(curPage, search);
@@ -56,19 +55,18 @@ public class ReportController {
 		
 		//신고 목록 정렬
 		List<HashMap<String, String>> list;
-		if( search.equals("")) {
-			logger.info(" > > >전체 목록 조회 < < <");
-			list = sortReport(sortPart, sortType, paging);
-		} else {
-			logger.info(" > > >회원 ID로 검색 ("+search+")< < <"); 
-			list = reportService.getListByUserId(search);
-		}
+		list = sortReport(sortPart, sortType, paging, search);
 		logger.info(" > > > 조회 결과 < < <");
 		logger.info(""+list);
-		model.addAttribute("list", list);
 		
 		//정지사유 가져오기
 		ResultReportReason rrr = reportService.getResultReason();
+		
+		//전달값저장하기
+		model.addAttribute("list", list);
+		model.addAttribute("search", search);
+		model.addAttribute("sortPart", sortPart);
+		model.addAttribute("sortType", sortType);
 		model.addAttribute("resultReason", rrr);
 		
 		return "/report/list_sort";
@@ -77,36 +75,26 @@ public class ReportController {
 	@RequestMapping(value="/list/sortajax")
 	public String sortAjax(Paging curPage, int sortType, int sortPart
 			,String search, Model model) {
+		//sortPart
+		//	0 : 신고일시 / 1 : 회원번호 / 2 : 신고사유
+		//sortType
+		//	0 : 오름차순ASC / 1 : 내림차순DESC
 		logger.info("sort요청");
 		logger.info("sortPart : "+sortPart);
 		logger.info("sortType : "+sortType);
 		logger.info("curPage : "+curPage);
 		logger.info("search : "+search);
-		model.addAttribute("sortPart", sortPart);
-		model.addAttribute("sortType", sortType);
+		
 		
 		//페이징 계산
 		Paging paging = reportService.getPaging(curPage, search);
 		
 		model.addAttribute("paging", paging);
 		
-		//sortPart
-		//	0 : 신고일시
-		//	1 : 회원번호
-		//	2 : 신고사유
-		
-		//sortType
-		//	0 : 오름차순ASC
-		//	1 : 내림차순DESC
 		
 		//신고 목록 정렬 
 		List<HashMap<String,String>> list;
-		if(search == null) {
-			 list = sortReport(sortPart, sortType, paging);
-			
-		} else {
-			 list = reportService.getListByUserId(search);
-		}
+		list = sortReport(sortPart, sortType, paging, search);
 		
 		logger.info(""+list);
 		model.addAttribute("list", list);
@@ -115,9 +103,10 @@ public class ReportController {
 		ResultReportReason rrr = reportService.getResultReason();
 		model.addAttribute("resultReason", rrr);
 		
-		//sort값 저장하기
+		//sort값, 검색아이디 저장하기
 		model.addAttribute("sortPart", sortPart);
 		model.addAttribute("sortType", sortType);
+		model.addAttribute("search", search);
 		
 		return "/report/list_sort_table";
 	}
@@ -165,6 +154,7 @@ public class ReportController {
 		logger.info("");
 		logger.info(""+search);
 		
+		//페이징 계산
 		Paging paging = reportService.getReportResultPaging(curPage, search);
 		model.addAttribute("paging", paging);
 		
@@ -173,7 +163,6 @@ public class ReportController {
 			search = "";
 		}
 		list = reportService.getReportResultList(paging.getStartNo(), paging.getEndNo(), search);
-		//페이징 계산
 		
 		
 		//신고 처리 목록 조회하기
@@ -187,35 +176,35 @@ public class ReportController {
 		return "/report/result_list";
 	}
 	
-	
-	//신고 목록 정렬 메소드
-	public List<HashMap<String, String>> sortReport(int sortPart, int sortType, Paging paging){
+	public List<HashMap<String, String>> sortReport(int sortPart, int sortType, Paging paging, String search){
 		if( sortPart == 0) {
 			if(sortType == 0) {
 				logger.info(" > > >신고일시 정렬 : 오름차순 < < <");
-				return reportService.getReportListByReportDateASC(paging);
+				return reportService.getReportListByReportDateASC(paging, search);
 			} else {
 				logger.info(" > > >신고일시 정렬 : 내림차순 < < <");
-				return reportService.getReportListByReportDateDESC(paging);
+				return reportService.getReportListByReportDateDESC(paging, search);
 			}
 		} else if( sortPart ==1) {
 			if(sortType==0) {
 				logger.info("> > > 회원번호 정렬 : 오름차순 < < <");
-				return reportService.getReportListByUernoASC(paging);
+				return reportService.getReportListByUernoASC(paging, search);
 			} else {
 				logger.info("> > > 회원번호 정렬 : 내림차순 < < <");
-				return reportService.getReportListByUsernoDESC(paging);
+				return reportService.getReportListByUsernoDESC(paging, search);
 			}
 		} else if(sortPart == 2 ){
 			if(sortType==0) {
 				logger.info(" > > > 신고 사유 정렬 : 오름차순 < < <");
-				return reportService.getReportByReportReasonASC(paging);
+				return reportService.getReportByReportReasonASC(paging, search);
 			} else {
 				logger.info(" > > > 신고 사유 정렬 : 내림차순 < < <");
-				return reportService.getReportByReportReasonDESC(paging);
+				return reportService.getReportByReportReasonDESC(paging, search);
 			}
 		} else {
 			return null;
 		}
 	}
+	
+	
 }

@@ -31,7 +31,8 @@ window.onload=showWindow;
 </script>
 <style type="text/css">
 #closeBtn{
-	float : right;
+	position : absolute;
+	left:35%;
 }
 
 </style>
@@ -40,6 +41,8 @@ window.onload=showWindow;
 <h1>신고완료 </h1>
 5초뒤 자동으로 닫힙니다.
 <hr>
+<div>
 <button id="closeBtn" onclick="popupClose();" class="btn btn-primary" >창 닫기</button>
+</div>
 </body>
 </html>

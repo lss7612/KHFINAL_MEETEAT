@@ -17,17 +17,17 @@ public interface ReportService {
 	
 	public ResultReportReason getResultReason();
 
-	public List<HashMap<String, String>> getReportListByReportDateASC(Paging paging);
+	public List<HashMap<String, String>> getReportListByReportDateASC(Paging paging, String search);
 
-	public List<HashMap<String, String>> getReportListByReportDateDESC(Paging paging);
+	public List<HashMap<String, String>> getReportListByReportDateDESC(Paging paging, String search);
 
-	public List<HashMap<String, String>> getReportListByUernoASC(Paging paging);
+	public List<HashMap<String, String>> getReportListByUernoASC(Paging paging, String search);
 
-	public List<HashMap<String, String>> getReportListByUsernoDESC(Paging paging);
+	public List<HashMap<String, String>> getReportListByUsernoDESC(Paging paging, String search);
 
-	public List<HashMap<String, String>> getReportByReportReasonASC(Paging paging);
+	public List<HashMap<String, String>> getReportByReportReasonASC(Paging paging, String search);
 
-	public List<HashMap<String, String>> getReportByReportReasonDESC(Paging paging);
+	public List<HashMap<String, String>> getReportByReportReasonDESC(Paging paging, String search);
 
 	public void reportResultSet(int user_no);
 
