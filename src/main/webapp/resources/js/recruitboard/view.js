@@ -11,11 +11,13 @@ $(document).ready(function(){
 	getCommentList()
 	
 	//추천눌렀을때 ajax동작
-	
 	$('#btn_recommend').click(function(){
-		console.log('clicked')
 		getCntRecommend()
 	})
+	
+	
+	
+	
 	
 	
 	//본문 수정 버튼 눌렀을 때
@@ -44,6 +46,7 @@ $(document).ready(function(){
 		console.log('loading')
 		isLoadList+=1;
 	}
+	
 	//코멘트 새로고침 버튼 클릭시 gif 파일을 한번 불러왔다가 코멘트리스트를 출력하기
 	$('#refrash_comment_botton').click(function(){
 		
@@ -169,12 +172,14 @@ function getCntRecommend() {
 		type: "get"
 		, url: "/recruitboard/recommend"
 		, data:{ board_no : 3, article_no : $('#article_no').val()}
-		, dataType:"html" //응답받은 데이터의 형식
+		, dataType:"json" //응답받은 데이터의 형식
 		, success: function( res ){
-			$('#cnt_recommend').html(res)
-			if(res==1)
+			console.log(res.recommendCnt)
+			console.log(res.isRecommend)
+			$('#cnt_recommend').html(res.recommendCnt)
+			if(res.isRecommend==0)
 				$('#isRecommend').text('추천한 게시물입니다')
-			if(res==0)
+			if(res.isRecommend==1)
 				$('#isRecommend').text('')
 		}
 		, error: function(){

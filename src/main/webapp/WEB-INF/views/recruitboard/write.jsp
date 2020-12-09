@@ -7,7 +7,16 @@
 <link rel="stylesheet" href="/resources/css/recruitboard/write.css">
 <script type="text/javascript" src="/resources/js/recruitboard/write.js"></script>
 
+
+<%-- 로딩 모달 --%>
+<div class="modal_img_upload invisible">
+	<img alt="" src="/resources/img/loading.gif"><br>
+	<span style="font-weight:bold; font-size:30px;">글 등록중입니다. 조금만 기다려주세요.</span>
+</div>
+
+
 <div id="write_wrapper">
+
 
 <h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
 <hr>
@@ -131,15 +140,16 @@
 	<hr>
 	<div class="clearfix none_height"></div>
 	
+	<div class="base_bar_height light_padding"><button id="btn_submit" type="button" class="pull-right btn btn-primary">글쓰기</button></div>
+	
 	<%-- 내용 --%>
 	<div class="form-group" style="min-width:550px;"> 
 		<label for="form_article_content">내용</label>
-		<textarea rows="10" id="form_article_content" name="article_content" style="min-width:550px; width:100%;" alertComment="내용"></textarea>
+		<textarea rows="20" id="form_article_content" name="article_content" style="min-width:550px; width:100%;" alertComment="내용"></textarea>
 	</div>
 
 	
 </form>
-<div class="base_bar_height light_padding"><button id="btn_submit" type="button" class="pull-right btn btn-primary">글쓰기</button></div>
 </div>
 </div>
 </div>
@@ -156,6 +166,7 @@ nhn.husky.EZCreator.createInIFrame({
 $('.se2_inputarea').css('min-width','550px');
 
 </script>
+
 
 <form id="imgForm" method="POST" enctype="multipart/form-data" >
 	<%-- 이미지폼1 이미지박스1과 연결 --%>

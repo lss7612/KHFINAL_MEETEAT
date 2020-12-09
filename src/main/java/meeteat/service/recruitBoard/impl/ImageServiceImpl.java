@@ -39,11 +39,14 @@ public class ImageServiceImpl implements ImageService{
 		String storedPath = context.getRealPath("resources/file/recruitboard/tmp");
 		logger.info("realPath : " + storedPath);
 		
+		//디렉토리폴더 지정
 		File stored = new File(storedPath);
 		if(!stored.exists()) {
 			stored.mkdir();
 		}
 		
+		
+		//각각의 파일들을 받을 인스턴스 생성
 		if(img1!=null) {
 			if(img1.getSize()!=0) {
 				int position = img1.getOriginalFilename().lastIndexOf(".");
@@ -58,7 +61,6 @@ public class ImageServiceImpl implements ImageService{
 				try {
 					img1.transferTo(temp01);
 				} catch (IllegalStateException | IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -79,7 +81,6 @@ public class ImageServiceImpl implements ImageService{
 				try {
 					img2.transferTo(temp02);
 				} catch (IllegalStateException | IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -99,7 +100,6 @@ public class ImageServiceImpl implements ImageService{
 				try {
 					img3.transferTo(temp03);
 				} catch (IllegalStateException | IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -123,16 +123,11 @@ public class ImageServiceImpl implements ImageService{
 		String tmpPath = context.getRealPath("resources/file/recruitboard/tmp");
 		String savePath = context.getRealPath("resources/file/recruitboard/save/");
 		
-		logger.info("tmpPath"+tmpPath);
-		
 		String tmpFile01Path = tmpPath+"/user_"+user_no+"_recruitImg01"+ext01;
 		String tmpFile02Path = tmpPath+"/user_"+user_no+"_recruitImg02"+ext02;
 		String tmpFile03Path = tmpPath+"/user_"+user_no+"_recruitImg03"+ext03;
 		
-		logger.info("tmpFile01Path"+tmpFile01Path);
-		logger.info("tmpFile02Path"+tmpFile02Path);
-		logger.info("tmpFile03Path"+tmpFile03Path);
-		
+		//tmp파일을 각각 변수에 저장
 		File tmp01 = new File(tmpFile01Path);
 		File tmp02 = new File(tmpFile02Path);
 		File tmp03 = new File(tmpFile03Path);
@@ -142,10 +137,13 @@ public class ImageServiceImpl implements ImageService{
 		
 		String val = sdf.format(now);
 		
-		String saveName01 = user_no+val+ext01;
-		String saveName02 = user_no+val+ext02;
-		String saveName03 = user_no+val+ext03;
+		//저장이름만들기
+		String saveName01 = user_no+val+"01"+ext01;
+		String saveName02 = user_no+val+"02"+ext02;
+		String saveName03 = user_no+val+"03"+ext03;
 		
+		
+		//tmp파일 각각을 파일 입출력 스트림을 이용해 save할 directory에 저장이름으로 복사 
 		if(tmp01.exists()) {
 			File save01 = new File(savePath, saveName01);
 			try {
@@ -160,10 +158,8 @@ public class ImageServiceImpl implements ImageService{
 	            fis.close();
 				fos.close();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -172,6 +168,9 @@ public class ImageServiceImpl implements ImageService{
 			param.put("board_no", board_no);
 			param.put("file_originname", tmp01.getName());
 			param.put("file_storedname", saveName01);
+			
+			logger.info("첫번쨰파일 저장합니다!");
+			logger.info(saveName01);
 			
 			imageDao.saveFile(param);
 
@@ -192,10 +191,8 @@ public class ImageServiceImpl implements ImageService{
 	            fis.close();
 				fos.close();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -204,6 +201,9 @@ public class ImageServiceImpl implements ImageService{
 			param.put("board_no", board_no);
 			param.put("file_originname", tmp02.getName());
 			param.put("file_storedname", saveName02);
+			
+			logger.info("두번째파일 저장합니다!");
+			logger.info(saveName02);
 			
 			imageDao.saveFile(param);
 			
@@ -222,10 +222,8 @@ public class ImageServiceImpl implements ImageService{
 				fis.close();
 				fos.close();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 				
@@ -237,19 +235,27 @@ public class ImageServiceImpl implements ImageService{
 			param.put("file_originname", tmp03.getName());
 			param.put("file_storedname", saveName03);
 			
+			logger.info("세번째파일 저장합니다!");
+			logger.info(saveName03);
+			
 			imageDao.saveFile(param);
 			
 		}
 		
+		tmp01.delete();
+		tmp02.delete();
+		tmp03.delete();
 		
-		String stored_name = null;
-		String origin_name = null;
+	}
+
+	@Override
+	public void deleteFile(String board_no, String article_no) {
+
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("board_no", board_no);
+		param.put("article_no", article_no);
 		
-		
-		
-		logger.info("tmp Delete? " + tmp01.delete());
-		logger.info("tmp Delete? " + tmp02.delete());
-		logger.info("tmp Delete? " + tmp03.delete());
+		imageDao.deleteFile(param);
 		
 	}
 

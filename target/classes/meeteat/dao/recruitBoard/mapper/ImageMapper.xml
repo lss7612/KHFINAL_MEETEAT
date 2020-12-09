@@ -8,5 +8,19 @@
 		INSERT INTO tb_file2 (file_no, file_originname, file_storedname, article_no, board_no)
 		VALUES(tb_file2_seq.nextval,#{file_originname},#{file_storedname},#{article_no},#{board_no})
 	</insert>
+	
+	<update id="modifyFile" parameterType="hashmap">
+		UPDATE tb_file2
+		SET
+			file_storedname = #{file_storedname}
+		WHERE article_no = #{article_no}
+			AND board_no = #{board_no}
+	</update>
+	
+	<delete id="deleteFile" parameterType="hashmap">
+		DELETE tb_file2
+		WHERE board_no = #{board_no}
+			AND article_no = #{article_no}
+	</delete>
 
 </mapper>

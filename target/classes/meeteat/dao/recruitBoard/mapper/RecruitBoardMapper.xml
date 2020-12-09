@@ -12,11 +12,11 @@
 	<insert id="insertRecruitBoard" parameterType="meeteat.dto.recruitBoard.RecruitBoard">
 		INSERT INTO tb_board2 (
 			article_no, article_title, article_content, party_location
-			, user_no, create_date, file_no, is_delete, article_hit, board_no
+			, user_no, create_date, is_delete, article_hit, board_no
 			, meet_time)
 		VALUES (
 			#{article_no}, #{article_title},#{article_content}, #{party_location, jdbcType=VARCHAR}
-			, #{user_no}, sysdate, #{file_no}, #{is_delete}, #{article_hit}, #{board_no}
+			, #{user_no}, sysdate, #{is_delete}, #{article_hit}, #{board_no}
 			, to_date(#{meet_time},'YYYY-MM-DDHH24MI'))
 	</insert>
 	

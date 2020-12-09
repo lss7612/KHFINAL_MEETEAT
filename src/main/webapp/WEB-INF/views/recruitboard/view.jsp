@@ -8,6 +8,7 @@
 <script type="text/javascript" src="/resources/js/recruitboard/view.js"></script>
 
 <div id="view_wrapper">
+
 <h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
 <hr>
 
@@ -47,7 +48,9 @@
 		</c:forEach>
 	</div>
 	<div class="clearfix" style=""></div>
-<%-- 내용영역 --%>
+	
+	
+	<%-- 내용영역 --%>
 	
 	<div id="view_content_bar" class="light_margin bold_padding vertical_bold_margin" style="padding:5px; text-align:left;">
 		
