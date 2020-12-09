@@ -18,7 +18,7 @@ function popupClose(){
 
 var wintimer;
 clearTimeout(wintimer);
-wintimer= setTimeout("closewin()",3000);  //천분의 1초 단위로 초를 지정합니다..
+wintimer= setTimeout("closewin()",5000);  
 
 function closewin() {
    window.close();

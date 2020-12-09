@@ -560,9 +560,12 @@ insert into tb_userreport2 (user_no, report_time, reason_no, report_content, is_
 insert into tb_userreport2 (user_no, report_time, reason_no, report_content, is_processed) values(176, sysdate + (1/24/60/60)*204, 5, 'test', 0);
 insert into tb_userreport2 (user_no, report_time, reason_no, report_content, is_processed) values(177, sysdate + (1/24/60/60)*205, 1,null, 0);
 
+insert into tb_userreport2 (user_no, report_time, reason_no, report_content, is_processed) values(177, sysdate + (1/24/60/60)*205, 1, '', 0);
 
+select * from tb_userreport2
+order by report_time desc;
 
-
+select * from tb_user2;
 
 --신고처리 더미데이터
 insert into tb_resultreport2 (user_no, report_result_date, report_result_detail_no) values(4, sysdate, 1);
