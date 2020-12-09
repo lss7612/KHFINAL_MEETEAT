@@ -55,6 +55,7 @@
 
 <table id="reportList" class="table table-bordered table-hover">
 <tr>
+	<th>순번</th>
 	<th>회원번호</th>
 	<th>회원 아이디 </th>
 	<th>신고 일시</th>
@@ -66,6 +67,7 @@
 </tr>
 <c:forEach items="${list }" var="hashmap">
 	<tr>
+		<td>${hashmap.RNUM }</td>
 		<td>${hashmap.USER_NO }</td>
 		<td>${hashmap.USER_ID}</td>
 		<td>

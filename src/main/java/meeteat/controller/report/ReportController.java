@@ -34,7 +34,7 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value="/list/sort")
-	public String listSort(Paging curPage, int sortType, int sortPart
+	public String listSort(Paging curPage, int sortPart, int sortType 
 			, String search, Model model) {
 		logger.info("sort요청");
 		logger.info("curPage : "+curPage);
@@ -44,6 +44,8 @@ public class ReportController {
 		
 		if(search == null) {
 			search = "";
+		} else {
+			model.addAttribute("search", search);
 		}
 		model.addAttribute("sortPart", sortPart);
 		model.addAttribute("sortType", sortType);
@@ -97,8 +99,14 @@ public class ReportController {
 		//	0 : 오름차순ASC
 		//	1 : 내림차순DESC
 		
-		//신고 목록 정렬 hashmap으로 변경하자.
-		List<HashMap<String,String>> list = sortReport(sortPart, sortType, paging);
+		//신고 목록 정렬 
+		List<HashMap<String,String>> list;
+		if(search == null) {
+			 list = sortReport(sortPart, sortType, paging);
+			
+		} else {
+			 list = reportService.getListByUserId(search);
+		}
 		
 		logger.info(""+list);
 		model.addAttribute("list", list);

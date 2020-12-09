@@ -58,8 +58,8 @@ function selectValue(str){
 		}
 		, dataType : "html"
 		, success : function(res){
-			console.log('요청성공')
-			console.log(res)
+			//console.log('요청성공')
+			//console.log(res)
 			$("#tableview").empty();
 			$("#tableview").append(res);
 		}
