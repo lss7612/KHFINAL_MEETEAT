@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import meeteat.dao.recruitBoard.face.RecruitBoardDao;
 import meeteat.dto.recruitBoard.RecruitBoard;
 import meeteat.dto.recruitBoard.SearchParam;
+import meeteat.service.recruitBoard.face.ImageService;
 import meeteat.service.recruitBoard.face.RecruitBoardService;
 import meeteat.util.Paging;
 
@@ -24,9 +25,14 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 
 	private static final Logger logger = LoggerFactory.getLogger(RecruitSerivceImpl.class);
 	@Autowired RecruitBoardDao recruitBoardDao;
+	@Autowired ImageService imageService;
 	
 	@Override
-	public HashMap<String,Object> write(RecruitBoard param) {
+	public HashMap<String,Object> write(RecruitBoard param
+			, HttpSession session
+			, String ext01
+			, String ext02
+			,String ext03) {
 
 		//남은구현
 		//파일이 있으면 tb_file_seq.nextval받아오기
@@ -43,6 +49,9 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		HashMap<String,Object> result = new HashMap<String, Object>();
 		result.put("article_no", article_no);
 		result.put("board_no", 3);
+		
+		imageService.saveFile(session, ext01, ext02, ext03, "3", ""+article_no);
+		
 		return result;
 		
 	}
@@ -188,17 +197,17 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 
 
 	@Override
-	public Map<String, Object> getModifyParam(int board_no,int article_no) {
+	public Map<String, Object> getModifyParam(int board_no,int article_no,HttpSession session) {
 		
 		Map<String, Object> param = new HashMap<>();
 		
-		param.put("board_no", board_no);
+		param.put("board_no", 3);
 		param.put("article_no", article_no);
+		param.put("user_no", session.getAttribute("user_no"));
 		
 		Map<String, Object> result = new HashMap<>();
 		result = recruitBoardDao.getBoardView(param);
 		
-//		Integer.parseInt((String) result.get("MEET_TIME_DATE"));
 		int meet_time_clock = Integer.parseInt((String) result.get("MEET_TIME_CLOCK"));
 		String meet_time_area = null;
 		String meet_time_clock_str = null;
@@ -233,9 +242,8 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		result.put("MEET_TIME_AREA", meet_time_area);
 		result.put("MEET_TIME_CLOCK", meet_time_clock_str);
 		
-		logger.info("영차"+result.get("MEET_TIME_DATE"));
-		logger.info("영차"+result.get("MEET_TIME_CLOCK"));
-		logger.info("영차"+result.get("MEET_TIME_MIN"));
+		List<HashMap<String,Object>> imglist = recruitBoardDao.getImgList(param);
+		result.put("IMGLIST", imglist);
 		
 		return result;
 	}
@@ -267,15 +275,27 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 
 
 	@Override
-	public int recommend(Map<String, Object> param) {
+	public HashMap<String, Object> recommend(Map<String, Object> param) {
 
-		if(recruitBoardDao.isRecommended(param)==0) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		int isRecommended = recruitBoardDao.isRecommended(param);
+		result.put("isRecommend", isRecommended);
+		
+		if(isRecommended==0) {
 			recruitBoardDao.increaseRecommendCnt(param);
 		} else {
 			recruitBoardDao.decreaseRecommendCnt(param);
 		}
 		
-		return recruitBoardDao.getRecommendCnt(param);
+		logger.info("isrecommended : " + isRecommended);
+		
+		
+		int recommendCnt = recruitBoardDao.getRecommendCnt(param);
+		result.put("recommendCnt", recommendCnt);
+		
+		return result;
+		
 	}
 
 

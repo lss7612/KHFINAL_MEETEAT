@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import meeteat.dto.recruitBoard.RecruitBoard;
 import meeteat.dto.recruitBoard.SearchParam;
@@ -66,11 +67,11 @@ public class RecruitBoardController {
 		logger.info("meet_time : "+param.getMeet_time());
 		logger.info("+ + + + + + + + + + + + + +");
 		
-		HashMap<String,Object> result = recruitBoardService.write(param);
-		String board_no = "" + result.get("board_no");
-		String article_no = "" + result.get("article_no");
+		HashMap<String,Object> result = recruitBoardService.write(param, session, ext01, ext02, ext03);
+//		String board_no = "" + result.get("board_no");
+//		String article_no = "" + result.get("article_no");
 		
-		imageService.saveFile(session, ext01, ext02, ext03, board_no, article_no);
+//		imageService.saveFile(session, ext01, ext02, ext03, board_no, article_no);
 		
 		model.addAttribute("writeSuccess",true);
 		
@@ -137,8 +138,8 @@ public class RecruitBoardController {
 			return "/common/errorpage";
 		}
 		
-		logger.info("board_no : " + board_no + ", article_no : " + article_no);
-		Map<String,Object> result= recruitBoardService.getModifyParam(board_no,article_no);
+		logger.info("의쌰의쌰 board_no : " + board_no + ", article_no : " + article_no);
+		Map<String,Object> result= recruitBoardService.getModifyParam(board_no,article_no,session);
 		result.put("ARTICLE_NO", article_no);
 		
 		model.addAttribute("result", result);
@@ -156,33 +157,31 @@ public class RecruitBoardController {
 			,String meet_time_area
 			,HttpSession session
 			,Model model
+			,String ext01
+			,String ext02
+			,String ext03
 			) {
 		
 		//전달받은 연월일 시간 하나의 스트링으로 바꿔주고 meet_time으로 넣기
 		if(meet_time_area.equals("pm")) {
-			logger.info("오후입니다");
 			int clock_no = Integer.parseInt(meet_time_clock);
 			if(clock_no != 12)	clock_no += 12;
 			meet_time_clock = "" + clock_no;
 		} else if(meet_time_area.equals("am") && meet_time_clock.equals("12")) {
-			logger.info("오전12시 입니다");
 			meet_time_clock = "00"; 
 		}
 		param.setMeet_time(meet_time_date+meet_time_clock+meet_time_min);
 		
-		logger.info("+ + + 전달 데이터확인 + + +");
-		logger.info("연월일 : "+meet_time_date);
-		logger.info("시간대 : "+meet_time_area);
-		logger.info("시간 : "+meet_time_clock);
-		logger.info("분 : "+meet_time_min);
-		logger.info("dto : "+param);
-		logger.info("meet_time : "+param.getMeet_time());
-		logger.info("article_no : "+param.getArticle_no());
-		logger.info("+ + + + + + + + + + + + + +");
-		
 		recruitBoardService.modify(param);
 		
-		return "redirect:/recruitboard/view?board_no="+3+"&article_no="+param.getArticle_no();
+		
+		String board_no = "3";
+		String article_no =""+param.getArticle_no();
+		
+		imageService.deleteFile(board_no, article_no);
+		imageService.saveFile(session, ext01, ext02, ext03, board_no, article_no);
+		
+		return "redirect:/recruitboard/view?board_no="+board_no+"&article_no="+article_no;
 	}
 	
 	@RequestMapping(value = "/recruitboard/delete")
@@ -205,7 +204,7 @@ public class RecruitBoardController {
 	}
 	
 	@RequestMapping(value = "/recruitboard/recommend")
-	public String recommend(
+	public @ResponseBody HashMap<String, Object> recommend(
 			HttpSession session
 			,int article_no
 			,int board_no
@@ -221,13 +220,13 @@ public class RecruitBoardController {
 		param.put("board_no", board_no);
 		param.put("user_no", session.getAttribute("user_no"));
 
-		int result = recruitBoardService.recommend(param);
+		HashMap<String, Object> result = recruitBoardService.recommend(param);
 		model.addAttribute("result", result);
 		
 		logger.info("영차"+result);
 		
 		
-		return "/recruitboard/recommend_ajax";
+		return result;
 		
 	}
 	

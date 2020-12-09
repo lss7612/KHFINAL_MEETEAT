@@ -12,4 +12,6 @@ public interface ImageService {
 
 	public void saveFile(HttpSession session,String ext01,String ext02,String ext03, String board_no, String article_no);
 
+	public void deleteFile(String board_no, String article_no);
+
 }
