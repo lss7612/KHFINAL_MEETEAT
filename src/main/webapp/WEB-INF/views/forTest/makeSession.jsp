@@ -6,6 +6,22 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript">
+//신고하기버튼 클릭시 동작할 함수
+function showPopup(){
+	var frmPop = document.frmPopup;
+	
+	//팝업 
+	window.open("http://localhost:8088/report/doReport","report"
+			, "width=500px,height=425px")
+	frmPop.action = "http://localhost:8088/report/doReport";
+	frmPop.target = "report";
+	frmPop.user_no.value = ${user_no};
+	frmPop.url.value = "<%=request.getRequestURL()%>";
+}
+// 신고하기 동작 함수 끝
+</script>
 </head>
 <body>
 <h1>SessionFactory</h1>
@@ -23,7 +39,11 @@
 <h2><a href="/recruitboard/list">게시판으로!</a></h2>
 <h2><a href="/admin/report/list">신고목록으로!</a></h2>
 <h2><a href="/admin/report/result/list">신고 처리 목록으로!</a></h2>
-
+<form name="frmPopup" method="POST">
+	<input type="hidden" name= "user_no">
+	<input type="hidden" name= "url" />
+<button onclick="showPopup();">신고</button>
+</form>
 <hr>
 
 <c:if test="${isLogin }">

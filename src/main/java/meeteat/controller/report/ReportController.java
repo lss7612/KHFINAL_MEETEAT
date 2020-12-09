@@ -30,7 +30,7 @@ public class ReportController {
 	public String list(Paging curPage, Model model) {
 		
 		return "redirect:/admin/report/list/sort?curPage="+curPage.getCurPage()
-				+"&sortType=0&sortPart=0";
+				+"&sortType=1&sortPart=0";
 	}
 	
 	@RequestMapping(value="/list/sort")

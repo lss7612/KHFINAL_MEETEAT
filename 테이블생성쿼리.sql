@@ -16,6 +16,7 @@ drop table tb_boardclass2;
 drop table tb_user2;
 drop table tb_grade2;
 
+-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
 
 -- TB_GRADE2 Table Create SQL
 CREATE TABLE TB_GRADE2
@@ -27,9 +28,8 @@ CREATE TABLE TB_GRADE2
 /
 
 CREATE SEQUENCE TB_GRADE2_SEQ
-START WITH 0
-INCREMENT BY 1
-minvalue 0;
+START WITH 1
+INCREMENT BY 1;
 /
 
 CREATE OR REPLACE TRIGGER TB_GRADE2_AI_TRG
@@ -88,17 +88,6 @@ BEGIN
 END;
 /
 
--- 신고목록 테이블에 insert작업시 회원정보의 blockcnt 횟수 증가 트리거
-CREATE OR REPLACE TRIGGER TB_USER2_blockcnt_AI_TRG
-BEFORE INSERT ON tb_userreport2
-    for each row
-begin 
-    update tb_user2 set user_blockcnt = user_blockcnt +1
-    where user_no = :new.user_no;
-end; 
-/
-
-drop trigger tb_user2_blockcnt_ai_trg;
 --DROP TRIGGER TB_USER2_AI_TRG;
 /
 
@@ -174,14 +163,13 @@ CREATE TABLE TB_BOARD2
     user_no            NUMBER            NOT NULL, 
     create_date        DATE              NOT NULL, 
     revision_date      DATE              NULL, 
-    file_no            NUMBER            NULL, 
     is_delete          NUMBER            NOT NULL, 
     category           VARCHAR2(20)      NULL, 
     article_hit        NUMBER            NOT NULL, 
     post_group         NUMBER            NULL, 
     post_step          NUMBER            NULL, 
     post_indent        NUMBER            NULL, 
-    meet_time          VARCHAR2(100)     NULL, 
+    meet_time          DATE              NULL, 
     article_pw         VARCHAR2(100)     NULL, 
     terminate_date     DATE              NULL, 
     mate_list          VARCHAR2(100)     NULL, 
@@ -235,9 +223,6 @@ COMMENT ON COLUMN TB_BOARD2.create_date IS '최초작성시간'
 /
 
 COMMENT ON COLUMN TB_BOARD2.revision_date IS '최종수정시간'
-/
-
-COMMENT ON COLUMN TB_BOARD2.file_no IS '첨부파일경로'
 /
 
 COMMENT ON COLUMN TB_BOARD2.is_delete IS '삭제여부'
@@ -576,8 +561,8 @@ CREATE TABLE TB_USERREPORT2
     report_time       DATE             NOT NULL, 
     reason_no         NUMBER           NOT NULL, 
     report_content    VARCHAR2(300)    NULL, 
-    board_url         VARCHAR2(200)    NULL,
-    is_processed      number           default 0 not null ,
+    board_url         VARCHAR2(200)    NULL, 
+    is_processed      NUMBER           NOT NULL, 
     CONSTRAINT TB_USERREPORT2_PK PRIMARY KEY (report_no)
 )
 /
@@ -622,6 +607,9 @@ COMMENT ON COLUMN TB_USERREPORT2.report_content IS '신고 내용'
 /
 
 COMMENT ON COLUMN TB_USERREPORT2.board_url IS '게시글URL'
+/
+
+COMMENT ON COLUMN TB_USERREPORT2.is_processed IS '처리여부'
 /
 
 ALTER TABLE TB_USERREPORT2
@@ -781,6 +769,8 @@ CREATE TABLE TB_FILE2
     file_no            NUMBER           NOT NULL, 
     file_originname    VARCHAR2(500)    NOT NULL, 
     file_storedname    VARCHAR2(200)    NOT NULL, 
+    article_no         NUMBER           NULL, 
+    board_no           NUMBER           NULL, 
     CONSTRAINT TB_FILE2_PK PRIMARY KEY (file_no)
 )
 /
@@ -818,19 +808,25 @@ COMMENT ON COLUMN TB_FILE2.file_originname IS '오리지날 파일명'
 COMMENT ON COLUMN TB_FILE2.file_storedname IS '스토어드 파일명'
 /
 
+COMMENT ON COLUMN TB_FILE2.article_no IS '게시글번호'
+/
+
+COMMENT ON COLUMN TB_FILE2.board_no IS '게시판분류번호'
+/
+
 ALTER TABLE TB_FILE2
-    ADD CONSTRAINT FK_TB_FILE2_file_no_TB_BOARD2_ FOREIGN KEY (file_no)
-        REFERENCES TB_BOARD2 (file_no)
+    ADD CONSTRAINT FK_TB_FILE2_article_no_TB_BOAR FOREIGN KEY (article_no, board_no)
+        REFERENCES TB_BOARD2 (article_no, board_no)
 /
 
 
 -- TB_GRADE2 Table Create SQL
 CREATE TABLE TB_RECOMMEND2
 (
-    article_no    NUMBER          NOT NULL, 
-    board_no      NUMBER          NULL, 
-    user_id       VARCHAR2(20)    NULL, 
-    CONSTRAINT TB_RECOMMEND2_PK PRIMARY KEY (article_no, board_no)
+    article_no    NUMBER    NOT NULL, 
+    board_no      NUMBER    NOT NULL, 
+    user_no       NUMBER    NOT NULL, 
+    CONSTRAINT TB_RECOMMEND2_PK PRIMARY KEY (article_no, board_no, user_no)
 )
 /
 
@@ -861,7 +857,7 @@ COMMENT ON COLUMN TB_RECOMMEND2.article_no IS '게시글번호'
 COMMENT ON COLUMN TB_RECOMMEND2.board_no IS '게시판분류번호'
 /
 
-COMMENT ON COLUMN TB_RECOMMEND2.user_id IS '아이디'
+COMMENT ON COLUMN TB_RECOMMEND2.user_no IS '유저번호'
 /
 
 ALTER TABLE TB_RECOMMEND2
@@ -870,11 +866,11 @@ ALTER TABLE TB_RECOMMEND2
 /
 
 ALTER TABLE TB_RECOMMEND2
-    ADD CONSTRAINT FK_TB_RECOMMEND2_user_id_TB_US FOREIGN KEY (user_id)
-        REFERENCES TB_USER2 (user_id)
+    ADD CONSTRAINT FK_TB_RECOMMEND2_user_no_TB_US FOREIGN KEY (user_no)
+        REFERENCES TB_USER2 (user_no)
 /
 
--- 신고목록 테이블에 insert작업시 회원정보의 blockcnt 횟수 증가 트리거
+-- 신고테이블에 데이터 추가시 유저의 신고누적횟수 증가 트리거
 CREATE OR REPLACE TRIGGER TB_USER2_blockcnt_AI_TRG
 BEFORE INSERT ON tb_userreport2
     for each row
@@ -884,4 +880,22 @@ begin
 end; 
 /
 
---drop trigger tb_user2_blockcnt_ai_trg;
+-- 자동생성된 트리거 삭제 코드
+DROP TRIGGER "TB_RESULTREPORTREASON2_AI_TRG";
+DROP TRIGGER "TB_RECOMMEND2_AI_TRG";
+DROP TRIGGER "TB_FILE2_AI_TRG";
+DROP TRIGGER "TB_COMMENT2_AI_TRG";
+--DROP TRIGGER "TB_USERREPORT2_AI_TRG";
+--DROP TRIGGER "TB_CHATTINGCONTENT2_AI_TRG";
+DROP TRIGGER "TB_PAYMENT2_AI_TRG";
+DROP TRIGGER "TB_RESULTREPORT2_AI_TRG";
+DROP TRIGGER "TB_REPORTREASON2_AI_TRG";
+--DROP TRIGGER "TB_CHATTING2_AI_TRG";
+DROP TRIGGER "TB_BOARD2_AI_TRG";
+DROP TRIGGER "TB_USER2_AI_TRG";
+DROP TRIGGER "TB_GRADE2_AI_TRG";
+
+DROP SEQUENCE tb_recruitBoard_seq;
+CREATE SEQUENCE tb_recruitBoard_seq;
+DROP SEQUENCE tb_recruitBoardComment_seq;
+CREATE SEQUENCE tb_recruitBoardComment_seq;
