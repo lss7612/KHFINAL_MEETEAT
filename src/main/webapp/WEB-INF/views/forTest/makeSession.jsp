@@ -6,6 +6,9 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 //신고하기버튼 클릭시 동작할 함수
@@ -42,7 +45,7 @@ function showPopup(){
 <form name="frmPopup" method="POST">
 	<input type="hidden" name= "user_no">
 	<input type="hidden" name= "url" />
-<button onclick="showPopup();">신고</button>
+<button onclick="showPopup();" class="btn btn-danger" >신고</button>
 </form>
 <hr>
 

@@ -55,6 +55,7 @@ function selectValue(str){
 			sortPart : $("#sortPart option:selected").val()
 			, sortType : $("#sortType option:selected").val()
 			, curPage : "${paging.curPage}"
+			, search : $("#search").val()
 		}
 		, dataType : "html"
 		, success : function(res){
