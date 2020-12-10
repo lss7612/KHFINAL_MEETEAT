@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 신고 처리 완료 목록</title>
 <!-- 부트스트랩 3.3.2 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
@@ -19,24 +19,43 @@ $(document).ready(function(){
 	$("#searchBtn").click(function(){
 		var search = $('#search').val();
 		console.log(""+search);
-		location.href="/admin/report/result/list?search="+search;
 	})
 })
+
+function searchBtnclick(){
+	console.log("아이디 검색 시작")
+	var search = $('#search').val();
+	console.log(""+search);
+	location.href="/admin/report/result/list?search="+search;
+}
+
+function enterKey(){
+	if(window.event.keyCode == 13){
+		searchBtnclick();
+	}
+}
 </script>
 
 <style type="text/css">
 #search{
 	display : inline;
-	width : 150px;
+	width : 200px;
 }
 </style>
 </head>
 <body>
 <h1><a href="/admin/report/result/list">신고 결과 처리 목록</a></h1>
 <hr>
-<div>
-<input type="text" id="search" class="form-control" /> 
-<input type="button" id="searchBtn" value="아이디검색" class="btn btn-primary">
+<div id="searchArea">
+	<c:choose>
+		<c:when test="${search eq null }">
+			<input type="text" id="search" class="form-control" placeholder="아이디를 입력하세요" onKeyDown="enterKey();"/> 
+		</c:when>
+		<c:when test="${search ne null }">
+			<input type="text" id="search" class="form-control" placeholder="아이디를 입력하세요" value="${search }" onKeyDown="enterKey();"/> 
+		</c:when>
+	</c:choose>
+	<input type="button" id="searchBtn" value="아이디검색" class="btn btn-primary" onclick="searchBtnclick();">
 </div>
 <br>
 <table class="table table-bordered table-hover">
