@@ -23,7 +23,8 @@ function reportPopup(){
 	//${user_no}에 작성자 번호에 맞는 변수명을 적어주시면 됩니당.
 	frmPop.user_no.value = ${user_no};
 	//현재글 URL정보 전달
-	frmPop.url.value = "<%=request.getRequestURL()%>";
+<%-- 	frmPop.url.value = "URI : <%=request.getRequestURI()%>, CONTEXT : <%= request.getContextPath() %>, URI : <%= request.getRequestURI() %>, Path : <%= request.getServletPath() %>"; --%>
+	frmPop.url.value = window.location.href
 }
 // 신고하기 동작 함수 끝
 </script>
