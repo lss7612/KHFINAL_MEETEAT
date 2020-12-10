@@ -5,7 +5,7 @@ var tried = 0;
 
 $(document).ready(function(){
 	
-	console.log($('#searchCategory').val())
+	/* 게시글 영역 */
 	
 	//페이지 불러왔을 때 코멘트 가져오기
 	getCommentList()
@@ -14,10 +14,6 @@ $(document).ready(function(){
 	$('#btn_recommend').click(function(){
 		getCntRecommend()
 	})
-	
-	
-	
-	
 	
 	
 	//본문 수정 버튼 눌렀을 때
@@ -47,7 +43,12 @@ $(document).ready(function(){
 		isLoadList+=1;
 	}
 	
-	//코멘트 새로고침 버튼 클릭시 gif 파일을 한번 불러왔다가 코멘트리스트를 출력하기
+	
+	
+	
+	/*코멘트영역*/
+	
+	//코멘트 새로고침 버튼 클릭시 loading.gif 파일을 한번 불러왔다가 코멘트리스트를 출력하기
 	$('#refrash_comment_botton').click(function(){
 		
 		$('#commentList').html(
@@ -56,8 +57,12 @@ $(document).ready(function(){
 		
 		setTimeout(function() {
 			getCommentList()
-		}, 1500);
+		}, 1100);
 	})
+	
+	
+	
+	
 	
 	//코멘트 달기를 클릭했을때
 	$('#commentSumitBtn').click(function () {
@@ -65,6 +70,23 @@ $(document).ready(function(){
 		console.log($('#form_comment_content').val())
 	    validateAndSubmit()
 	});
+	
+	//코멘트수정을 클릭했을 때
+	$('.updateComment').click(function(){
+		console.log($(this).attr('comment_no'))
+	})
+	//코멘트삭제을 클릭했을 때
+	$('.deleteComment').click(function(){
+		console.log('clicked')
+		console.log($(this).attr('comment_no'))
+	})
+	//코멘트답글을 클릭했을 때
+	$('.commentReply').click(function(){
+		console.log('clicked')
+		console.log($(this).attr('comment_no'))
+	})
+	
+	
 	
 	//스크롤 맨 아래로 내렸을때 게시판 불러오는 코드(미구현)
 	 $(window).scroll(function(){
@@ -87,16 +109,7 @@ $(document).ready(function(){
 		}  
 	 })
 
-	 $('#viewList div').click(function(){
-		 $('#viewList').html(
-			'<div style="text-align:center;"><img style="margin:0 auto;" alt="" src="/resources/img/loading.gif"></div>'
-		 )		
-		
-		 setTimeout(() => {
-			 loadList()	
-		 }, 1100);
-		  
-	 })
+	
 	 
 })
 

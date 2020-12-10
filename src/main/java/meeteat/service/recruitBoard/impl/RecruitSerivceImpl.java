@@ -34,11 +34,6 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 			, String ext02
 			,String ext03) {
 
-		//남은구현
-		//파일이 있으면 tb_file_seq.nextval받아오기
-		//파일이 있으면 file insert하기
-		
-		//param에 fileno set하기
 		
 		param.setBoard_no(3);
 		int article_no = recruitBoardDao.getNextVal();

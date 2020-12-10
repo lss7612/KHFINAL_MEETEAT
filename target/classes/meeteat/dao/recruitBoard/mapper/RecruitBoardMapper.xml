@@ -27,7 +27,7 @@
 		(SELECT 
 			user_no, article_no, article_title, article_content, party_location, create_date, meet_time, article_hit, is_delete,board_no
 		    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
-		    ,(SELECT count(*) FROM tb_comment2 c WHERE b.board_no = #{board_no} AND b.article_no = c.article_no ) cnt_comment
+		    ,(SELECT count(*) FROM tb_comment2 c WHERE b.board_no = #{board_no} AND b.article_no = c.article_no AND c.comment_order = 0) cnt_comment
 		    ,(SELECT count(*) FROM tb_recommend2 r WHERE b.board_no = #{board_no} AND b.article_no = r.article_no) cnt_recommend
 		FROM tb_board2 b
 		ORDER BY article_no DESC) list
@@ -88,8 +88,9 @@
 		    ,article_hit
 		    ,create_date
 		    ,party_location
+		    ,user_no
 		    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
-		    ,(SELECT count(*) FROM tb_comment2 c WHERE c.board_no = #{board_no} AND c.article_no = #{article_no }) cnt_comment
+		    ,(SELECT count(*) FROM tb_comment2 c WHERE c.board_no = #{board_no} AND c.article_no = #{article_no } AND c.comment_order = 0) cnt_comment
 		    ,(SELECT count(*) FROM tb_recommend2 r WHERE b.board_no = #{board_no} AND b.article_no = r.article_no) cnt_recommend
 		    ,(SELECT count(*) FROM tb_recommend2 r WHERE b.board_no = #{board_no} AND b.article_no = r.article_no AND user_no=#{user_no}) isRecommend
 		FROM tb_board2 b
