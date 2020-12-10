@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 신고 목록</title>
 <!-- 부트스트랩 3.3.2 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
@@ -35,14 +35,20 @@
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#searchBtn").click(function(){
-		var search = $('#search').val();
-		console.log(""+search);
-		location.href="/admin/report/list/sort?curPage=0&sortType=0&sortPart=0&search="+search;
-	})
-	
-})
+
+function searchBtnclick(){
+	console.log("아이디 검색 시작")
+	var search = $('#search').val();
+	console.log(""+search);
+	location.href="/admin/report/list/sort?curPage=0&sortType=0&sortPart=0&search="+search;
+}
+
+function enterKey(){
+	if(window.event.keyCode == 13){
+		searchBtnclick();
+	}
+}
+
 
 //정렬기준, 방향 실시간 적용 AJAX
 function selectValue(str){

@@ -49,14 +49,14 @@
 <c:choose>
 	<c:when test="${search eq null }">
 		<input type="text" id="search" class="form-control" 
-			style="width : auto; dispaly : inline;" placeholder = "id 검색">
+			style="width : auto; dispaly : inline;" placeholder = "id 검색" onKeyDown="enterKey();">
 	</c:when>
 	<c:when test="${search ne null }">
 		<input type="text" id="search" class="form-control" 
-			style="width : auto; dispaly : inline;" placeholder = "id 검색" value="${search }">
+			style="width : auto; dispaly : inline;" placeholder = "id 검색" value="${search }" onKeyDown="enterKey();">
 	</c:when>
 </c:choose>
-<input type="button" id="searchBtn" value="아이디검색"  class="btn btn-primary"/>
+<button id="searchBtn" class="btn btn-primary" onclick="searchBtnclick();">아이디 검색</button>
 </div>
 <br>
 
@@ -109,7 +109,7 @@
 	</tr>
 </c:forEach>
 </table>
-<button id="doProcess" class="btn btn-danger">유저 처리</button>
+<button id="doProcess" class="btn btn-danger" >유저 처리</button>
 </form>
 <br>
 <jsp:include page="/WEB-INF/views/report/list_sort_paging.jsp"/>

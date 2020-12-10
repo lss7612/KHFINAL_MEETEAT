@@ -169,6 +169,7 @@ public class ReportController {
 		
 		logger.info(">> 조회 목록 <<< ");
 		logger.info(""+list);
+		model.addAttribute("search", search);
 		model.addAttribute("list", list);
 		
 		
