@@ -15,7 +15,7 @@
 	VALUES(tb_comment2_seq.nextval, #{article_no}, #{board_no}
 		,#{comment_content}, #{user_no}, #{comment_order}
 		,#{comment_originno}, #{is_delete}
-		,sysdate, #{revision_date,jdbcType=VARCHAR}
+		,sysdate, #{revision_date,jdbcType=DATE}
 		)
 </insert>
 
@@ -23,10 +23,38 @@
 	SELECT 
 	    c.*
 	    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = c.user_no) user_nick
+	    ,(SELECT count(*) FROM tb_comment2 c2 WHERE c.comment_no = c2.comment_originno) cntreply
 	FROM tb_comment2 c
 	WHERE article_no = #{article_no}
 	    AND board_no = #{board_no}
+	    AND comment_order = 0
 	ORDER BY c.comment_no ASC
+</select>
+
+<update id="deleteComment" parameterType="int">
+	UPDATE tb_comment2
+	SET is_delete = 1
+	WHERE comment_no = #{comment_no}
+</update>
+
+<select id="getCommentContetnt" parameterType="int" resultType="String">
+	SELECT comment_content FROM tb_comment2
+	WHERE comment_no = #{comment_no}
+</select>
+
+<update id="updateComment" parameterType="hashmap">
+	UPDATE tb_comment2
+	SET comment_content =#{comment_content}
+		,revision_date = sysdate
+	WHERE comment_no = #{comment_no}
+</update>
+
+<select id="getReplyList" parameterType="int" resultType="hashmap">
+	SELECT 
+		c.*
+		,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = c.user_no) user_nick 
+	FROM tb_comment2 c
+	WHERE comment_originno = ${comment_originno}
 </select>
 
 </mapper>

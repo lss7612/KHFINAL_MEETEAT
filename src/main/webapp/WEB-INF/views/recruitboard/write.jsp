@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,6 +18,9 @@
 
 <div id="write_wrapper">
 
+<c:set value="<%=new Date() %>" var="now"/>
+<fmt:formatDate var="today" value="${now }" pattern="yyyy-MM-dd"/>
+
 
 <h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
 <hr>
@@ -24,7 +28,7 @@
 <div class="base_bar_height color_primary light_padding">&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size:30px;" class="fas fa-pencil-alt"></i></i></div>
 <div class="horizontal_base_padding">
 <form id="articleSubmitForm" class="" action="/recruitboard/write" method="POST" >
-<%-- 글제목 인풋영역 --%>
+	<%-- 글제목 인풋영역 --%>
 	<input type="text" name="user_no" value="${user_no }" readonly="readonly" class="invisible"/>
 	
 	<%-- 글제목 --%>
@@ -126,15 +130,17 @@
 	<div class="clearfix" ></div>
 	
 	
-	
-	<%-- 파일확장자submit --%>
+	<%-- 안보이는 Form 영역 --%>	
 	<div class=" form-group small_form invisible none_height">
+		<%-- 파일확장자submit --%>
 		<label for="form_ext01" >ext01</label>
-		<input type="text" id="form_ext01" name="ext01" class="form-control"  placeholder="미구현"/>
+		<input type="text" id="form_ext01" name="ext01" class="form-control"/>
 		<label for="form_ext02" >ext02</label>
-		<input type="text" id="form_ext02" name="ext02" class="form-control"  placeholder="미구현"/>
+		<input type="text" id="form_ext02" name="ext02" class="form-control"/>
 		<label for="form_ext03" >ext03</label>
-		<input type="text" id="form_ext03" name="ext03" class="form-control"  placeholder="미구현"/>
+		<input type="text" id="form_ext03" name="ext03" class="form-control"/>
+		<label for="form_today" >ext03</label>
+		<input type="text" id="form_today" name="today" class="form-control"  value="${today }"/>
 	</div>
 	
 	<hr>

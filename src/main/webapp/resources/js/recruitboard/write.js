@@ -10,6 +10,20 @@ $(document).ready(function () {
 	
 	$('.modal_img_upload').css('padding-top',windowHeight/4)
  	
+	$('#form_meet_time').change(function(){
+		let pickDate = $(this).val()
+		let today = $('#form_today').val()
+		
+		if(today>pickDate){
+			
+			console.log('not allowed')
+			alert('과거 날짜는 선택이 불가능합니다. 오늘 날짜를 선택합니다.')
+			$('#form_meet_time').val(today)
+			
+		}
+		
+	})
+	
 	/*폼을 submit하는 코드*/
   $('#btn_submit').click(function () {
 	  /*textarea로 스마트에디터에 등록한것 옮김*/
@@ -152,8 +166,8 @@ function putOnRealTextArea(){
 function imgFormSubmit(){
 	
 
-	var form = $('#imgForm')[0];
-    var formData = new FormData(form);
+	let form = $('#imgForm')[0];
+    let formData = new FormData(form);
 	
 	console.log(formData)
 	$.ajax({

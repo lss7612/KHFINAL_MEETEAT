@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="/resources/css/recruitboard/view.css">
 <script type="text/javascript" src="/resources/js/recruitboard/view.js"></script>
 
+
+
 <div id="view_wrapper">
 
 <h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
@@ -77,8 +79,8 @@
 <div class="base_bar_height light_padding light_margin pull-left" style="width:30%;">
 	<c:set var="QueryString" value="/recruitboard/list?searchBoard_no=3&searchKeyword=${searchParam.searchKeyword }&searchCategory=${searchParam.searchCategory}&searchLocation=${searchParam.searchLocation }&curPage=${paging.curPage }" />
 	<a href=${QueryString }><button type="button" id="back_to_list" class="btn btn-primary pull-left" >목록으로</button></a>
+	
 </div>
-<c:if test="${result.USER_NICK eq sessionScope.user_nick }">
 <div class="base_bar_height light_padding light_margin pull-right" style="width:30%;">
 	<div class="invisible" style="height:0;">
 	<form id="deleteOrModify" action="" method="">
@@ -87,13 +89,18 @@
 		<input type="text" name="article_no" value="${result.ARTICLE_NO }" >
 	</form>
 	</div>
-	
+	<form name="frmPopup" method="POST">
+		<input type="hidden" name= "user_no">
+		<input type="hidden" name= "url" />
+		<button onclick="reportPopup();" class="btn btn-primary pull-right" >신고</button>
+	</form>
+<c:if test="${result.USER_NICK eq sessionScope.user_nick }">
 	<button type="button" id="article_delete" class="btn btn-primary pull-right" style="float:center;">삭제</button>
 	<button type="button" id="article_modify" class="btn btn-primary pull-right" style="float:center;">수정</button>
+</c:if>
 
 	
 </div>
-</c:if>
 <div class="clearfix"></div>
 
 
@@ -104,19 +111,19 @@
 
 
 </div>
-
+<div style="width:90%; margin:0 auto;">
 <div class="col-md-4 pull-right"style="margin:5px 0 0 0; padding:10px 10px 0; font-size:20px;text-align:right;"><i id="refrash_comment_botton"  style="cursor: pointer;" class="fas fa-sync-alt"></i></div>
 <div class="col-md-4 pull-left" style="margin:5px 0 0 0; padding:14px 10px 0; font-size:18px;text-align:left;">${result.CNT_COMMENT }개의 덧글</div>
 <div class="clearfix"></div>
-
+</div>
 
 <%-- 댓글내용영역 --%>
-<div id="commentList">
+<div id="commentList" style="width:90%; margin:0 auto;">
 </div>
 
 <%-- 코멘트작성 --%>
 <c:if test="${isLogin }">
-	<div class="border" style="width:100%; margin:0 auto;">
+	<div class="border" style="width:90%; margin:0 auto;">
 	<form action="/recruitboard/comment/write" method="POST">
 	
 		<%-- 안보이는 form태그부분 --%>
@@ -157,6 +164,21 @@ nhn.husky.EZCreator.createInIFrame({
 
 
 $('iframe').css('height','100px');
+
+//신고하기버튼 클릭시 동작할 함수
+function reportPopup(){
+	var frmPop = document.frmPopup;
+	
+	//팝업 
+	window.open("http://localhost:8088/report/doReport","report"
+			, "width=500px,height=425px")
+	frmPop.action = "http://localhost:8088/report/doReport";
+	frmPop.target = "report";
+	frmPop.user_no.value = ${result.USER_NO };
+	frmPop.url.value = "<%=request.getRequestURL()%>";
+}
+//신고하기 동작 함수 끝
+
 
 </script>
 
