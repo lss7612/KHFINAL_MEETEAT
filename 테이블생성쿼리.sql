@@ -170,7 +170,8 @@ CREATE TABLE TB_BOARD2
     post_step          NUMBER            NULL, 
     post_indent        NUMBER            NULL, 
     meet_time          DATE              NULL, 
-    article_pw         VARCHAR2(100)     NULL, 
+    article_pw         VARCHAR2(100)     NULL,
+    start_date         DATE              NULL,
     terminate_date     DATE              NULL, 
     mate_list          VARCHAR2(100)     NULL, 
     CONSTRAINT TB_BOARD2_PK PRIMARY KEY (article_no, board_no)
@@ -247,6 +248,9 @@ COMMENT ON COLUMN TB_BOARD2.meet_time IS '만나는시간'
 /
 
 COMMENT ON COLUMN TB_BOARD2.article_pw IS '게시글 비밀번호'
+/
+
+COMMENT ON COLUMN TB_BOARD2.start_date IS '시작날짜'
 /
 
 COMMENT ON COLUMN TB_BOARD2.terminate_date IS '완료날짜'
