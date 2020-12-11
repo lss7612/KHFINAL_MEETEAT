@@ -59,17 +59,19 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		if(curPage_str!=null || ("").equals(curPage_str))
 			curPage = Integer.parseInt(curPage_str);
 
-		searchParam.setSearchBoard_no(3);//검색form에 invisible로 3을 submit해주는 태그 만들어줘야함
+		//처음 게시판에 들어오게 되면 Location이 null인데 그때 null을 ""로 바까줌
+		if(searchParam.getSearchLocation() == null)
+			searchParam.setSearchLocation("");
+		
+		searchParam.setSearchBoard_no(3);
 		int totalCnt = recruitBoardDao.selectCntListAll(searchParam);
 		
-		logger.info("****totalCnt = "+totalCnt +"****");
-		logger.info("searchParam : "+ searchParam);
 		return new Paging(totalCnt, curPage, 10);
 	}
 	
 	
 	@Override
-	public List<HashMap<String,String>> list(Paging paging, SearchParam searchParam) {
+	public List<HashMap<String,String>> list(Paging paging, SearchParam searchParam, int board_no) {
 
 		HashMap<String, Object> param = new HashMap<>();
 		
@@ -196,46 +198,50 @@ public class RecruitSerivceImpl implements RecruitBoardService{
 		
 		Map<String, Object> param = new HashMap<>();
 		
-		param.put("board_no", 3);
+		param.put("board_no", board_no);
 		param.put("article_no", article_no);
 		param.put("user_no", session.getAttribute("user_no"));
 		
 		Map<String, Object> result = new HashMap<>();
 		result = recruitBoardDao.getBoardView(param);
 		
-		int meet_time_clock = Integer.parseInt((String) result.get("MEET_TIME_CLOCK"));
-		String meet_time_area = null;
-		String meet_time_clock_str = null;
-		if(meet_time_clock >= 12) {
-			
-			if(meet_time_clock > 12) {
+		if(board_no == 3) {
+			int meet_time_clock = Integer.parseInt((String) result.get("MEET_TIME_CLOCK"));
+			String meet_time_area = null;
+			String meet_time_clock_str = null;
+			if(meet_time_clock >= 12) {
 				
-				meet_time_clock = meet_time_clock - 12;
-				meet_time_clock_str = "0" + meet_time_clock;
+				if(meet_time_clock > 12) {
+					
+					meet_time_clock = meet_time_clock - 12;
+					meet_time_clock_str = "0" + meet_time_clock;
+					
+				}else {
+					
+					meet_time_clock_str = "" + meet_time_clock;
+					
+				}
 				
-			}else {
+				meet_time_area = "pm";
 				
-				meet_time_clock_str = "" + meet_time_clock;
-				
-			}
-			
-			meet_time_area = "pm";
-			
-		} else {
-			if(meet_time_clock >=10) {
-				meet_time_clock_str=""+meet_time_clock;
-			} else if(meet_time_clock == 0) {
-				meet_time_clock_str="12";
 			} else {
-				meet_time_clock_str="0"+meet_time_clock;
+				if(meet_time_clock >=10) {
+					meet_time_clock_str=""+meet_time_clock;
+				} else if(meet_time_clock == 0) {
+					meet_time_clock_str="12";
+				} else {
+					meet_time_clock_str="0"+meet_time_clock;
+				}
+				meet_time_area = "am";
 			}
-			meet_time_area = "am";
+			
+			result.put("MEET_TIME_AREA", meet_time_area);
+			result.put("MEET_TIME_CLOCK", meet_time_clock_str);
 		}
 		
-		logger.info(""+meet_time_clock_str);
-		
-		result.put("MEET_TIME_AREA", meet_time_area);
-		result.put("MEET_TIME_CLOCK", meet_time_clock_str);
+		if(board_no == 6) {
+			
+		}
 		
 		List<HashMap<String,Object>> imglist = recruitBoardDao.getImgList(param);
 		result.put("IMGLIST", imglist);

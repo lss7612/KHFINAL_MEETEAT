@@ -4,14 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:import url="/WEB-INF/views/forTest/header.jsp"/>
-<link rel="stylesheet" href="/resources/css/recruitboard/view.css">
-<script type="text/javascript" src="/resources/js/recruitboard/view.js"></script>
-
-
+<link rel="stylesheet" href="/resources/css/common/common.css">
+<link rel="stylesheet" href="/resources/css/eventboard/view.css">
+<script type="text/javascript" src="/resources/js/eventboard/view.js"></script>
 
 <div id="view_wrapper">
 
-<h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
+<h2 class=""><a href="/eventboard/terminated">이벤트</a></h2>
 <hr>
 
 <div id="view_title_bar" class="border">
@@ -54,30 +53,17 @@
 	
 	<%-- 내용영역 --%>
 	
-	<div id="view_content_bar" class="light_margin bold_padding vertical_bold_margin" style="padding:5px; text-align:left;">
-		
-	<h4 style="font-weight:bold">만날시간: ${result.MEET_TIME_DATE } ${result.MEET_TIME_CLOCK }:${result.MEET_TIME_MIN }</h4> 
-	<br>
+	<div id="view_content_bar" class="light_margin bolder_padding vertical_bold_margin" style="padding:5px; text-align:left;">
+	<h4 style="font-weight:bold">이벤트기간: ${result.START_DATE } ~ ${result.TERMINATE_DATE }</h4> 
+	<br>	
 	${result.ARTICLE_CONTENT }
 	
-		<%--추천 영역 --%>
-		<div class="bolder_bar_height vertical_bold_margin" style="text-align:center;">
-			<div id="cnt_recommend" class="vertical_light_padding vertical_base_margin" style="width:50px; height:50px; margin:0 auto; border: 1px solid #ccc; border-radius: 10px;  font-size:1.5em;">
-			${result.CNT_RECOMMEND }
-			</div>
-			<i id="btn_recommend" style="font-size:2.5em; cursor:pointer;"class="far fa-thumbs-up"></i>
-			<div id="isRecommend" class="bold_bar_height vertical_bold_margin">
-				<c:if test="${result.ISRECOMMEND eq 1 }">
-				추천한 게시물입니다.
-				</c:if>
-			</div>
-		</div>
 	</div>
 </div>
 
 <%-- 삭제, 수정 버튼영역 --%>
 <div class="base_bar_height light_padding light_margin pull-left" style="width:30%;">
-	<c:set var="QueryString" value="/recruitboard/list?searchBoard_no=3&searchKeyword=${searchParam.searchKeyword }&searchCategory=${searchParam.searchCategory}&searchLocation=${searchParam.searchLocation }&curPage=${paging.curPage }" />
+	<c:set var="QueryString" value="/eventboard/terminated?searchBoard_no=3&searchKeyword=${searchParam.searchKeyword }&searchCategory=${searchParam.searchCategory}&searchLocation=${searchParam.searchLocation }" /><%-- 미구현: CurPage 구현해야함 --%>
 	<a href=${QueryString }><button type="button" id="back_to_list" class="btn btn-primary pull-left" >목록으로</button></a>
 	
 </div>
@@ -85,15 +71,10 @@
 	<div class="invisible" style="height:0;">
 	<form id="deleteOrModify" action="" method="">
 		<input type="text" name="user_nick" value="${result.USER_NICK }" >
-		<input type="text" name="board_no" value="3" >
+		<input type="text" name="board_no" value="6" >
 		<input type="text" name="article_no" value="${result.ARTICLE_NO }" >
 	</form>
 	</div>
-	<form name="frmPopup" method="POST">
-		<input type="hidden" name= "user_no">
-		<input type="hidden" name= "url" />
-		<button onclick="reportPopup();" class="btn btn-primary pull-right" >신고</button>
-	</form>
 <c:if test="${result.USER_NICK eq sessionScope.user_nick }">
 	<button type="button" id="article_delete" class="btn btn-primary pull-right" style="float:center;">삭제</button>
 	<button type="button" id="article_modify" class="btn btn-primary pull-right" style="float:center;">수정</button>
@@ -124,7 +105,7 @@
 <%-- 코멘트작성 --%>
 <c:if test="${isLogin }">
 	<div class="border" style="width:90%; margin:0 auto;">
-	<form action="/recruitboard/comment/write" method="POST">
+	<form action="/eventboard/comment/write" method="POST">
 	
 		<%-- 안보이는 form태그부분 --%>
 		<div style="height:0;">
@@ -134,7 +115,7 @@
 			<input type="text" class="invisible"  name="article_no" value="${result.ARTICLE_NO }" readonly="readonly"><br>
 		</div>
 		<div style="height:0;">
-			<input type="text" class="invisible"  name="board_no" value="3" readonly="readonly"><br>
+			<input type="text" class="invisible"  name="board_no" value="6" readonly="readonly"><br>
 		</div>
 		<%-- 안보이는 form태그부분 끝 --%>
 		
@@ -165,19 +146,6 @@ nhn.husky.EZCreator.createInIFrame({
 
 $('iframe').css('height','100px');
 
-//신고하기버튼 클릭시 동작할 함수
-function reportPopup(){
-	var frmPop = document.frmPopup;
-	
-	//팝업 
-	window.open("http://localhost:8088/report/doReport","report"
-			, "width=500px,height=425px")
-	frmPop.action = "http://localhost:8088/report/doReport";
-	frmPop.target = "report";
-	frmPop.user_no.value = ${result.USER_NO };
-	frmPop.url.value = window.location.href
-}
-//신고하기 동작 함수 끝
 
 
 </script>

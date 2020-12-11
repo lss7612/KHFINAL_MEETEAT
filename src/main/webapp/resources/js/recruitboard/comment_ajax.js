@@ -31,27 +31,44 @@ $(document).ready(function(){
 		openReplyForm($(this).attr('comment_no'), $(this).attr('article_no'), $(this).attr('board_no'))
 	})
 	
-	//코멘트답글열기 클릭시 
+	
+	
+	
+	
+	//코멘트답글보기 클릭시 
 	$('.closeOrOpenCommentList').on('click','.openReplyList',function(){
 		console.log('open')
-		let id='replysForOriginno'+$(this).attr('comment_originno')
+		let comment_originno = $(this).attr('comment_originno')
+		let id='replysForOriginno'+comment_originno
+		
+		$('#closeOrOpenCommentList').toggleClass('closeOrOpenCommentList')
+		
 		$(this).toggleClass('openReplyList')
 		$(this).toggleClass('closeReplyList')
 		$('#'+id).toggleClass('light_padding')
+		
+		
 		$(this).children().html('개의 답글 숨기기▲')
-		openReplyList($(this).attr('comment_originno'))
+		openReplyList(comment_originno)
+			
 	})
 	
-	//코멘트답글닫기 클릭시
-	$('#closeOrOpenCommentList').on('click','.closeReplyList',function(){
+	//코멘트답글숨기기 클릭시
+	$('.closeOrOpenCommentList').on('click','.closeReplyList',function(){
 		console.log('close')
-		let id='replysForOriginno'+$(this).attr('comment_originno')
+		let comment_originno = $(this).attr('comment_originno')
+		let id='replysForOriginno'+comment_originno
+		
 		$(this).toggleClass('openReplyList')
 		$(this).toggleClass('closeReplyList')
 		$('#'+id).toggleClass('light_padding')
+		
 		$(this).children().html('개의 답글 보기▼')
-		closeReplyList($(this).attr('comment_originno'))
+		closeReplyList(comment_originno)
 	})
+	
+	
+	
 	
 })
 
@@ -136,11 +153,14 @@ function openReplyList(commentOriginNo){
 			setTimeout(() => {
 				$('#'+id).html(res)
 			}, 1000);
+			
 		}
 		, error: function(){
-			console.log('실패')
+			alert('불러오기를 실패했습니다')
 		}
 	})
+	
+	return true
 	
 }
 function closeReplyList(commentOriginNo){

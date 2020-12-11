@@ -39,7 +39,6 @@ public class RecruitBoardController {
 			,String meet_time_clock
 			,String meet_time_min
 			,String meet_time_area
-			,Model model
 			,HttpSession session
 			,String ext01
 			,String ext02
@@ -48,12 +47,10 @@ public class RecruitBoardController {
 
 		//전달받은 연월일 시간 하나의 스트링으로 바꿔주고 meet_time으로 넣기
 		if(meet_time_area.equals("pm")) {
-			logger.info("오후입니다");
 			int clock_no = Integer.parseInt(meet_time_clock);
 			if(clock_no != 12)	clock_no += 12;
 			meet_time_clock = "" + clock_no;
 		} else if(meet_time_area.equals("am") && meet_time_clock.equals("12")) {
-			logger.info("오전12시 입니다");
 			meet_time_clock = "00"; 
 		}
 		param.setMeet_time(meet_time_date+meet_time_clock+meet_time_min);
@@ -67,13 +64,7 @@ public class RecruitBoardController {
 		logger.info("meet_time : "+param.getMeet_time());
 		logger.info("+ + + + + + + + + + + + + +");
 		
-		HashMap<String,Object> result = recruitBoardService.write(param, session, ext01, ext02, ext03);
-//		String board_no = "" + result.get("board_no");
-//		String article_no = "" + result.get("article_no");
-		
-//		imageService.saveFile(session, ext01, ext02, ext03, board_no, article_no);
-		
-		model.addAttribute("writeSuccess",true);
+		recruitBoardService.write(param, session, ext01, ext02, ext03);
 		
 		return "redirect:/recruitboard/list";
 		
@@ -96,7 +87,8 @@ public class RecruitBoardController {
 		Paging paging = recruitBoardService.getPaging(curPage, searchParam);
 		model.addAttribute("paging", paging);
 		
-		List<HashMap<String,String>> list = recruitBoardService.list(paging, searchParam);
+		int board_no = 3;
+		List<HashMap<String,String>> list = recruitBoardService.list(paging, searchParam, board_no);
 		model.addAttribute("list",list);
 		
 		model.addAttribute("searchParam",searchParam);
@@ -132,10 +124,12 @@ public class RecruitBoardController {
 			,Model model
 			) {
 		
-		Boolean isWriter = recruitBoardService.isWriter(user_nick, session);
-		if(!isWriter) {
-			model.addAttribute("errorMsg", "잘못된 접근입니다. 작성자만 수정이 가능합니다");
-			return "/common/errorpage";
+		if(board_no != 6) {//6번 게시판은 작성자가 아니더라도 관리자라면 수정이 가능하다.
+			Boolean isWriter = recruitBoardService.isWriter(user_nick, session);
+			if(!isWriter) {
+				model.addAttribute("errorMsg", "잘못된 접근입니다. 작성자만 수정이 가능합니다");
+				return "/common/errorpage";
+			}
 		}
 		
 		logger.info("의쌰의쌰 board_no : " + board_no + ", article_no : " + article_no);
@@ -144,8 +138,10 @@ public class RecruitBoardController {
 		
 		model.addAttribute("result", result);
 		
-		return null;
+		if(board_no == 3) return "/recruitboard/modify";
+		if(board_no == 6) return "/eventboard/modify";
 		
+		return "/";
 	}
 	
 	@RequestMapping(value = "/recruitboard/modify", method = RequestMethod.POST)
@@ -156,7 +152,6 @@ public class RecruitBoardController {
 			,String meet_time_min
 			,String meet_time_area
 			,HttpSession session
-			,Model model
 			,String ext01
 			,String ext02
 			,String ext03
@@ -178,9 +173,10 @@ public class RecruitBoardController {
 		String board_no = "3";
 		String article_no =""+param.getArticle_no();
 		
-		imageService.deleteFile(board_no, article_no);
-		imageService.saveFile(session, ext01, ext02, ext03, board_no, article_no);
-		
+		if(ext01!="" || ext02!="" || ext03!="") {
+			imageService.deleteFile(board_no, article_no);
+			imageService.saveFile(session, ext01, ext02, ext03, board_no, article_no);
+		}
 		return "redirect:/recruitboard/view?board_no="+board_no+"&article_no="+article_no;
 	}
 	
@@ -192,15 +188,23 @@ public class RecruitBoardController {
 			, HttpSession session
 			, Model model) {
 		
-		Boolean isWriter = recruitBoardService.isWriter(user_nick, session);
-		if(!isWriter) {
-			model.addAttribute("errorMsg", "잘못된 접근입니다. 작성자만 수정이 가능합니다");
-			return "/common/errorpage";
+		
+		if(board_no!=6) { //6번 게시판은 같은 작성자가 아니더라도 관리자라면 수정이 가능하다.
+			Boolean isWriter = recruitBoardService.isWriter(user_nick, session);
+			if(!isWriter) {
+				model.addAttribute("errorMsg", "잘못된 접근입니다. 작성자만 수정이 가능합니다");
+				return "/common/errorpage";
+			}
 		}
 		
 		recruitBoardService.delete(article_no, board_no);
 		
-		return "redirect:/recruitboard/list";
+		if(board_no == 3)
+			return "redirect:/recruitboard/list";
+		if(board_no == 6)
+			return "redirect:/eventboard/holding";
+		
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/recruitboard/recommend")
@@ -242,9 +246,7 @@ public class RecruitBoardController {
 		Paging paging = recruitBoardService.getPaging(curPage, searchParam);
 		model.addAttribute("paging", paging);
 		
-		logger.info("후앗!"+searchParam);
-		
-		List<HashMap<String,String>> list = recruitBoardService.list(paging, searchParam);
+		List<HashMap<String,String>> list = recruitBoardService.list(paging, searchParam, board_no);
 		model.addAttribute("list",list);
 		model.addAttribute("article_no",article_no);
 		model.addAttribute("searchParam",searchParam);

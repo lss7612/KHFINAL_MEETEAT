@@ -15,7 +15,7 @@ public interface RecruitBoardService {
 
 	public HashMap<String, Object> write(RecruitBoard param, HttpSession session, String ext01, String ext02,String ext03);
 
-	public List<HashMap<String, String>> list(Paging paging, SearchParam searchParam);
+	public List<HashMap<String, String>> list(Paging paging, SearchParam searchParam, int board_no);
 
 	public Paging getPaging(String curPage_str, SearchParam searchParam);
 

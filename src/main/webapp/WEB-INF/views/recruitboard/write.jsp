@@ -28,9 +28,9 @@
 <div class="base_bar_height color_primary light_padding">&nbsp;&nbsp;&nbsp;&nbsp;<i style="font-size:30px;" class="fas fa-pencil-alt"></i></i></div>
 <div class="horizontal_base_padding">
 <form id="articleSubmitForm" class="" action="/recruitboard/write" method="POST" >
-	<%-- 글제목 인풋영역 --%>
 	<input type="text" name="user_no" value="${user_no }" readonly="readonly" class="invisible"/>
 	
+	<%-- 글제목 인풋영역 --%>
 	<%-- 글제목 --%>
 	<div class="form-group">
 		<label id="labebforform_article_title"for="form_article_title">글제목</label>
@@ -146,7 +146,6 @@
 	<hr>
 	<div class="clearfix none_height"></div>
 	
-	<div class="base_bar_height light_padding"><button id="btn_submit" type="button" class="pull-right btn btn-primary">글쓰기</button></div>
 	
 	<%-- 내용 --%>
 	<div class="form-group" style="min-width:550px;"> 
@@ -154,6 +153,7 @@
 		<textarea rows="20" id="form_article_content" name="article_content" style="min-width:550px; width:100%;" alertComment="내용"></textarea>
 	</div>
 
+	<div class="base_bar_height light_padding"><button id="btn_submit" type="button" class="pull-right btn btn-primary">글쓰기</button></div>
 	
 </form>
 </div>

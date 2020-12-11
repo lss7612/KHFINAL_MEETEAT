@@ -31,9 +31,6 @@ public class RecruitCommentController {
 			) {
 		commentService.write(comment);
 		
-//		int board_no = comment.getBoard_no();
-//		int article_no = comment.getArticle_no();
-		
 		String returnURI = "redirect:/recruitboard/view?board_no="+comment.getBoard_no()+"&article_no="+comment.getArticle_no();
 
 		return returnURI;
@@ -53,6 +50,8 @@ public class RecruitCommentController {
 		List<Map<String,Object>> list = commentService.getCommentlist(article_no, board_no);
 		logger.info("param:"+list);
 		model.addAttribute("list",list);
+		if(board_no == 3) return "/comment/comment_ajax_view";
+		if(board_no == 6) return "/comment/comment_ajax_view_event";
 		
 		return "/comment/comment_ajax_view";
 	}

@@ -68,37 +68,18 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	//코멘트영역으로 들어오면 시간과 답글수정삭제을 바까준다
-	$('#commentList').mouseenter(function(){
-		$('span.toggle_invisible').toggleClass('invisible')
-		$('span.toggle_invisible').toggleClass('none_width')
-	})
-	$('#commentList').mouseleave(function(){
-		$('span.toggle_invisible').toggleClass('invisible')
-		$('span.toggle_invisible').toggleClass('none_width')
-	})
 	
-	
-	//코멘트수정을 클릭했을 때
+	//코멘트(대댓글)수정을 클릭했을 때
 	$('.updateReply').click(function(){
 		console.log($(this).attr('comment_no'))
 		openUpdateForm($(this).attr('comment_no'))
 	})
 	
-	//코멘트삭제을 클릭했을 때
+	//코멘트(대댓글)삭제을 클릭했을 때
 	$('.deleteReply').click(function(){
 		if(confirm('삭제하시겠습니까?'))
 			deleteComment($(this).attr('comment_no'))
-		
 	})
-	
-	//코멘트답글을 클릭했을 때
-	$('.commentReply').click(function(){
-		console.log($(this).attr('comment_no'))
-		openReplyForm($(this).attr('comment_no'), $(this).attr('article_no'), $(this).attr('board_no'))
-	})
-	
-	
 	
 	
 })
@@ -165,36 +146,9 @@ function openReplyForm(commentNo, articleNo, boardNo) {
 		}
 	})
 	
+	
+	
 }
 
-function openReplyList(commentOriginNo){
-	
-	let id = 'replysForOriginno' + commentOriginNo
-	
-		$.ajax({
-		type: "get"
-		, async: true
-		, url: "/comment/openReplyList"
-		, data:{comment_originno : commentOriginNo}
-		, dataType:"html" //응답받은 데이터의 형식
-		, success: function( res ){
-			$('#'+id).html(
-				'<div style="text-align:center;"><img style="margin:0 auto;" alt="" src="/resources/img/loading.gif"></div>'
-			)
-			setTimeout(() => {
-				$('#'+id).html(res)
-			}, 1000);
-		}
-		, error: function(){
-			console.log('실패')
-		}
-	})
-	
-}
-function closeReplyList(commentOriginNo){
-	let id = 'replysForOriginno' + commentOriginNo
-	
-	$('#'+id).html('')
-}
 
 </script>

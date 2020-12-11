@@ -162,7 +162,7 @@ function putOnRealTextArea(){
 }
 
 
-/**/
+/*이미지폼을 서밋해준다.*/
 function imgFormSubmit(){
 	
 

@@ -140,7 +140,7 @@
 		</c:if>
 		<c:if test="${(fmt_now_second - fmt_creat_date_second) < 600000 }">
 			<img class="" alt="새글" src="/resources/img/new_article_icon.jpg" style="width:10px">
-	</c:if>
+		</c:if>
 	</div>
 	
 	</td>
