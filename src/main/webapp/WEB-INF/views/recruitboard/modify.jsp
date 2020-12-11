@@ -179,7 +179,7 @@
 	
 	<div class="form-group" style="min-width:550px;"> 
 		<label for="form_article_content">내용</label>
-		<textarea rows="10" id="form_article_content" name="article_content" style="min-width:550px; width:100%;" alertComment="내용"></textarea>
+		<textarea rows="20" id="form_article_content" name="article_content" style="min-width:550px; width:100%;" alertComment="내용"></textarea>
 	</div>
 
 	

@@ -25,7 +25,16 @@
 		SELECT * FROM
 		(SELECT rownum rnum, list.* FROM 
 		(SELECT 
-			user_no, article_no, article_title, article_content, party_location, create_date, meet_time, article_hit, is_delete,board_no
+			user_no
+			, article_no
+			, article_title
+			, article_content
+			, party_location
+			, create_date
+			, meet_time
+			, article_hit
+			, is_delete
+			, board_no
 		    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
 		    ,(SELECT count(*) FROM tb_comment2 c WHERE b.board_no = #{board_no} AND b.article_no = c.article_no AND c.comment_order = 0) cnt_comment
 		    ,(SELECT count(*) FROM tb_recommend2 r WHERE b.board_no = #{board_no} AND b.article_no = r.article_no) cnt_recommend
@@ -85,6 +94,8 @@
 		    ,to_char(meet_time, 'YYYY-MM-DD') meet_time_date
 		    ,to_char(meet_time, 'HH24') meet_time_clock
 		    ,to_char(meet_time, 'MI') meet_time_min
+		    ,to_char(start_date, 'YYYY-MM-DD') start_date
+		    ,to_char(terminate_date, 'YYYY-MM-DD') terminate_date
 		    ,article_hit
 		    ,create_date
 		    ,party_location

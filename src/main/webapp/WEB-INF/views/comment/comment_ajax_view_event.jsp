@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<link rel="stylesheet" href="/resources/css/recruitboard/view.css">
-<link rel="stylesheet" href="/resources/css/recruitboard/comment_ajax.css">
+<link rel="stylesheet" href="/resources/css/common/common.css">
 <script type="text/javascript" src="/resources/js/recruitboard/comment_ajax.js"></script>
 
 <div id="commentList_ajax">

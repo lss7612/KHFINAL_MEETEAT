@@ -1,0 +1,29 @@
+#view_wrapper{
+	width:50%;
+	min-width:800px;
+	margin: 0 auto;
+}
+
+.imgBox {
+	cursor:pointer;
+	overflow: hidden;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	width: 500px;
+	height: 500px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+}
+
+.upload-image {
+    width: 500px;
+}
+
+
+
+#view_title_bar div span{
+	margin:0 10px;
+}
+
+

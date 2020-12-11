@@ -15,7 +15,7 @@
 	<interceptors>
 		<!-- 관리자인터셉터 등록 -->
 		<interceptor>
-			<mapping path="/event/manage/**"/><!-- 이상성 : 이벤트관리 -->
+			<mapping path="/eventboard/manage/**"/><!-- 이상성 : 이벤트관리 -->
 			<mapping path="/sitemanage/**"/><!-- 이상성: 메인이미지관리 -->
 			<mapping path="/admin/**" /><!-- 관리자 기능 url -->
 			<exclude-mapping path=""/>
