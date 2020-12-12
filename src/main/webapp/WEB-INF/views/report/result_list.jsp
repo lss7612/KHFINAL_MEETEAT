@@ -21,7 +21,7 @@ $(document).ready(function(){
 		console.log(""+search);
 	})
 })
-
+ 
 function searchBtnclick(){
 	console.log("아이디 검색 시작")
 	var search = $('#search').val();
