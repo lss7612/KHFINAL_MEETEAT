@@ -1,10 +1,18 @@
 #popupManageWrapper{
 	width:60%;
 	margin: 0 auto;
-	min-width:700px;
+	min-width:1150px;
 }
 
-#workBoxes > div {
+#eventSideBar{
+	width:25%
+}
+
+
+
+#workBoxes{
+	width:70%;
+	min-width:785px;
 }
 
 #popup{
@@ -31,9 +39,13 @@
 	border-radius: 10px;
 }
 
-.selected {
+.willAdd {
 	background:#b2fef7;
 	border: 1px solid #b2fef7;
+}
+.willDelete {
+	background:#f06292;
+	border: 1px solid #f06292;
 }
 
 .notSelected{

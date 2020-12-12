@@ -1,9 +1,6 @@
 $(document).ready(function(){
-	
-	getList(1);
-	getList(0);
-	
-	
+
+	//이부분 CSS로 바까줘야함
 	$('.nonePopupContent').click(function(){
 		console.log('clicked')
 		$(this).toggleClass('willAdd')
@@ -38,26 +35,6 @@ $(document).ready(function(){
 	
 	
 })
-
-
-function getList(isPopup){//isPopup==0 means notPopup, isPopup==1 means popup.
-	$.ajax({
-		type: "get"
-		, url: "/eventboard/manage/popup_ajax"
-		, data:{ is_popup : isPopup }
-		, dataType:"html" //응답받은 데이터의 형식
-		, success: function( res ){
-			if(isPopup==0) $('#notPopupList').html(res)
-			if(isPopup==1) $('#popupList').html(res)
-			
-		}
-		, error: function(){
-			console.log('실패')
-		}
-	})
-}
-
-
 
 
 

@@ -159,8 +159,22 @@ public class EventBoardController {
 	@RequestMapping(value = "/eventboard/manage/popup")
 	public String EventPopupManage() {
 		
+		return null;
+	}
+	
+	@RequestMapping(value = "/eventboard/manage/popup_ajax")
+	public String EventPopupAjaxView(
+			Model model
+			,int is_popup
+			) {
+		
+		List<HashMap<String, Object>> list = eventBoardService.getLists(is_popup);
+		
+		if(is_popup==0)	model.addAttribute("notPopupList",list);
+		if(is_popup==1)	model.addAttribute("popupList",list);
 		
 		return null;
+		
 	}
 
 

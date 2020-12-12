@@ -22,4 +22,8 @@ public interface EventBoardDao {
 
 	public List<HashMap<String, Object>> getTerminatedEventList();
 
+	public void insertPopup(EventBoard param);
+
+	public List<HashMap<String, Object>> getPopupList(int is_popup);
+
 }

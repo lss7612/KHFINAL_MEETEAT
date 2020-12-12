@@ -106,6 +106,11 @@
 	)
 </insert>
 
+<insert id="insertPopup" parameterType="meeteat.dto.eventBoard.EventBoard">
+	INSERT INTO tb_popup2( article_no, board_no, is_popup )
+	VALUES( #{article_no}, #{board_no}, 0)
+</insert>
+
 <update id="updateEventBoard" parameterType="meeteat.dto.eventBoard.EventBoard">
 	UPDATE tb_board2
 	SET
@@ -117,5 +122,21 @@
 	WHERE article_no = #{article_no}
 		AND board_no = #{board_no} 
 </update>
+
+<select id="getPopupList" parameterType="int" resultType="hashmap">
+	SELECT b.*, p.is_popup FROM
+	(SELECT 
+	    article_no
+	    ,article_title
+	    ,to_char(start_date,'YYYY-MM-DD') start_date
+	    ,to_char(terminate_date,'YYYY-MM-DD') terminate_date
+	FROM tb_board2
+	WHERE board_no = 6
+	    AND to_char(terminate_date,'YYYY-MM-DD')>=to_char(sysdate,'YYYY-MM-DD')) b
+	INNER JOIN tb_popup2 p
+	ON p.article_no = b.article_no
+	WHERE is_popup=#{is_popup}
+</select>
+
 
 </mapper>    

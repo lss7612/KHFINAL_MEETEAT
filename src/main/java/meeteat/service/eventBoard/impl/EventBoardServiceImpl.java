@@ -68,6 +68,8 @@ public class EventBoardServiceImpl implements EventBoardService {
 		
 		imageService.saveFile(session, ext01, ext02, ext03, "6", ""+article_no);
 		
+		eventBoardDao.insertPopup(param);//해시맵에 넣어서 보내줘야함
+		
 	}
 
 	@Override
@@ -96,6 +98,14 @@ public class EventBoardServiceImpl implements EventBoardService {
 		
 		return eventBoardDao.getTerminatedEventList();
 		
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getLists(int is_popup) {
+
+		List<HashMap<String, Object>> list = eventBoardDao.getPopupList(is_popup);
+		
+		return list;
 	}
 
 	
