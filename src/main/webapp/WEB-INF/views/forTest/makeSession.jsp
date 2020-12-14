@@ -14,8 +14,8 @@
 //작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
 $(document).ready(function(){
 	$("#userMenu>span").click(function(){
-		//$(this).next("ul").toggleClass("hide");
 		
+		//2. 슬라이드 형식으로 나타나기
 		var submenu = $(this).next("ul");
 		if(submenu.is(":visible")){
 			submenu.slideUp();
@@ -51,21 +51,30 @@ function reportPopup(){
 // 신고하기 동작 함수 끝
 </script>
 
+
 <style type="text/css">
-ul{
+/* 회원 아이디 클릭시 나타나는 목록 CSS */
+#userMenuList{
    list-style:none;
    padding : 0 0 0 0;
 }
 
-#userHiddenMenu{
-	display:none;
-	padding : 0 0 0 40px;
-	position : absolute;
-}
+#userHiddenMenu{ 
+	list-style:none;
+   	display:none;
+	padding : 0 0 0 40px; 
+	position : absolute; 
+} 
 
 #userHiddenMenu > li{
+	background-color : #ff8f11;
 	position : relative;
+	cursor : pointer;
+	border : solid #e46508 1px;
+	padding : 3px 3px 3px 3px;
 }
+/* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
+
 </style>
 </head>
 <body>
@@ -95,11 +104,11 @@ ul{
 <hr>
 
 <!-- 작성글 내용 페이지에서 작성자 닉네임클릭했을 시 나타나는 메뉴 -->
-<ul>
+<ul id="userMenuList">
 	<li id="userMenu">
 		<span>작성자닉네임</span>
-		<ul id="userHiddenMenu">
-			<li onclick="createChat();">채팅하기</li>
+		<ul id="userHiddenMenu" >
+			<li onclick="createChat();" >채팅하기</li>
 		</ul>
 	</li>
 	
