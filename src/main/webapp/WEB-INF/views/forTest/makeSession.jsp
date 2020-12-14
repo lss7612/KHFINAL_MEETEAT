@@ -14,9 +14,6 @@
 //작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
 $(document).ready(function(){
 	$("#userMenu>span").click(function(){
-		//메뉴바 나타나는 방식 선택.
-		//1. 클릭하면 그냥 나타나기
-// 		$(this).next("ul").toggleClass("hidden");
 		
 		//2. 슬라이드 형식으로 나타나기
 		var submenu = $(this).next("ul");
@@ -54,20 +51,17 @@ function reportPopup(){
 // 신고하기 동작 함수 끝
 </script>
 
+
 <style type="text/css">
+/* 회원 아이디 클릭시 나타나는 목록 CSS */
 #userMenuList{
    list-style:none;
    padding : 0 0 0 0;
 }
 
-.hidden{
-	display : none;
-}
-
-
 #userHiddenMenu{ 
 	list-style:none;
-  	display:none;
+   	display:none;
 	padding : 0 0 0 40px; 
 	position : absolute; 
 } 
@@ -79,6 +73,8 @@ function reportPopup(){
 	border : solid #e46508 1px;
 	padding : 3px 3px 3px 3px;
 }
+/* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
+
 </style>
 </head>
 <body>
@@ -111,7 +107,6 @@ function reportPopup(){
 <ul id="userMenuList">
 	<li id="userMenu">
 		<span>작성자닉네임</span>
-<!-- 		<ul id="userHiddenMenu" class="hidden"> -->
 		<ul id="userHiddenMenu" >
 			<li onclick="createChat();" >채팅하기</li>
 		</ul>
