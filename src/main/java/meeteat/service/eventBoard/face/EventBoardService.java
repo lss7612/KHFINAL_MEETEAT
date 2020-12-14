@@ -25,4 +25,6 @@ public interface EventBoardService {
 
 	public List<HashMap<String, Object>> getLists(int is_popup);
 
+	public void update(int is_popup,List<String> list);
+
 }

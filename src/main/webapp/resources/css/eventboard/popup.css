@@ -8,7 +8,14 @@
 	width:25%
 }
 
-
+.eventManageButton{
+	cursor:pointer;
+	border:1px solid #ccc;
+	border-radius:10px;
+	width: 50%;
+	margin: 0 auto;
+	text-align:center;
+}
 
 #workBoxes{
 	width:70%;
@@ -16,17 +23,16 @@
 }
 
 #popup{
-	width: 45%;
+	width: 70%;
 	border:1px solid #ccc;
-	height:500px;
+	height:680px;
 	overflow: scroll;
+	margin: 0 auto;
 }
 
-#notPopup{
-	width: 45%;
-	border:1px solid #ccc;
-	height:500px;
+#ajaxList{
 	overflow: scroll;
+	height:300px;
 }
 
 #popupOperator{

@@ -15,6 +15,7 @@
 <fmt:formatDate var="fmt_now_second" value="${now }" pattern="yyyyMMddHHmmss"/>
 <fmt:formatDate var="fmt_now_minute" value="${now }" pattern="yyyyMMddHHmm"/>
 
+${list }
 
 <div class="bold_padding">
 <h2>이벤트</h2>
@@ -91,7 +92,9 @@
 		
 		<c:if test="${user_grade eq 0 }">
 		<td style="width:10%">
-			<input type="checkbox">
+			<c:if test="${list.IS_POPUP eq 1 }">팝업중</c:if>
+			<c:if test="${list.IS_POPUP eq 0 }"></c:if>
+			
 		</td>
 		</c:if>
 		

@@ -1,6 +1,7 @@
 package meeteat.service.eventBoard.impl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -106,6 +107,26 @@ public class EventBoardServiceImpl implements EventBoardService {
 		List<HashMap<String, Object>> list = eventBoardDao.getPopupList(is_popup);
 		
 		return list;
+	}
+
+	@Override
+	public void update(int is_popup,List<String> list) {
+
+		Iterator<String> e = list.iterator();
+
+		for(int i = 0; i < list.size(); i++) {
+			
+			HashMap<String, Object> param = new HashMap<String, Object>();
+			param.put("is_popup", is_popup);
+			param.put("article_no", list.get(i));
+			
+			eventBoardDao.updatePopup(param);
+			
+		}
+			
+		
+		
+		
 	}
 
 	

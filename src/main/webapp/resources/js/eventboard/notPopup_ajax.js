@@ -1,15 +1,13 @@
 $(document).ready(function(){
-	
-	const deleteList = new Array();
-	
-	$('.popupContent').click(function(){
 
-		$(this).toggleClass('willDelete')
+	
+	$('.nonePopupContent').click(function(){
+		$(this).toggleClass('willAdd')
 		$(this).toggleClass('notSelected')
-		
 	})
 	
 	$('.eventContent').mouseenter(function(){
+		
 		
 		$(this).css('font-size','0.8em')
 		
@@ -19,6 +17,7 @@ $(document).ready(function(){
 	
 	$('.eventContent').mouseleave(function(){
 	
+		
 		$(this).css('font-size','1em')
 		
 		$(this).children('.eventDate').css('font-size','0')
@@ -29,18 +28,19 @@ $(document).ready(function(){
 	$('#popupSubmit').click(function(){
 		console.log('clicked')
 		
-		let deleteArray = new Array();
+		let addArray = new Array();
 		
-		$('.eventContent.willDelete').each(function(i){
-			deleteArray.push($(this).attr('article_no'))
+		$('.eventContent.willAdd').each(function(i){
+			addArray.push($(this).attr('article_no'))
 		})
 		
-		console.log('deleteArray')
-		console.log(deleteArray)
-		popupSubmit(0, deleteArray)
+		console.log('addArray')
+		console.log(addArray)
+		popupSubmit(1, addArray)
 	})
 	
 })
+
 
 function popupSubmit(isPopup, List){
 	

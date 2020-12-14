@@ -26,4 +26,6 @@ public interface EventBoardDao {
 
 	public List<HashMap<String, Object>> getPopupList(int is_popup);
 
+	public void updatePopup(HashMap<String, Object> param);
+
 }
