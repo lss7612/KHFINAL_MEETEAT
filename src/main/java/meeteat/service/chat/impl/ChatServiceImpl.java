@@ -24,4 +24,23 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.findChatRoom(user0, user1);
 	}
 	
+	@Override
+	public String getChatId(int roomNum) {
+		return chatDao.getChattingId(roomNum);
+	}
+	
+	@Override
+	public void createChatById(String chatting_id) {
+		chatDao.insertChatById(chatting_id);
+	}
+	
+	@Override
+	public int getChatNumById(String chatting_id) {
+		return chatDao.getChatNumById(chatting_id);
+	}
+	
+	@Override
+	public void insertUserToChatNum(int chatting_no, int user0) {
+		chatDao.insertUserToChatNum(chatting_no, user0);
+	}
 }

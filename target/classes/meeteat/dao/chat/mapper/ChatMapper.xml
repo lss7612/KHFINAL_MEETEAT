@@ -13,9 +13,31 @@
 		            on c.chatting_no = cu.chatting_no
 		        where c.user_total =2
 		    )
-		    where user_no = ${user0}
-		        or user_no = ${user1}
+		    where user_no = #{user0}
+		        or user_no = #{user1}
 		    )
 		group by chatting_no
 	</select>
+	
+	<!-- chatting_id를 통해 chatting_no구하기 -->
+	<select id="getChattingId" parameterType="int" resultType="String">
+		select chatting_id from tb_chatting2
+		where chatting_no = #{chatting_no}
+	</select>
+	
+	<!-- 채팅방 생성을 위해 chatting_id 추가하기 -->
+	<insert id="insertChatById" parameterType="String">
+		insert into tb_chatting2(chatting_id) values( #{chatting_id})
+	</insert>
+	
+	<!-- chatting_id를 이용해 chatting_no구하기 -->
+	<select id="getChatNumById" parameterType="String" resultType="int">
+		select chatting_no from tb_chatting2
+		where chatting_id = #{chatting_id}
+	</select>
+	
+	<!-- chatting_no에 참여할 회원 추가하기 -->
+	<insert id="insertUserToChatNum" parameterType="int">
+		insert into tb_chattinguser2(chatting_no, user_no) values(#{chatting_no}, #{user_no})
+	</insert>
 </mapper>

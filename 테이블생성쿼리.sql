@@ -273,8 +273,10 @@ ALTER TABLE TB_BOARD2
 -- TB_GRADE2 Table Create SQL
 CREATE TABLE TB_CHATTING2
 (
-    chatting_no    NUMBER    NOT NULL, 
-    user_total     NUMBER    NOT NULL, 
+    chatting_no    NUMBER    NOT NULL,
+    chatting_name  VARCHAR2(120),
+    chatting_id    VARCHAR2(40) NOT NULL,
+    user_total     NUMBER    DEFAULT 0 NOT NULL , 
     CONSTRAINT TB_CHATTING2_PK PRIMARY KEY (chatting_no)
 )
 /
@@ -472,7 +474,7 @@ END;
 --DROP SEQUENCE TB_CHATTINGUSER2_SEQ;
 /
 
-COMMENT ON TABLE TB_CHATTINGUSER2 IS '채팅참여자'
+COMMENT .ON TABLE TB_CHATTINGUSER2 IS '채팅참여자'
 /
 
 COMMENT ON COLUMN TB_CHATTINGUSER2.index IS '참여자목록'
@@ -884,6 +886,26 @@ begin
 end; 
 /
 
+--tb_chattinguser2에 유저 추가시 채팅방 인원 증가 트리거
+CREATE OR REPLACE TRIGGER TB_CHATTING2_USER_TOTAL_AI_TRG
+AFTER INSERT ON tb_chattinguser2
+    for each row
+begin 
+    update tb_chatting2 set user_total = user_total +1
+    where chatting_no = :new.chatting_no;
+end; 
+/
+
+--tb_chattinguser2에 유저 나갈시 채팅방 인원 감소 트리거
+CREATE OR REPLACE TRIGGER TB_CHATTING2_USER_TOTAL_AD_TRG
+AFTER DELETE ON tb_chattinguser2
+    for each row
+begin 
+    update tb_chatting2 set user_total = user_total -1
+    where chatting_no = :old.chatting_no;
+end; 
+/
+
 -- 자동생성된 트리거 삭제 코드
 DROP TRIGGER "TB_RESULTREPORTREASON2_AI_TRG";
 DROP TRIGGER "TB_RECOMMEND2_AI_TRG";
@@ -903,3 +925,5 @@ DROP SEQUENCE tb_recruitBoard_seq;
 CREATE SEQUENCE tb_recruitBoard_seq;
 DROP SEQUENCE tb_recruitBoardComment_seq;
 CREATE SEQUENCE tb_recruitBoardComment_seq;
+
+commit;
