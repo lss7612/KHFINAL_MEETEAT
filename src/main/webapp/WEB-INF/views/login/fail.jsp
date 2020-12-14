@@ -5,16 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+alert("로그인실패");
+location.href("/login/login");
+
+</style>
 </head>
 <body>
-
-<h1>MateFind List</h1>
-
-<div>
-<p>2020 12 01 18 15 에 수정된 글</p>
-<p>dsfsdf</p>
-</div>
-
 
 </body>
 </html>
