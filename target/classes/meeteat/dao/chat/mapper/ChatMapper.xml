@@ -3,6 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="meeteat.dao.chat.impl.ChatDao">
-
+<mapper namespace="meeteat.dao.chat.face.ChatDao">
+	<!-- 기존에 1대1 대화방이 있는지 검색  -->
+	<select id="findChatRoom" parameterType="int" resultType="hashmap">
+		select chatting_no, count(*) cnt from(
+		    select * from (
+		        select c.chatting_no, c.user_total, cu.user_no from tb_chatting2 c
+		        inner join tb_chattinguser2 cu
+		            on c.chatting_no = cu.chatting_no
+		        where c.user_total =2
+		    )
+		    where user_no = ${user0}
+		        or user_no = ${user1}
+		    )
+		group by chatting_no
+	</select>
 </mapper>
