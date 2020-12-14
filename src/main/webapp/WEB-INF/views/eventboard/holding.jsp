@@ -15,8 +15,6 @@
 <fmt:formatDate var="fmt_now_second" value="${now }" pattern="yyyyMMddHHmmss"/>
 <fmt:formatDate var="fmt_now_minute" value="${now }" pattern="yyyyMMddHHmm"/>
 
-${list }
-
 <div class="bold_padding">
 <h2>이벤트</h2>
 </div>
