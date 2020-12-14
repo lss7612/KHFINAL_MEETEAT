@@ -31,11 +31,13 @@ public class PayInterceptor implements HandlerInterceptor {
 			
 			int user_grade = (int) session.getAttribute("user_grade");
 			
+			if(user_grade==0) return true;
+			
 			if(user_grade!=1) {
 				logger.info("결제회원이아님");
 				response.sendRedirect("/interceptor/payfail");
 				return false;
-			}
+			} 
 		}
 		logger.info("결제회원임");
 		return true;

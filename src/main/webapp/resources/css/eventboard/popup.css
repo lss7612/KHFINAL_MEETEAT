@@ -1,0 +1,41 @@
+#popupManageWrapper{
+	width:60%;
+	margin: 0 auto;
+	min-width:700px;
+}
+
+#workBoxes > div {
+}
+
+#popup{
+	width: 45%;
+	border:1px solid #ccc;
+	height:500px;
+	overflow: scroll;
+}
+
+#notPopup{
+	width: 45%;
+	border:1px solid #ccc;
+	height:500px;
+	overflow: scroll;
+}
+
+#popupOperator{
+	width: 10%;
+	border:1px solid #ccc;
+}
+
+.eventContent{
+	cursor:pointer;
+	border-radius: 10px;
+}
+
+.selected {
+	background:#b2fef7;
+	border: 1px solid #b2fef7;
+}
+
+.notSelected{
+	border: 1px solid #ccc;
+}

@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-관리자만 접속 가능합니다.
+<div style="text-align:center; width:50%; margin:0 auto;" id="searchMsg" >
+	<br>
+	<img alt="" src="/resources/img/error.jpg">
+	<h4>접근권한이 없습니다...</h4>
+	<a href="/"><span>이전페이지로..</span></a>
+</div>
 </body>
 </html>

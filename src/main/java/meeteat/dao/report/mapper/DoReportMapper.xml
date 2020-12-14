@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="meeteat.dao.report.face.DoReportDao">
+	<select id="getReportReasonList" resultType="hashmap">
+		select * from tb_reportreason2
+	</select>
+	
+	<select id="getUserInfoByUserNo" parameterType="int" resultType="hashmap">
+		select user_no, user_id, user_nick from tb_user2
+		where user_no = #{user_no}
+	</select>
+	
+	<insert id="insertUserReport" parameterType="meeteat.dto.report.UserReport">
+		insert into tb_userreport2 (user_no, report_time, reason_no, report_content, board_url, is_processed )
+		values ( #{user_no}, sysdate, #{reason_no}, #{report_content}, #{board_url}, 0)
+	</insert>
+</mapper>

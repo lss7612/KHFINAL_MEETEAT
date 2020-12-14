@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="meeteat.dao.eventBoard.face.EventBoardDao">
+
+<select id="selectCntHoldingListAll" parameterType="meeteat.dto.recruitBoard.SearchParam" resultType="int">
+	SELECT count(*) FROM
+	(SELECT  
+   		b.*
+   	,(SELECT user_nick FROM tb_user2 u WHERE b.user_no = u.user_no) user_nick
+   	FROM tb_board2 b)
+	<where>
+	<!-- 검색기능 -->
+	<if test="searchBoard_no!=0">
+		AND board_no = #{searchBoard_no}		
+	</if>
+	<if test="(searchCategory!=null and !searchCategory.equals('')) and (searchKeyword!=null and !searchKeyword.equals(''))">
+		AND ${searchCategory} LIKE '%${searchKeyword}%'
+	</if>
+	<if test="true">
+		AND terminate_date >= to_char(sysdate, 'YYYY-MM-DD') 
+		AND is_delete=0
+	</if>
+	</where>
+</select>
+
+<select id="getHoldingEventList" resultType="hashmap">
+	SELECT 
+		board_no
+		,article_no
+		,article_title
+		,create_date
+		,revision_date
+		,is_delete
+		,article_hit
+		,start_date
+		,terminate_date
+		,(SELECT count(*) FROM tb_comment2 c WHERE b.board_no = 6 AND b.article_no = c.article_no AND c.comment_order = 0) cnt_comment
+	FROM tb_board2 b
+	WHERE board_no = 6
+	    AND terminate_date >= to_char(sysdate, 'YYYY-MM-DD')
+	    AND is_delete=0
+	ORDER BY article_no DESC 
+</select>
+
+<select id="selectCntTerminatedListAll" parameterType="meeteat.dto.recruitBoard.SearchParam" resultType="int">
+	SELECT count(*) FROM
+	(SELECT  
+   		b.*
+   	,(SELECT user_nick FROM tb_user2 u WHERE b.user_no = u.user_no) user_nick
+   	FROM tb_board2 b)
+	<where>
+	<!-- 검색기능 -->
+	<if test="searchBoard_no!=0">
+		AND board_no = #{searchBoard_no}		
+	</if>
+	<if test="(searchCategory!=null and !searchCategory.equals('')) and (searchKeyword!=null and !searchKeyword.equals(''))">
+		AND ${searchCategory} LIKE '%${searchKeyword}%'
+	</if>
+	<if test="true">
+		<![CDATA[AND terminate_date < to_char(sysdate, 'YYYY-MM-DD')]]> 
+		AND is_delete=0
+	</if>
+	</where>
+</select>
+
+<select id="getTerminatedEventList" resultType="hashmap">
+	SELECT 
+		board_no
+		,article_no
+		,article_title
+		,create_date
+		,revision_date
+		,is_delete
+		,article_hit
+		,start_date
+		,terminate_date
+		,(SELECT count(*) FROM tb_comment2 c WHERE b.board_no = 6 AND b.article_no = c.article_no AND c.comment_order = 0) cnt_comment
+	FROM tb_board2 b
+	WHERE board_no = 6
+	    <![CDATA[AND terminate_date < to_char(sysdate, 'YYYY-MM-DD')]]>
+	    AND is_delete=0
+	ORDER BY article_no DESC 
+</select>
+
+<select id="getNextVal" resultType="int">
+	SELECT tb_eventBoard_seq.nextval FROM dual
+</select>
+
+<insert id="insertEventBoard" parameterType="meeteat.dto.eventBoard.EventBoard">
+	INSERT INTO tb_board2 (
+		article_no, article_title, article_content
+		,board_no, user_no, create_date
+		,is_delete, article_hit
+		, start_date
+		, terminate_date
+	)
+	VALUES (
+		#{article_no}, #{article_title}, #{article_content}
+		,6, #{user_no}, sysdate
+		,#{is_delete}, #{article_hit}
+		,to_date(#{start_date},'YYYY-MM-DD')
+		,to_date(#{terminate_date}, 'YYYY-MM-DD') 
+	)
+</insert>
+
+<update id="updateEventBoard" parameterType="meeteat.dto.eventBoard.EventBoard">
+	UPDATE tb_board2
+	SET
+		article_title = #{article_title}
+		,start_date = to_date(#{start_date},'YYYY-MM-DD')
+		,terminate_date = to_date(#{terminate_date},'YYYY-MM-DD')
+		,article_content = #{article_content}
+		,revision_date = sysdate
+	WHERE article_no = #{article_no}
+		AND board_no = #{board_no} 
+</update>
+
+</mapper>    
