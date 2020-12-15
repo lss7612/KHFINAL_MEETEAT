@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>채팅방 접속</title>
 </head>
 <body>
-<h1>pushTest3</h1>
+
 </body>
 </html>
