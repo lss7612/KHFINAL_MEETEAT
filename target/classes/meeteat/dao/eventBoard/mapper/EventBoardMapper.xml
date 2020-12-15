@@ -133,6 +133,7 @@
 	    ,to_char(terminate_date,'YYYY-MM-DD') terminate_date
 	FROM tb_board2
 	WHERE board_no = 6
+		AND is_delete = 0
 	    AND to_char(terminate_date,'YYYY-MM-DD')>=to_char(sysdate,'YYYY-MM-DD')) b
 	INNER JOIN tb_popup2 p
 	ON p.article_no = b.article_no
