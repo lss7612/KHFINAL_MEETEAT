@@ -501,11 +501,11 @@ ALTER TABLE TB_CHATTINGUSER2
 CREATE TABLE TB_CHATTINGCONTENT2
 (
     chatting_no    NUMBER           NOT NULL, 
-    msg_no         VARCHAR2(20)     NOT NULL, 
+    msg_no         NUMBER           NOT NULL, 
     user_no        NUMBER           NOT NULL, 
     msg_content    VARCHAR2(500)    NOT NULL, 
     msg_date       DATE             NOT NULL, 
-    CONSTRAINT TB_CHATTINGCONTENT2_PK PRIMARY KEY (chatting_no)
+    CONSTRAINT TB_CHATTINGCONTENT2_PK PRIMARY KEY (msg_no)
 )
 /
 
@@ -519,7 +519,7 @@ BEFORE INSERT ON TB_CHATTINGCONTENT2
 REFERENCING NEW AS NEW FOR EACH ROW 
 BEGIN 
     SELECT TB_CHATTINGCONTENT2_SEQ.NEXTVAL
-    INTO :NEW.chatting_no
+    INTO :NEW.msg_no
     FROM DUAL;
 END;
 /

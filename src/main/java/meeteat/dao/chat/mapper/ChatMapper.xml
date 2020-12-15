@@ -54,4 +54,26 @@
 		    on cu.user_no = u.user_no
 		where cu.chatting_no = #{chatting_no}
 	</select>
+	
+	<!-- usre_no가 속한 채팅방 조회 -->
+	<select id="getUserJoinChatList" parameterType="int" resultType="int">
+		select c.chatting_no from tb_chatting2 c
+		inner join tb_chattinguser2 cu
+		    on c.chatting_no = cu.chatting_no
+		where cu.user_no = #{user_no}    
+	</select>
+	
+	<!-- chatting_no의 최신 메시지 정보를 조회 -->
+	<select id="getChatNewestContentAtRoom" parameterType="int" resultType="hashmap">
+		select rownum, t.* from (
+		    select c.chatting_no, c.chatting_name, c.chatting_id, cc.user_no, u.user_id, u.user_nick, cc.msg_content, cc.msg_date from tb_chattingcontent2 cc
+		    inner join tb_user2 u
+		        on cc.user_no = u.user_no
+		    inner join tb_chatting2 c
+		        on cc.chatting_no = c.chatting_no
+		    where c.chatting_no= #{chatting_no}
+		    order by msg_date desc
+			)t
+		where rownum =1
+	</select>
 </mapper>
