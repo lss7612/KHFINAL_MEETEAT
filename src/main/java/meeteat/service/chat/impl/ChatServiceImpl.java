@@ -43,4 +43,14 @@ public class ChatServiceImpl implements ChatService{
 	public void insertUserToChatNum(int chatting_no, int user0) {
 		chatDao.insertUserToChatNum(chatting_no, user0);
 	}
+	
+	@Override
+	public HashMap<String, Object> getChatRoomInfoById(String chatting_id) {
+		return chatDao.getChatRoomInfoById(chatting_id);
+	}
+	
+	@Override
+	public List<HashMap<String, Object>> getChattingUserList(int chatting_no) {
+		return chatDao.getChatUserListByChatNum(chatting_no);
+	}
 }

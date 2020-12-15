@@ -96,12 +96,24 @@ public class ChatController {
 		//채팅목록에서 접속할때 또는 게시판에 접속할때 해당 방의 id를 전달값으로 받아온다.
 		logger.info("> > > 채팅방에 접속 완료 < < < ");
 		logger.info("> > > 접속한 채팅방의 id : "+chatting_id+" < < <");
-		//방의 이전 메시지 로드
+		//chatting_id로 채팅방 정보 가져오기
+		HashMap<String, Object> roomInfo = chatService.getChatRoomInfoById(chatting_id);
+		logger.info("접속한 채팅방의 정보 : "+roomInfo);
 		
 		//방에 참여하고 있는 회원들
+		int chatting_no = Integer.parseInt(""+roomInfo.get("CHATTING_NO"));
+		logger.info("채팅방 번호 : "+chatting_no);
+		List<HashMap<String,Object>> chatUserList = chatService.getChattingUserList(chatting_no);
 		
-		//
+		logger.info("> > > 채팅 참여자 리스트 < < < ");
+		logger.info(""+chatUserList);
 		
+		//방의 이전 메시지 로드(필요시 구현)
+		
+		
+		//model 객체 등록
+		model.addAttribute("roomInfo", roomInfo);
+		model.addAttribute("chatUserList", chatUserList);
 		return null;
 	}
 	
@@ -112,6 +124,7 @@ public class ChatController {
 		logger.info("> > > 현재 접속한 회원 정보 : "+user_no+" < < <");
 		
 		//회원 번호로 속해있는 채팅방 정보 갖고 오기.
+		//List roomNum = chatService.getJoinChatList(user_no);
 		
 		return null;
 	}

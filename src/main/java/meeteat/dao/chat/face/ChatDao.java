@@ -44,4 +44,18 @@ public interface ChatDao {
 	 */
 	public void insertUserToChatNum(@Param("chatting_no")int chatting_no, @Param("user_no")int user_no);
 
+	/**
+	 * chatting_id로 채팅방 정보 조회해서 가져오기
+	 * @param chatting_id : 조회할 채팅방의 chatting_id
+	 * @return tb_chatting2의 정보
+	 */
+	public HashMap<String, Object> getChatRoomInfoById(String chatting_id);
+
+	/**
+	 * 채팅방 번호로 채팅참여자 목록 갖고오기
+	 * @param chatting_no : 조회할 채팅방 번호
+	 * @return 참여자 목록
+	 */
+	public List<HashMap<String, Object>> getChatUserListByChatNum(int chatting_no);
+
 }

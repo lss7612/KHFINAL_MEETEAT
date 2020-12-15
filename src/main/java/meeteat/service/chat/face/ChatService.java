@@ -39,4 +39,18 @@ public interface ChatService {
 	 */
 	public void insertUserToChatNum(int chatting_no, int user0);
 
+	/**
+	 * chatting_id로 방정보 얻기
+	 * @param chatting_id
+	 * @return tb_chatting2의 정보
+	 */
+	public HashMap<String, Object> getChatRoomInfoById(String chatting_id);
+
+	/**
+	 * chatting_no로 속해있는 회원 정보 조회
+	 * @param chatting_no : 조회할 채팅방 번호
+	 * @return 회원 목록
+	 */
+	public List<HashMap<String, Object>> getChattingUserList(int chatting_no);
+
 }
