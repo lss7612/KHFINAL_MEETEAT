@@ -1,5 +1,9 @@
 package meeteat.controller.chat;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -124,8 +128,57 @@ public class ChatController {
 		logger.info("> > > 현재 접속한 회원 정보 : "+user_no+" < < <");
 		
 		//회원 번호로 속해있는 채팅방 정보 갖고 오기.
-		//List roomNum = chatService.getJoinChatList(user_no);
+		List roomNum = chatService.getJoinChatList(user_no);
+		logger.info(""+roomNum);
+	
+		//접속한 회원이 속한 채팅방의 가장 최신 대화만 갖고오기.
+		List<HashMap<String, Object>> chatList = new ArrayList<HashMap<String, Object>>();
+		GetChatNewest(roomNum, chatList);
 		
-		return null;
+		logger.info("> > > 참여 채팅방 최신 대화 목록 < < < ");
+		logger.info(""+chatList);
+		
+		//메시지를 최신순으로 정렬하기
+		logger.info("> > > 정렬 전 < < < ");
+		for(int i=0; i<chatList.size();i++) {
+			logger.info(chatList.get(i).get("CHATTING_NO")+"번방 "+chatList.get(i).get("MSG_DATE") );
+			//String date = chatList.get(i);
+		}
+		
+		logger.info("> > > 정렬 중 < < < ");
+		DateSort(chatList);		
+		
+		logger.info("> > > 정렬 후 < < < ");
+		for(int i=0; i<chatList.size();i++) {
+			logger.info(chatList.get(i).get("CHATTING_NO")+"번방 "+chatList.get(i).get("MSG_DATE") );
+		}
+		
+		//전달값 저장하기
+		model.addAttribute("chatList", chatList);
+		
+		return "/chat/list";
 	}
+
+	public void GetChatNewest(List roomNum, List<HashMap<String, Object>> chatList) {
+		int chatting_no = 0;
+		HashMap<String, Object> content = null;
+		for(int i=0; i<roomNum.size(); i++) {
+			logger.info(""+roomNum.get(i));
+			chatting_no = Integer.parseInt(""+(roomNum.get(i)) );
+			content = chatService.getChatContentNewestAtRoom(chatting_no);
+			logger.info(""+content);
+			chatList.add(content);
+		}
+		
+	}
+
+	public void DateSort(List<HashMap<String, Object>> chatList) {
+		Collections.sort(chatList, new Comparator<HashMap<String,Object>>(){
+			@Override
+			public int compare(HashMap<String, Object> o1, HashMap<String, Object> o2) {
+				return -1*String.valueOf(o1.get("MSG_DATE")).compareTo(String.valueOf(o2.get("MSG_DATE")));
+			}
+		});
+	}
+	
 }

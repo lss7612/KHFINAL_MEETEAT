@@ -106,6 +106,7 @@ function reportPopup(){
 <h2><a href="/admin/report/list">신고목록으로!</a></h2>
 <h2><a href="/admin/report/result/list">신고 처리 목록으로!</a></h2>
 <h2><a href="/eventboard/holding">이벤트게시판으로(관리자로접속하면 일반과 다름)</a></h2>
+<h2><a href="/chat/list">채팅목록으로!</a></h2>
 
 
 <!-- 게시글 신고 버튼 구역 -->

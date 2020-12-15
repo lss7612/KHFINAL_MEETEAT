@@ -53,4 +53,15 @@ public class ChatServiceImpl implements ChatService{
 	public List<HashMap<String, Object>> getChattingUserList(int chatting_no) {
 		return chatDao.getChatUserListByChatNum(chatting_no);
 	}
+	
+	@Override
+	public List getJoinChatList(int user_no) {
+		return chatDao.getUserJoinChatList(user_no);
+	}
+	
+	@Override
+	public HashMap<String, Object> getChatContentNewestAtRoom(int chatting_no) {
+		return chatDao.getChatNewestContentAtRoom(chatting_no);
+	}
+	
 }
