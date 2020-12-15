@@ -29,21 +29,63 @@
 
 <div id="workBoxes" class="base_padding pull-right" style="">
 	
-	
-	<%--왼쪽 박스 --%>
-	<div id="popup" class="workBox bold_padding">
-		
-		<div id="addOrDelete" class="light_padding eventManageButton">팝업 해제화면으로 전환</div>
-		<hr>
-		
-		<div id="List">
-			<div style="text-align:center;">
-			<img src="/resources/img/loading.gif">
-			</div>
-		</div>
+	<%--위쪽 박스 --%>
+	<div>
+	팝업 등록<br>
+	팝업 해제
 	</div>
 	
+	<%--왼쪽 박스 --%>
+	<div id="popup" class="workBox pull-left bold_padding">
+		
+		<h3>NON_POPUP</h3>
+		팝업등록할 이벤트 선택
+		<hr>
+		
+		<div id="notPopupList">
+		<div style="text-align:center;">
+		<img src="/resources/img/loading.gif">
+		</div>
+		</div>
+		
+	</div>
+	
+	
+	<%--중간 박스 --%>
+	<div id="popupOperator" class="pull-left"><div style="height:250px; padding-left:15px;padding-top:190px">
+	
+	<i id="add" style="cursor:pointer; font-size:50px;" class="fas fa-plus-square"></i>
+	
+	</div><div style="cursor:pointer;height:250px; padding-left:15px;padding-bottom:190px">
+	
+	<i id="delete" style="font-size:50px;" class="fas fa-minus-square"></i>
+	
+	</div></div>
+	
+	
+	
+	<%--오른쪽 박스 --%>
+	<div id="notPopup" class="workBox pull-left bold_padding">
+	
+		<h3>POPUP</h3>
+		팝업해제할 이벤트 선택
+		<hr>
+		
+		<div id="popupList">
+		<div style="text-align:center;">
+		<img src="/resources/img/loading.gif">
+		</div>
+		</div>
+		
+	</div>
+	
+	
+	
 </div>
+	<button>적용</button>
+
+
+
 </div>
 
 </body>

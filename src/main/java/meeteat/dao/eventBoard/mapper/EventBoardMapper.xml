@@ -38,6 +38,7 @@
 		,start_date
 		,terminate_date
 		,(SELECT count(*) FROM tb_comment2 c WHERE b.board_no = 6 AND b.article_no = c.article_no AND c.comment_order = 0) cnt_comment
+		,(SELECT is_popup FROM tb_popup2 p WHERE p.article_no = b.article_no AND board_no = 6) is_popup
 	FROM tb_board2 b
 	WHERE board_no = 6
 	    AND terminate_date >= to_char(sysdate, 'YYYY-MM-DD')
@@ -106,6 +107,11 @@
 	)
 </insert>
 
+<insert id="insertPopup" parameterType="meeteat.dto.eventBoard.EventBoard">
+	INSERT INTO tb_popup2( article_no, board_no, is_popup )
+	VALUES( #{article_no}, #{board_no}, 0)
+</insert>
+
 <update id="updateEventBoard" parameterType="meeteat.dto.eventBoard.EventBoard">
 	UPDATE tb_board2
 	SET
@@ -116,6 +122,32 @@
 		,revision_date = sysdate
 	WHERE article_no = #{article_no}
 		AND board_no = #{board_no} 
+</update>
+
+<select id="getPopupList" parameterType="int" resultType="hashmap">
+	SELECT b.*, p.is_popup FROM
+	(SELECT 
+	    article_no
+	    ,article_title
+	    ,to_char(start_date,'YYYY-MM-DD') start_date
+	    ,to_char(terminate_date,'YYYY-MM-DD') terminate_date
+	FROM tb_board2
+	WHERE board_no = 6
+		AND is_delete = 0
+	    AND to_char(terminate_date,'YYYY-MM-DD')>=to_char(sysdate,'YYYY-MM-DD')) b
+	INNER JOIN tb_popup2 p
+	ON p.article_no = b.article_no
+	WHERE is_popup=#{is_popup}
+</select>
+
+
+<update id="updatePopup" parameterType="hashmap">
+	UPDATE tb_popup2
+	SET
+		is_popup = #{is_popup}
+	WHERE
+		article_no = #{article_no}
+		AND board_no = 6
 </update>
 
 </mapper>    
