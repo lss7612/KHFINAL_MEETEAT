@@ -131,7 +131,8 @@
 	    ,article_title
 	    ,to_char(start_date,'YYYY-MM-DD') start_date
 	    ,to_char(terminate_date,'YYYY-MM-DD') terminate_date
-	FROM tb_board2
+	    ,(SELECT file_storedname FROM tb_file2 f WHERE b.board_no = f.board_no AND b.article_no = f.article_no) stored_name
+	FROM tb_board2 b
 	WHERE board_no = 6
 		AND is_delete = 0
 	    AND to_char(terminate_date,'YYYY-MM-DD')>=to_char(sysdate,'YYYY-MM-DD')) b
@@ -149,5 +150,17 @@
 		article_no = #{article_no}
 		AND board_no = 6
 </update>
+
+<select id="selectPopupListCnt" resultType="int">
+	SELECT count(*) FROM
+		(SELECT article_no, board_no FROM tb_board2
+		WHERE board_no=6
+		    AND is_delete=0
+		    AND to_char(terminate_date,'YYYY-MM-DD')>=to_char(sysdate,'YYYY-MM-DD')) b
+	INNER JOIN tb_popup2 p
+	ON p.article_no = b.article_no
+	    AND p.board_no = b.board_no
+	WHERE p.is_popup=1
+</select>
 
 </mapper>    

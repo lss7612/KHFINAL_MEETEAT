@@ -27,4 +27,6 @@ public interface EventBoardService {
 
 	public void update(int is_popup,List<String> list);
 
+	public int anyPopupList();
+
 }

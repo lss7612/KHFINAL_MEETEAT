@@ -28,4 +28,6 @@ public interface EventBoardDao {
 
 	public void updatePopup(HashMap<String, Object> param);
 
+	public int selectPopupListCnt();
+
 }
