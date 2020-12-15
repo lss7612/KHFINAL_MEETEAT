@@ -1,11 +1,14 @@
 package meeteat.controller.eventBoard;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -167,6 +171,7 @@ public class EventBoardController {
 			,int is_popup
 			) {
 		
+		
 		List<HashMap<String, Object>> list = eventBoardService.getLists(is_popup);
 		
 		if(is_popup==0)	model.addAttribute("notPopupList",list);
@@ -190,6 +195,39 @@ public class EventBoardController {
 		
 	}
 
+	@RequestMapping(value = "/eventboard/mainpopuplist")
+	public void mainPopupList(Model model) {
+		
+		List<HashMap<String, Object>> list = eventBoardService.getLists(1);
+		
+		model.addAttribute("list",list);
+		
+	}
+	
+	@RequestMapping(value="/eventboard/getpopupcookie")
+	public @ResponseBody Boolean getPopupCookie(
+			//제가 여기서 쿠키가 있는지 없는지 판단하는데
+			//이게 잘못될수도있을거같아여.. 여기서 마이너스 1이 나와요..
+			@CookieValue(value="popup", required = false) Cookie ispopup
+			) {
 
-
+		if(ispopup!=null) {
+			logger.info("널이 아님"+ ispopup.getValue());
+			logger.info("널이 아님"+ ispopup.getMaxAge());//마이너스1나옴
+			if(ispopup.getMaxAge()>0) {//popup쿠키가 아직 시간이 남아있음
+				logger.info(""+ispopup.getMaxAge());
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	@RequestMapping(value="/eventboard/anypopuplist")
+	public @ResponseBody int anyPopupList() {
+		
+		return eventBoardService.anyPopupList();
+		
+	}
+	
 }

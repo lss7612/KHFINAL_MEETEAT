@@ -129,6 +129,14 @@ public class EventBoardServiceImpl implements EventBoardService {
 		
 	}
 
+	@Override
+	public int anyPopupList() {
+		
+		
+		
+		return eventBoardDao.selectPopupListCnt();
+	}
+
 	
 	
 }

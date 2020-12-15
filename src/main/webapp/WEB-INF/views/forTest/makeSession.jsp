@@ -85,9 +85,10 @@ function reportPopup(){
 </style>
 </head>
 <body>
-
 <%-- 모달(팝업) 모듈 import --%>
+<c:if test="${empty cookie.popup }">
 <c:import url="eventPopupModule.jsp"></c:import>
+</c:if>
 
 
 <h1>SessionFactory</h1>
