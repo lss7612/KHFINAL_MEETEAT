@@ -1,8 +1,37 @@
 $(document).ready(function(){
 	
+	getList(0);
 	
-	$('.eventContent').click(function(){
-		$(this).toggleClass('selected')
+	$('#addOrDelete').click(function(){
+		console.log('clicked')
+		let text = $('#addOrDelete').text()
+		console.log(text)
+		
+		if(text=='팝업 등록화면으로 전환') {
+			$('#addOrDelete').text('팝업 해제화면으로 전환')
+			getList(0);
+		}
+		if(text=='팝업 해제화면으로 전환'){ 
+			$('#addOrDelete').text('팝업 등록화면으로 전환')
+			getList(1);
+		}
+		
+	})
+	
+	$('#delete').click(function(){
+		console.log('clicked')
+	})
+	
+	const addList = new Array();
+	
+	$('.nonePopupContent').click(function(){
+		console.log('clicked')
+		$(this).toggleClass('willAdd')
+		$(this).toggleClass('notSelected')
+	})
+	$('.popupContent').click(function(){
+		console.log('clicked')
+		$(this).toggleClass('willDelete')
 		$(this).toggleClass('notSelected')
 	})
 	
@@ -26,7 +55,36 @@ $(document).ready(function(){
 		$(this).children('.eventDate').css('height','0')
 		
 	})
-	
-	
+		
 	
 })
+
+
+function getList(isPopup){//isPopup==0 means notPopup, isPopup==1 means popup.
+	$.ajax({
+		type: "get"
+		, url: "/eventboard/manage/popup_ajax"
+		, data:{ is_popup : isPopup }
+		, dataType:"html" //응답받은 데이터의 형식
+		, success: function( res ){
+			
+				$('#List').html(
+					'<div style="text-align:center;" class="bold_padding">'+
+					'<img src="/resources/img/loading.gif">'+
+					'</div>'
+				)
+			
+			setTimeout(() => {
+				$('#List').html(res)
+			}, 1000);	
+		}
+		, error: function(){
+			console.log('실패')
+		}
+	})
+}
+
+
+
+
+
