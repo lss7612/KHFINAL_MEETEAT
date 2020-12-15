@@ -63,7 +63,7 @@ public interface ChatDao {
 	 * @param user_no : 접속된 회원의 회원 번호
 	 * @return 채팅 목록
 	 */
-	public List getUserJoinChatList(int user_no);
+	public List<HashMap<String,Object>> getUserJoinChatList(int user_no);
 
 	/**
 	 * 채팅방의 최신 메시지 내용을 조회

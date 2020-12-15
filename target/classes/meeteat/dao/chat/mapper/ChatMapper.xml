@@ -56,11 +56,20 @@
 	</select>
 	
 	<!-- usre_no가 속한 채팅방 조회 -->
-	<select id="getUserJoinChatList" parameterType="int" resultType="int">
-		select c.chatting_no from tb_chatting2 c
+	<select id="getUserJoinChatList" parameterType="int" resultType="hashmap">
+		select c.chatting_no, cu.user_no, u.user_nick  from tb_chatting2 c
 		inner join tb_chattinguser2 cu
 		    on c.chatting_no = cu.chatting_no
-		where cu.user_no = #{user_no}    
+		inner join tb_user2 u
+		    on cu.user_no = u.user_no
+		where cu.chatting_no in(
+		    select c.chatting_no from tb_chatting2 c
+				inner join tb_chattinguser2 cu
+				    on c.chatting_no = cu.chatting_no
+				where cu.user_no = #{user_no} 
+		)
+		and cu.user_no != #{user_no} 
+		order by chatting_no
 	</select>
 	
 	<!-- chatting_no의 최신 메시지 정보를 조회 -->
