@@ -13,9 +13,6 @@
 	width : 100%;
 	height : 810px;
 }
-#chatArea, #userListArea{
-/* 	display : inline-block; */
-}
 
 #chatArea{
 	float : left;
@@ -33,7 +30,90 @@
 
 </style>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script type="text/javascript"></script>
+<script type="text/javascript">
+var webSocket;
+$(document).ready(function(){
+	//채팅입력창 포커스
+    $("#chatContent").focus();
+    
+    //webSocket.onclose = onClose;
+    
+  	//웹소켓 객체 생성 코드
+    console.log(webSocket)
+    if (webSocket !== undefined && webSocket.readyState != WebSocket.CLOSED){
+    	console.log("이미 만들어져있습니다.")
+    } else {
+    	console.log("새로운 websocket생성.")
+    	webSocket = new WebSocket("ws://localhost:8088/chatws/${roomInfo.CHATTING_ID}");
+    	console.log(webSocket);
+    	webSocket.onopen;
+    	console.log(webSocket);
+    	console
+    }
+    //webSocket.onOpen();
+    webSocket.onmessage = onMessage;
+
+    var user_no = "${user_no}";
+    var roomId = "${roomInfo.CHATTING_ID}";
+    var roomNo = "${roomInfo.CHATTING_NO}"
+    console.log("회원번호 : "+user_no);
+    console.log("roomId:"+roomId);
+    
+})
+
+
+//input 박스에서 enter키 입력하면 동작하는 함수
+function enterKeyAtChat(){
+	if(window.event.keyCode == 13){
+		send();
+	}
+}
+
+//전송버튼 클릭시 동작하는 함수
+function send(){
+	var msg = document.getElementById("chatContent").value;
+	var sendMsg = "{writer:${user_no}, message:"+msg+" }"
+    console.log("msg : "+msg);
+    console.log("msg : "+sendMsg);
+    webSocket.send(sendMsg);
+    //webSocket.send(JSON.stringify(sendMsg));
+	msg ="";
+	$("#chatContent").val('');
+}
+
+//연결 종료시 동작하는 함수
+function disconnect(){
+// 	var sendMsg = "{chatRoomId:${room.roomId}, type=LEAVE, writer:${id}}"
+	var sendMsg = "{writer:${user_no}}"
+    webSocket.send(sendMsg);
+    webSocket.close();
+}
+
+//소켓 연결시 동작하는 함수
+function onOpen(){
+	var sendMsg = "{chatRoomNo:${roomInfo.CHATTING_NO}, type=ENTER, writer:${user_no}}"
+// 	var sendMsg = "{writer:${id}}"
+    webSocket.send(sendMsg);
+}
+
+//메시지 도착시 동작하는 함수
+function onMessage(e){
+    data = e.data;
+    console.log(e);
+    console.log(data);
+    console.log(data.message);
+    console.log("웹소켓에서 전달해준 메세지 : "+data);
+    
+    chatroom = document.getElementById("chatArea");
+    chatroom.innerHTML = chatroom.innerHTML + "<br>" + data;
+}
+
+//웹소켓 종료시 동작하는 함수
+function onClose(){
+    disconnect();
+}
+
+</script>
 
 
 </head>
@@ -66,72 +146,8 @@
 	</table>
 	</div>
 </div>
-<input type="text" id="chatContent"/><button onclick="send();">전송</button>
-
-<script type="text/javascript">
-//웹소켓 객체 생성 코드
-var webSocket;
-console.log(webSocket)
-if (webSocket !== undefined && webSocket.readyState != WebSocket.CLOSED){
-	console.log("이미 만들어져있습니다.")
-} else {
-	console.log("새로운 websocket생성.")
-	webSocket = new WebSocket("ws://localhost:8088/chatws/${roomInfo.CHATTING_ID}");
-	console.log(webSocket);
-	webSocket.onopen;
-	//webSocket.onOpen();
-	console.log(webSocket);
-}
-webSocket.onmessage = onMessage;
-
-var user_no = "${user_no}";
-var roomId = "${roomInfo.CHATTING_ID}";
-var roomNo = "${roomInfo.CHATTING_NO}"
-console.log("회원번호 : "+user_no);
-console.log("roomId:"+roomId);
-$(document).ready(function(){
-    //webSocket.onclose = onClose;
-})
-function send(){
-	var msg = document.getElementById("chatContent").value;
-// 	var sendMsg = "{chatRoomId:${room.roomId}, type:CHAT, writer:${id}, message:"+msg+" }"
-	var sendMsg = "{writer:${user_no}, message:"+msg+" }"
-    console.log("msg : "+msg);
-    console.log("msg : "+sendMsg);
-    webSocket.send(JSON.stringify(sendMsg));
-	msg ="";
-	$("#chatContent").val();
-}
-
-function disconnect(){
-// 	var sendMsg = "{chatRoomId:${room.roomId}, type=LEAVE, writer:${id}}"
-	var sendMsg = "{writer:${user_no}}"
-    webSocket.send(sendMsg);
-    webSocket.close();
-}
-
-function onOpen(){
-	var sendMsg = "{chatRoomNo:${roomInfo.CHATTING_NO}, type=ENTER, writer:${user_no}}"
-// 	var sendMsg = "{writer:${id}}"
-    webSocket.send(sendMsg);
-}
-
-function onMessage(e){
-    data = e.data;
-    console.log(e);
-    console.log(data);
-    console.log(data.message);
-    console.log("웹소켓에서 전달해준 메세지 : "+data);
-    
-    chatroom = document.getElementById("chatArea");
-    chatroom.innerHTML = chatroom.innerHTML + "<br>" + data;
-}
-
-function onClose(){
-    disconnect();
-}
-
-</script>
+<input type="text" id="chatContent" onKeyDown="enterKeyAtChat();" />
+<button id="sendBtn" onclick="send();">전송</button>
 
 </body>
 </html>
