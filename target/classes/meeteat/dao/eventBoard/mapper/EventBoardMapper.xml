@@ -26,24 +26,29 @@
 	</where>
 </select>
 
-<select id="getHoldingEventList" resultType="hashmap">
-	SELECT 
-		board_no
-		,article_no
-		,article_title
-		,create_date
-		,revision_date
-		,is_delete
-		,article_hit
-		,start_date
-		,terminate_date
-		,(SELECT count(*) FROM tb_comment2 c WHERE b.board_no = 6 AND b.article_no = c.article_no AND c.comment_order = 0) cnt_comment
-		,(SELECT is_popup FROM tb_popup2 p WHERE p.article_no = b.article_no AND board_no = 6) is_popup
+<select id="getHoldingEventList" parameterType="hashmap" resultType="hashmap">
+		
+	SELECT * FROM 
+	(SELECT rownum rnum, v.* FROM
+	(SELECT 
+	    board_no
+	    ,article_no
+	    ,article_title
+	    ,create_date
+	    ,revision_date
+	    ,is_delete
+	    ,article_hit
+	    ,start_date
+	    ,terminate_date
+	    ,(SELECT count(*) FROM tb_comment2 c WHERE b.board_no = 6 AND b.article_no = c.article_no AND c.comment_order = 0) cnt_comment
+	    ,(SELECT is_popup FROM tb_popup2 p WHERE p.article_no = b.article_no AND board_no = 6) is_popup
 	FROM tb_board2 b
 	WHERE board_no = 6
 	    AND terminate_date >= to_char(sysdate, 'YYYY-MM-DD')
 	    AND is_delete=0
-	ORDER BY article_no DESC 
+	ORDER BY article_no DESC ) v)
+	WHERE rnum BETWEEN #{startNo} AND #{endNo}
+	
 </select>
 
 <select id="selectCntTerminatedListAll" parameterType="meeteat.dto.recruitBoard.SearchParam" resultType="int">
@@ -67,8 +72,11 @@
 	</where>
 </select>
 
-<select id="getTerminatedEventList" resultType="hashmap">
-	SELECT 
+<select id="getTerminatedEventList" parameterType="hashmap" resultType="hashmap">
+	
+	SELECT * FROM
+	(SELECT v.*, rownum rnum FROM
+	(SELECT 
 		board_no
 		,article_no
 		,article_title
@@ -83,7 +91,10 @@
 	WHERE board_no = 6
 	    <![CDATA[AND terminate_date < to_char(sysdate, 'YYYY-MM-DD')]]>
 	    AND is_delete=0
-	ORDER BY article_no DESC 
+	ORDER BY article_no DESC) v)
+	WHERE rnum BETWEEN #{startNo} and #{endNo}
+	
+	
 </select>
 
 <select id="getNextVal" resultType="int">
