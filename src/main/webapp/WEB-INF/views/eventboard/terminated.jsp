@@ -107,6 +107,7 @@
 
 <%-- 페이징 부분 --%>
 <div>
+	<c:import url="terminated_paging.jsp"></c:import>
 </div>
 
 

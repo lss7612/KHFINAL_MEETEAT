@@ -43,7 +43,12 @@ public class EventBoardServiceImpl implements EventBoardService {
 	@Override
 	public List<HashMap<String, Object>> getHoldingEventList(Paging paging, int board_no, SearchParam searchParam) {
 		
-		return eventBoardDao.getHoldingEventList();
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("startNo", paging.getStartNo());
+		param.put("endNo", paging.getEndNo());
+		
+		return eventBoardDao.getHoldingEventList(param);
 		
 	}
 
@@ -97,7 +102,11 @@ public class EventBoardServiceImpl implements EventBoardService {
 	@Override
 	public List<HashMap<String, Object>> getTerminatedEventList(Paging paging, int board_no, SearchParam searchParam) {
 		
-		return eventBoardDao.getTerminatedEventList();
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("startNo", paging.getStartNo());
+		param.put("endNo", paging.getEndNo());
+		return eventBoardDao.getTerminatedEventList(param);
 		
 	}
 

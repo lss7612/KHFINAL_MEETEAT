@@ -107,12 +107,13 @@
 <a href="/eventboard/manage/write"><button type="button" class="btn btn-primary pull-right" style="">이벤트 등록</button></a>
 </div>
 </c:if>
-</div>
-
-
 <%-- 페이징 부분 --%>
 <div>
+<c:import url="holding_paging.jsp"></c:import>
 </div>
+</div>
+
+
 
 
 
