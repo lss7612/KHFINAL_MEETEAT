@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -20,7 +21,6 @@
 
 .innerList{
 	height : 50px;
-	width : auto;
 	border : black;
 	border-style : solid;
 	border-top-width : 0; 
@@ -30,14 +30,31 @@
 }
 
 .innerContentArea{
-	text-align : right;
+	float : right;
 }
+
+.innerTime{
+	font-size : small;
+	margin-right : 10px;
+}
+
+.innerContent{
+	display : inline-block;
+	max-width : 200px;
+	height : 20px;
+	overflow : hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.innerList:hover{background:#ccc;}
+
 </style>
 </head>
 <body>
 <h1>채팅목록</h1>
 <hr>
-
+<c:set var="now" value="<%=new Date() %>"/>
 
 <div id="chatList">
 	<c:forEach items="${chatList }" var="list">
@@ -46,7 +63,7 @@
 		<c:when test="${list.CHATTING_NAME eq null }">
 			<c:forEach items="${roomUserInfo}" var="info">
 				<c:if test="${info.CHATTING_NO eq list.CHATTING_NO }">
-					${info.USER_NICK }님과의 대화
+					<strong>${info.USER_NICK }님과의 대화</strong>
 				</c:if>
 			</c:forEach>
 		</c:when>
@@ -57,7 +74,24 @@
 		<br>
 		<div class="innerContentArea">
 			<span class="innerTime">
-				<fmt:formatDate value="${list.MSG_DATE }" pattern="yy/MM/dd HH:mm"/>
+			<!-- 날자 비교해서 오늘 / 어제/ 기타로 출력 -->
+			<fmt:formatDate value="${now }" var="today" pattern="yy/MM/dd"/>
+			<fmt:formatDate value="${list.MSG_DATE }" var="msg_date" pattern="yy/MM/dd"/>
+			<c:choose>
+				<c:when test="${today eq msg_date }">
+					오늘
+					<fmt:formatDate value="${list.MSG_DATE }" type="both" pattern="a"/>
+					<fmt:formatDate value="${list.MSG_DATE }" pattern="HH:mm"/>
+				</c:when>
+				<c:when test="${now > msg_date}">
+					어제
+					<fmt:formatDate value="${list.MSG_DATE }" type="both" pattern="a"/>
+					<fmt:formatDate value="${list.MSG_DATE }" pattern="HH:mm"/>
+				</c:when>
+				<c:otherwise>
+					<fmt:formatDate value="${list.MSG_DATE }" pattern="yy/MM/dd HH:mm"/>
+				</c:otherwise>
+			</c:choose>
 			</span>
 			<span class="innerContent">
 				${list.MSG_CONTENT }
