@@ -39,7 +39,7 @@ public class ChatController {
 		//***************************
 		//구현 테스트를 위해 user1번호를 임의로 고정
 		//완료시 지우면 된다.
-		user1 = 5;
+		user1 = 6;
 		//***************************
 		
 		logger.info("> > > 접속 유저 번호 : "+user0+" < < <");
@@ -118,7 +118,7 @@ public class ChatController {
 		//model 객체 등록
 		model.addAttribute("roomInfo", roomInfo);
 		model.addAttribute("chatUserList", chatUserList);
-		return null;
+		return "/chat/room";
 	}
 	
 	@RequestMapping(value="/list")
@@ -129,6 +129,7 @@ public class ChatController {
 		
 		//회원 번호로 속해있는 채팅방 정보 갖고 오기.
 		List<HashMap<String,Object>> roomNum = chatService.getJoinChatList(user_no);
+		logger.info("> > > roomNum < < <");
 		logger.info(""+roomNum);
 	
 		//접속한 회원이 속한 채팅방의 가장 최신 대화만 갖고오기.
@@ -167,8 +168,11 @@ public class ChatController {
 			logger.info(""+roomNum.get(i));
 			chatting_no = Integer.parseInt(""+(roomNum.get(i).get("CHATTING_NO")) );
 			content = chatService.getChatContentNewestAtRoom(chatting_no);
+			logger.info("> > > content < < <");
 			logger.info(""+content);
-			chatList.add(content);
+			if(content != null ) {
+				chatList.add(content);
+			}
 		}
 		
 	}
