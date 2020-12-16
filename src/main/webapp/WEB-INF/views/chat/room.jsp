@@ -28,6 +28,30 @@
 	margin-left : 10px;
 }
 
+#chatting{
+	height: 85%;
+    background-color: #ececc2;
+}
+
+#usingArea{
+	height : 15%;
+	background-color : #ece2e2;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+}
+
+#chatContent{
+    height: 80%;
+    width: 80%;
+    margin-top : 1%;
+    margin-left : 1%;
+}
+
+#sendBtn{
+	width : 15%;
+	height : 80%;
+	background-color: skyblue;
+}
 </style>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
@@ -75,16 +99,23 @@ function send(){
 	var sendMsg = "{writer:${user_no}, message:"+msg+" }"
     console.log("msg : "+msg);
     console.log("msg : "+sendMsg);
+    
+    if( msg == ''){
+    	console.log("빈 메세지입니다.");
+    	$("#chatContent").focus();
+    	return false;
+    }
     webSocket.send(sendMsg);
     //webSocket.send(JSON.stringify(sendMsg));
 	msg ="";
 	$("#chatContent").val('');
+	$("#chatContent").focus();
 }
 
 //연결 종료시 동작하는 함수
 function disconnect(){
-// 	var sendMsg = "{chatRoomId:${room.roomId}, type=LEAVE, writer:${id}}"
-	var sendMsg = "{writer:${user_no}}"
+	var sendMsg = "{chatRoomId:${room.roomId}, type=LEAVE, writer:${user_no}"
+// 	var sendMsg = "{writer:${user_no}}"
     webSocket.send(sendMsg);
     webSocket.close();
 }
@@ -104,8 +135,8 @@ function onMessage(e){
     console.log(data.message);
     console.log("웹소켓에서 전달해준 메세지 : "+data);
     
-    chatroom = document.getElementById("chatArea");
-    chatroom.innerHTML = chatroom.innerHTML + "<br>" + data;
+    chatroom = document.getElementById("chatting");
+    chatroom.innerHTML = chatroom.innerHTML + data  + "<br>";
 }
 
 //웹소켓 종료시 동작하는 함수
@@ -131,7 +162,13 @@ function onClose(){
 <hr>
 <div id="chattingContent">
 	<div id="chatArea">
+		<div id="chatting">
 		
+		</div>
+		<div id="usingArea">
+			<input type="text" id="chatContent" onKeyDown="enterKeyAtChat();" />
+			<button id="sendBtn" onclick="send();">전송</button>
+		</div>
 	</div>
 	<div id="userListArea">
 	<table>
@@ -146,8 +183,6 @@ function onClose(){
 	</table>
 	</div>
 </div>
-<input type="text" id="chatContent" onKeyDown="enterKeyAtChat();" />
-<button id="sendBtn" onclick="send();">전송</button>
 
 </body>
 </html>
