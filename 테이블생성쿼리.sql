@@ -876,6 +876,40 @@ ALTER TABLE TB_RECOMMEND2
         REFERENCES TB_USER2 (user_no)
 /
 
+
+CREATE TABLE TB_POPUP2
+(
+    article_no       NUMBER    NOT NULL, 
+    board_no         NUMBER    NOT NULL, 
+    is_popup         NUMBER    NOT NULL, 
+    revision_date    DATE      NOT NULL
+)
+/
+
+COMMENT ON COLUMN TB_POPUP2.article_no IS '게시글번호'
+/
+
+COMMENT ON COLUMN TB_POPUP2.board_no IS '게시판분류번호'
+/
+
+COMMENT ON COLUMN TB_POPUP2.is_popup IS '팝업여부'
+/
+
+COMMENT ON COLUMN TB_POPUP2.revision_date IS '수정날짜'
+/
+
+ALTER TABLE TB_POPUP2
+    ADD CONSTRAINT FK_TB_POPUP2_article_no_TB_BOA FOREIGN KEY (article_no, board_no)
+        REFERENCES TB_BOARD2 (article_no, board_no)
+/
+
+
+
+
+
+--트리거 설정 구역
+
+
 -- 신고테이블에 데이터 추가시 유저의 신고누적횟수 증가 트리거
 CREATE OR REPLACE TRIGGER TB_USER2_blockcnt_AI_TRG
 BEFORE INSERT ON tb_userreport2

@@ -37,7 +37,7 @@ public class ChatController {
 		int user0 = (int)session.getAttribute("user_no");
 		
 		//***************************
-		//구현 테스트를 위해 user1번호를 임의로 고정
+		//구현 테스트를 위해 user1(대화 상대)번호를 임의로 고정
 		//완료시 지우면 된다.
 		user1 = 6;
 		//***************************
@@ -102,11 +102,11 @@ public class ChatController {
 		logger.info("> > > 접속한 채팅방의 id : "+chatting_id+" < < <");
 		//chatting_id로 채팅방 정보 가져오기
 		HashMap<String, Object> roomInfo = chatService.getChatRoomInfoById(chatting_id);
-		logger.info("접속한 채팅방의 정보 : "+roomInfo);
+		logger.info("> > >접속한 채팅방의 정보 : "+roomInfo+" < < <");
 		
 		//방에 참여하고 있는 회원들
 		int chatting_no = Integer.parseInt(""+roomInfo.get("CHATTING_NO"));
-		logger.info("채팅방 번호 : "+chatting_no);
+		logger.info("> > >채팅방 번호 : "+chatting_no+" < < <");
 		List<HashMap<String,Object>> chatUserList = chatService.getChattingUserList(chatting_no);
 		
 		logger.info("> > > 채팅 참여자 리스트 < < < ");
@@ -118,7 +118,8 @@ public class ChatController {
 		//model 객체 등록
 		model.addAttribute("roomInfo", roomInfo);
 		model.addAttribute("chatUserList", chatUserList);
-		return "/chat/room";
+//		return null;
+		return "chat/room";
 	}
 	
 	@RequestMapping(value="/list")
