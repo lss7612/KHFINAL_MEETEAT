@@ -55,7 +55,7 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public List getJoinChatList(int user_no) {
+	public List<HashMap<String,Object>> getJoinChatList(int user_no) {
 		return chatDao.getUserJoinChatList(user_no);
 	}
 	

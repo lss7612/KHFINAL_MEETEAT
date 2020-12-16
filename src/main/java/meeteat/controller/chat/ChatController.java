@@ -128,7 +128,7 @@ public class ChatController {
 		logger.info("> > > 현재 접속한 회원 정보 : "+user_no+" < < <");
 		
 		//회원 번호로 속해있는 채팅방 정보 갖고 오기.
-		List roomNum = chatService.getJoinChatList(user_no);
+		List<HashMap<String,Object>> roomNum = chatService.getJoinChatList(user_no);
 		logger.info(""+roomNum);
 	
 		//접속한 회원이 속한 채팅방의 가장 최신 대화만 갖고오기.
@@ -155,16 +155,17 @@ public class ChatController {
 		
 		//전달값 저장하기
 		model.addAttribute("chatList", chatList);
+		model.addAttribute("roomUserInfo", roomNum);
 		
 		return "/chat/list";
 	}
 
-	public void GetChatNewest(List roomNum, List<HashMap<String, Object>> chatList) {
+	public void GetChatNewest(List<HashMap<String,Object>> roomNum, List<HashMap<String, Object>> chatList) {
 		int chatting_no = 0;
 		HashMap<String, Object> content = null;
 		for(int i=0; i<roomNum.size(); i++) {
 			logger.info(""+roomNum.get(i));
-			chatting_no = Integer.parseInt(""+(roomNum.get(i)) );
+			chatting_no = Integer.parseInt(""+(roomNum.get(i).get("CHATTING_NO")) );
 			content = chatService.getChatContentNewestAtRoom(chatting_no);
 			logger.info(""+content);
 			chatList.add(content);

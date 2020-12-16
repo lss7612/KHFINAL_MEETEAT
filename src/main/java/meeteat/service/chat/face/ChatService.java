@@ -58,7 +58,7 @@ public interface ChatService {
 	 * @param user_no : 접속한 회원의 회원 번호
 	 * @return 채팅 목록
 	 */
-	public List getJoinChatList(int user_no);
+	public List<HashMap<String,Object>> getJoinChatList(int user_no);
 
 	/**
 	 * 채팅방 번호로 최신 대화 갖고오기
