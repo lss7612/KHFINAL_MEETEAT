@@ -98,7 +98,7 @@ function send(){
 	var sendMsg = "{writer:${user_no}, message:"+msg+" }"
     console.log("msg : "+msg);
     console.log("msg : "+sendMsg);
-    webSocket.send(sendMsg);
+    webSocket.send(JSON.stringify(sendMsg));
 	msg ="";
 	$("#chatContent").val();
 }

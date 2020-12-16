@@ -44,7 +44,8 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		TextMessage msg = new TextMessage(message.getPayload());
 		logger.info("msg : "+msg);
 		logger.info("msg : "+msg.getPayload());
-		
+		String msgWriter = msg.getPayload();
+		logger.info("msgWriter : "+msgWriter);
 		//웹소켓 Uri와 내가 접속한 Uri가 같을때 msg를 뿌려준다.
 		for(WebSocketSession sess : sessionList) {
 			if(session.getUri().toString().equals(sess.getUri().toString())) {

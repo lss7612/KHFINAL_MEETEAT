@@ -276,7 +276,7 @@ CREATE TABLE TB_CHATTING2
     chatting_no    NUMBER    NOT NULL,
     chatting_name  VARCHAR2(120),
     chatting_id    VARCHAR2(40) NOT NULL,
-    user_total     NUMBER    DEFAULT 0 NOT NULL , 
+    user_total     NUMBER NOT NULL , 
     CONSTRAINT TB_CHATTING2_PK PRIMARY KEY (chatting_no)
 )
 /
@@ -907,8 +907,9 @@ ALTER TABLE TB_POPUP2
 
 
 
---트리거 설정 구역
-
+--트리거 추가 및 기능 설정 구역
+--tb_chatting2의 user_total 컬럼에 default값 설정
+alter table tb_chatting2 modify user_total default 0 not null;
 
 -- 신고테이블에 데이터 추가시 유저의 신고누적횟수 증가 트리거
 CREATE OR REPLACE TRIGGER TB_USER2_blockcnt_AI_TRG

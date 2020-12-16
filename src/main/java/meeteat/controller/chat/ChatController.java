@@ -118,7 +118,7 @@ public class ChatController {
 		//model 객체 등록
 		model.addAttribute("roomInfo", roomInfo);
 		model.addAttribute("chatUserList", chatUserList);
-//		return null;
+		
 		return "chat/room";
 	}
 	
