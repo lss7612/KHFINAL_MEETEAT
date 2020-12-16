@@ -83,6 +83,7 @@ function listup(res){
 
 <%-- 검색부분 --%>
 <div id="searchBox" style="">
+	<div>'지역' + '먹거리' 로 검색하시면 좋습니다!</div>
 	<form class="form-inline">
 		<select class="form-control" name="sort">
 			<option value="random">유사도순</option>
