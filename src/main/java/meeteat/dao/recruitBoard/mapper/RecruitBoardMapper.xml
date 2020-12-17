@@ -103,7 +103,9 @@
 		    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
 		    ,(SELECT count(*) FROM tb_comment2 c WHERE c.board_no = #{board_no} AND c.article_no = #{article_no } AND c.comment_order = 0) cnt_comment
 		    ,(SELECT count(*) FROM tb_recommend2 r WHERE b.board_no = #{board_no} AND b.article_no = r.article_no) cnt_recommend
+		    <if test="user_no!=null and !user_no.equals('')">
 		    ,(SELECT count(*) FROM tb_recommend2 r WHERE b.board_no = #{board_no} AND b.article_no = r.article_no AND user_no=#{user_no}) isRecommend
+		    </if>
 		FROM tb_board2 b
 		WHERE board_no = #{board_no}
    			AND article_no = #{article_no}
