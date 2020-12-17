@@ -10,5 +10,11 @@ public interface LoginDao {
 
 	public User selectUserByUserNo(User user);
 	
+	public int userIdCheck(String user_id);
+
+	public int userNickCheck(String user_nick);
+
+	public void signUp(User user);
+	
 
 }

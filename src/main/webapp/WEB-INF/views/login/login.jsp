@@ -62,30 +62,32 @@ function onSignIn(googleUser) {
 
 <h1>로그인</h1>
 <hr>
-<div>
-<form action="/login/login" method="post" class="form-horizontal">
+<form action="/login/login" method="post" class="form-horizontal" id="loginForm">
+<div class="loginBox" id="loginBox">
+
 	<div class="form-group">
-		<label class="col-xs-3 control-label" for="id">아이디 : </label>
+		<label class="col-xs-3 control-label" for="user_id">아이디 : </label>
 		<div class="col-xs-6">
-			<input type="text" class="form-control" id="id" name="user_id" placeholder="Id"/>
+			<input type="text" class="form-control" id="user_id" name="user_id" placeholder="Id"/>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label class="col-xs-3 control-label" for="pw">패스워드 : </label>
+		<label class="col-xs-3 control-label" for="user_pw">패스워드 : </label>
 		<div class="col-xs-6">
-			<input type="password" class="form-control" id="pw" name="user_pw" placeholder="Password"/>
+			<input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="Password"/>
 		</div>
 	</div>
 		
 	<div class="form-group">
 		<div class="col-xs-offset-3 col-xs-10">
-			<button class="btn btn-primary">로그인</button>
-			<input type="reset" id="cancel" class="btn btn-danger" value="취소"/>
+			<button class="btn btn-primary" id="loginBtn">로그인</button>
+			<a href="/login/signup"><input type="button" class="btn btn-danger" value="회원가입"/></a>
 		</div>
 	</div>
-</form>
+	
 </div>
+</form>
 
 
  
@@ -112,4 +114,58 @@ function onSignIn(googleUser) {
 </div><!-- .container -->
 
 </body>
+
+<style type="text/css">
+.failAction {animation: motion 0.1s linear 0s 3 alternate; margin-top: 0;}
+@keyframes motion {
+	0% {transform: translate(10px,0px);}
+	25% {transform: translate(0px,0px);}
+	50% {transform: translate(-10px,0px);}
+	100% {transform: translate(0px,0px);}
+}  
+</style>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	
+	$('#loginBtn').click(function(e) {
+	
+		var user_id = $('#user_id').val();
+		var user_pw = $('#user_pw').val();
+		
+		e.preventDefault();
+		
+		if($('#loginBox').hasClass('failAction')) {
+			$('#loginBox').removeClass('failAction');
+		}
+		
+		$.ajax({
+			url: '/login/logincheck' ,
+			data : {
+				"user_id": user_id,
+				"user_pw": user_pw
+			},
+			dataType : 'json',
+			type: "get",
+			success: function(checkResult) {
+				if(checkResult) {
+					$('#loginForm').submit();
+				} else {
+					$('#loginBox').addClass('failAction');	
+				}
+			},
+			error: function() {
+				console.log("[ajax] /login/logincheck 전송실패")
+				
+			}
+		})
+	})
+	
+})
+
+
+</script>
+
 </html>

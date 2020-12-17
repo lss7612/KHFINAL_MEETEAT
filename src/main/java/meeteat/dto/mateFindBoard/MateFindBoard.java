@@ -2,6 +2,8 @@ package meeteat.dto.mateFindBoard;
 
 import java.util.Date;
 
+import meeteat.dto.user.User;
+
 public class MateFindBoard {
 
 // 기본생성
@@ -32,17 +34,58 @@ public class MateFindBoard {
 	private int post_step;
 	private int post_indent;
 	
+	private User user;
 	
+	public MateFindBoard() {
+	}
+	
+	
+	
+
+	public MateFindBoard(int article_no, int board_no, int user_no, Date create_date, Date revision_date, int file_no,
+			int is_delete, int article_hit, String mate_list, String article_title, String article_content,
+			String category, String party_location, String meet_time, Date terminate_date, String article_pw,
+			int post_group, int post_step, int post_indent, User user) {
+		super();
+		this.article_no = article_no;
+		this.board_no = board_no;
+		this.user_no = user_no;
+		this.create_date = create_date;
+		this.revision_date = revision_date;
+		this.file_no = file_no;
+		this.is_delete = is_delete;
+		this.article_hit = article_hit;
+		this.mate_list = mate_list;
+		this.article_title = article_title;
+		this.article_content = article_content;
+		this.category = category;
+		this.party_location = party_location;
+		this.meet_time = meet_time;
+		this.terminate_date = terminate_date;
+		this.article_pw = article_pw;
+		this.post_group = post_group;
+		this.post_step = post_step;
+		this.post_indent = post_indent;
+		this.user = user;
+	}
+
+
+	
+
+
+
 	@Override
 	public String toString() {
-		return "MateFindBoard [article_no=" + article_no + ", article_title=" + article_title + ", article_content="
-				+ article_content + ", board_no=" + board_no + ", party_location=" + party_location + ", user_no="
-				+ user_no + ", create_date=" + create_date + ", revision_date=" + revision_date + ", file_no=" + file_no
-				+ ", is_delete=" + is_delete + ", article_hit=" + article_hit + ", category=" + category
-				+ ", meet_time=" + meet_time + ", mate_list=" + mate_list + ", terminate_date=" + terminate_date
-				+ ", article_pw=" + article_pw + ", post_group=" + post_group + ", post_step=" + post_step
-				+ ", post_indent=" + post_indent + "]";
+		return "MateFindBoard [article_no=" + article_no + ", board_no=" + board_no + ", user_no=" + user_no
+				+ ", create_date=" + create_date + ", revision_date=" + revision_date + ", file_no=" + file_no
+				+ ", is_delete=" + is_delete + ", article_hit=" + article_hit + ", mate_list=" + mate_list
+				+ ", article_title=" + article_title + ", article_content=" + article_content + ", category=" + category
+				+ ", party_location=" + party_location + ", meet_time=" + meet_time + ", terminate_date="
+				+ terminate_date + ", article_pw=" + article_pw + ", post_group=" + post_group + ", post_step="
+				+ post_step + ", post_indent=" + post_indent + ", user=" + user + "]";
 	}
+
+
 
 
 	public int getArticle_no() {
@@ -233,10 +276,20 @@ public class MateFindBoard {
 	public void setPost_indent(int post_indent) {
 		this.post_indent = post_indent;
 	}
-	
-	
-	
-	
+
+
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 	
 

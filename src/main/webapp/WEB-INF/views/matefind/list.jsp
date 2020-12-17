@@ -27,7 +27,7 @@ body {
 }
 
 .thumbnail-wrapper {
-	width: 300px;
+	width: 350px;
 	margin-bottom: 70px;
 	padding-left: 8px;
 	padding-right: 8px;
@@ -122,15 +122,14 @@ body {
 
 	<c:forEach items="${mateFindList }" var="list">
 	
-	<a href="/matefind/view?article_no=${list.article_no }">
-		<div class="thumbnail-wrapper">
-			<img class="thumbnail-img" alt="썸네일이미지" src="https://www.bloter.net/wp-content/uploads/2016/08/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0-%EC%82%AC%EC%A7%84.jpg">
+	<div class="thumbnail-wrapper">
+		<a href="/matefind/view?article_no=${list.article_no }">
+		
+			<img class="thumbnail-img" style="margin-bottom: 10px;" alt="썸네일이미지" src="https://www.bloter.net/wp-content/uploads/2016/08/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0-%EC%82%AC%EC%A7%84.jpg">
 			
-			<h2 style="	white-space:nowrap;	
-						text-overflow: ellipsis;
-						overflow: hidden;">${list.article_title }</h2>
+			<h2 style="white-space:nowrap; text-overflow: ellipsis; overflow: hidden;">${list.article_title }</h2>
 			
-	</a>
+		</a>
 			<div class="info">
 			
 				<p style="	white-space:nowrap;	
@@ -149,12 +148,14 @@ body {
 					
 					<span class="user-right" style="float: right; height: 50px;">
 						host <br>
-						nickname
+<!-- 						nick -->
+						${list.user_nick }
 					</span>
 				</p>
 			
 			</div>
 		</div>
+		
 	
 	</c:forEach>
 
@@ -163,12 +164,13 @@ body {
 	<div class="row">
 		<div class="col">
 		
-			<a href="/matefind/write"><button class="btn btn-primary" style="float: right;">글쓰기</button></a>
+			<a href="/matefind/write"><button class="btn btn-primary" style="float: right; margin-bottom: 50px;">글쓰기</button></a>
 		
 		</div>
 	</div>	
 <!-- //버튼 영역v2 -->
 
+<%-- <jsp:include page="./paging.jsp" /> --%>
 
 </div><!-- //container -->
 

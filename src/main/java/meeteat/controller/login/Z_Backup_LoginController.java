@@ -87,7 +87,7 @@ public class Z_Backup_LoginController {
 			session.setAttribute("user_no", user.getUser_no());
 			session.setAttribute("user_nick", user.getUser_nick());
 			session.setAttribute("user_grade", user.getUser_grade());
-			session.setAttribute("user_image", user.getUser_profile());
+			session.setAttribute("user_image", user.getUser_profilestored());
 			session.setAttribute("user_gender", user.getUser_gender());
 			session.setAttribute("user_age", user.getUser_age());
 			session.setAttribute("user_email", user.getUser_email());
