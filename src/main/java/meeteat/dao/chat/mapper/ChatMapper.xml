@@ -85,4 +85,9 @@
 			)t
 		where rownum =1
 	</select>
+	
+	<insert id="inserMsgContent" parameterType="hashmap">
+		insert into tb_chattingcontent2 (chatting_no, user_no, msg_content, msg_date)
+		values (#{chatting_no}, #{user_no}, #{msg_content}, sysdate)
+	</insert>
 </mapper>

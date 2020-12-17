@@ -57,6 +57,8 @@
 <c:set var="now" value="<%=new Date() %>"/>
 
 <div id="chatList">
+	<fmt:formatDate value="${now }" var="today" pattern="yyMMdd"/>
+	<fmt:parseNumber value="${today }" integerOnly="true" var="isDate" />
 	<c:forEach items="${chatList }" var="list">
 	<div class="innerList" onclick="location.href='/chat/room/${list.CHATTING_ID}'">
 		<c:choose>
@@ -75,15 +77,15 @@
 		<div class="innerContentArea">
 			<span class="innerTime">
 			<!-- 날자 비교해서 오늘 / 어제/ 기타로 출력 -->
-			<fmt:formatDate value="${now }" var="today" pattern="yy/MM/dd"/>
-			<fmt:formatDate value="${list.MSG_DATE }" var="msg_date" pattern="yy/MM/dd"/>
+			<fmt:formatDate value="${list.MSG_DATE }" var="msg_date" pattern="yyMMdd"/>
+			<fmt:parseNumber value="${msg_date }" integerOnly="true" var="itDate" />
 			<c:choose>
 				<c:when test="${today eq msg_date }">
 					오늘
 					<fmt:formatDate value="${list.MSG_DATE }" type="both" pattern="a"/>
 					<fmt:formatDate value="${list.MSG_DATE }" pattern="HH:mm"/>
 				</c:when>
-				<c:when test="${now > msg_date}">
+				<c:when test="${isDate - itDate eq 1}">
 					어제
 					<fmt:formatDate value="${list.MSG_DATE }" type="both" pattern="a"/>
 					<fmt:formatDate value="${list.MSG_DATE }" pattern="HH:mm"/>

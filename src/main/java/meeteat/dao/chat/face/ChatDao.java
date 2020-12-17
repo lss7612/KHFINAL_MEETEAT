@@ -72,4 +72,11 @@ public interface ChatDao {
 	 */
 	public HashMap<String, Object> getChatNewestContentAtRoom(int chatting_no);
 
+	/**
+	 * 채팅 메시지지를 db에 저장한다.
+	 * @param chatting_no : 저장할 채팅 번호
+	 * @param user_no : 작성자
+	 */
+	public void inserMsgContent(@Param("chatting_no")int chatting_no, @Param("user_no")int user_no, @Param("msg_content")String msg_content);
+
 }
