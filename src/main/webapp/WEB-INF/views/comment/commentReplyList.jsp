@@ -56,7 +56,7 @@
 	</div>
 	
 	<%-- 대댓글입력란 --%>
-	<div id="replyOrUpdateFormforReply${list.COMMENT_NO }" style="width:90%; margin: 0 auto;">
+	<div id="replyOrUpdateFormforReply${list.COMMENT_NO }" class="replyOrUpdateFormforReply" style="width:90%; margin: 0 auto;">
 	</div>
 	
 	
@@ -72,6 +72,7 @@ $(document).ready(function(){
 	//코멘트(대댓글)수정을 클릭했을 때
 	$('.updateReply').click(function(){
 		console.log($(this).attr('comment_no'))
+		closeOtherUpdateForms()
 		openUpdateForm($(this).attr('comment_no'))
 	})
 	
@@ -104,6 +105,10 @@ function deleteComment(commentNo) {
 			console.log('실패')
 		}
 	})
+}
+
+function closeOtherUpdateForms(){
+	$('.replyOrUpdateFormforReply').html('')
 }
 
 function openUpdateForm(commentNo) {
