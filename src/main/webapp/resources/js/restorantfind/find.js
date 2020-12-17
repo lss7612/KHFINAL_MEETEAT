@@ -14,6 +14,9 @@ $(document).ready(function(){
 	})
 	
 	$('.restorantInfoBox .map a').click(function(){
+		
+		console.log('clicked')
+		
 		let mapX = $(this).attr('mapx')
 		let mapY = $(this).attr('mapy')
 		
@@ -31,24 +34,30 @@ $(document).ready(function(){
 
 function search(Query, Sort){
 	
-	$.ajax({
-		type: "POST"
-		, url: "/restorantfind/find"
-		, data: { query : Query, sort : Sort }
-		, dataType:"json" //응답받은 데이터의 형식
-		, success: function( res ){
-			console.log('성공')
-			console.log(res)
-			console.log(res.items[0])
-			console.log(res.items[0].title)
-			
-			listup(res)
-			
-		}
-		, error: function(){
-			console.log('실패')
-		}
-	}) 
+	if(Query!=''){
+		$.ajax({
+			type: "POST"
+			, url: "/restorantfind/find"
+			, data: { query : Query, sort : Sort }
+			, dataType:"json" //응답받은 데이터의 형식
+			, success: function( res ){
+				listup(res)
+				$('#beforeSearch').addClass('invisible')
+				$('#beforeSearch').addClass('none_height')
+				$('.restorantInfoBox').css('background','');
+				$('#resultList > div:nth-child(1)').css('background','#ccc');
+				$('#resultList > div:nth-child(1) > .map > a').click();
+			}
+			, error: function(){
+				console.log('실패')
+			}
+		}) 
+		return;
+	} 
+
+	alert('검색어를 입력하세요');
+	
+	
 }
 
 function listup(res){
@@ -86,8 +95,6 @@ function getRestorantLocation(mapX,mapY){
 		, data: { mapx : mapX, mapy : mapY}
 		, dataType:"html" //응답받은 데이터의 형식
 		, success: function( res ){
-			alert('성공')
-			console.log(res)
 			$('#resultDetail').html(res)
 		}
 		, error: function(){

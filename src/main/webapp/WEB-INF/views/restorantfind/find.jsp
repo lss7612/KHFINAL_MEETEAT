@@ -39,6 +39,17 @@
 </div>
 
 
+<%-- 검색 전 --%>
+<div id="beforeSearch">
+
+	<div style="width:500px; margin:0 auto; text-align:center;">
+		<img alt="" src="/resources/img/error.jpg"><br>
+		검색하세요!
+	</div>
+
+</div>
+
+
 <%-- 결과부분 --%>
 <div id="result">
 
