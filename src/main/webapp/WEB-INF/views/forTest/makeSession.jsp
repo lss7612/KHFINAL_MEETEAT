@@ -6,10 +6,14 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<!-- FontAwsome -->
+<script src="https://kit.fontawesome.com/2dc2c9d106.js" crossorigin="anonymous"></script>
+
+
 <script type="text/javascript">
 //작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
 $(document).ready(function(){
@@ -52,6 +56,9 @@ function reportPopup(){
 </script>
 
 
+
+
+
 <style type="text/css">
 /* 회원 아이디 클릭시 나타나는 목록 CSS */
 #userMenuList{
@@ -78,6 +85,12 @@ function reportPopup(){
 </style>
 </head>
 <body>
+<%-- 모달(팝업) 모듈 import --%>
+<c:if test="${empty cookie.popup }">
+<c:import url="eventPopupModule.jsp"></c:import>
+</c:if>
+
+
 <h1>SessionFactory</h1>
 <h3>로그인 구현 전 세션발급을 담당한다</h3>
 
@@ -90,9 +103,13 @@ function reportPopup(){
 <li><a href="/makesession/BannedUser">영정유저세션받기</a><br></li>
 <li><a href="/makesession/guestUser">세션삭제(로그인안한유저)</a><br></li>
 </ul>
-<h2><a href="/recruitboard/list">게시판으로!</a></h2>
+<h2><a href="/recruitboard/list">파티모집게시판으로</a></h2>
 <h2><a href="/admin/report/list">신고목록으로!</a></h2>
 <h2><a href="/admin/report/result/list">신고 처리 목록으로!</a></h2>
+<h2><a href="/eventboard/holding">이벤트게시판으로(관리자로접속하면 일반과 다름)</a></h2>
+<h2><a href="/restorantfind/find">맛집찾기!</a></h2>
+<h2><a href="/chat/list">채팅목록으로!</a></h2>
+
 
 <!-- 게시글 신고 버튼 구역 -->
 <form name="frmPopup" method="POST">

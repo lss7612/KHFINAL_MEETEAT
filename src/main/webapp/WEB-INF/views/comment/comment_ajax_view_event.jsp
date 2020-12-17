@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link rel="stylesheet" href="/resources/css/common/common.css">
+<link rel="stylesheet" href="/resources/css/recruitboard/comment_ajax.css">
 <script type="text/javascript" src="/resources/js/recruitboard/comment_ajax.js"></script>
 
 <div id="commentList_ajax">
@@ -76,7 +77,7 @@
 	</div>
 	
 	<%-- 대댓글입력란 --%>
-	<div id="replyOrUpdateForm${list.COMMENT_NO }" style="width:90%; margin: 0 auto;">
+	<div id="replyOrUpdateForm${list.COMMENT_NO }" class="replyOrUpdateForm" style="width:90%; margin: 0 auto;">
 	</div>
 	
 	

@@ -15,7 +15,6 @@
 <fmt:formatDate var="fmt_now_second" value="${now }" pattern="yyyyMMddHHmmss"/>
 <fmt:formatDate var="fmt_now_minute" value="${now }" pattern="yyyyMMddHHmm"/>
 
-
 <div class="bold_padding">
 <h2>이벤트</h2>
 </div>
@@ -23,8 +22,12 @@
 <%-- 사이드바 부분 --%>
 <div id="eventSideBar" class="pull-left vertical_bolder_padding horizontal_light_padding" >
 <div class="base_bar_height base_padding" style="font-size:1.1em; font-weight:bold">목록</div>
-<div class="base_bar_height base_padding"><a href="/eventboard/holding">진행중인 이벤트</a></div>
+<div class="base_bar_height base_padding" style="font-weight:bold"><a href="/eventboard/holding">진행중인 이벤트</a></div>
 <div class="base_bar_height base_padding"><a href="/eventboard/terminated">종료된 이벤트</a></div>
+
+<c:if test="${user_grade eq 0 }">
+<div class="base_bar_height base_padding"><a href="/eventboard/manage/popup">이벤트 팝업관리</a></div>
+</c:if>
 
 </div>
 
@@ -87,7 +90,9 @@
 		
 		<c:if test="${user_grade eq 0 }">
 		<td style="width:10%">
-			<input type="checkbox">
+			<c:if test="${list.IS_POPUP eq 1 }">팝업중</c:if>
+			<c:if test="${list.IS_POPUP eq 0 }"></c:if>
+			
 		</td>
 		</c:if>
 		
@@ -102,12 +107,13 @@
 <a href="/eventboard/manage/write"><button type="button" class="btn btn-primary pull-right" style="">이벤트 등록</button></a>
 </div>
 </c:if>
-</div>
-
-
 <%-- 페이징 부분 --%>
 <div>
+<c:import url="holding_paging.jsp"></c:import>
 </div>
+</div>
+
+
 
 
 

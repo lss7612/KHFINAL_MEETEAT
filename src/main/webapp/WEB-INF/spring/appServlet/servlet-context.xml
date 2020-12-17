@@ -31,6 +31,7 @@
 		</interceptor>
 	 	<!-- 로그인인터셉터 등록 -->
 		<interceptor>
+			<mapping path="/chat/**"/><!-- 채팅 -->
 			<mapping path="/searchrestorant/**"/><!-- 이상성 : 맛집검색 -->
 			<exclude-mapping path=""/>
 			<beans:bean class="meeteat.interceptor.LoginInterceptor"/>
@@ -78,7 +79,7 @@
 	<!-- Websocket Handler 등록 -->
 	<beans:bean id="chatHandler" class="meeteat.handler.WebSocketHandler"/>
 	<websocket:handlers>
-		<websocket:mapping handler="chatHandler" path="/chat/room/**" />
+		<websocket:mapping handler="chatHandler" path="/chatws/**" />
 		<websocket:handshake-interceptors>
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 		</websocket:handshake-interceptors>

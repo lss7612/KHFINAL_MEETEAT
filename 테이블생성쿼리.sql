@@ -273,8 +273,10 @@ ALTER TABLE TB_BOARD2
 -- TB_GRADE2 Table Create SQL
 CREATE TABLE TB_CHATTING2
 (
-    chatting_no    NUMBER    NOT NULL, 
-    user_total     NUMBER    NOT NULL, 
+    chatting_no    NUMBER    NOT NULL,
+    chatting_name  VARCHAR2(120),
+    chatting_id    VARCHAR2(40) NOT NULL,
+    user_total     NUMBER NOT NULL , 
     CONSTRAINT TB_CHATTING2_PK PRIMARY KEY (chatting_no)
 )
 /
@@ -444,10 +446,10 @@ ALTER TABLE TB_PAYMENT2
 -- TB_GRADE2 Table Create SQL
 CREATE TABLE TB_CHATTINGUSER2
 (
-    index          NUMBER    NOT NULL, 
+    idx            NUMBER    NOT NULL, 
     chatting_no    NUMBER    NOT NULL, 
     user_no        NUMBER    NOT NULL, 
-    CONSTRAINT TB_CHATTINGUSER2_PK PRIMARY KEY (index)
+    CONSTRAINT TB_CHATTINGUSER2_PK PRIMARY KEY (idx)
 )
 /
 
@@ -461,7 +463,7 @@ BEFORE INSERT ON TB_CHATTINGUSER2
 REFERENCING NEW AS NEW FOR EACH ROW 
 BEGIN 
     SELECT TB_CHATTINGUSER2_SEQ.NEXTVAL
-    INTO :NEW.index
+    INTO :NEW.idx
     FROM DUAL;
 END;
 /
@@ -472,10 +474,10 @@ END;
 --DROP SEQUENCE TB_CHATTINGUSER2_SEQ;
 /
 
-COMMENT ON TABLE TB_CHATTINGUSER2 IS '채팅참여자'
+COMMENT .ON TABLE TB_CHATTINGUSER2 IS '채팅참여자'
 /
 
-COMMENT ON COLUMN TB_CHATTINGUSER2.index IS '참여자목록'
+COMMENT ON COLUMN TB_CHATTINGUSER2.idx IS '참여자목록'
 /
 
 COMMENT ON COLUMN TB_CHATTINGUSER2.chatting_no IS '채팅방번호'
@@ -499,11 +501,11 @@ ALTER TABLE TB_CHATTINGUSER2
 CREATE TABLE TB_CHATTINGCONTENT2
 (
     chatting_no    NUMBER           NOT NULL, 
-    msg_no         VARCHAR2(20)     NOT NULL, 
+    msg_no         NUMBER           NOT NULL, 
     user_no        NUMBER           NOT NULL, 
     msg_content    VARCHAR2(500)    NOT NULL, 
     msg_date       DATE             NOT NULL, 
-    CONSTRAINT TB_CHATTINGCONTENT2_PK PRIMARY KEY (chatting_no)
+    CONSTRAINT TB_CHATTINGCONTENT2_PK PRIMARY KEY (msg_no)
 )
 /
 
@@ -517,7 +519,7 @@ BEFORE INSERT ON TB_CHATTINGCONTENT2
 REFERENCING NEW AS NEW FOR EACH ROW 
 BEGIN 
     SELECT TB_CHATTINGCONTENT2_SEQ.NEXTVAL
-    INTO :NEW.chatting_no
+    INTO :NEW.msg_no
     FROM DUAL;
 END;
 /
@@ -874,6 +876,41 @@ ALTER TABLE TB_RECOMMEND2
         REFERENCES TB_USER2 (user_no)
 /
 
+
+CREATE TABLE TB_POPUP2
+(
+    article_no       NUMBER    NOT NULL, 
+    board_no         NUMBER    NOT NULL, 
+    is_popup         NUMBER    NOT NULL, 
+    revision_date    DATE      NOT NULL
+)
+/
+
+COMMENT ON COLUMN TB_POPUP2.article_no IS '게시글번호'
+/
+
+COMMENT ON COLUMN TB_POPUP2.board_no IS '게시판분류번호'
+/
+
+COMMENT ON COLUMN TB_POPUP2.is_popup IS '팝업여부'
+/
+
+COMMENT ON COLUMN TB_POPUP2.revision_date IS '수정날짜'
+/
+
+ALTER TABLE TB_POPUP2
+    ADD CONSTRAINT FK_TB_POPUP2_article_no_TB_BOA FOREIGN KEY (article_no, board_no)
+        REFERENCES TB_BOARD2 (article_no, board_no)
+/
+
+
+
+
+
+--트리거 추가 및 기능 설정 구역
+--tb_chatting2의 user_total 컬럼에 default값 설정
+alter table tb_chatting2 modify user_total default 0 not null;
+
 -- 신고테이블에 데이터 추가시 유저의 신고누적횟수 증가 트리거
 CREATE OR REPLACE TRIGGER TB_USER2_blockcnt_AI_TRG
 BEFORE INSERT ON tb_userreport2
@@ -881,6 +918,26 @@ BEFORE INSERT ON tb_userreport2
 begin 
     update tb_user2 set user_blockcnt = user_blockcnt +1
     where user_no = :new.user_no;
+end; 
+/
+
+--tb_chattinguser2에 유저 추가시 채팅방 인원 증가 트리거
+CREATE OR REPLACE TRIGGER TB_CHATTING2_USER_TOTAL_AI_TRG
+AFTER INSERT ON tb_chattinguser2
+    for each row
+begin 
+    update tb_chatting2 set user_total = user_total +1
+    where chatting_no = :new.chatting_no;
+end; 
+/
+
+--tb_chattinguser2에 유저 나갈시 채팅방 인원 감소 트리거
+CREATE OR REPLACE TRIGGER TB_CHATTING2_USER_TOTAL_AD_TRG
+AFTER DELETE ON tb_chattinguser2
+    for each row
+begin 
+    update tb_chatting2 set user_total = user_total -1
+    where chatting_no = :old.chatting_no;
 end; 
 /
 
@@ -903,3 +960,5 @@ DROP SEQUENCE tb_recruitBoard_seq;
 CREATE SEQUENCE tb_recruitBoard_seq;
 DROP SEQUENCE tb_recruitBoardComment_seq;
 CREATE SEQUENCE tb_recruitBoardComment_seq;
+
+commit;
