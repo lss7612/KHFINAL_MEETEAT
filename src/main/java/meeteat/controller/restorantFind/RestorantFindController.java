@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import meeteat.service.restorantFind.face.RestorantFindService;
+import meeteat.util.GeoTrans;
+import meeteat.util.GeoTransPoint;
 
 @Controller
 public class RestorantFindController {
@@ -83,6 +86,28 @@ public class RestorantFindController {
 			e.printStackTrace();
 		}
         
+	}
+	
+	@RequestMapping(value = "/restorantfind/map_ajax_view")
+	public String getRestorantMap(
+			int mapx
+			,int mapy
+			,Model model
+			) {
+		
+		GeoTransPoint katecCoordinates = new GeoTransPoint(mapx,mapy);
+		GeoTransPoint TransforCoordinates = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, katecCoordinates);
+		
+		double longitude = TransforCoordinates.getX();
+		double latitude = TransforCoordinates.getY();
+				
+		String.format("%.7f", longitude);
+		String.format("%.7f", latitude);
+		
+		model.addAttribute("mapx",String.format("%.7f", longitude));
+		model.addAttribute("mapy",String.format("%.7f", latitude));
+		
+		return null;
 	}
 	
 	
