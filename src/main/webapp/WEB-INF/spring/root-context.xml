@@ -7,7 +7,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSourceSpied" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>	
-		<property name="url" value="jdbc:oracle:thin:@182.230.108.84:1521:xe"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
 		<property name="username" value="scott"/>
 		<property name="password" value="tiger"/>
 	</bean>
