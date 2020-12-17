@@ -148,5 +148,11 @@ body {
 	</table>
 </div>
 
+<div class="link">
+
+	<a href="/matefind/list">게시판 리스트</a>
+
+</div>
+
 </body>
 </html>

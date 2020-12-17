@@ -6,11 +6,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<style type="text/css">
-alert("로그인실패");
-location.href("/login/login");
+<script type="text/javascript">
 
-</style>
+alert("회원가입에 성공하셨습니다.");
+location.href="/login/login";
+
+</script>
 </head>
 <body>
 

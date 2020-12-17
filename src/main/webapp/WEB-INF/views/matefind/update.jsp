@@ -65,6 +65,7 @@ $(document).ready(function() {
 
 <br><br>
 
+<form action="/matefind/update" method="post">
 
 	<div class="row">
 		<div class="col-2">
@@ -132,16 +133,16 @@ $(document).ready(function() {
 	
 	</script>	
 	
-	<div class="row">
-		<div class="col">
-			<h2 style="float: left;">#${view.party_location } #${view.meet_time } #${view.category }</h2>
-			<input type="text" id="category" name="category">
-		</div>
-	</div>
-	<hr>
+<!-- 	<div class="row"> -->
+<!-- 		<div class="col"> -->
+<!-- 			<h2 style="float: left;">#${view.party_location } #${view.meet_time } #${view.category }</h2> -->
+<!-- 			<input type="text" id="category" name="category"> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<hr> -->
 	
-	<label for="date" class="form-label" style="float: left;">시간</label>
-	<input class="form-control" id="date" type="datetime-local" name="meet_time" style="width: 300px;">
+	<label for="date" class="form-label" style="float: left; margin-top: 20px;">시간</label>
+	<input class="form-control" id="date" type="datetime-local" value="${view.meet_time }" name="meet_time" style="width: 300px;">
 	
 	
 
@@ -354,7 +355,7 @@ $(document).ready(function() {
 		
 			<button class="btn btn-secondary" onclick=goList() style="float: left;">목록으로</button>
 					
-			<button class="btn btn-primary" type="submit">수정하기</button>		
+			<button class="btn btn-primary" id="btnWrite">수정하기</button>		
 			<button class="btn btn-secondary" id="cancel">취소하기</button>
 			
 			<button class="btn btn-danger" style="float: right;">삭제하기</button>
@@ -363,7 +364,7 @@ $(document).ready(function() {
 		</div>
 	</div>	
 <!-- //버튼 영역v2 -->
-
+</form>
 
 </div><!-- //container -->
 

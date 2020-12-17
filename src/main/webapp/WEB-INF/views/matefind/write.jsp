@@ -55,8 +55,20 @@ $(document).ready(function() {
 		//스마트에디터의 내용을 <textarea>에 적용하기
 		submitContents($("#btnWrite"));
 		
-		//form submit 수행하기
-		$("form").submit();
+		var is_empty = false;
+		$('#form').find('input[type!="hidden"]').each(function(){
+		    if(!$(this).val()) {
+				is_empty = true;
+		    }
+		});
+		 
+		if(is_empty) {
+		    alert('값을 전부 입력하시오');
+		    return false;
+		} else {
+			$("form").submit();
+		}
+		
 		
 	})
 	
@@ -76,6 +88,9 @@ $(document).ready(function() {
 	
 	
 })
+
+
+
 </script>
 
 </head>
@@ -85,7 +100,7 @@ $(document).ready(function() {
 
 <br><br>
 
-<form action="/matefind/write" method="post">
+<form action="/matefind/write" method="post" id="form">
 
 	
 	<div class="row">

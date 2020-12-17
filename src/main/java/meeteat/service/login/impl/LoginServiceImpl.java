@@ -36,5 +36,33 @@ public class LoginServiceImpl implements LoginService {
 		
 		return loginDao.selectUserByUserNo(user);
 	}
+	
+	@Override
+	public boolean userIdCheck(String user_id) {
+		
+		if(loginDao.userIdCheck(user_id) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	@Override
+	public boolean userNickCheck(String user_nick) {
+		
+		if(loginDao.userNickCheck(user_nick) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public void signUp(User user) {
+
+		loginDao.signUp(user);
+		
+	}
 
 }

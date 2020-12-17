@@ -5,43 +5,152 @@
     
 <mapper namespace="meeteat.dao.matefind.face.MateFindDao">
 
+<!-- 2020 - 12 - 17 대공사 -->
+
+	<resultMap type="meeteat.dto.user.User" id="UserJoin">
+		<result column="user_no" property="user_no"/>
+		<result column="user_id" property="user_id"/>
+		<result column="user_nick" property="user_nick"/>
+		<result column="user_gender" property="user_gender"/>
+		<result column="user_age" property="user_age"/>
+		<result column="user_blockcnt" property="user_blockcnt"/>
+		<result column="user_email" property="user_email"/>
+		<result column="user_profileorigin" property="user_profileorigin"/>
+		<result column="user_profilestored" property="user_profilestored"/>
+		<result column="user_grade" property="user_grade"/>
+	</resultMap>
+
+
+	<resultMap type="meeteat.dto.mateFindBoard.MateFindBoard" id="MateFindBoard">
+		<result column="article_no" property="article_no"/>
+		<result column="article_title" property="article_title"/>
+		<result column="article_content" property="article_content"/>
+		<result column="board_no" property="board_no"/>
+		<result column="party_location" property="party_location"/>
+		<result column="user_no" property="user_no"/>
+		<result column="category" property="category"/>
+		<result column="meet_time" property="meet_time"/>
+		<result column="mate_list" property="mate_list"/>
+	</resultMap>
+	
+	<resultMap type="meeteat.dto.mateFindBoard.MateFindBoard" id="MateFindBoardJoin">
+		<result column="article_no" property="article_no"/>
+		<result column="article_title" property="article_title"/>
+		<result column="article_content" property="article_content"/>
+		<result column="board_no" property="board_no"/>
+		<result column="party_location" property="party_location"/>
+		<result column="user_no" property="user_no"/>
+		<result column="category" property="category"/>
+		<result column="meet_time" property="meet_time"/>
+		<result column="mate_list" property="mate_list"/>
+		<collection resultMap="UserJoin" property="user"/>
+	</resultMap>
+
 	<select id="selectList" resultType="meeteat.dto.mateFindBoard.MateFindBoard">
-		SELECT * FROM tb_board
+		SELECT * FROM tb_board2
 		WHERE board_no = 2
 			AND is_delete = 0
 		ORDER BY article_no DESC
 	</select>
 	
+	<sql id="selectMateFind">
+		SELECT 
+			article_no
+			, article_title
+			, article_content
+			, board_no
+			, party_location
+			, user_no
+			, category
+			, meet_time
+			, mate_list
+<!-- 			, (SELECT user_id FROM tb_user2 WHERE user_no = tb_board2.user_no) AS user_id -->
+			, (SELECT user_nick FROM tb_user2 WHERE user_no = tb_board2.user_no) AS user_nick
+		FROM tb_board2
+			WHERE board_no = 2
+				AND is_delete = 0
+		ORDER BY article_no DESC
+	</sql>
+	
+	<sql id="selectRownum">
+		SELECT
+			rownum rnum, B.*
+		FROM (
+			<include refid="selectMateFind" />
+		) B
+		ORDER BY rnum
+	</sql>
+	
+	<select id="selectPagingList" parameterType="meeteat.dto.mateFindBoard.Paging" resultMap="MateFindBoard">
+		SELECT * FROM (
+			<include refid="selectRownum" />
+		) R
+		<where>
+			rnum BETWEEN #{startNo } AND #{endNo }
+		</where>
+	</select>
+	
+	<select id="selectCntAll" resultType="int">
+		SELECT count(*) FROM (
+			<include refid="selectMateFind" />
+		) CNT
+	</select>
+	
+	
 	<select id="selectByArticleNo" parameterType="meeteat.dto.mateFindBoard.MateFindBoard" resultType="meeteat.dto.mateFindBoard.MateFindBoard">
-		SELECT * FROM tb_board
+		SELECT 
+			article_no
+			, article_title
+			, article_content
+			, board_no
+			, party_location
+			, user_no
+			, category
+<!-- 			, meet_time -->
+			, TO_CHAR(meet_time, 'YYYY-MM-DD HH24:MI') as meet_time
+<!-- 			, TO_CHAR(terminate_date, 'YYYY-MM-DD HH24:MI') as terminate_date -->
+			, mate_list
+		FROM tb_board2
 		WHERE board_no = 2
 			AND article_no = #{article_no }
 	</select>
+
+<!-- 	<select id="selectByArticleNo" parameterType="meeteat.dto.mateFindBoard.MateFindBoard" resultType="meeteat.dto.mateFindBoard.MateFindBoard"> -->
+<!-- 		SELECT  -->
+<!-- 			* -->
+<!-- 		FROM tb_board2 -->
+<!-- 		WHERE board_no = 2 -->
+<!-- 			AND article_no = #{article_no } -->
+<!-- 	</select> -->
 	
 	<update id="updateHit" parameterType="meeteat.dto.mateFindBoard.MateFindBoard">
-		UPDATE tb_board
+		UPDATE tb_board2
 		SET article_hit = article_hit + 1
 		WHERE board_no = 2
 			AND article_no = #{article_no }
 	</update>
 	
 	<update id="updateMateFindBoard" parameterType="meeteat.dto.mateFindBoard.MateFindBoard">
-		UPDATE tb_board
+		UPDATE tb_board2
 		SET article_title = #{article_title }
 			, article_content = #{article_content }
+			, party_location = #{party_location }
+			, category = #{category }
+			, meet_time = TO_DATE(#{meet_time}, 'YYYY-MM-DD HH24MI')
+			, mate_list = #{mate_list}
 		WHERE board_no = 2
 			AND article_no = #{article_no }
 	</update>
 	
 	<update id="mateFindDelete" parameterType="meeteat.dto.mateFindBoard.MateFindBoard">
-		UPDATE tb_board
+		UPDATE tb_board2
 		SET is_delete = 1
 		WHERE board_no = 2
 			AND article_no = #{article_no }
 	</update>
 	
 	<insert id="write" parameterType="meeteat.dto.mateFindBoard.MateFindBoard">
-		INSERT INTO tb_board (article_no
+		INSERT INTO tb_board2 (article_no
 					, article_title
 					, article_content
 					, board_no
@@ -58,16 +167,81 @@
 				, #{party_location}
 				, #{user_no}
 				, #{category}
-				, TO_DATE(#{meet_time}, 'YYYYMMDDHH24MISS')
-				, TO_DATE(#{meet_time}, 'YYYYMMDDHH24MISS')
+				, TO_DATE(#{meet_time}, 'YYYY-MM-DD HH24MI')
+				, TO_DATE(#{meet_time}, 'YYYY-MM-DD HH24MI')
 				, #{mate_list} )
 	</insert>
+
+
+	
+	<select id="selectUserByMateFind" parameterType="meeteat.dto.mateFindBoard.MateFindBoard" resultMap="MateFindBoard">
+		SELECT 
+			*
+		FROM tb_board2 mf
+			JOIN tb_user2 u
+				ON u.user_no = mf.user_no
+			WHERE mf.board_no = 2
+				AND mf.article_no = #{article_no}
+	</select>
+
+	<select id="selectListWithUser" resultMap="MateFindBoardJoin">
+		SELECT 
+			mf.article_no			as article_no
+			, mf.article_title		as article_title
+			, mf.article_content	as article_content
+			, mf.board_no			as board_no
+			, mf.party_location		as party_location
+			, mf.user_no			as user_no
+			, mf.category			as category
+			, mf.meet_time			as meet_time
+			, mf.mate_list			as mate_list
+			, u.user_id				as user_id
+			, u.user_nick			as user_nick
+		FROM tb_board2 mf
+			JOIN tb_user2 u
+				ON u.user_no = mf.user_no
+			WHERE mf.board_no = 2
+				AND is_delete = 0
+		ORDER BY article_no DESC
+	</select>
 		
 <!-- 	<select id=""> -->
-<!-- 	SELECT * FROM TB_BOARD -->
+<!-- 	SELECT * FROM TB_BOARD2 -->
 <!-- 		WHERE board_no = 2 -->
+<!-- 		<choose> -->
+<!-- 			<when test=""> -->
+			
+<!-- 			</when> -->
+<!-- 		</choose> -->
 <!-- 			AND SUBSTR(party_location, 0, INSTR(party_location, ' ', 1, 1) - 1) = #{party_location } -->
 			
 <!-- 	</select> -->
+
+
+
+<!-- TB_Recommend -->
+
+	<update id="insertAttend" parameterType="meeteat.dto.mateFindBoard.Recommend">
+		INSERT INTO tb_recommend (article_no, board_no, user_no)
+		VALUES (#{article_no}, #{board_no}, #{user_no})
+	</update>	
+	
+	<delete id="deleteAttend" parameterType="meeteat.dto.mateFindBoard.Recommend">
+		DELETE FROM tb_recommend
+		WHERE user_no = #{user_no}
+			AND board_no = 2
+			AND article_no = #{article_no }
+	</delete>
+
+	<select id="selectAttend" parameterType="meeteat.dto.mateFindBoard.Recommend" resultType="meeteat.dto.mateFindBoard.Recommend">
+		SELECT count(*) FROM tb_recommend
+		WHERE user_no = #{user_no}
+			AND board_no = 2
+			AND article_no = #{article_no }
+	</select>
+	
+	
+
+<!-- //TB_Recommend 끝 -->
 
 </mapper>

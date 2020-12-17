@@ -3,6 +3,7 @@ package meeteat.controller.matefind;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,8 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import meeteat.dto.mateFindBoard.MateFindBoard;
+import meeteat.dto.mateFindBoard.Paging;
+import meeteat.dto.mateFindBoard.Recommend;
 import meeteat.dto.user.User;
 import meeteat.service.login.face.LoginService;
 import meeteat.service.matefind.face.MateFindService;
@@ -30,9 +34,15 @@ public class MateFindController {
 	@Autowired LoginService loginService;
 
 	@RequestMapping(value = "/list")
-	public void mateFindList(Model model) {
+	public void mateFindList(Paging curPage, Model model) {
+		
+//		Paging paging = mateFindService.getPaging(curPage);
+//		model.addAttribute("paging", paging);
 		
 		List<MateFindBoard> mateFindList = mateFindService.list();
+//		List<MateFindBoard> mateFindList = mateFindService.pagingList(paging);
+		
+//		List<HashMap<String, String>> mateFindList = mateFindService.list(paging);
 		
 		model.addAttribute("mateFindList", mateFindList);
 		
@@ -47,9 +57,13 @@ public class MateFindController {
 		}
 		
 		viewBoard = mateFindService.mateFindView(viewBoard);
+		viewBoard.setMeet_time(viewBoard.getMeet_time().replace(" ", "T"));
+		
 		model.addAttribute("view", viewBoard);
 		
 		viewBoard.setMate_list(viewBoard.getMate_list().replaceAll(" ", ""));
+		
+		// list Recommend 테이브블에서 참여하기 누른 사람 user_no 가져오기
 		
 		String[] list = viewBoard.getMate_list().split(",");
 		int[] guestList = new int[list.length];
@@ -81,6 +95,8 @@ public class MateFindController {
 		
 		mateFindBoard = mateFindService.read(mateFindBoard);
 		
+		mateFindBoard.setMeet_time(mateFindBoard.getMeet_time().replace(" ", "T"));
+		
 		model.addAttribute("view", mateFindBoard);
 		
 	}
@@ -91,6 +107,14 @@ public class MateFindController {
 		Date revision_date = new Date();
 		
 		mateFindBoard.setRevision_date(revision_date);
+		
+		String mateTimeStr = mateFindBoard.getMeet_time();
+		mateTimeStr = mateTimeStr.replaceAll("-", "");
+		mateTimeStr = mateTimeStr.replaceAll("T", " ");
+		mateTimeStr = mateTimeStr.replaceAll(":", "");
+		logger.info(mateTimeStr);
+		
+		mateFindBoard.setMeet_time(mateTimeStr);
 		
 		mateFindService.update(mateFindBoard);
 		
@@ -115,7 +139,7 @@ public class MateFindController {
 		
 		String mateTimeStr = mateFindBoard.getMeet_time();
 		mateTimeStr = mateTimeStr.replaceAll("-", "");
-		mateTimeStr = mateTimeStr.replaceAll("T", "");
+		mateTimeStr = mateTimeStr.replaceAll("T", " ");
 		mateTimeStr = mateTimeStr.replaceAll(":", "");
 		logger.info(mateTimeStr);
 		
@@ -127,9 +151,34 @@ public class MateFindController {
 		
 	}
 	
-	@RequestMapping(value = "/attend")
-	public void mateFindAttend() {
+	@RequestMapping(value = "/attend", method = RequestMethod.GET)
+	public boolean mateFindAttend(@RequestParam int article_no, HttpSession session) {
 		
+		int guestUserNo = (int)session.getAttribute("user_no");
+		
+		Recommend recommend = new Recommend();
+		
+		recommend.setArticle_no(article_no);
+		recommend.setBoard_no(2);
+		recommend.setUser_no(guestUserNo);
+		
+		if(mateFindService.hasData(recommend)) {
+			
+			mateFindService.deleteAttend(recommend);
+			return false;
+			
+		} else {
+			
+			mateFindService.insertAttend(recommend);
+			return true;
+			
+		}
+		
+		//mate_list 의 크기와
+		//Recommend count 숫자 비교하기
+		//Recommend한 user_no 을 통해 정보 가져오기
+		
+//		return "redirect:/matefind/view?article_no=" + mateFindBoard.getArticle_no();
 		
 	}
 	

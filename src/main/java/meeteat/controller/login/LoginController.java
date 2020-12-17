@@ -21,9 +21,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -61,6 +63,27 @@ public class LoginController {
 		
 	}
 	
+	@RequestMapping(value = "/logincheck", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean loginCheck(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) {
+		
+		logger.info("/logincheck 접근했음");
+		logger.info(user_pw);
+		
+		User user = new User();
+		
+		user.setUser_id(user_id);
+		user.setUser_pw(user_pw);
+		
+		if(loginService.login(user)) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginProcess(User user, HttpSession session, Model model) {
 		
@@ -76,7 +99,7 @@ public class LoginController {
 			session.setAttribute("user_no", user.getUser_no());
 			session.setAttribute("user_nick", user.getUser_nick());
 			session.setAttribute("user_grade", user.getUser_grade());
-			session.setAttribute("user_image", user.getUser_profile());
+			session.setAttribute("user_image", user.getUser_profilestored());
 			session.setAttribute("user_gender", user.getUser_gender());
 			session.setAttribute("user_age", user.getUser_age());
 			session.setAttribute("user_email", user.getUser_email());
@@ -110,11 +133,39 @@ public class LoginController {
 		
 	}
 	
-	@RequestMapping(value = "/fail")
-	public void loginFail() {
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	public void signUp() {
 		
 	}
 	
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public String signUpProcess(User user) {
+		
+		loginService.signUp(user);
+		
+		return "redirect:/login/signupsuccess";
+	}
+	
+	@RequestMapping(value = "/signupsuccess")
+	public void signUpSuccess() {
+		
+	}
+	
+	@RequestMapping(value = "/idcheck", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean idCheck(@RequestParam("user_id") String user_id) {
+		
+		return loginService.userIdCheck(user_id);
+		
+	}
+	
+	@RequestMapping(value = "/nickcheck", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean nickCheck(@RequestParam("user_nick") String user_nick) {
+		
+		return loginService.userNickCheck(user_nick);
+		
+	}
 	
 	@RequestMapping(value = "/main")
 	public void main() {
@@ -162,7 +213,35 @@ public class LoginController {
 		session.setAttribute("user_image", image);
 		
 		
-		return "redirect:/login/main";
+		//네이버 회원 데이터베이스에 저장하기
+		User user = new User();
+		
+		String[] naverId = new String[1];
+		naverId = email.split("@");
+				
+		user.setUser_id(naverId[0]);
+		user.setUser_pw(id);
+		user.setUser_nick(nick);
+		user.setUser_age(age);
+		user.setUser_gender(gender);
+		user.setUser_email(email);
+		user.setUser_profileorigin(image);
+		user.setUser_profilestored(image);
+		
+		boolean hasData = loginService.login(user);
+		
+		if(hasData) {
+
+			return "redirect:/login/main";
+			
+		} else {
+			
+			loginService.signUp(user);
+			return "redirect:/login/main";
+			
+		}
+		
+		
 	}
 
 	@RequestMapping(value = "/google")
