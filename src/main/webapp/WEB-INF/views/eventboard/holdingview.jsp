@@ -87,18 +87,13 @@
 
 <hr>
 <%-- 코멘트영역 --%>
-<div id="view_comment" style="width:95%; margin:0 auto;">
-
-
-
-</div>
 <div style="width:90%; margin:0 auto;">
 <div class="col-md-4 pull-right"style="margin:5px 0 0 0; padding:10px 10px 0; font-size:20px;text-align:right;"><i id="refrash_comment_botton"  style="cursor: pointer;" class="fas fa-sync-alt"></i></div>
 <div class="col-md-4 pull-left" style="margin:5px 0 0 0; padding:14px 10px 0; font-size:18px;text-align:left;">${result.CNT_COMMENT }개의 덧글</div>
 <div class="clearfix"></div>
 </div>
 
-<%-- 댓글내용영역 --%>
+<%-- 댓글 불러오는 내용영역 --%>
 <div id="commentList" style="width:90%; margin:0 auto;">
 </div>
 

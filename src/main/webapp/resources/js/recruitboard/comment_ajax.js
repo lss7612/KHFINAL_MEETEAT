@@ -15,6 +15,7 @@ $(document).ready(function(){
 	//코멘트수정을 클릭했을 때
 	$('.updateComment').click(function(){
 		console.log($(this).attr('comment_no'))
+		closeOtherForms()
 		openUpdateForm($(this).attr('comment_no'))
 	})
 	
@@ -28,6 +29,7 @@ $(document).ready(function(){
 	//코멘트답글을 클릭했을 때
 	$('.commentReply').click(function(){
 		console.log($(this).attr('comment_no'))
+		closeOtherForms();
 		openReplyForm($(this).attr('comment_no'), $(this).attr('article_no'), $(this).attr('board_no'))
 	})
 	
@@ -94,6 +96,7 @@ function deleteComment(commentNo) {
 	})
 }
 
+
 function openUpdateForm(commentNo) {
 	let id = 'replyOrUpdateForm'+commentNo
 	console.log(id)
@@ -113,6 +116,10 @@ function openUpdateForm(commentNo) {
 		}
 	})
 	
+}
+
+function closeOtherForms(){
+	$('.replyOrUpdateForm').html('')
 }
 
 function openReplyForm(commentNo, articleNo, boardNo) {
