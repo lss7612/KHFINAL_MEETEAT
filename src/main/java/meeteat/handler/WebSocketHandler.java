@@ -80,10 +80,8 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		logger.info("msg msg : "+chatMessage.getMsg());
 		String user_nick = chatService.getUserNick(chatMessage.getWriter());
 		
-		if(chatMessage.getType().equals("CHAT")) {
-			//chatService.saveMsg(chatMessage.getChatRoomNo(), chatMessage.getWriter(), chatMessage.getMsg());
-			
-		}
+		//MessageType으로 db값 설정
+		chatDBset(chatMessage.getType());
 		
 		//웹소켓 Uri와 내가 접속한 Uri가 같을때 msg를 뿌려준다.
 		for(WebSocketSession sess : sessionList) {
@@ -117,7 +115,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						
 					} else if(chatMessage.getType().equals("ENTER")) {
 						logger.info("> > > 내가 보낸 메시지 < < <");
-						String enterMsg = enterMsg(user_nick);
+						String enterMsg = enterMsgNotice(user_nick);
 						cMsg.setMsg(enterMsg);
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsBytes(cMsg));
 						sess.sendMessage(tMsg);
@@ -251,12 +249,29 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		return Integer.parseInt(""+userSession.getAttribute("user_no"));
 	}
 	
+	public String enterMsgNotice(String user_nick) {
+		return "<div class='noticeArea'><span> 채팅방에 입장하셨습니다.</span></div>";
+	}
+	
 	public String enterMsg(String user_nick) {
 		return "<div class='noticeArea'><span>"+user_nick+"님이 채팅방에 입장하셨습니다.</span></div>";
 	}
 	
 	public String leaveMsg(String user_nick) {
 		return "<div class='noticeArea'><span>"+user_nick+"님이 채팅방에서 퇴장하셨습니다.</span></div>";
+	}
+	
+	public void chatDBset(String type) {
+		if(type.equals("CHAT")) {
+			//chatService.saveMsg(chatMessage.getChatRoomNo(), chatMessage.getWriter(), chatMessage.getMsg());
+			logger.info("message type : "+type);
+		} else if(type.equals("ENTER")){
+			//채팅방에 회원번호 없으면 db삽입. 
+			logger.info("message type : "+type);
+		} else {
+			//leave메세지 도착시 tb_chattinguser2 에서 삭제
+			logger.info("message type : "+type);
+		}
 	}
 	
 }
