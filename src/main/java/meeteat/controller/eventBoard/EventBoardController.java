@@ -1,14 +1,11 @@
 package meeteat.controller.eventBoard;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -206,15 +203,11 @@ public class EventBoardController {
 	
 	@RequestMapping(value="/eventboard/getpopupcookie")
 	public @ResponseBody Boolean getPopupCookie(
-			//제가 여기서 쿠키가 있는지 없는지 판단하는데
-			//이게 잘못될수도있을거같아여.. 여기서 마이너스 1이 나와요..
 			@CookieValue(value="popup", required = false) Cookie ispopup
 			) {
 
 		if(ispopup!=null) {
-			logger.info("널이 아님"+ ispopup.getValue());
-			logger.info("널이 아님"+ ispopup.getMaxAge());//마이너스1나옴
-			if(ispopup.getMaxAge()>0) {//popup쿠키가 아직 시간이 남아있음
+			if(ispopup.getMaxAge()>0) {
 				logger.info(""+ispopup.getMaxAge());
 				return true;
 			}
