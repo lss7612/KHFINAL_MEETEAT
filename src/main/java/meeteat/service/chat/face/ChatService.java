@@ -67,4 +67,11 @@ public interface ChatService {
 	 */
 	public HashMap<String, Object> getChatContentNewestAtRoom(int chatting_no);
 
+	/**
+	 * 채팅 메시지를 DB에 저장한다.
+	 * @param chatRoomNo : 채팅방 번호
+	 * @param writer : 작성자
+	 */
+	public void saveMsg(int chatting_no, int user_no, String msg_content);
+
 }

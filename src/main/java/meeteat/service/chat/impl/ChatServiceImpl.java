@@ -63,5 +63,9 @@ public class ChatServiceImpl implements ChatService{
 	public HashMap<String, Object> getChatContentNewestAtRoom(int chatting_no) {
 		return chatDao.getChatNewestContentAtRoom(chatting_no);
 	}
-	
+
+	@Override
+	public void saveMsg(int chatting_no, int user_no, String msg_content) {
+		chatDao.inserMsgContent(chatting_no, user_no, msg_content);
+	}
 }

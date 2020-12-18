@@ -40,27 +40,37 @@
     border-bottom: solid 1px;
 }
 
-#chatContent{
+#writeMsg{
     height: 80%;
     width: 80%;
     margin-top : 1%;
     margin-left : 1%;
+    vertical-align: middle;
 }
 
 #sendBtn{
+    margin-top : 1%;
 	width : 15%;
 	height : 80%;
 	background-color: skyblue;
+	vertical-align: middle;
 }
+
+.noticeArea{
+    height: 4%;
+    width: auto;
+    background-color: gainsboro;
+    border-radius: 3px;
+    text-align: center;
+}
+
 </style>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 var webSocket;
 $(document).ready(function(){
 	//채팅입력창 포커스
-    $("#chatContent").focus();
-    
-    //webSocket.onclose = onClose;
+    $("#writeMsg").focus();
     
   	//웹소켓 객체 생성 코드
     console.log(webSocket)
@@ -70,18 +80,11 @@ $(document).ready(function(){
     	console.log("새로운 websocket생성.")
     	webSocket = new WebSocket("ws://localhost:8088/chatws/${roomInfo.CHATTING_ID}");
     	console.log(webSocket);
-    	webSocket.onopen;
+    	webSocket.onopen = onOpen;
+    	webSocket.onclose = onClose;
+	    webSocket.onmessage = onMessage;
     	console.log(webSocket);
-    	console
     }
-    //webSocket.onOpen();
-    webSocket.onmessage = onMessage;
-
-    var user_no = "${user_no}";
-    var roomId = "${roomInfo.CHATTING_ID}";
-    var roomNo = "${roomInfo.CHATTING_NO}"
-    console.log("회원번호 : "+user_no);
-    console.log("roomId:"+roomId);
     
 })
 
@@ -95,45 +98,53 @@ function enterKeyAtChat(){
 
 //전송버튼 클릭시 동작하는 함수
 function send(){
-	var msg = document.getElementById("chatContent").value;
-	var sendMsg = "{writer:${user_no}, message:"+msg+" }"
+	var msg = document.getElementById("writeMsg").value;
+	var sendMsg = {chatRoomNo:${roomInfo.CHATTING_NO}, type:'CHAT', writer:${user_no}, msg : msg }
     console.log("msg : "+msg);
     console.log("msg : "+sendMsg);
     
     if( msg == ''){
-    	console.log("빈 메세지입니다.");
-    	$("#chatContent").focus();
+    	$("#writeMsg").focus();
     	return false;
     }
-    webSocket.send(sendMsg);
-    //webSocket.send(JSON.stringify(sendMsg));
+    //webSocket.send(sendMsg);
+    webSocket.send(JSON.stringify(sendMsg));
 	msg ="";
-	$("#chatContent").val('');
-	$("#chatContent").focus();
+	$("#writeMsg").val('');
+	$("#writeMsg").focus();
 }
 
 //연결 종료시 동작하는 함수
 function disconnect(){
-	var sendMsg = "{chatRoomId:${room.roomId}, type=LEAVE, writer:${user_no}"
+	var sendMsg = {chatRoomNo:${roomInfo.CHATTING_NO}, type:'LEAVE', writer:${user_no} }
 // 	var sendMsg = "{writer:${user_no}}"
-    webSocket.send(sendMsg);
+//     webSocket.send(sendMsg);
+    webSocket.send(JSON.stringify(sendMsg));
     webSocket.close();
 }
 
 //소켓 연결시 동작하는 함수
 function onOpen(){
-	var sendMsg = "{chatRoomNo:${roomInfo.CHATTING_NO}, type=ENTER, writer:${user_no}}"
+	var sendMsg = {chatRoomNo:${roomInfo.CHATTING_NO}, type:'ENTER', writer:${user_no}}
 // 	var sendMsg = "{writer:${id}}"
-    webSocket.send(sendMsg);
+//     webSocket.send(sendMsg);
+    webSocket.send(JSON.stringify( sendMsg ));
 }
 
 //메시지 도착시 동작하는 함수
 function onMessage(e){
     data = e.data;
-    console.log(e);
-    console.log(data);
-    console.log(data.message);
-    console.log("웹소켓에서 전달해준 메세지 : "+data);
+    console.log("e : "+e);
+    console.log("data : "+data);
+    console.log("웹소켓에서 전달해준 메세지 : "+data.msg);
+    var jsonStr = JSON.parse(data)
+    console.log(jsonStr);
+    console.log(jsonStr.writer);
+    if(jsonStr.writer == ${user_no}){
+    	console.log("내가 보낸메시지 : "+jsonStr.msg);
+    } else {
+    	console.log("다른 사람이 보낸 메시지")
+    }
     
     chatroom = document.getElementById("chatting");
     chatroom.innerHTML = chatroom.innerHTML + data  + "<br>";
@@ -163,10 +174,20 @@ function onClose(){
 <div id="chattingContent">
 	<div id="chatArea">
 		<div id="chatting">
-		
+<!-- 			<div class="noticeArea"> -->
+<!-- 				<span>ㅁㅁㅁ님이 채팅방에 입장하셨습니다.</span> -->
+<!-- 			</div> -->
+<!-- 			<div id="fromMsg"> -->
+<!-- 				<div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div id="toMsg"> -->
+<!-- 				<div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 		</div>
 		<div id="usingArea">
-			<input type="text" id="chatContent" onKeyDown="enterKeyAtChat();" />
+			<input type="text" id="writeMsg" onKeyDown="enterKeyAtChat();" />
 			<button id="sendBtn" onclick="send();">전송</button>
 		</div>
 	</div>
@@ -176,9 +197,19 @@ function onClose(){
 			<th>회원 목록</th>
 		</tr>
 		 <c:forEach items="${chatUserList }" var="user">
-			<tr>
-				<td>${user.USER_NICK }</td>
-			</tr>
+		 <c:choose>
+		 	<c:when test="${user_no eq user.USER_NO }">
+				<tr>
+					<td>${user.USER_NICK } &lt;나&gt;</td>
+				</tr>
+		 	</c:when>
+		 	<c:when test="${user_no ne user.USER_NO }">
+				<tr>
+					<td>${user.USER_NICK } </td>
+				</tr>
+		 	
+		 	</c:when>
+		 </c:choose>
 		 </c:forEach>
 	</table>
 	</div>
