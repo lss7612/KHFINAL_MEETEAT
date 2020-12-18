@@ -47,7 +47,8 @@ public class RestorantFindController {
 	
 	@RequestMapping(value = "/restorantfind/find", method = RequestMethod.POST)
 	public void RestorantFindProc(
-			String query
+			String query_location
+			,String query_food
 			,String sort
 			,HttpServletResponse resp
 			) {
@@ -55,6 +56,11 @@ public class RestorantFindController {
         String clientId = "WfmT9jU_F810rHN9qdhX"; 
         String clientSecret = "4ZytAzgtN5"; 
 
+        if(query_food=="") {
+        	query_food="맛집";
+        }
+        
+        String query = query_location + " " + query_food;
         
         if(sort == null || sort =="")
         	sort="random";
@@ -77,6 +83,51 @@ public class RestorantFindController {
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = restorantFindService.get(apiURL,requestHeaders);
 
+        
+        resp.setContentType("application/json; charset=utf-8");
+        try {
+			PrintWriter out = resp.getWriter();
+			out.print(responseBody);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+	}
+	
+	@RequestMapping(value = "/restorantfind/blogSearch_ajax_view")
+	public void RestortanFindBlogSearch(
+			String location
+			,String retorantName
+			,String start
+			,HttpServletResponse resp
+			) {
+		
+        String clientId = "WfmT9jU_F810rHN9qdhX"; 
+        String clientSecret = "4ZytAzgtN5"; 
+
+        
+        String query = location + " " + retorantName;
+        
+        
+        String text = null;
+        
+        try {
+            text = URLEncoder.encode(query, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("검색어 인코딩 실패",e);
+        }
+
+        String apiURL = "https://openapi.naver.com/v1/search/blog?"
+		        		+ "start="+start
+        				+ "&display=5"
+        				+ "&query=" + text;
+
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("X-Naver-Client-Id", clientId);
+        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
+        String responseBody = restorantFindService.get(apiURL,requestHeaders);
+
+        System.out.println(responseBody);
         
         resp.setContentType("application/json; charset=utf-8");
         try {
