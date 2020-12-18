@@ -55,6 +55,15 @@
 	background-color: skyblue;
 	vertical-align: middle;
 }
+
+.noticeArea{
+    height: 4%;
+    width: auto;
+    background-color: gainsboro;
+    border-radius: 3px;
+    text-align: center;
+}
+
 </style>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
@@ -128,6 +137,14 @@ function onMessage(e){
     console.log("e : "+e);
     console.log("data : "+data);
     console.log("웹소켓에서 전달해준 메세지 : "+data.msg);
+    var jsonStr = JSON.parse(data)
+    console.log(jsonStr);
+    console.log(jsonStr.writer);
+    if(jsonStr.writer == ${user_no}){
+    	console.log("내가 보낸메시지 : "+jsonStr.msg);
+    } else {
+    	console.log("다른 사람이 보낸 메시지")
+    }
     
     chatroom = document.getElementById("chatting");
     chatroom.innerHTML = chatroom.innerHTML + data  + "<br>";
@@ -157,7 +174,17 @@ function onClose(){
 <div id="chattingContent">
 	<div id="chatArea">
 		<div id="chatting">
-		
+<!-- 			<div class="noticeArea"> -->
+<!-- 				<span>ㅁㅁㅁ님이 채팅방에 입장하셨습니다.</span> -->
+<!-- 			</div> -->
+<!-- 			<div id="fromMsg"> -->
+<!-- 				<div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div id="toMsg"> -->
+<!-- 				<div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 		</div>
 		<div id="usingArea">
 			<input type="text" id="writeMsg" onKeyDown="enterKeyAtChat();" />
