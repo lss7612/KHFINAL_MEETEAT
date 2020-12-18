@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<div id="findRestorantWrapper" style="width:60%; min-width:600px; margin:0 auto;">
+<div id="findRestorantWrapper" style="width:60%; min-width:850px; margin:0 auto;">
 
 
 <h2>맛집검색</h2>
@@ -31,7 +31,10 @@
 			<option value="comment">리뷰순</option>
 		</select>	
 		<div class="form-group">
-			<input id="form_query" class="form-control" name="query" type="text">
+			<input id="form_query_location" class="form-control" name="query_location" type="text" placeholder="지역 입력" >
+		</div>
+		<div class="form-group">
+			<input id="form_query_food" class="form-control" name="query_food" type="text" placeholder="먹거리 입력(기본값: 맛집)" >
 		</div>
 		&nbsp;<i id="searchButton" style="font-size:20px; cursor:pointer;" class="fas fa-search"></i>
 	</form>
@@ -57,7 +60,7 @@
 	<div id="resultList" style="width:35%;" class="pull-left">
 	
 		<div id="restorant1" class="restorantInfoBox light_padding">
-			<h3 class="title"></h3><%-- 제목 --%>
+			<h3 class="title"><a href="#"></a></h3><%-- 제목 --%>
 			
 			<%-- 아이콘들 --%>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
@@ -69,7 +72,7 @@
 		</div>
 		
 		<div id="restorant2" class="restorantInfoBox light_padding">
-			<h3 class="title"></h3>
+			<h3 class="title"><a href="#"></a></h3>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
 			<div class="map pull-left" style="width:30px; text-align:center;"><a href="#"></a></div>
 			<div class="clearfix"></div>
@@ -78,7 +81,7 @@
 		</div>
 		
 		<div id="restorant3" class="restorantInfoBox light_padding">
-			<h3 class="title"></h3>
+			<h3 class="title"><a href="#"></a></h3>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
 			<div class="map pull-left" style="width:30px; text-align:center;"><a href="#"></a></div>
 			<div class="clearfix"></div>
@@ -87,7 +90,7 @@
 		</div>
 		
 		<div id="restorant4" class="restorantInfoBox light_padding">
-			<h3 class="title"></h3>
+			<h3 class="title"><a href="#"></a></h3>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
 			<div class="map pull-left" style="width:30px; text-align:center;"><a href="#"></a></div>
 			<div class="clearfix"></div>
@@ -96,21 +99,27 @@
 		</div>
 		
 		<div id="restorant5" class="restorantInfoBox light_padding">
-			<h3 class="title"></h3>
+			<h3 class="title"><a href="#"></a></h3>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
 			<div class="map pull-left" style="width:30px; text-align:center;"><a href="#"></a></div>
 			<div class="clearfix"></div>
 			<div class="category"></div>
-			<div class="address"></div>
+			<div class="address"></div>	
 		</div>
 	
 	</div>
 	
 	<%-- 지도부분 --%>
-	<div id="resultDetail" style="width:60%" class="pull-left base_margin">
+	<div id="mapResult" style="width:60%" class="pull-left base_margin invisible none_height">
 		
 	</div>
 	
+	<%-- 블로그 검색 부분 --%>
+	<div id="blogResult" style="width:60%" class="pull-left base_margin invisible none_height">
+		<div id="blogResultList"></div>
+	</div>
+	
+	<div id="seeMoreBlogResult" style="width:60%; text-align:center; border-radius:8px; cursor:pointer" class="pull-right light_margin light_padding invisible none_height">더보기</div>
 </div>
 
 </div>
