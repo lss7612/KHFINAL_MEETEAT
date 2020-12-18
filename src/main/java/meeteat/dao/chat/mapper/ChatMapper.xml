@@ -90,4 +90,9 @@
 		insert into tb_chattingcontent2 (chatting_no, user_no, msg_content, msg_date)
 		values (#{chatting_no}, #{user_no}, #{msg_content}, sysdate)
 	</insert>
+	
+	<select id="getUserNickByUserNo" parameterType="int" resultType="String">
+		select user_nick from tb_user2
+		where user_no = #{user_no}
+	</select>
 </mapper>

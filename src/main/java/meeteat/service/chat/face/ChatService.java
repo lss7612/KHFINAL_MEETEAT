@@ -74,4 +74,11 @@ public interface ChatService {
 	 */
 	public void saveMsg(int chatting_no, int user_no, String msg_content);
 
+	/**
+	 * 회원 번호로 회원의 닉네임 얻어오기
+	 * @param user_no : 회원 번호
+	 * @return : 회원 닉네임
+	 */
+	public String getUserNick(int user_no);
+
 }

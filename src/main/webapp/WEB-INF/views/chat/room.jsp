@@ -62,6 +62,7 @@
     background-color: gainsboro;
     border-radius: 3px;
     text-align: center;
+    margin-bottom: 1%;
 }
 
 </style>
@@ -127,7 +128,7 @@ function disconnect(){
 function onOpen(){
 	var sendMsg = {chatRoomNo:${roomInfo.CHATTING_NO}, type:'ENTER', writer:${user_no}}
 // 	var sendMsg = "{writer:${id}}"
-//     webSocket.send(sendMsg);
+//	webSocket.send(sendMsg);
     webSocket.send(JSON.stringify( sendMsg ));
 }
 
@@ -138,8 +139,8 @@ function onMessage(e){
     console.log("data : "+data);
     console.log("웹소켓에서 전달해준 메세지 : "+data.msg);
     var jsonStr = JSON.parse(data)
-    console.log(jsonStr);
-    console.log(jsonStr.writer);
+    console.log("jsonStr : "+jsonStr);
+    console.log("jsonStr.writer : "+jsonStr.writer);
     if(jsonStr.writer == ${user_no}){
     	console.log("내가 보낸메시지 : "+jsonStr.msg);
     } else {
@@ -147,7 +148,7 @@ function onMessage(e){
     }
     
     chatroom = document.getElementById("chatting");
-    chatroom.innerHTML = chatroom.innerHTML + data  + "<br>";
+    chatroom.innerHTML = chatroom.innerHTML + jsonStr.msg;
 }
 
 //웹소켓 종료시 동작하는 함수
