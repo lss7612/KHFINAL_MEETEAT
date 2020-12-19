@@ -79,4 +79,18 @@ public interface ChatDao {
 	 */
 	public void inserMsgContent(@Param("chatting_no")int chatting_no, @Param("user_no")int user_no, @Param("msg_content")String msg_content);
 
+	/**
+	 * 회원 벙호로 해당 회원의 닉네임 얻어오기
+	 * @param user_no : 회원 번호
+	 * @return 회원의 닉네임
+	 */
+	public String getUserNickByUserNo(int user_no);
+
+	/**
+	 * 채팅방 번호로 해당 방의 과거 대화 이력 갖고오기.
+	 * @param chatting_no : 조회할 채팅방 번호
+	 * @return 대화 리스트
+	 */
+	public List<HashMap<String, Object>> getOldChatByRoomNo(int chatting_no);
+
 }

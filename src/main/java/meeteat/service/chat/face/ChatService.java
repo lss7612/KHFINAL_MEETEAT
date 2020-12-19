@@ -74,4 +74,18 @@ public interface ChatService {
 	 */
 	public void saveMsg(int chatting_no, int user_no, String msg_content);
 
+	/**
+	 * 회원 번호로 회원의 닉네임 얻어오기
+	 * @param user_no : 회원 번호
+	 * @return : 회원 닉네임
+	 */
+	public String getUserNick(int user_no);
+
+	/**
+	 * 전달받은 채팅방 번호로 과거 대화 이력을 갖고온다.
+	 * @param chatting_no : 채팅방번호
+	 * @return : 과거 대화 이력
+	 */
+	public List<HashMap<String, Object>> getOldChatList(int chatting_no);
+
 }

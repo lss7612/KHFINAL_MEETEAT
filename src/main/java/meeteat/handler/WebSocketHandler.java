@@ -1,18 +1,16 @@
 package meeteat.handler;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -65,23 +63,35 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		logger.info("세션의 회원 번호 : "+user_no);
 		
 		//전송된 메세지 조회
-		TextMessage msg = new TextMessage(message.getPayload());
+		logger.info("message : "+message);
+		logger.info("message : "+message.getPayload());
+		String msg = message.getPayload();
 		logger.info("msg : "+msg);
-		logger.info("msg : "+msg.getPayload());
-		String msgWriter = message.getPayload();
-		logger.info("msgWriter : "+msgWriter);
+		
+		//전달시각 저장
+		Date time = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm");
+		String msgTime = getMsgTime(time, sdf);
+		System.out.println(msgTime);
 		
 		
 		//JSON형태로 전달받은 메시지 변환
 		ObjectMapper mapper = new ObjectMapper();
-		ChatMessage chatMessage = mapper.readValue(msgWriter, ChatMessage.class);
-		logger.info("msg type : "+chatMessage.getType());
+		ChatMessage chatMessage = mapper.readValue(message.getPayload(), ChatMessage.class);
 		logger.info("msg roomno : "+chatMessage.getChatRoomNo());
+		logger.info("msg type : "+chatMessage.getType());
+		logger.info("msg type : "+chatMessage.getWriter());
 		logger.info("msg msg : "+chatMessage.getMsg());
+		String user_nick = chatService.getUserNick(chatMessage.getWriter());
 		
-		//JSONObject json = new JSONObject();
+		//MessageType으로 db값 설정
+		chatDBset(chatMessage);
+		
 		//웹소켓 Uri와 내가 접속한 Uri가 같을때 msg를 뿌려준다.
 		for(WebSocketSession sess : sessionList) {
+			//세션에 전달해주기 위핸 객체
+			ChatMessage cMsg = new ChatMessage();
+			
 			if(session.getUri().toString().equals(sess.getUri().toString())) {
 				//메시지 타입(chat, enter, leave)보고 메시지 연산
 				//enter일경우 채팅방에 처음 접근이면 채팅방에 인원 추가 연산 및 참여 알림 전달
@@ -92,54 +102,69 @@ public class WebSocketHandler extends TextWebSocketHandler{
 				logger.info("sess    : "+sess.getUri());
 				logger.info("session : "+session.getUri());
 				
-				if(user_no == chatMessage.getWriter()) {
-					//내가 보낸 메세지 처리
-					if(chatMessage.getType().equals("ENTER")) {
-						logger.info(""+chatMessage.getWriter()+"님이 채팅에 참가.");
-						String jsonStr = mapper.writeValueAsString(msgWriter);
-						logger.info("jsonStr : "+jsonStr);
-						logger.info("msg : "+msg);
-						sess.sendMessage(msg);
+				//session의 id로 본인이 접속한 세션 or 상대방인지 구분한다.
+				if(session.getId().equals(sess.getId())) {
+					logger.info("> > > 내가 접속한 세션 < < <");
+					logger.info("> > > sessionid : "+session.getId()+" < < <");
+					
+					if(chatMessage.getType().equals("CHAT")) {
+						logger.info("> > > 내가 보낸 메시지 < < <");
+						String chatMsg = myMsg(chatMessage, msgTime);
+						cMsg.setMsg(chatMsg);
+						//TextMessage로 변환
+						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
+						logger.info(" > > > tMsg : "+tMsg.getPayload());
+						sess.sendMessage(tMsg);
+						//*****메시지 세션에 뿌리는 방법 끝
 						
-					} else if (chatMessage.getType().equals("CHAT")){
-						logger.info(""+chatMessage.getWriter()+"님이 메시지 전달.");
-						//chatService.saveMsg(chatMessage.getChatRoomNo(), chatMessage.getWriter(), chatMessage.getMsg());
-						logger.info("msg : "+msg);
-						sess.sendMessage(msg);
-						
-					} else {
-						logger.info(""+chatMessage.getWriter()+"님이 채팅에서 나감.");
-						
-						logger.info("msg : "+msg);
-						sess.sendMessage(msg);
-						
+					} else if(chatMessage.getType().equals("ENTER")) {
+						logger.info("> > > 내가 보낸 메시지 < < <");
+						String enterMsg = enterMsgToMe(user_nick);
+						cMsg.setMsg(enterMsg);
+						TextMessage tMsg = new TextMessage(mapper.writeValueAsBytes(cMsg));
+						sess.sendMessage(tMsg);
 					}
+					
 				} else {
-					//상대가 보낸 메세지 처리
-					if(chatMessage.getType().equals("ENTER")) {
-						logger.info(""+chatMessage.getWriter()+"님이 채팅에 참가.");
-						String jsonStr = mapper.writeValueAsString(msgWriter);
-						logger.info("msg : "+msg);
-						sess.sendMessage(msg);
-						
-					} else if (chatMessage.getType().equals("CHAT")){
+					logger.info("> > > 대화 상대방의 세션 < < <");
+					logger.info("> > > sessionid : "+session.getId()+" < < <");
+					
+					if (chatMessage.getType().equals("ENTER")) {
 						logger.info(""+chatMessage.getWriter()+"님이 메시지 전달.");
-						//chatService.saveMsg(chatMessage.getChatRoomNo(), chatMessage.getWriter(), chatMessage.getMsg());
-						logger.info("msg : "+msg);
-						sess.sendMessage(msg);
+						logger.info("닉네임 : "+user_nick);
+						
+						//*****메시지 세션에 뿌리는 방법
+						String enterMsg = enterMsgToRoom(user_nick);
+						cMsg.setMsg(enterMsg);
+						logger.info(" > > > chatMessage : "+cMsg);
+						//TextMessage로 변환
+						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
+						logger.info(" > > > tMsg : "+tMsg.getPayload());
+						sess.sendMessage(tMsg);
+						//*****메시지 세션에 뿌리는 방법 끝
+					} else if(chatMessage.getType().equals("LEAVE")) {
+						//*****메시지 세션에 뿌리는 방법
+						String leaveMsg = leaveMsgToRoom(user_nick);
+						cMsg.setMsg(leaveMsg);
+						logger.info(" > > > chatMessage : "+cMsg);
+						//TextMessage로 변환
+						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
+						logger.info(" > > > tMsg : "+tMsg.getPayload());
+						sess.sendMessage(tMsg);
+						//*****메시지 세션에 뿌리는 방법 끝
 						
 					} else {
-						logger.info(""+chatMessage.getWriter()+"님이 채팅에서 나감.");
-						
-						logger.info("msg : "+msg);
-						sess.sendMessage(msg);
-						
+						logger.info("> > > 상대방이 보낸 메시지 < < <");
+						String chatMsg = otherMsg(chatMessage,user_nick, msgTime);
+						cMsg.setMsg(chatMsg);
+						//TextMessage로 변환
+						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
+						logger.info(" > > > tMsg : "+tMsg.getPayload());
+						sess.sendMessage(tMsg);
+						//*****메시지 세션에 뿌리는 방법 끝
 					}
+					
 				}
-				
-				//전달 메시지 타입으로 구분
-				logger.info("--------------------------------");
-				continue;
 			} else {
 				logger.info("접속중인 websocket의 uri가 다릅니다");
 				logger.info("sess    : "+sess.getUri());
@@ -150,16 +175,72 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		}
 	}
 	
-	public String enterMsg(String user_nick) {
-		String eMsg = "<div class=\"noticeArea\"><span>"+user_nick+"님이 채팅방에 입장하셨습니다.</span></div>";
-		return eMsg;
+	//MM/dd HH:mm
+	private String getMsgTime(Date time, SimpleDateFormat sdf) {
+		String sdfTime = sdf.format(time);
+		System.out.println(sdfTime);
+		String date = sdfTime.substring(0,5);
+		int hour = Integer.parseInt(""+sdfTime.substring(6,8));
+		int min = Integer.parseInt(sdfTime.substring(9,11));
+		String msgTime = null;
+		if(hour - 12 >=0) {
+			return msgTime = date+" 오후 "+(hour-12)+":"+min;
+		} else {
+			return msgTime = date+" 오전 "+(hour)+":"+min;
+		}
 	}
-	
+
 	public int getSessionUserNo(WebSocketSession session) {
 		//세션에서 유저정보 얻어오기
 		Map map = session.getAttributes();
 		System.out.println(map);
 		HttpSession userSession = (HttpSession)map.get("httpSession");
 		return Integer.parseInt(""+userSession.getAttribute("user_no"));
+	}
+	
+	public String enterMsgToMe(String user_nick) {
+		return "<div class='noticeArea'><span> 채팅방에 입장하셨습니다.</span></div>";
+	}
+	
+	public String enterMsgToRoom(String user_nick) {
+		return "<div class='noticeArea'><span>"+user_nick+"님이 채팅방에 입장하셨습니다.</span></div>";
+	}
+	
+	public String leaveMsgToRoom(String user_nick) {
+		return "<div class='noticeArea'><span>"+user_nick+"님이 채팅방에서 퇴장하셨습니다.</span></div>";
+	}
+	
+	public void chatDBset(ChatMessage chatMessage) {
+		if(chatMessage.getType().equals("CHAT")) {
+			//chatService.saveMsg(chatMessage.getChatRoomNo(), chatMessage.getWriter(), chatMessage.getMsg());
+			logger.info("message type : "+chatMessage.getType());
+		} else if(chatMessage.getType().equals("ENTER")){
+			//채팅방에 회원번호 없으면 db삽입. 
+			logger.info("message type : "+chatMessage.getType());
+		} else {
+			//leave메세지 도착시 tb_chattinguser2 에서 삭제
+			logger.info("message type : "+chatMessage.getType());
+		}
+	}
+	
+	
+	public String myMsg(ChatMessage chatMessage, String msgTime) {
+		
+		return "<div class=\"toMsg\">"
+				+ "<span class=\"toMsgTime\">"+msgTime+"</span>"
+				+ "<div class=\"toChatContent toBallon\">"+chatMessage.getMsg()+"</div>"
+				+ "</div>";
+	}
+	
+	public String otherMsg(ChatMessage chatMessage, String user_nick, String msgTime) {
+		
+		return "<div class=\"fromMsg\">"
+				+ "<img class=\"profileImg\" src=\"/resources/img/default_profile_img.jpg\">"
+				+ "<div class=\"fromMsgInfo\">"
+					+ "<strong><span>"+user_nick+"</span></strong>"
+				+ "</div>"
+				+ "<div class=\"fromChatContent fromBallon\">"+chatMessage.getMsg()+"</div>"
+				+ "<span class=\"fromMsgTime\">"+msgTime +"</span>"
+				+ "</div>";
 	}
 }

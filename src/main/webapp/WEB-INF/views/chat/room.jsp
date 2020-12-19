@@ -7,64 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>채팅방 접속</title>
-<style type="text/css">
-
-#chattingContent{
-	width : 100%;
-	height : 810px;
-}
-
-#chatArea{
-	float : left;
-	height : 800px;
-	width : 70%;
-	border : solid 1px;
-}
-
-#userListArea{
-	border : solid 1px;
-	float : left;
-	width : 25%;
-	margin-left : 10px;
-}
-
-#chatting{
-	height: 85%;
-    background-color: #ececc2;
-}
-
-#usingArea{
-	height : 15%;
-	background-color : #ece2e2;
-    border-top: solid 1px;
-    border-bottom: solid 1px;
-}
-
-#writeMsg{
-    height: 80%;
-    width: 80%;
-    margin-top : 1%;
-    margin-left : 1%;
-    vertical-align: middle;
-}
-
-#sendBtn{
-    margin-top : 1%;
-	width : 15%;
-	height : 80%;
-	background-color: skyblue;
-	vertical-align: middle;
-}
-
-.noticeArea{
-    height: 4%;
-    width: auto;
-    background-color: gainsboro;
-    border-radius: 3px;
-    text-align: center;
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="/resources/css/chat/room.css" />
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
 var webSocket;
@@ -103,8 +46,9 @@ function send(){
     console.log("msg : "+msg);
     console.log("msg : "+sendMsg);
     
-    if( msg == ''){
+    if( msg == '' || msg == ' '){
     	$("#writeMsg").focus();
+    	console.log("빈문자는 전달되지 않습니다.");
     	return false;
     }
     //webSocket.send(sendMsg);
@@ -127,7 +71,7 @@ function disconnect(){
 function onOpen(){
 	var sendMsg = {chatRoomNo:${roomInfo.CHATTING_NO}, type:'ENTER', writer:${user_no}}
 // 	var sendMsg = "{writer:${id}}"
-//     webSocket.send(sendMsg);
+//	webSocket.send(sendMsg);
     webSocket.send(JSON.stringify( sendMsg ));
 }
 
@@ -138,8 +82,8 @@ function onMessage(e){
     console.log("data : "+data);
     console.log("웹소켓에서 전달해준 메세지 : "+data.msg);
     var jsonStr = JSON.parse(data)
-    console.log(jsonStr);
-    console.log(jsonStr.writer);
+    console.log("jsonStr : "+jsonStr);
+    console.log("jsonStr.writer : "+jsonStr.writer);
     if(jsonStr.writer == ${user_no}){
     	console.log("내가 보낸메시지 : "+jsonStr.msg);
     } else {
@@ -147,7 +91,8 @@ function onMessage(e){
     }
     
     chatroom = document.getElementById("chatting");
-    chatroom.innerHTML = chatroom.innerHTML + data  + "<br>";
+    chatroom.innerHTML = chatroom.innerHTML + jsonStr.msg;
+    $('#chatting').scrollTop($('#chatting')[0].scrollHeight);
 }
 
 //웹소켓 종료시 동작하는 함수
@@ -174,15 +119,27 @@ function onClose(){
 <div id="chattingContent">
 	<div id="chatArea">
 		<div id="chatting">
+			<c:if test="${oldChat ne null }">
+				<c:forEach items="${oldChat }" var="list">
+					${list }
+				</c:forEach>
+			</c:if>
 <!-- 			<div class="noticeArea"> -->
-<!-- 				<span>ㅁㅁㅁ님이 채팅방에 입장하셨습니다.</span> -->
 <!-- 			</div> -->
-<!-- 			<div id="fromMsg"> -->
-<!-- 				<div> -->
+<!-- 			<div class="fromMsg"> -->
+<!-- 				<div class="imgDiv"> -->
+<!-- 					<img class="profileImg" src="/resources/img/default_profile_img.jpg"> -->
 <!-- 				</div> -->
+<!-- 				<div class="fromMsgInfo"> -->
+<!-- 					<strong><span>아무개씨</span></strong>&nbsp; -->
+<!-- 				</div> -->
+<!-- 				<div class="fromChatContent fromBallon"> -->
+<!-- 				</div> -->
+<!-- 				<span class="fromMsgTime">시각</span> -->
 <!-- 			</div> -->
-<!-- 			<div id="toMsg"> -->
-<!-- 				<div> -->
+<!-- 			<div class="toMsg"> -->
+<!-- 				<span class="toMsgTime">시각</span> -->
+<!-- 				<div class="toChatContent toBallon"> -->
 <!-- 				</div> -->
 <!-- 			</div> -->
 		</div>

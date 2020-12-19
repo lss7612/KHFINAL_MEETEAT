@@ -653,6 +653,8 @@ insert into tb_chatting2 (chatting_id) values('c3a616c31ecb4c929a13b26a528e8ccc'
 insert into tb_chatting2 (chatting_id) values('fa42ada03fb7495eb4514075ea98a36b');
 insert into tb_chatting2 (chatting_id) values('4cebdd2490af45a6a12729029b1fa70f');
 insert into tb_chatting2 (chatting_id) values('aef24e22369e43c88de2d13e01f22fbf');
+insert into tb_chatting2 (chatting_id) values('f459334d815b4109dc19029b1f22fbf0');
+
 
 -- 1대1 채팅방 참여자 정보
 insert into tb_chattinguser2 (chatting_no, user_no) values( 1, 10);
