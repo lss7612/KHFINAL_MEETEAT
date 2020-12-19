@@ -57,19 +57,18 @@
 	
 	<!-- usre_no가 속한 채팅방 조회 -->
 	<select id="getUserJoinChatList" parameterType="int" resultType="hashmap">
-		select c.chatting_no, cu.user_no, u.user_nick  from tb_chatting2 c
-		inner join tb_chattinguser2 cu
-		    on c.chatting_no = cu.chatting_no
-		inner join tb_user2 u
-		    on cu.user_no = u.user_no
-		where cu.chatting_no in(
-		    select c.chatting_no from tb_chatting2 c
-				inner join tb_chattinguser2 cu
-				    on c.chatting_no = cu.chatting_no
-				where cu.user_no = #{user_no} 
-		)
-		and cu.user_no != #{user_no} 
-		order by chatting_no
+		select b.*, u.user_nick from tb_user2 u
+		inner join (select c.chatting_no, c.chatting_name, max(cu.user_no)user_no from tb_chatting2 c
+		    inner join tb_chattinguser2 cu
+		        on c.chatting_no = cu.chatting_no
+		    where c.chatting_no in (    
+		        select chatting_no from tb_chattinguser2
+		        where user_no = 1
+		    )
+		    group by c.chatting_no, c.chatting_name
+		    order by c.chatting_no
+		    )b
+		on u.user_no = b.user_no    
 	</select>
 	
 	<!-- chatting_no의 최신 메시지 정보를 조회 -->
@@ -94,5 +93,13 @@
 	<select id="getUserNickByUserNo" parameterType="int" resultType="String">
 		select user_nick from tb_user2
 		where user_no = #{user_no}
+	</select>
+	
+	<select id="getOldChatByRoomNo" resultType="hashmap">
+		select cc.user_no, u.user_nick, cc.msg_content, cc.msg_date from tb_chattingcontent2 cc
+		inner join tb_user2 u
+		    on cc.user_no = u.user_no
+		where chatting_no = #{chatting_no}    
+		order by cc.msg_date asc
 	</select>
 </mapper>

@@ -81,4 +81,11 @@ public interface ChatService {
 	 */
 	public String getUserNick(int user_no);
 
+	/**
+	 * 전달받은 채팅방 번호로 과거 대화 이력을 갖고온다.
+	 * @param chatting_no : 채팅방번호
+	 * @return : 과거 대화 이력
+	 */
+	public List<HashMap<String, Object>> getOldChatList(int chatting_no);
+
 }

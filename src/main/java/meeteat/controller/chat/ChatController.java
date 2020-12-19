@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -100,6 +101,9 @@ public class ChatController {
 		//채팅목록에서 접속할때 또는 게시판에 접속할때 해당 방의 id를 전달값으로 받아온다.
 		logger.info("> > > 채팅방에 접속 완료 < < < ");
 		logger.info("> > > 접속한 채팅방의 id : "+chatting_id+" < < <");
+		//세션에서 회원정보 갖고오기
+		int user_no = Integer.parseInt(""+session.getAttribute("user_no"));
+		
 		//chatting_id로 채팅방 정보 가져오기
 		HashMap<String, Object> roomInfo = chatService.getChatRoomInfoById(chatting_id);
 		logger.info("> > >접속한 채팅방의 정보 : "+roomInfo+" < < <");
@@ -113,15 +117,25 @@ public class ChatController {
 		logger.info(""+chatUserList);
 		
 		//방의 이전 메시지 로드(필요시 구현)
+		List<HashMap<String,Object>> oldChat;
+		oldChat = chatService.getOldChatList(chatting_no);
+		logger.info(""+oldChat);
+		
+		//전달시각 저장
+		Date time = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm");
+		List<String> trimOldChat = oldChatTrim(oldChat, user_no, sdf);
 		
 		
 		//model 객체 등록
 		model.addAttribute("roomInfo", roomInfo);
 		model.addAttribute("chatUserList", chatUserList);
+		model.addAttribute("oldChat", trimOldChat);
 		
 		return "chat/room";
 	}
 	
+
 	@RequestMapping(value="/list")
 	public String chatList(HttpSession session, Model model) {
 		logger.info(" > > > chatting list 조회 < < <");
@@ -135,7 +149,7 @@ public class ChatController {
 	
 		//접속한 회원이 속한 채팅방의 가장 최신 대화만 갖고오기.
 		List<HashMap<String, Object>> chatList = new ArrayList<HashMap<String, Object>>();
-		GetChatNewest(roomNum, chatList);
+		getChatNewest(roomNum, chatList);
 		
 		logger.info("> > > 참여 채팅방 최신 대화 목록 < < < ");
 		logger.info(""+chatList);
@@ -162,7 +176,7 @@ public class ChatController {
 		return "/chat/list";
 	}
 
-	public void GetChatNewest(List<HashMap<String,Object>> roomNum, List<HashMap<String, Object>> chatList) {
+	public void getChatNewest(List<HashMap<String,Object>> roomNum, List<HashMap<String, Object>> chatList) {
 		int chatting_no = 0;
 		HashMap<String, Object> content = null;
 		for(int i=0; i<roomNum.size(); i++) {
@@ -187,4 +201,47 @@ public class ChatController {
 		});
 	}
 	
+	private List<String> oldChatTrim(List<HashMap<String, Object>> oldChat, int user_no, SimpleDateFormat sdf) {
+		if(oldChat == null) {
+			return null;
+		}
+		
+		List<String> trim = new ArrayList<>();
+		String msgTime = null;
+		Date time = null;
+		for(int i=0; i<oldChat.size();i++) {
+			time = (Date)oldChat.get(i).get("MSG_DATE");
+			msgTime = getMsgTime(time, sdf);
+			if(Integer.parseInt(""+oldChat.get(i).get("USER_NO")) == user_no) {
+				trim.add("<div class=\"toMsg\">"
+						+ "<span class=\"toMsgTime\">"+msgTime+"</span>"
+						+ "<div class=\"toChatContent toBallon\">"+oldChat.get(i).get("MSG_CONTENT")+"</div>"
+						+ "</div>");
+			} else {
+				trim.add("<div class=\"fromMsg\">"
+						+ "<img class=\"profileImg\" src=\"/resources/img/default_profile_img.jpg\">"
+						+ "<div class=\"fromMsgInfo\">"
+							+ "<strong><span>"+oldChat.get(i).get("USER_NICK")+"</span></strong>"
+						+ "</div>"
+						+ "<div class=\"fromChatContent fromBallon\">"+oldChat.get(i).get("MSG_CONTENT")+"</div>"
+						+ "<span class=\"fromMsgTime\">"+msgTime+"</span>"
+						+ "</div>");
+			}
+		}
+		return trim;
+	}
+	
+	private String getMsgTime(Date time, SimpleDateFormat sdf) {
+		String sdfTime = sdf.format(time);
+		System.out.println(sdfTime);
+		String date = sdfTime.substring(0,5);
+		int hour = Integer.parseInt(""+sdfTime.substring(6,8));
+		int min = Integer.parseInt(sdfTime.substring(9,11));
+		String msgTime = null;
+		if(hour - 12 >=0) {
+			return msgTime = date+" 오후 "+(hour-12)+":"+min;
+		} else {
+			return msgTime = date+" 오전 "+(hour)+":"+min;
+		}
+	}
 }

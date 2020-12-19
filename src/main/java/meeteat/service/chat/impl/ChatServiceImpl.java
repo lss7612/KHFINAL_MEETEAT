@@ -73,4 +73,9 @@ public class ChatServiceImpl implements ChatService{
 	public String getUserNick(int user_no) {
 		return chatDao.getUserNickByUserNo(user_no);
 	}
+	
+	@Override
+	public List<HashMap<String, Object>> getOldChatList(int chatting_no) {
+		return chatDao.getOldChatByRoomNo(chatting_no);
+	}
 }
