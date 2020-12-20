@@ -88,4 +88,18 @@ public interface ChatService {
 	 */
 	public List<HashMap<String, Object>> getOldChatList(int chatting_no);
 
+	/**
+	 * 채팅방 참여 여부 확인
+	 * @param user_no : 회원번호 
+	 * @return true or false
+	 */
+	public boolean findJoinUser(int user_no, int chatting_no);
+
+	/**
+	 * 채팅방 나가기
+	 * @param user_no : 회원 번호
+	 * @return true or false
+	 */
+	public boolean exitChatRoom(int user_no, int chatting_no);
+
 }

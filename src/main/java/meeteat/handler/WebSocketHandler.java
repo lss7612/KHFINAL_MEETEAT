@@ -62,6 +62,8 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		int user_no = getSessionUserNo(session);
 		logger.info("세션의 회원 번호 : "+user_no);
 		
+		boolean is_state = false;
+		
 		//전송된 메세지 조회
 		logger.info("message : "+message);
 		logger.info("message : "+message.getPayload());
@@ -70,9 +72,8 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		
 		//전달시각 저장
 		Date time = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm");
-		String msgTime = getMsgTime(time, sdf);
-		System.out.println(msgTime);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd a hh:mm");
+		String msgTime = sdf.format(time);
 		
 		
 		//JSON형태로 전달받은 메시지 변환
@@ -84,8 +85,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		logger.info("msg msg : "+chatMessage.getMsg());
 		String user_nick = chatService.getUserNick(chatMessage.getWriter());
 		
+		
 		//MessageType으로 db값 설정
-		chatDBset(chatMessage);
+		is_state = chatDBset(chatMessage);
 		
 		//웹소켓 Uri와 내가 접속한 Uri가 같을때 msg를 뿌려준다.
 		for(WebSocketSession sess : sessionList) {
@@ -117,8 +119,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						sess.sendMessage(tMsg);
 						//*****메시지 세션에 뿌리는 방법 끝
 						
-					} else if(chatMessage.getType().equals("ENTER")) {
+					} else if(chatMessage.getType().equals("ENTER") && is_state == true) {
 						logger.info("> > > 내가 보낸 메시지 < < <");
+						logger.info("> > > 상태 : "+is_state+" < < <");
 						String enterMsg = enterMsgToMe(user_nick);
 						cMsg.setMsg(enterMsg);
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsBytes(cMsg));
@@ -129,7 +132,8 @@ public class WebSocketHandler extends TextWebSocketHandler{
 					logger.info("> > > 대화 상대방의 세션 < < <");
 					logger.info("> > > sessionid : "+session.getId()+" < < <");
 					
-					if (chatMessage.getType().equals("ENTER")) {
+					if (chatMessage.getType().equals("ENTER") && is_state==true) {
+						logger.info("> > > 상태 : "+is_state+" < < <");
 						logger.info(""+chatMessage.getWriter()+"님이 메시지 전달.");
 						logger.info("닉네임 : "+user_nick);
 						
@@ -142,7 +146,8 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						logger.info(" > > > tMsg : "+tMsg.getPayload());
 						sess.sendMessage(tMsg);
 						//*****메시지 세션에 뿌리는 방법 끝
-					} else if(chatMessage.getType().equals("LEAVE")) {
+					} else if(chatMessage.getType().equals("LEAVE") && is_state==true) {
+						logger.info("> > > 상태 : "+is_state+" < < <");
 						//*****메시지 세션에 뿌리는 방법
 						String leaveMsg = leaveMsgToRoom(user_nick);
 						cMsg.setMsg(leaveMsg);
@@ -152,11 +157,11 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						logger.info(" > > > tMsg : "+tMsg.getPayload());
 						sess.sendMessage(tMsg);
 						//*****메시지 세션에 뿌리는 방법 끝
-						
-					} else {
-						logger.info("> > > 상대방이 보낸 메시지 < < <");
-						String chatMsg = otherMsg(chatMessage,user_nick, msgTime);
+					} else if(chatMessage.getType().equals("CHAT")) {
+						//*****메시지 세션에 뿌리는 방법
+						String chatMsg = otherMsg(chatMessage, user_nick, msgTime);
 						cMsg.setMsg(chatMsg);
+						logger.info(" > > > chatMessage : "+cMsg);
 						//TextMessage로 변환
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
 						logger.info(" > > > tMsg : "+tMsg.getPayload());
@@ -175,21 +180,6 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		}
 	}
 	
-	//MM/dd HH:mm
-	private String getMsgTime(Date time, SimpleDateFormat sdf) {
-		String sdfTime = sdf.format(time);
-		System.out.println(sdfTime);
-		String date = sdfTime.substring(0,5);
-		int hour = Integer.parseInt(""+sdfTime.substring(6,8));
-		int min = Integer.parseInt(sdfTime.substring(9,11));
-		String msgTime = null;
-		if(hour - 12 >=0) {
-			return msgTime = date+" 오후 "+(hour-12)+":"+min;
-		} else {
-			return msgTime = date+" 오전 "+(hour)+":"+min;
-		}
-	}
-
 	public int getSessionUserNo(WebSocketSession session) {
 		//세션에서 유저정보 얻어오기
 		Map map = session.getAttributes();
@@ -210,16 +200,24 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		return "<div class='noticeArea'><span>"+user_nick+"님이 채팅방에서 퇴장하셨습니다.</span></div>";
 	}
 	
-	public void chatDBset(ChatMessage chatMessage) {
+	
+	public boolean chatDBset(ChatMessage chatMessage) {
 		if(chatMessage.getType().equals("CHAT")) {
-			//chatService.saveMsg(chatMessage.getChatRoomNo(), chatMessage.getWriter(), chatMessage.getMsg());
 			logger.info("message type : "+chatMessage.getType());
+			//메시지 db에 저장
+			chatService.saveMsg(chatMessage.getChatRoomNo(), chatMessage.getWriter(), chatMessage.getMsg());
+			
+			return false;
 		} else if(chatMessage.getType().equals("ENTER")){
 			//채팅방에 회원번호 없으면 db삽입. 
 			logger.info("message type : "+chatMessage.getType());
+			
+			return chatService.findJoinUser(chatMessage.getWriter(), chatMessage.getChatRoomNo());
 		} else {
 			//leave메세지 도착시 tb_chattinguser2 에서 삭제
 			logger.info("message type : "+chatMessage.getType());
+			
+			return chatService.exitChatRoom(chatMessage.getWriter(), chatMessage.getChatRoomNo());
 		}
 	}
 	

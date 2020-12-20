@@ -123,9 +123,8 @@ public class ChatController {
 		
 		//전달시각 저장
 		Date time = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd a hh:mm");
 		List<String> trimOldChat = oldChatTrim(oldChat, user_no, sdf);
-		
 		
 		//model 객체 등록
 		model.addAttribute("roomInfo", roomInfo);
@@ -211,7 +210,7 @@ public class ChatController {
 		Date time = null;
 		for(int i=0; i<oldChat.size();i++) {
 			time = (Date)oldChat.get(i).get("MSG_DATE");
-			msgTime = getMsgTime(time, sdf);
+			msgTime = sdf.format(time);
 			if(Integer.parseInt(""+oldChat.get(i).get("USER_NO")) == user_no) {
 				trim.add("<div class=\"toMsg\">"
 						+ "<span class=\"toMsgTime\">"+msgTime+"</span>"
@@ -229,19 +228,5 @@ public class ChatController {
 			}
 		}
 		return trim;
-	}
-	
-	private String getMsgTime(Date time, SimpleDateFormat sdf) {
-		String sdfTime = sdf.format(time);
-		System.out.println(sdfTime);
-		String date = sdfTime.substring(0,5);
-		int hour = Integer.parseInt(""+sdfTime.substring(6,8));
-		int min = Integer.parseInt(sdfTime.substring(9,11));
-		String msgTime = null;
-		if(hour - 12 >=0) {
-			return msgTime = date+" 오후 "+(hour-12)+":"+min;
-		} else {
-			return msgTime = date+" 오전 "+(hour)+":"+min;
-		}
 	}
 }

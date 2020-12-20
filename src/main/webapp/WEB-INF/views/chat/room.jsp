@@ -28,7 +28,7 @@ $(document).ready(function(){
 	    webSocket.onmessage = onMessage;
     	console.log(webSocket);
     }
-    
+    $('#chatting').scrollTop($('#chatting')[0].scrollHeight);
 })
 
 
@@ -100,20 +100,32 @@ function onClose(){
     disconnect();
 }
 
+function exitRoom(){
+	var res = confirm("채팅방을 정말 나가시겠습니까?");
+	console.log(res);
+	if( res ){
+		disconnect();
+		location.href="/chat/list"
+	}
+}
+
 </script>
 
 
 </head>
 <body>
-<c:if test="${chatUserList.size() eq 2 }">
+<c:choose>
+<c:when test="${chatUserList.size() eq 2 }">
 	<c:forEach items="${chatUserList }" var="userList">
-		<c:choose>
-			<c:when test="${userList.USER_NO ne user_no}">
+			<c:if test="${userList.USER_NO ne user_no}">
 				${userList.USER_NICK }님과 대화
-			</c:when>
-		</c:choose>
+			</c:if>
 	</c:forEach>
-</c:if>
+</c:when>
+<c:when test="${chatUserList.size() gt 2 }">
+	방제 : ${roomInfo.CHATTING_NAME }
+</c:when>
+</c:choose>
 
 <hr>
 <div id="chattingContent">
@@ -148,27 +160,30 @@ function onClose(){
 			<button id="sendBtn" onclick="send();">전송</button>
 		</div>
 	</div>
-	<div id="userListArea">
-	<table>
-		<tr>
-			<th>회원 목록</th>
-		</tr>
-		 <c:forEach items="${chatUserList }" var="user">
-		 <c:choose>
-		 	<c:when test="${user_no eq user.USER_NO }">
+	<div id="etcArea">
+		<button id="exitBtn" onclick="exitRoom()">채팅방 나가기</button>
+		<div id="userListArea">
+			<table>
 				<tr>
-					<td>${user.USER_NICK } &lt;나&gt;</td>
+					<th>회원 목록</th>
 				</tr>
-		 	</c:when>
-		 	<c:when test="${user_no ne user.USER_NO }">
-				<tr>
-					<td>${user.USER_NICK } </td>
-				</tr>
-		 	
-		 	</c:when>
-		 </c:choose>
-		 </c:forEach>
-	</table>
+				 <c:forEach items="${chatUserList }" var="user">
+				 <c:choose>
+				 	<c:when test="${user_no eq user.USER_NO }">
+						<tr>
+							<td>${user.USER_NICK } <span id="checkme">&lt;나&gt;</span></td>
+						</tr>
+				 	</c:when>
+				 	<c:when test="${user_no ne user.USER_NO }">
+						<tr>
+							<td>${user.USER_NICK } </td>
+						</tr>
+				 	
+				 	</c:when>
+				 </c:choose>
+				 </c:forEach>
+			</table>
+		</div>
 	</div>
 </div>
 

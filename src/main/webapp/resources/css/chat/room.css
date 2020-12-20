@@ -1,21 +1,38 @@
 #chattingContent{
 	width : 100%;
-	height : 810px;
+	height : 520px;
 }
 
 #chatArea{
 	float : left;
-	height : 800px;
+	height : 600px;
 	min-width : 510px;
 	max-width : 580px;
 	border : solid 1px;
 }
 
+#etcArea{
+    float: left;
+    height: auto;
+    margin-left: 10px;
+    width: 150px;
+}
+
+#exitBtn{
+    background-color: #ea0000;;
+    color: white;
+    border-radius: 5px;
+    width : 100%;
+	height: 50px;
+	margin-bottom : 10px;
+}
+
 #userListArea{
 	border : solid 1px;
-	float : left;
-	width : 25%;
-	margin-left : 10px;
+}
+
+#checkme{
+    font-size: smaller;
 }
 
 #chatting{
@@ -102,7 +119,7 @@
     height: auto;
 	min-width : 15px;
 	min-height : 21px;
-	padding : 1%;
+	padding : 10px;
 	word-break : break-word;
     display : inline-block;
 	position:relative;
@@ -154,3 +171,4 @@
 .toMsgTime{
 	margin-right : 10px;
 }
+
