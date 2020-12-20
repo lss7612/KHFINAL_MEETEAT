@@ -85,7 +85,7 @@
 		where rownum =1
 	</select>
 	
-	<insert id="inserMsgContent" parameterType="hashmap">
+	<insert id="insertMsgContent" parameterType="hashmap">
 		insert into tb_chattingcontent2 (chatting_no, user_no, msg_content, msg_date)
 		values (#{chatting_no}, #{user_no}, #{msg_content}, sysdate)
 	</insert>
@@ -102,4 +102,18 @@
 		where chatting_no = #{chatting_no}    
 		order by cc.msg_date asc
 	</select>
+	
+	<select id="findUserAtRoomByUserNo" parameterType="hashmap" resultType="int">
+		select count(*) from tb_chattinguser2
+		where user_no = #{user_no}
+		and chatting_no = #{chatting_no}
+	</select>
+	
+	<insert id="joinChatRoomByUserNo" parameterType="hashmap">
+		insert into tb_chattinguser2(chatting_no, user_no) values(#{chatting_no}, #{user_no})
+	</insert>
+	
+	<delete id="exitChatRoomByUserNo" parameterType="hashmap">
+		delete tb_chattinguser2 where chatting_no={#chatting_no} and user_no = #{user_no}
+	</delete>
 </mapper>

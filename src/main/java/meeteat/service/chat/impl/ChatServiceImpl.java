@@ -66,7 +66,7 @@ public class ChatServiceImpl implements ChatService{
 
 	@Override
 	public void saveMsg(int chatting_no, int user_no, String msg_content) {
-		chatDao.inserMsgContent(chatting_no, user_no, msg_content);
+		chatDao.insertMsgContent(chatting_no, user_no, msg_content);
 	}
 	
 	@Override
@@ -78,4 +78,31 @@ public class ChatServiceImpl implements ChatService{
 	public List<HashMap<String, Object>> getOldChatList(int chatting_no) {
 		return chatDao.getOldChatByRoomNo(chatting_no);
 	}
+	
+	@Override
+	public boolean findJoinUser(int user_no, int chatting_no) {
+		if( chatDao.findUserAtRoomByUserNo(user_no, chatting_no) > 0) {
+			return false;
+		}
+		chatDao.joinChatRoomByUserNo(user_no, chatting_no);
+		if( chatDao.findUserAtRoomByUserNo(user_no, chatting_no) > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean exitChatRoom(int user_no, int chatting_no) {
+		if( chatDao.findUserAtRoomByUserNo(user_no, chatting_no) == 0) {
+			logger.info("> > > 회원이 채팅방에 존재하지 않습니다. < < < ");
+			return false;
+		}
+		chatDao.exitChatRoomByUserNo(user_no, chatting_no);
+		if( chatDao.findUserAtRoomByUserNo(user_no, chatting_no) == 0) {
+			logger.info("> > > 회원이 채팅방에서 나갔습니다. < < < ");
+			return true;
+		}
+		return false;
+	}
+	
 }
