@@ -23,9 +23,19 @@ $(document).ready(function(){
 })
 //작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
 
+//채팅목록 팝업으로 띄워주는 함수
+function chatListPopup(){
+	var frmPop = document.frmPopup;
+	window.open("http://localhost:8088/chat/list", "chatList"
+			, "width = 710px, height = 681px");
+}
+//채팅목록 팝업 종료
+
 //채팅하기 클릭시 동작하는 스크립트
 function createChat(){
-	location.href="/chat/create?user_no=${user_no}"
+	window.open("http://localhost:8088/chat/create?user_no=${user_no}", "chatCreate"
+			, "width = 710px, height = 665px");
+	//location.href="/chat/create?user_no=${user_no}"
 }
 //채팅하기 클릭시 동작하는 스크립트 끝
 </script>
@@ -107,7 +117,7 @@ function reportPopup(){
 <h2><a href="/admin/report/result/list">신고 처리 목록으로!</a></h2>
 <h2><a href="/eventboard/holding">이벤트게시판으로(관리자로접속하면 일반과 다름)</a></h2>
 <h2><a href="/restorantfind/find">맛집찾기!</a></h2>
-<h2><a href="/chat/list">채팅목록으로!</a></h2>
+<h2><a href="#" onclick="chatListPopup();">채팅목록으로!</a></h2>
 
 
 <!-- 게시글 신고 버튼 구역 -->
