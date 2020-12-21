@@ -63,8 +63,9 @@
 		        on c.chatting_no = cu.chatting_no
 		    where c.chatting_no in (    
 		        select chatting_no from tb_chattinguser2
-		        where user_no = 1
+		        where user_no = #{user_no}
 		    )
+		    and user_no != #{user_no}
 		    group by c.chatting_no, c.chatting_name
 		    order by c.chatting_no
 		    )b
