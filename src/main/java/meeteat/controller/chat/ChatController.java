@@ -104,6 +104,8 @@ public class ChatController {
 		//세션에서 회원정보 갖고오기
 		int user_no = Integer.parseInt(""+session.getAttribute("user_no"));
 		
+		//0. 현재 url에 
+		
 		//chatting_id로 채팅방 정보 가져오기
 		HashMap<String, Object> roomInfo = chatService.getChatRoomInfoById(chatting_id);
 		logger.info("> > >접속한 채팅방의 정보 : "+roomInfo+" < < <");

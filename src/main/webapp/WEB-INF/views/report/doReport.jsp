@@ -25,6 +25,10 @@ label {
 	position : absolute;
 	left : 35%;
 }
+#reportTargetView{
+	width : 480px;
+	word-break : break-all;
+}
 </style>
 
 <script type="text/javascript">
