@@ -25,6 +25,10 @@ label {
 	position : absolute;
 	left : 35%;
 }
+#reportTargetView{
+	width : 480px;
+	word-break : break-all;
+}
 </style>
 
 <script type="text/javascript">
@@ -39,9 +43,9 @@ function popupClose(){
 <body>
 <h1>🚨신고하기</h1>
 <hr>
-<div>
-	대상 : ${user.USER_NICK }(${user.USER_ID })<br>
-	신고 글 : ${url }
+<div id="reportTargetView">
+	대상 : <span id="reportTargetId">${user.USER_NICK }(${user.USER_ID })</span><br>
+	신고 글 : <span id="reportTargetUrl">${url }</span>
 </div>
 <form name="summit" action="/report/doReport/cmplt" method="post">
 <div class="checkbox" id="formList">
