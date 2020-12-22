@@ -101,7 +101,7 @@
 		</where>
 	</select>
 	
-	<select id="selectSearchPagingList" parameterType="meeteat.dto.mateFindBoard.Paging" resultMap="MateFindBoardJoin">
+	<select id="filterList" parameterType="hashmap" resultMap="MateFindBoardJoin">
 		SELECT * FROM (
 			SELECT
 				rownum rnum, B.*
@@ -124,10 +124,13 @@
 						ON u.user_no = mf.user_no
 					WHERE mf.board_no = 2
 						AND is_delete = 0
-						<if test="party_location != null">
+						<if test='!party_location.equals("")'>
 							AND SUBSTR(party_location, 0, INSTR(party_location, ' ', 1, 1) - 1) = #{party_location }
 						</if>
-						<if test="category != null">
+						<if test='!meet_time.equals("")'>
+							AND meet_time = #{meet_time }
+						</if>
+						<if test='!category.equals("")'>
 							AND category = #{category }
 						</if>
 				ORDER BY article_no DESC

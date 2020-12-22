@@ -52,6 +52,7 @@
 
 <div class="container">
 
+<h1>TEST용</h1>
 <h1>로그인성공한 메인페이지</h1>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -88,7 +89,6 @@ $(document).ready(function() {
 })
 </script>
 
-</head>
 
 <div class="wrap">
 
@@ -127,7 +127,31 @@ th, td {
 	text-align: center;
 }
 
+#logo{
+	text-align:center;
+/* 	margin-top:-8px; */
+	}
+	
+#logo img{
+    width:150px;
+    height:150px;
+}
+
+#logo > h5 {
+	margin: 0px;
+	color: #adb5bd;
+}
+
+
 </style>
+
+
+<div id="logo">
+	<a href="http://localhost:8088/"><img src="/resources/img/logo.png" alt="Logo"></a>
+	<h5>MEET EAT</h5>
+	<h5 style="margin-bottom: 20px;">로고 클릭시 메인페이지</h5>
+	
+</div>
 
 <h3>접속자 정보</h3>
 
@@ -159,9 +183,9 @@ th, td {
 	</table>
 </div>
 
-<div class="link">
+<div class="link" style="margin: 30px; 0px;">
 
-	<a href="/matefind/list"><button class="btn btn-secondary">게시판 리스트</button></a>
+	<a href="/matefind/list"><button class="btn btn-secondary">메이트찾기</button></a>
 
 </div>
 

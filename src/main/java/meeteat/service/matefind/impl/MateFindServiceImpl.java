@@ -121,5 +121,12 @@ public class MateFindServiceImpl implements MateFindService {
 		return mateFindDao.attendeeList(recommend);
 	}
 	
+	@Override
+	public List<MateFindBoard> filterList(HashMap<String, Object> map) {
+		
+		return mateFindDao.filterList(map);
+
+	}
+	
 	
 }
