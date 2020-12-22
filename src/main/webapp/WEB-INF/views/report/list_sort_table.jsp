@@ -64,43 +64,43 @@
 
 <table id="reportList" class="table table-bordered table-hover">
 <tr>
-	<th>순번</th>
-	<th>회원번호</th>
-	<th>회원 아이디 </th>
-	<th>신고 일시</th>
-	<th>신고 사유</th>
-	<th>신고 항목</th>
-	<th>신고 내용</th>
-	<th>신고 글 보기</th>
-	<th>신고 처리</th>
+	<th class="reportSortNum reportColName">순번</th>
+	<th class="reportUserNum reportColName">회원번호</th>
+	<th class="reportUserId reportColName">회원 아이디 </th>
+	<th class="reportDate reportColName">신고 일시</th>
+	<th class="reportReason reportColName">신고 사유</th>
+	<th class="reportType reportColName">신고 항목</th>
+	<th class="reportContent reportColName">신고 내용</th>
+	<th class="reportTarget reportColName">신고 글 보기</th>
+	<th class="reportResult reportColName">신고 처리</th>
 </tr>
 <c:forEach items="${list }" var="hashmap">
 	<tr>
-		<td>${hashmap.RNUM }</td>
-		<td>${hashmap.USER_NO }</td>
-		<td>${hashmap.USER_ID}</td>
-		<td>
+		<td class="reportSortNum">${hashmap.RNUM }</td>
+		<td class="reportUserNum">${hashmap.USER_NO }</td>
+		<td class="reportUserId">${hashmap.USER_ID}</td>
+		<td class="reportDate">
 			<fmt:formatDate value="${hashmap.REPORT_TIME }" pattern="yy/MM/dd HH:mm:ss"/>
 		</td>
-		<td>${hashmap.REASON_NO }</td>
-		<td>${hashmap.REASON_CONTENT}</td>
-		<td>
+		<td class="reportReason">${hashmap.REASON_NO }</td>
+		<td class="reportType">${hashmap.REASON_CONTENT}</td>
+		<td class="reportContent">
 			<c:if test="${hashmap.REPORT_CONTENT eq null }">
 				-
 			</c:if>
 			<c:if test="${hashmap.REPORT_CONTENT ne null }">
-				${hashmap.REPORT_CONTENT }
+				<span class="reportContentView">${hashmap.REPORT_CONTENT }</span>
 			</c:if>
 		</td>
-		<td>
+		<td class="reportTarget">
 			<c:if test="${hashmap.BOARD_URL eq null }">
 				-
 			</c:if>
 			<c:if test="${hashmap.BOARD_URL ne null }">
-				<a href="${hashmap.BOARD_URL }" >${hashmap.BOARD_URL }</a>
+				<a href="${hashmap.BOARD_URL }" >글 확인하기</a>
 			</c:if>
 		</td>
-		<td>
+		<td class="reportResult">
 			<select name="${hashmap.USER_NO }">
 				<option value="0">선택암함</option>
 				<option value="1">${resultReason.report_result_content }</option>

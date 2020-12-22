@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html style="background-color : #c3bdc5">
 <head>
 <meta charset="UTF-8">
 <title>채팅방 접속</title>
@@ -109,23 +109,32 @@ function exitRoom(){
 	}
 }
 
+function goChatList(){
+	location.href="/chat/list";
+}
 </script>
 
 
 </head>
 <body>
-<c:choose>
-<c:when test="${chatUserList.size() eq 2 }">
-	<c:forEach items="${chatUserList }" var="userList">
-			<c:if test="${userList.USER_NO ne user_no}">
-				${userList.USER_NICK }님과 대화
-			</c:if>
-	</c:forEach>
-</c:when>
-<c:when test="${chatUserList.size() gt 2 }">
-	방제 : ${roomInfo.CHATTING_NAME }
-</c:when>
-</c:choose>
+<div id="titleArea">
+	<img id="goChatList" src="/resources/img/previous.png" style="width : 42px; height : 39px;"
+		onclick="goChatList();">
+	<div id="roomTitle">
+		<c:choose>
+		<c:when test="${chatUserList.size() eq 2 }">
+			<c:forEach items="${chatUserList }" var="userList">
+					<c:if test="${userList.USER_NO ne user_no}">
+						<span id="roomTitleContent">${userList.USER_NICK }님과 대화</span>
+					</c:if>
+			</c:forEach>
+		</c:when>
+		<c:when test="${chatUserList.size() gt 2 }">
+			<span id="roomTitleContent" >${roomInfo.CHATTING_NAME }</span>
+		</c:when>
+		</c:choose>
+	</div>
+</div>
 
 <hr>
 <div id="chattingContent">
