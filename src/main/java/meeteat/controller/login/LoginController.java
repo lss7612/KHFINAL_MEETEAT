@@ -68,7 +68,6 @@ public class LoginController {
 	public boolean loginCheck(@RequestParam("user_id") String user_id, @RequestParam("user_pw") String user_pw) {
 		
 		logger.info("/logincheck 접근했음");
-		logger.info(user_pw);
 		
 		User user = new User();
 		
@@ -95,8 +94,8 @@ public class LoginController {
 			
 			session.setAttribute("isLogin", true);
 			
-			session.setAttribute("user_id", user.getUser_id());
 			session.setAttribute("user_no", user.getUser_no());
+			session.setAttribute("user_id", user.getUser_id());
 			session.setAttribute("user_nick", user.getUser_nick());
 			session.setAttribute("user_grade", user.getUser_grade());
 			session.setAttribute("user_image", user.getUser_profilestored());
@@ -230,11 +229,20 @@ public class LoginController {
 		
 		boolean hasData = loginService.login(user);
 		
+		
 		if(hasData) {
+
+			user = loginService.selectUser(user);
+			session.setAttribute("isLogin", true);
+			session.setAttribute("user_no", user.getUser_no());
 
 			return "redirect:/login/main";
 			
 		} else {
+			
+			user = loginService.selectUser(user);
+			session.setAttribute("isLogin", true);
+			session.setAttribute("user_no", user.getUser_no());
 			
 			loginService.signUp(user);
 			return "redirect:/login/main";

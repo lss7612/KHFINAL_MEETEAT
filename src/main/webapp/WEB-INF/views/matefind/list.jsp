@@ -9,6 +9,10 @@
 <html>
 <head>
 
+<!-- jQuery 2.2.4.min -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+<!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
 <meta charset="UTF-8">
@@ -54,7 +58,55 @@ body {
 	margin: 0 auto;
 }
 
+
+/* 회원 아이디 클릭시 나타나는 목록 CSS */
+#userMenuList{
+   list-style:none;
+   padding : 0 0 0 0;
+}
+
+#userHiddenMenu{ 
+	list-style:none;
+   	display:none;
+	padding : 0 0 0 40px; 
+	position : absolute; 
+} 
+
+#userHiddenMenu > li{
+	background-color : #ff8f11;
+	position : relative;
+	cursor : pointer;
+	border : solid #e46508 1px;
+	padding : 3px 3px 3px 3px;
+}
+/* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
+
 </style>
+
+<script type="text/javascript">
+
+//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
+$(document).ready(function(){
+	$("#userMenu>span").click(function(){
+		
+		//2. 슬라이드 형식으로 나타나기
+		var submenu = $(this).next("ul");
+		if(submenu.is(":visible")){
+			submenu.slideUp();
+		} else{
+			submenu.slideDown();
+		}
+	})
+})
+//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
+
+//채팅하기 클릭시 동작하는 스크립트
+function createChat(){
+	window.open("http://localhost:8088/chat/create?user_no=${user_no}"
+			, "width = 710px, height = 665px");
+}
+//채팅하기 클릭시 동작하는 스크립트 끝
+</script>
 
 </head>
 <body>
@@ -71,8 +123,8 @@ body {
 	
 	<form action="/matefind/search" method="post">
 		<div class="input-group mb-3">
-		  <label class="input-group-text" for="inputGroupSelect01">지역</label>
-		  <select class="form-select" id="inputGroupSelect01">
+		  <label class="input-group-text" for="party_location">지역</label>
+		  <select class="form-select" id="party_location" name="party_location">
 		    <option selected>지역</option>
 		    <option value="서울특별시">서울특별시</option>
 		    <option value="부산광역시">부산광역시</option>
@@ -95,8 +147,8 @@ body {
 		  
 		  <span style="width: 50px;"></span>
 	
-		  <label class="input-group-text" for="inputGroupSelect01">시간</label>
-		  <select class="form-select" id="inputGroupSelect01">
+		  <label class="input-group-text" for="meet_time">시간</label>
+		  <select class="form-select" id="meet_time" name="meet_time">
 		    <option selected>시간</option>
 		    <option value="1">아침</option>
 		    <option value="2">점심</option>
@@ -105,8 +157,8 @@ body {
 	
 		  <span style="width: 50px;"></span>
 	
-		  <label class="input-group-text" for="inputGroupSelect01">종류</label>
-		  <select class="form-select" id="inputGroupSelect01">
+		  <label class="input-group-text" for="category">종류</label>
+		  <select class="form-select" id="category" name="category">
 		    <option selected>종류</option>
 		    <option value="1">식사</option>
 		    <option value="2">술</option>
@@ -119,6 +171,20 @@ body {
 	</div>
 
 <br><br>
+
+<div class="locSort">
+	<div class="row">
+		<a href="">전체</a>
+		<a href="">서울</a>
+		<a href="">경기</a>
+		<a>인천</a>
+		<a>강원</a>
+		<a>충청</a>
+		<a>전라</a>
+		<a>경상</a>
+		<a>제주</a>
+	</div>
+</div>
 
 	<c:forEach items="${mateFindList }" var="list">
 	
@@ -143,14 +209,28 @@ body {
 			<hr style="margin: 4px 0px;">
 				<p class="span-parent">
 					<span class="user-left" style="float: right;">
-						<img style="width: 50px; height: 50px;" src="https://i.pinimg.com/474x/7d/56/56/7d5656879b5d6ed45779f89c4e89c91a.jpg" alt="유저프로필사진">
+						<img style="width: 50px; height: 50px;" src="${list.user.user_profilestored }" alt="유저프로필사진">
 					</span>
 					
-					<span class="user-right" style="float: right; height: 50px;">
-						host <br>
-<!-- 						nick -->
-						${list.user_nick }
-					</span>
+					
+					<ul id="userMenuList">
+						<li id="userMenu">
+							<span>
+							${list.user.user_id } <br>
+							${list.user.user_nick }
+							</span>
+							<ul id="userHiddenMenu" >
+								<li onclick="createChat();" >채팅하기</li>
+							</ul>
+						</li>
+					</ul>
+<!-- 					<span class="user-right" style="float: right; height: 50px;"> -->
+<%-- 						${list.user.user_id } <br> --%>
+<%-- 						${list.user.user_nick } --%>
+<!-- 					</span> -->
+<!-- 					<ul id="userHiddenMenu" > -->
+<!-- 						<li onclick="createChat();" >채팅하기</li> -->
+<!-- 					</ul> -->
 				</p>
 			
 			</div>
@@ -158,19 +238,24 @@ body {
 		
 	
 	</c:forEach>
-
+	
+<div class="row">
+	<div class="col" style="text-align: center;">
+		<jsp:include page="./paging.jsp" />
+	</div>
+</div>
 
 <!-- 버튼 영역v2 -->
 	<div class="row">
 		<div class="col">
 		
+			<a href="/login/main"><button class="btn btn-secondary" style="float: left; margin-bottom: 50px;">로그인메인</button></a>
 			<a href="/matefind/write"><button class="btn btn-primary" style="float: right; margin-bottom: 50px;">글쓰기</button></a>
 		
 		</div>
 	</div>	
 <!-- //버튼 영역v2 -->
 
-<%-- <jsp:include page="./paging.jsp" /> --%>
 
 </div><!-- //container -->
 

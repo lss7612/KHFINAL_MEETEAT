@@ -112,12 +112,16 @@ function reportPopup(){
 <li><a href="/makesession/BannedUser">영정유저세션받기</a><br></li>
 <li><a href="/makesession/guestUser">세션삭제(로그인안한유저)</a><br></li>
 </ul>
+<h2><a href="/login/login">로그인페이지로</a></h2>
 <h2><a href="/recruitboard/list">파티모집게시판으로</a></h2>
 <h2><a href="/admin/report/list">신고목록으로!</a></h2>
 <h2><a href="/admin/report/result/list">신고 처리 목록으로!</a></h2>
 <h2><a href="/eventboard/holding">이벤트게시판으로(관리자로접속하면 일반과 다름)</a></h2>
 <h2><a href="/restorantfind/find">맛집찾기!</a></h2>
 <h2><a href="#" onclick="chatListPopup();">채팅목록으로!</a></h2>
+<h2><a href="/matefind/list">메이트찾기게시판으로</a></h2>
+
+
 
 
 <!-- 게시글 신고 버튼 구역 -->
