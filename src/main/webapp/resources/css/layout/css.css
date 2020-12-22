@@ -201,11 +201,6 @@ ul.navvvv > li ul.subb > li:hover {
 }
 
 
-
-
-
-
-
 /* ------------------------ */
 
 /* 이미지 슬라이더 박스 */
@@ -245,3 +240,88 @@ ul.navvvv > li ul.subb > li:hover {
 	width: 600px;
 	height: 400px;
 }
+
+/* ------------------------------------------- */
+
+
+.error404 {
+	
+	display: block;
+    margin: 0px auto;
+    width: 895px;
+    height: 680px;
+}
+
+.error500 {
+	display: block;
+    margin: 0px auto;
+    width: 895px;
+    height: 776px;
+}
+
+
+
+.errorbtn a{
+	color: black;
+}
+
+.errorbtn{
+  background:#F5DA81;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+	left: 33%;
+    margin-left: 20px;
+}
+
+.errorbtn:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+
+.errorbtn:before, .errorbtn:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #F5DA81;
+  transition:400ms ease all;
+}
+
+.errorbtn:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+
+.errorbtn:hover:before, .errorbtn:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
