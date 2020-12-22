@@ -50,6 +50,8 @@
 </head>
 <body>
 
+<div class="container">
+
 <h1>로그인성공한 메인페이지</h1>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -119,13 +121,21 @@ body {
 	text-align: center;
 }
 
+th, td {
+	border: 1px solid black;
+	margin: 5px;
+	text-align: center;
+}
+
 </style>
 
+<h3>접속자 정보</h3>
+
 <div class="userInfo">
-	<h3>접속자 정보</h3>
 	
 	<table style="border: 1px solid black;">
 		<thead>
+			<th>유저번호</th>
 			<th>아이디</th>
 			<th>이름</th>
 			<th>닉네임</th>
@@ -136,6 +146,7 @@ body {
 		</thead>
 		
 		<tbody>
+			<td>${user_no }</td>
 			<td>${user_id }</td>
 			<td>${user_name }</td>
 			<td>${user_nick }</td>
@@ -150,9 +161,10 @@ body {
 
 <div class="link">
 
-	<a href="/matefind/list">게시판 리스트</a>
+	<a href="/matefind/list"><button class="btn btn-secondary">게시판 리스트</button></a>
 
 </div>
 
+</div>
 </body>
 </html>

@@ -36,46 +36,12 @@ body {
 </style>
 
 <script type="text/javascript">
+
 function goList() {
 	location.href="/matefind/list";
 }
 
-$(document).ready(function() {
-	$("#btnAttend").click(function() {
-		console.log("clicked")
-
-		$.ajax({
-			type : "get"
-			, url: "/matefind/attend"
-			, data: { article_no : $('#article_no').val() }
-			, dataType: "json" //응답받은 데이터의 형식
-			, success: function(res) {
-				console.log("성공")
-				console.log(res)
-				
-				if(res) {
-					$("#btnAttend").removeClass("active");
-				} else {
-					$("#btnAttend").addClass("active");
-				}
-				
-// 				if($("#btnRecommend").hasClass("active") === true) {
-// 					$("#btnRecommend").removeClass("active");
-// 				} else {
-// 					$("#btnRecommend").addClass("active");
-// 				}
-				
-			}
-			, error: function() {
-				console.log("실패")
-			}
-		})
-		
-	});
-	
-})
 </script>
-
 </head>
 <body>
 
@@ -122,7 +88,7 @@ $(document).ready(function() {
 	<div class="row">
 		<!-- user_no는 나중에 사진으로 대체 되어야함 -->
 		<div class="col-4">
-			<h4>${hostInfo.user_no }</h4>		
+			<img style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	
 		</div>
 		
 		<div class="col-4">
@@ -141,31 +107,27 @@ $(document).ready(function() {
 	<!-- guest -->
 	<div class="row">
 		<div class="col">
-			<h3 style="float: left;">guest
-<%-- 			<c:forEach items="${guestList }" var="guest"> --%>
-<%-- 				[ ${guest } ] --%>
-<%-- 			</c:forEach> --%>
-			</h3>
+			<h3 style="float: left;">guest [ ${attendeeCount } / ${attendeeMax } ]</h3>
 		</div>
 	</div>
 	
 	<div class="row">
 		
-		
-		<c:forEach items="${guestUserList }" var="guestUser">
+		<c:forEach items="${attendUserList }" var="attendUserList">
 			
 			<!-- user_no는 나중에 사진으로 대체 되어야함 -->
 			<div class="col-2">
-				<h4>${guestUser.user_no }</h4>		
+				<img style="width: 50px; height: 50px;" src="${attendUserList.user.user_profilestored }" alt="유저프로필사진">	
 			</div>
 			
 			<div class="col-2">
-				<h3>${guestUser.user_id }</h3>
+				<h3>${attendUserList.user.user_id }</h3>
 			</div>
 			<div class="col-2">
-				<h3>${guestUser.user_nick }</h3>
+				<h3>${attendUserList.user.user_nick }</h3>
 			</div>
 		</c:forEach>
+		
 	</div>
 	<!-- //guest -->
 	
@@ -330,11 +292,30 @@ $(document).ready(function() {
 			<button class="btn btn-secondary" onclick=goList() style="float: left;">목록으로</button>	
 			
 			<c:set var="writer" value="${view.user_no }" />
-
-			<c:if test="${user_no  ne writer}">	
-				<button class="btn btn-primary" id="btnAttend" style="text-align: center">참여하기</button>			
-			</c:if>
+		
+	
+	<c:set var="isAttendee" value="false" />
+	<c:forEach items="${attendeeList }" var="list">
+		<c:if test="${user_no eq list.user_no }">
+			<c:set var="isAttendee" value="true" />
+		</c:if>
+	</c:forEach>
+	
+	<input type="hidden" readonly="readonly" value="${isAttendee }">
+	
+		<c:if test="${user_no  ne writer}">
+			<c:choose>
+				<c:when test="${attendeeMax le attendeeCount && !isAttendee}">
+					<input type="button" class="btn btn-danger" value="정원이 다 찼습니다">
+				</c:when>
+				
+				<c:otherwise>
+					<input type="button" class="btn" id="btnAttend" value="참여하기">
+				</c:otherwise>
 			
+			</c:choose>
+		</c:if>
+		
 			<c:choose>
 				<c:when test="${user_no  eq writer}">
 					<div style="float: right;">
@@ -344,8 +325,16 @@ $(document).ready(function() {
 				</c:when>
 				<c:otherwise>
 					<div style="float: right;">
-						<!-- 신고하기 버튼 만든걸로 수정 해야함 -->
-						<button class="btn btn-danger">신고하기</button>
+					
+						<!-- 게시글 신고 버튼 구역 -->
+						<form name="frmPopup" method="POST">
+							<input type="hidden" name= "user_no">
+							<input type="hidden" name= "url" />
+						<button onclick="reportPopup();" class="btn btn-danger" >신고</button>
+						</form>
+						<!-- 게시글 신고 버튼 구역  종료-->
+<!-- 						신고하기 버튼 만든걸로 수정 해야함 -->
+<!-- 						<button class="btn btn-danger">신고하기</button> -->
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -357,4 +346,109 @@ $(document).ready(function() {
 </div>
 
 </body>
+
+<style type="text/css">
+
+.active {
+	background-color: blue;
+	color: white;
+}
+
+</style>
+
+<script type="text/javascript">
+
+//게시글 신고하기버튼 클릭시 동작할 함수
+function reportPopup(){
+	var frmPop = document.frmPopup;
+	
+	//팝업 
+	window.open("http://localhost:8088/report/doReport","report"
+			, "width=500px,height=425px")
+	frmPop.action = "http://localhost:8088/report/doReport";
+	frmPop.target = "report";
+	//${user_no}에 작성자 번호에 맞는 변수명을 적어주시면 됩니당.
+	frmPop.user_no.value = ${user_no};
+	//현재글 URL정보 전달
+	frmPop.url.value = window.location.href
+}
+// 신고하기 동작 함수 끝
+
+
+function addAttendee() {
+	
+	$('#btnAttend').val("참여취소");
+	$("#btnAttend").addClass("btn-secondary")
+	$("#btnAttend").removeClass("btn-primary")
+	
+}
+
+function deleteAttendee() {
+	
+	$('#btnAttend').val("참여하기");
+	$("#btnAttend").removeClass("btn-secondary")
+	$("#btnAttend").addClass("btn-primary")
+	
+	
+}
+
+
+$(document).ready(function() {
+
+	if(${isAttendee}) {
+		
+		addAttendee()
+		
+	} else {
+		
+		deleteAttendee()
+	}
+	
+	$('#btnAttend').click(function() {
+		
+		$.ajax({
+			url: '/matefind/attend',
+			data: { article_no : $('#article_no').val() },
+			type: 'get',
+			
+			success: function(result) {
+				
+				if(result) {
+					
+					addAttendee()
+					// 미참여중 참여시키기
+// 					$('#btnAttend').val("참여취소");
+// 					$("#btnAttend").addClass("btn-secondary")
+// 					$("#btnAttend").removeClass("btn-primary")
+					
+					
+					// recommend - user join결과 불러오기
+
+				} else {
+					
+					deleteAttendee()
+					// 이미 참여중 참여취소시키기
+// 					$('#btnAttend').val("참여하기");
+// 					$("#btnAttend").removeClass("btn-secondary")
+// 					$("#btnAttend").addClass("btn-primary")
+					
+					// recommend - user join결과 불러오기
+				}
+				
+			},
+			error: function() {
+				console.log("[ajax] /matefind/attend 전송실패")
+				
+			}
+			
+			
+			
+			
+		})
+		
+	})
+	
+})
+</script>
+
 </html>

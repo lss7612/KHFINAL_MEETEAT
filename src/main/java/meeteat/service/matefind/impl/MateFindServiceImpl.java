@@ -104,4 +104,22 @@ public class MateFindServiceImpl implements MateFindService {
 		}
 	}
 	
+	@Override
+	public List<MateFindBoard> attendUserInfo(MateFindBoard viewBoard) {
+		
+		return mateFindDao.attendUserInfo(viewBoard);
+	}
+	
+	@Override
+	public int attendeeCount(MateFindBoard viewBoard) {
+		
+		return mateFindDao.attendeeCount(viewBoard);
+	}
+	
+	@Override
+	public List<Recommend> attendeeList(Recommend recommend) {
+		return mateFindDao.attendeeList(recommend);
+	}
+	
+	
 }

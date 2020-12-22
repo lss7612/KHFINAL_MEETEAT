@@ -31,4 +31,10 @@ public interface MateFindService {
 
 	public List<MateFindBoard> list();
 
+	public List<MateFindBoard> attendUserInfo(MateFindBoard viewBoard);
+
+	public int attendeeCount(MateFindBoard viewBoard);
+
+	public List<Recommend> attendeeList(Recommend recommend);
+
 }

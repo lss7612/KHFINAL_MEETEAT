@@ -30,4 +30,10 @@ public interface MateFindDao {
 
 	public int selectCntAll();
 
+	public List<MateFindBoard> attendUserInfo(MateFindBoard viewBoard);
+
+	public int attendeeCount(MateFindBoard viewBoard);
+
+	public List<Recommend> attendeeList(Recommend recommend);
+
 }

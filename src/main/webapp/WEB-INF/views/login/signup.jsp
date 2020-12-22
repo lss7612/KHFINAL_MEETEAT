@@ -72,11 +72,11 @@
   
     <label for="hidden">성별</label>
 	<div class="form-check form-check-inline">
-	  <input class="form-check-input" type="radio" name="user_gender" id="user_genderM" value="m" checked="checked">
+	  <input class="form-check-input" type="radio" name="user_gender" id="user_genderM" value="M" checked="checked">
 	  <label class="form-check-label" for="user_genderM">남</label>
 	</div>
 	<div class="form-check form-check-inline">
-	  <input class="form-check-input" type="radio" name="user_gender" id="user_genderF" value="f">
+	  <input class="form-check-input" type="radio" name="user_gender" id="user_genderF" value="F">
 	  <label class="form-check-label" for="user_genderF">여</label>
 	</div>
 
