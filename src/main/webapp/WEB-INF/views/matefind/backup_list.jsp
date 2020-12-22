@@ -87,7 +87,7 @@ body {
 
 $(document).ready(function(){
 	
-	$("select").change(function() {
+	$("#party_location").change(function() {
 		
 		console.log("party_location [change]")
 		console.log($("#party_location").val())
@@ -97,7 +97,6 @@ $(document).ready(function(){
 		$.ajax({
 			
 			url: '/matefind/sortajax',
-			type: 'get',
 			data: {
 				"party_location": $("#party_location").val()
 				, "meet_time": $("#meet_time").val()
@@ -158,10 +157,11 @@ function createChat(){
 	<div class="filter">
 	<h4>필터</h4>
 	
+	<form action="/matefind/search" method="post">
 		<div class="input-group mb-3">
 		  <label class="input-group-text" for="party_location">지역</label>
 		  <select class="form-select" id="party_location" name="party_location">
-		    <option selected value="">전체</option>
+		    <option selected>전체</option>
 		    <option value="서울특별시">서울특별시</option>
 		    <option value="부산광역시">부산광역시</option>
 		    <option value="대구광역시">대구광역시</option>
@@ -185,24 +185,26 @@ function createChat(){
 	
 		  <label class="input-group-text" for="meet_time">시간</label>
 		  <select class="form-select" id="meet_time" name="meet_time">
-		    <option value="">전체</option>
-		    <option value="아침">아침</option>
-		    <option value="점심">점심</option>
-		    <option value="저녁">저녁</option>
-		    <option value="새벽">새벽</option>
+		    <option selected>전체</option>
+		    <option value="1">아침</option>
+		    <option value="2">점심</option>
+		    <option value="3">저녁</option>
+		    <option value="4">새벽</option>
 		  </select>
 	
 		  <span style="width: 50px;"></span>
 	
 		  <label class="input-group-text" for="category">종류</label>
 		  <select class="form-select" id="category" name="category">
-		    <option value="">전체</option>
+		    <option selected>전체</option>
 		    <option value="식사">식사</option>
 		    <option value="술">술</option>
 		    <option value="카페/디저트">카페/디저트</option>
 		  </select>
 		</div>
+		<button type="button" class="btn btn-primary">검색하기</button>
 	
+	</form>
 	</div>
 
 <br><br>

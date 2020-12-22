@@ -27,7 +27,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <script type="text/javascript">
@@ -83,7 +82,6 @@ body {
 
 .form-group > .col {
 	margin: 0px 20px;
-	text-align: center;
 	
 }
 
@@ -106,25 +104,24 @@ body {
 	
 	text-align: center;
 	margin-top: 7px;
+/* 	color: #868e96; */
 	color: #adb5bd;
-/* 	color: #868e96;  */	/* 좀더 진한 회색 */ 
 }
 
 .or > h5 {
-	text-align: center;
 	color: #adb5bd;
 }
 
-.signupLink {
-	text-align: center;
-}
-
 </style>
+
 </head>
 
-
+<%-- <c:import url="/WEB-INF/views/layout/header.jsp" /> --%>
 
 <body>
+
+<!-- <h1>로그인</h1> -->
+<!-- <hr> -->
 
 <div class="container">
 
@@ -155,15 +152,16 @@ body {
 	</div>
 		
 	<div class="form-group">
-		<div class="col">
-			<button class="btn btn-primary" id="loginBtn" style="transform:scale(1.1);  ">로그인</button>
+		<div class="col-xs-offset-3 col-xs-10">
+			<button class="btn btn-primary" id="loginBtn">로그인</button>
+			<a href="/login/signup"><input type="button" class="btn btn-danger" value="회원가입"/></a>
 		</div>
 	</div>
 	
 </div>
 
 <div class="or">
-	<h5>또는</h5>
+	<h5 style="text-align: center;">또는</h5>
 </div>
 
 <!-- sns 로그인 -->
@@ -181,12 +179,8 @@ body {
 <!-- 구글로그인버튼 -->
 <!-- 	<div class="g-signin2" data-onsuccess="onSignIn" style="width: 223px;"></div> -->
 
-</div> <!-- //sns 로그인 -->
-
-<div class="signupLink">
-	<a href="/login/signup" class="btn">계정만들기</a>
 </div>
-
+<!-- //sns 로그인 -->
 </form>
 <div class="loginFooter">
 	© 2020 MEET&EAT All rights reserved.
@@ -228,8 +222,8 @@ $(document).ready(function() {
 		
 		e.preventDefault();
 		
-		if($('#loginForm').hasClass('failAction')) {
-			$('#loginForm').removeClass('failAction');
+		if($('#loginBox').hasClass('failAction')) {
+			$('#loginBox').removeClass('failAction');
 		}
 		
 		$.ajax({
@@ -244,7 +238,7 @@ $(document).ready(function() {
 				if(checkResult) {
 					$('#loginForm').submit();
 				} else {
-					$('#loginForm').addClass('failAction');	
+					$('#loginBox').addClass('failAction');	
 				}
 			},
 			error: function() {

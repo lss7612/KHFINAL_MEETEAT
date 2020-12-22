@@ -1,5 +1,6 @@
 package meeteat.dao.matefind.face;
 
+import java.util.HashMap;
 import java.util.List;
 
 import meeteat.dto.mateFindBoard.MateFindBoard;
@@ -35,5 +36,7 @@ public interface MateFindDao {
 	public int attendeeCount(MateFindBoard viewBoard);
 
 	public List<Recommend> attendeeList(Recommend recommend);
+
+	public List<MateFindBoard> filterList(HashMap<String, Object> map);
 
 }

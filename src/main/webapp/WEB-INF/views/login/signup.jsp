@@ -9,19 +9,73 @@
 <!-- jQuery 2.2.4.min -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 
+<!-- 부트스트랩 3.3.2 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<style type="text/css">
+html,body {
+  height: 100%;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 30px 20px;
+  background-color: #f5f5f5;
+}
+
+.signUpForm {
+	  width: 100%;
+	  max-width: 500px;
+	  padding: 15px;
+	  margin: auto;
+	  border: 1px solid #adb5bd;
+	  border-radius: 5px;
+}
+
+#logo{
+	text-align:center;
+/* 	margin-top:-8px; */
+	}
+	
+#logo img{
+    width:150px;
+    height:150px;
+}
+
+#logo > h3 {
+	margin: 0px;
+	color: #adb5bd;
+}
+
+#pwCheckResult {
+	margin-bottom: 20px;
+}
+
+
+</style>
 
 </head>
 <body>
 
 <div class="container">
 
-<h1 style="text-align:center; margin-top: 100px;">회원가입</h1>
+<div id="logo">
+	<a href="http://localhost:8088/"><img src="/resources/img/logo.png" alt="Logo"></a>
+<!-- 	<h3>MEET EAT</h3> -->
+	<h3 style="margin-bottom: 20px;">회원가입</h3>
+</div>
+	
 
-<hr style="margin: 50px; 0px;">
+<!-- <h1 style="text-align:center; margin-bottom: 30px; color: #adb5bd;">MEET EAT 회원가입</h1> -->
 
-<form id="signUpForm" action="/login/signup" method="post">
+<!-- <hr style="margin: 50px; 0px;"> -->
+
+<form class="signUpForm" id="signUpForm" action="/login/signup" method="post">
 
   <div class="form-group">
     <label for="user_id">아이디</label>
@@ -80,9 +134,10 @@
 	  <label class="form-check-label" for="user_genderF">여</label>
 	</div>
 
-	<div id="submitResult" style="margin-top: 50px; margin-bottom: 10px;"></div>
+	<div id="submitResult" style="margin-top: 20px; margin-bottom: 10px;">　</div>
 	<div class="form-group">
-	  <button id="signUpSubmit" class="btn btn-primary" style="margin-bottom: 100px;">가입하기</button>
+	  <button id="signUpSubmit" class="btn btn-primary">가입하기</button>
+	  <a href="#" onClick="history.go(-1)"><input type="button" class="btn btn-danger" value="뒤로가기"/></a>
 	</div>
   
   

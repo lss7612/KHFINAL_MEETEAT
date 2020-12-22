@@ -1,8 +1,10 @@
 package meeteat.controller.matefind;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -41,16 +43,6 @@ public class MateFindController {
 		List<MateFindBoard> mateFindList = mateFindService.pagingList(paging);
 		
 		model.addAttribute("mateFindList", mateFindList);
-		
-	}
-	
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public void mateFindSearch(Paging curPage, Model model, MateFindBoard mateFindBoard) {
-		
-		
-		// MateFindBoard dto 에 Paging 추가
-		
-		
 		
 	}
 	
@@ -213,7 +205,47 @@ public class MateFindController {
 		
 	}
 	
+	@RequestMapping(value = "/sortajax")
+	public void sortAjax(@RequestParam("party_location") String party_location
+						, @RequestParam("meet_time") String meet_time
+						, @RequestParam("category") String category
+						, Paging curPage
+						, Model model) {
+		
+		logger.info(party_location);
+		logger.info(meet_time);
+		logger.info(category);
+		// if "" == isEmpty
+		
+		if("아침".equals(meet_time)) {
+			// 6 ~ 12
+			
+		} else if("점심".equals(meet_time)) {
+			// 12 ~ 18
+			
+		} else if("저녁".equals(meet_time)) {
+			// 18 ~ 24
+			
+		} else if("새벽".equals(meet_time)) {
+			// 24 ~ 6
+		}
+		
+		Paging paging = mateFindService.getPaging(curPage);
+		model.addAttribute("paging", paging);
 
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("party_location", party_location);
+		map.put("meet_time", meet_time);
+		map.put("category", category);
+		map.put("startNo", paging.getStartNo());
+		map.put("endNo", paging.getEndNo());
+		
+		List<MateFindBoard> filterList = mateFindService.filterList(map);
+		
+		model.addAttribute("filterList", filterList);
+		
+		
+	}
 	
-	
+
 }
