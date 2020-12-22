@@ -21,8 +21,33 @@ public interface MyPageDao {
 	 */
 	public void updateUser(User userUpdate);
 
-
+	/**
+	 * 내가 쓴 글 조회
+	 * @param user_no
+	 * @return
+	 */
 	public List<Map<String, Object>> selectMyPostByNo(int user_no);
+
+
+	/**내가 쓴 댓글 조회
+	 * 
+	 * @param user_no
+	 * @return
+	 */
+	public List<Map<String, Object>> selectMyCommentByNo(int user_no);
+
+	/**
+	 * 비밀번호 확인
+	 * @param user
+	 * @return
+	 */
+	public int pwChk(User user);
+
+	/**
+	 * 회원 탈퇴(회원 삭제)
+	 * @param user
+	 */
+	public void deleteUser(User user);
 
 
 }
