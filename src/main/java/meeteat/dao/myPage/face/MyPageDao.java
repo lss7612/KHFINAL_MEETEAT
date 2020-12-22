@@ -1,6 +1,9 @@
 package meeteat.dao.myPage.face;
 
+import java.util.List;
 import java.util.Map;
+
+import meeteat.dto.user.User;
 
 public interface MyPageDao {
 
@@ -9,6 +12,17 @@ public interface MyPageDao {
 	 * @param user_no
 	 * @return
 	 */
-	Map<String, Object> selectByNo(int user_no);
+	public Map<String, Object> selectByNo(int user_no);
+
+
+	/**
+	 * 마이페이지 수정
+	 * @param user
+	 */
+	public void updateUser(User userUpdate);
+
+
+	public List<Map<String, Object>> selectMyPostByNo(int user_no);
+
 
 }

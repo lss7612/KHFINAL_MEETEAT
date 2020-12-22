@@ -1,87 +1,228 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!-- 부트스트랩 3.3.2 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<c:import url="/WEB-INF/views/layout/header.jsp" />
+
+<style>
+#container {
+	position: relative;
+	z-index: 20;
+	max-width: 954px;
+	margin: 0 auto;
+}
+
+#content.section_home {
+	line-height: 14px;
+	zoom: 1;
+	padding: 16px 12px 94px;
+}
+
+#content {
+	positioin: relative;
+}
+
+div {
+	display: block;
+}
+
+.column {
+	float: none;
+	width: 100%;
+}
+
+.sh_group .sh_content {
+	min-height: 185px;
+	padding-top: 9px;
+}
+
+.sh_group {
+	margin: 16px 8px 0;
+	padding: 32px 29px 30px;
+	text-align: left;
+	border: 1px solid #dadada;
+	border-radius: 2px;
+	background: #fff;
+}
+
+.blind {
+	position: absolute;
+	clip: react(0 0 0 0);
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+}
+.img_frame{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 80px;
+	height: 80px;
+	background-position: 0 0;
+}
+
+.spimg{
+	line-weight: 999px!important;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: top;
+	background-repeat: no-repeat;
+}
+
+.sh_lst .pix_desc {
+	position: absolute;
+	top: 3px;
+	left: 0;
+	width: 80px;
+}
+
+.sh_lst dd {
+	overflow: hidden;
+	word-break: keep-all;
+}
+
+.sh_lst {
+	positioin: relative;
+	min-height: 80px;
+	margin-top: -1px;
+	padding-bottom: 8px;
+}
+
+dd {
+	display: block;
+	margin-inline-start: 40px;
+}
+
+.section_home {
+	padding: 17px 0 0 1px;
+}
+
+.sh_header .btn_update {
+	position: absolute;
+	top: -4px;
+	right: -4px;
+	padding: 5px;
+}
+
+a {
+	text-decoration: none;
+}
+
+a: -webkit-any-link {
+	color: -webkit-link;
+	cursor: pointer;
+}
+</style>
 
 
-<!-- SNS 공유용 주소 연결 용 --> 
-<script type="text/javascript" async> 
-	var url_default_ks = "https://story.kakao.com/share?url="; 
-	var url_default_fb = "https://www.facebook.com/sharer/sharer.php?u="; 
-	var url_default_tw_txt = "https://twitter.com/intent/tweet?text="; 
-	var url_default_tw_url = "&url="; 
-	var url_default_band = "http://band.us/plugin/share?body="; 
-	var url_route_band = "&route="; 
-	var url_default_naver = "http://share.naver.com/web/shareView.nhn?url="; 
-	var title_default_naver = "&title="; 
-	var url_this_page = location.href; 
-	var title_this_page = document.title; 
-	var url_combine_ks = url_default_ks + url_this_page; 
-	var url_combine_fb = url_default_fb + url_this_page; 
-	var url_combine_tw = url_default_tw_txt + document.title + url_default_tw_url + url_this_page; 
-	var url_combine_band = url_default_band + encodeURI(url_this_page)+ '%0A' + encodeURI(title_this_page)+'%0A' + '&route=tistory.com'; 
-	var url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page); 
-</script>
 
-</head>
-<body>
-<!-- SNS버튼 시작 -->
-<div style="width: 100%; text-align: center; margin-bottom: 64px;"> 
-<!-- 페이스북 공유 버튼 --> 
-	<a href="" onclick="window.open(url_combine_fb, '', 'scrollbars=no, width=600, height=600'); return false;">
-	<img src="/resources/img/facebook_logo1.png" title="페이스북으로 공유하기" class="sharebtn_custom" style="width: 32px;"></a> 
-<!-- 트위터 공유 버튼 --> 
-	<a href="" onclick="window.open(url_combine_tw, '', 'scrollbars=no, width=600, height=600'); return false;">
-	<img src="/resources/img/twitter_log.png" title="트위터로 공유하기" class="sharebtn_custom" style="width: 32px;"></a> 
-<!-- 카카오 스토리 공유 버튼 --> 
-	<a href="" onclick="window.open(url_combine_ks, '', 'scrollbars=no, width=600, height=600'); return false;">
-	<img src="/resources/img/kakaostory_logo.png" title="카카오스토리로 공유하기" class="sharebtn_custom" style="width: 32px;"></a> 
-<!-- 네이버 공유 버튼 --> 
-	<a href="" onclick="window.open(url_combine_naver, '', 'scrollbars=no, width=600, height=600'); return false;">
-	<img src="/resources/img/naver_logo.png" title="네이버로 공유하기" class="sharebtn_custom" style="width: 32px;"></a> 
-<!-- 밴드 공유 버튼 --> 
-	<a href="" onclick="window.open(url_combine_band, '', 'scrollbars=no, width=584, height=635'); return false;">
-	<img src="/resources/img/naverband_logo.png" title="밴드로 공유하기" class="sharebtn_custom" style="width: 32px;"></a> 
-<span id="shareAddrCopy" class="shareBtn" title="주소 복사"></span>
+<div id="divpage">
 
+	<div id="container">
 
+		<div id="content" class="section_home">
+			<div class="column">
+				<div class="sh_group">
+					<div class="sh_header">
+						<h2>회원 정보</h2>
+					</div>
+					<div class="sh_content">
+						<dl class="sh_lst">
+							<dt class="blind">프로필 사진</dt>
+							<dd class="pic_desc">
+								<img src="/resources/upload/${userinfo.USER_PROFILESTORED }" style="width: 150px; height:150px; border-radius:100px; display: block;">
+									<span class="spimg img_frame"></span>
+							</dd>
+							<dt>별명</dt>
+							<dd>${userinfo.USER_NICK }</dd>
+							<dt>유저 등급</dt>
+							<dd>${userinfo.GRADE_NAME }</dd>
+							<dt>이메일</dt>
+							<dd>${userinfo.USER_EMAIL }</dd>
+						</dl>
+					</div>
+					<p class="btn_area_btm">
+						<a href="/mypage/myedit" class="btn btn-default" role="button">수정</a>
+					</p>
+				</div>
+			<div class="sh_group">
+				<div class="sh_header">
+					<h2>내 결제 정보</h2>
+				</div>
+				<div class="content">
+				
+				
+				
+				</div>
+				
+				<p class="btn_area_btm">
+					<a href="/mypage/mypost" class="btn btn-default" role="button">더 보기</a>
+				</p>
+			</div>
 
-<div class="profile_pic">
-	<img src="/resources/upload/${userinfo.USER_PROFILESTORED }" style="width: 150px; height:150px; border-radius:100px; display: block;" ><br>
-	<button onclick="popup();" class="btn btn-info btn-sm pull-right">프로필 사진 변경</button>
+			</div>
+			
+<div class="column">
+
+				<div class="sh_group">
+					<div class="sh_header">
+						<h2>내가 작성한 글</h2>
+					</div>
+					<div class="sh_content">
+						<c:choose>
+							<c:when test="${empty pList }">
+								<h3>등록하신 글이 없습니다</h3>
+							</c:when>
+
+							<c:otherwise>
+								<table class="table table-condensed">
+									<tr>
+										<th style="width: 10%">게시판 이름</th>
+										<th style="width: 20%">글 제목</th>
+										<th style="width: 15%">작성일</th>
+									</tr>
+
+									<c:forEach items="${pList}" var="b" varStatus="status"
+										begin="0" end="4">
+										<tr>
+											<td>${b.BOARD_NAME}</td>
+											<td>${b.ARTICLE_TITLE}</td>
+											<td>${b.CREATE_DATE}</td>
+										</tr>
+									</c:forEach>
+								</table>
+
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<p class="btn_area_btm">
+						<a href="/mypage/mypost" class="btn btn-default pull-right" role="button">더 보기</a>
+					</p>
+				</div>			
+			
+			<div class="sh_group">
+				<div class="sh_header">
+					<h2>내가 작성한 댓글</h2>
+				</div>
+				<div class="sh_content">
+				
+				
+				</div>
+				<p class="btn_area_btm">
+					<a href="/mypage/mypost" class="btn btn-default" role="button">더 보기</a>
+				</p>
+			</div>
+		</div>
+	</div>
+		<!-- content end -->
 </div>
+	<!-- container end -->
+	<c:import url="/WEB-INF/views/layout/share.jsp" />
 
-<div class="box_manage">
-<!-- 	<strong class="tit_manage">유저 정보</strong> -->
-	<h2 class="tit_manage">회원 정보</h2>
-	
-	<div class="box_set">
-		<strong class="tit_set">닉네임</strong>
-		<span class="txt_set">${userinfo.USER_NICK }</span>
-	</div>
-	<div class="box_set">
-		<strong class="tit_set">아이디</strong>
-		<span class="txt_set">${userinfo.USER_ID }</span>
-	</div>
-	<div class="box_set">
-		<strong class="tit_set">유저 등급</strong>
-		<span class="txt_set">${userinfo.GRADE_NAME }</span>
-	</div>
-	<div class="box_set">
-		<strong class="tit_set">이메일</strong>
-		<span class="txt_set">${userinfo.USER_EMAIL }</span>
-	</div><br>
-
-	<div>
-	<button onclick="location.href='/mypage/myedit'" class="btn btn-info btn-sm pull-right" id="btn1">내 정보 수정</button> 	
-	</div>
-	
-</div><!-- 프로필 div 끝 -->
-</div> <!-- SNS버튼 끝 -->
-</body>
-</html>
+</div>
+<c:import url="/WEB-INF/views/layout/footer.jsp" />

@@ -11,4 +11,19 @@
 		FROM tb_user2 u
 		WHERE user_no = #{user_no }
 	</select>
+	
+	<update id="updateUser" parameterType="meeteat.dto.user.User">
+		UPDATE tb_user2
+			SET user_nick = #{user_nick}, user_email = #{user_email}, user_pw = #{user_pw}
+				,user_profileorigin = #{user_profileorigin}, user_profilestored = #{user_profilestored }
+		WHERE user_no = #{user_no}
+	</update>
+	
+	<select id="selectMyPostByNo" parameterType="int" resultType="HashMap">
+		SELECT board.article_title, board.create_date 
+			, (SELECT board_name FROM tb_boardclass2 WHERE board_no = board.board_no) board_name
+		FROM tb_board2 board
+		WHERE user_no = #{user_no}
+		ORDER BY article_no DESC
+	</select>
 </mapper>
