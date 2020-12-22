@@ -23,7 +23,7 @@ $(document).ready(function(){
 
 <div class="eventImgBox pull-left">
 	<a href="/eventboard/view?board_no=6&article_no=${list.get(0).ARTICLE_NO }">
-	<img src="/resources/file/recruitboard/save/${list.get(0).STORED_NAME }">
+	<img class="eventPopupImg" src="/resources/file/recruitboard/save/${list.get(0).STORED_NAME }">
 	</a>
 </div>
 <div class="eventListBox pull-left base_padding">

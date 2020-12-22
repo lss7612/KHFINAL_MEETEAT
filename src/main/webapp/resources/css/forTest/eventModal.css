@@ -4,6 +4,7 @@
     background: #ccc;
     background-color: rgba( 255, 255, 255, 0.5 );
     position:absolute;
+    z-index: 100;
 }
 
 
@@ -25,7 +26,7 @@
 	height: 400px;
 }
 
-img {
+.eventPopupImg {
 /* 	left: 50px; */
 	width: 500px;
 }
