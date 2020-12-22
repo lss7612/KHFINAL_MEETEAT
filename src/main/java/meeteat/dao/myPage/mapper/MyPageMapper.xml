@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="meeteat.dao.myPage.face.MyPageDao">
+	<select id="selectByNo" parameterType="int" resultType="HashMap">
+		SELECT u.*
+			,(SELECT grade_name FROM tb_grade2 g WHERE g.user_grade = u.user_grade) grade_name
+		FROM tb_user2 u
+		WHERE user_no = #{user_no }
+	</select>
+	
+	<update id="updateUser" parameterType="meeteat.dto.user.User">
+		UPDATE tb_user2
+			SET user_nick = #{user_nick}, user_email = #{user_email}, user_pw = #{user_pw}
+				,user_profileorigin = #{user_profileorigin}, user_profilestored = #{user_profilestored }
+		WHERE user_no = #{user_no}
+	</update>
+	
+	<select id="pwChk" parameterType="meeteat.dto.user.User" resultType="int">
+		SELECT COUNT(*) FROM tb_user2
+		WHERE 1=1
+		 AND user_id = #{user_id}
+		 AND user_pw = #{user_pw}
+ 	</select>
+ 	
+	<delete id="deleteUser" parameterType="meeteat.dto.user.User">
+		DELETE FROM tb_user2
+		WHERE user_id = #{user_id}
+		AND user_pw = #{user_pw }
+	</delete>
+	
+	<select id="selectMyPostByNo" parameterType="int" resultType="HashMap">
+		SELECT board.article_title, board.create_date 
+			, (SELECT board_name FROM tb_boardclass2 WHERE board_no = board.board_no) board_name
+		FROM tb_board2 board
+		WHERE user_no = #{user_no}
+		ORDER BY article_no DESC
+	</select>
+	
+	<select id="selectMyCommentByNo" parameterType="int" resultType="HashMap">
+		SELECT c.comment_content,
+	    	(SELECT board_name FROM tb_boardclass2  WHERE board_no = c.board_no) board_name
+	   	  , (SELECT article_title FROM tb_board2  WHERE article_no = c.article_no) article_title
+		FROM tb_comment2 c
+		WHERE user_no = #{user_no}
+		ORDER BY c.comment_no DESC
+	</select>
+</mapper>

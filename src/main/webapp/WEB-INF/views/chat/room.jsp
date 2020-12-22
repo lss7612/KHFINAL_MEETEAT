@@ -130,7 +130,14 @@ function goChatList(){
 			</c:forEach>
 		</c:when>
 		<c:when test="${chatUserList.size() gt 2 }">
-			<span id="roomTitleContent" >${roomInfo.CHATTING_NAME }</span>
+			<c:choose>
+				<c:when test="${roomInfo.CHATTING_NAME eq null }">
+					<span id="roomTitleContent" >이름없는 대화방 (${chatUserList.size() })</span>
+				</c:when>
+				<c:otherwise>
+					<span id="roomTitleContent" >${roomInfo.CHATTING_NAME }</span>
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		</c:choose>
 	</div>

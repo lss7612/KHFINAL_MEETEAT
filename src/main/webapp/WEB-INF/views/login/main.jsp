@@ -55,6 +55,8 @@
 <h1>TEST용</h1>
 <h1>로그인성공한 메인페이지</h1>
 
+<a href="/mypage/mypage">마이페이지</a>
+
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <script type="text/javascript">

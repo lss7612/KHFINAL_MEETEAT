@@ -19,6 +19,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
+<!-- FontAwsome -->
+<script src="https://kit.fontawesome.com/2dc2c9d106.js" crossorigin="anonymous"></script>
+
+
 
 <script type="text/javascript">
 
@@ -124,13 +128,16 @@ $(document).ready(function () {
 	
 	<div id="top_menu">
 	<div class="top_menu_sub">
+	<a href="/WEB-INF/views/layout/404error.jsp" style="font-size: 3px; color: #170B3B;">404</a>
+	<a href="/WEB-INF/views/layout/500error.jsp" style="font-size: 3px; color: #170B3B;">500</a>
+		
 		<c:choose>
 		<c:when test="${empty isLogin }">
 			<a href="/login/signup">회원가입</a>
 			<a href="/login/login">로그인</a>
 		</c:when>
 		<c:otherwise>
-				<a href="#">마이페이지</a>
+        <a href="/mypage/mypage">마이페이지</a>
 				<a href="/login/logout">로그아웃</a>
 		</c:otherwise>
 	</c:choose>
