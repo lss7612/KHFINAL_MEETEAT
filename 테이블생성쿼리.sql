@@ -68,7 +68,7 @@ CREATE TABLE TB_USER2
     user_email             VARCHAR2(100)    NOT NULL, 
     user_profileorigin     VARCHAR2(500)    NULL, 
     user_grade             NUMBER           NOT NULL, 
-    user_profilestorerd    VARCHAR2(500)    NULL, 
+    USER_PROFILESTORED    VARCHAR2(500)    NULL, 
     CONSTRAINT TB_USER2_PK PRIMARY KEY (user_no)
 )
 /

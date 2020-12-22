@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import meeteat.service.chat.face.ChatService;
@@ -40,7 +41,7 @@ public class ChatController {
 		//***************************
 		//구현 테스트를 위해 user1(대화 상대)번호를 임의로 고정
 		//완료시 지우면 된다.
-		user1 = 6;
+		user1 = 12;
 		//***************************
 		
 		logger.info("> > > 접속 유저 번호 : "+user0+" < < <");
@@ -73,9 +74,10 @@ public class ChatController {
 			//방번호의 고유 id 가져와서 접속하기
 			String chatting_id = chatService.getChatId(roomNum);
 			logger.info("> > >chatting id : "+chatting_id+" < < <");
+			model.addAttribute("chatting_id", chatting_id);
 			
 			//채팅아이디를 이용해 채팅방 접속
-			return "redirect:/chat/room/"+chatting_id;
+			return "/chat/tmp";
 			
 		} else {
 			logger.info(user0+"와 "+user1+"의 채팅방은 존재하지 않습니다. < < <");
@@ -91,13 +93,14 @@ public class ChatController {
 			chatService.insertUserToChatNum(chatting_no, user0);
 			chatService.insertUserToChatNum(chatting_no, user1);
 			
+			model.addAttribute("chatting_id", chatting_id);
 			//채팅아이디를 이용해 채팅방 접속
-			return "redirect:/chat/room/"+chatting_id;
+			return "/chat/tmp";
 		}
 	}
 	
-	@RequestMapping(value="/room/{chatting_id}")
-	public String chatRoom(@PathVariable String chatting_id, HttpSession session, Model model) {
+	@RequestMapping(value="/room", method = RequestMethod.POST)
+	public String chatRoom(String chatting_id, HttpSession session, Model model) {
 		//채팅목록에서 접속할때 또는 게시판에 접속할때 해당 방의 id를 전달값으로 받아온다.
 		logger.info("> > > 채팅방에 접속 완료 < < < ");
 		logger.info("> > > 접속한 채팅방의 id : "+chatting_id+" < < <");
