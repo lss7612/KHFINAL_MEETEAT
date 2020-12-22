@@ -653,6 +653,11 @@ insert into tb_chatting2 (chatting_id) values('c3a616c31ecb4c929a13b26a528e8ccc'
 insert into tb_chatting2 (chatting_id) values('fa42ada03fb7495eb4514075ea98a36b');
 insert into tb_chatting2 (chatting_id) values('4cebdd2490af45a6a12729029b1fa70f');
 insert into tb_chatting2 (chatting_id) values('aef24e22369e43c88de2d13e01f22fbf');
+insert into tb_chatting2 (chatting_id, chatting_name) values('f459334d815b4109dc19029b1f22fbf0', '관리자와 결제회원, 일반회원의 채팅방');
+
+select * from tb_chatting2;
+
+
 
 -- 1대1 채팅방 참여자 정보
 insert into tb_chattinguser2 (chatting_no, user_no) values( 1, 10);
@@ -674,6 +679,21 @@ insert into tb_chattinguser2 (chatting_no, user_no) values( 8, 3);
 insert into tb_chattinguser2 (chatting_no, user_no) values( 9, 3);
 insert into tb_chattinguser2 (chatting_no, user_no) values( 9, 4);
 
+--1대다 채팅방 참여자 정보
+insert into tb_chattinguser2 (chatting_no, user_no) values(23, 1);
+insert into tb_chattinguser2 (chatting_no, user_no) values(23, 2);
+insert into tb_chattinguser2 (chatting_no, user_no) values(23, 3);
+
+--1대다 채팅방에 메시지 예시
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date)
+values(23, 1, 'ㅎㅇㅎㅇ', sysdate);
+
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date)
+values(23, 2, 'Hello', sysdate);
+
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date)
+values(23, 3, '안뇽', sysdate);
+select * from tb_chattingcontent2;
 
 select * from tb_board2;
 commit;

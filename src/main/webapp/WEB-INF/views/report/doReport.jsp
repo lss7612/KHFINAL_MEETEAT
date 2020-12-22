@@ -11,21 +11,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<style type="text/css">
-label {
-	display : block;
-}
-#report_content{
-	height : 80px;
-	width : 450px;
-	margin : 0 0 0 2.5%;
-	resize : none;
-}
-#buttonDiv{
-	position : absolute;
-	left : 35%;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="/resources/css/report/doReport.css">
 
 <script type="text/javascript">
 function popupClose(){
@@ -37,11 +23,11 @@ function popupClose(){
 </script>
 </head>
 <body>
-<h1>🚨신고하기</h1>
+<h1 id="reportTitle">🚨신고하기</h1>
 <hr>
-<div>
-	대상 : ${user.USER_NICK }(${user.USER_ID })<br>
-	신고 글 : ${url }
+<div id="reportTargetView">
+	<strong>대상</strong> : <span id="reportTargetId">${user.USER_NICK }(${user.USER_ID })</span><br>
+	<strong>신고 글 </strong>: <span id="reportTargetUrl">${url }</span>
 </div>
 <form name="summit" action="/report/doReport/cmplt" method="post">
 <div class="checkbox" id="formList">

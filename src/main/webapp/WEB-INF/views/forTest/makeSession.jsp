@@ -1,15 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<c:import url="/WEB-INF/views/layout/header.jsp" />
+
 <!-- FontAwsome -->
 <script src="https://kit.fontawesome.com/2dc2c9d106.js" crossorigin="anonymous"></script>
 
@@ -30,9 +23,19 @@ $(document).ready(function(){
 })
 //작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
 
+//채팅목록 팝업으로 띄워주는 함수
+function chatListPopup(){
+	var frmPop = document.frmPopup;
+	window.open("http://localhost:8088/chat/list", "chatList"
+			, "width = 710px, height = 681px");
+}
+//채팅목록 팝업 종료
+
 //채팅하기 클릭시 동작하는 스크립트
 function createChat(){
-	location.href="/chat/create?user_no=${user_no}"
+	window.open("http://localhost:8088/chat/create?user_no=${user_no}", "chatCreate"
+			, "width = 710px, height = 665px");
+	//location.href="/chat/create?user_no=${user_no}"
 }
 //채팅하기 클릭시 동작하는 스크립트 끝
 </script>
@@ -54,9 +57,6 @@ function reportPopup(){
 }
 // 신고하기 동작 함수 끝
 </script>
-
-
-
 
 
 <style type="text/css">
@@ -83,18 +83,27 @@ function reportPopup(){
 /* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
 
 </style>
-</head>
-<body>
 <%-- 모달(팝업) 모듈 import --%>
 <c:if test="${empty cookie.popup }">
 <c:import url="eventPopupModule.jsp"></c:import>
 </c:if>
 
-
+<div id="divpage">
 <h1>SessionFactory</h1>
 <h3>로그인 구현 전 세션발급을 담당한다</h3>
 
 <hr>
+
+<div id="sliderbox">
+	<ul id="slider">
+		<li><img src="https://i.imgur.com/fDHtQ8N.jpg" /></li>
+		<li><img src="https://i.imgur.com/CGR48hH.jpg" /></li>
+		<li><img src="https://i.imgur.com/kK8Jrh6.jpg" /></li>
+		<li><img src="https://i.imgur.com/4kKOYtZ.jpg" /></li>
+		<li><img src="https://i.imgur.com/WjCxgv7.jpg" /></li>
+	</ul>
+</div>
+
 
 <ul>
 <li><a href="/makesession/adminUser"><span>관리자유저세션받기</span></a><br></li>
@@ -109,8 +118,9 @@ function reportPopup(){
 <h2><a href="/admin/report/result/list">신고 처리 목록으로!</a></h2>
 <h2><a href="/eventboard/holding">이벤트게시판으로(관리자로접속하면 일반과 다름)</a></h2>
 <h2><a href="/restorantfind/find">맛집찾기!</a></h2>
-<h2><a href="/chat/list">채팅목록으로!</a></h2>
+<h2><a href="#" onclick="chatListPopup();">채팅목록으로!</a></h2>
 <h2><a href="/matefind/list">메이트찾기게시판으로</a></h2>
+
 
 
 
@@ -155,8 +165,6 @@ user_grade: ${user_grade }<br>
 </div>
 </c:if>
 
+</div>
 
-
-
-</body>
-</html>
+<c:import url="/WEB-INF/views/layout/footer.jsp" />
