@@ -27,7 +27,7 @@ $(document).ready(function(){
 function chatListPopup(){
 	var frmPop = document.frmPopup;
 	window.open("http://localhost:8088/chat/list", "chatList"
-			, "width = 710px, height = 681px");
+			, "width = 710px, height = 665px");
 }
 //채팅목록 팝업 종료
 
