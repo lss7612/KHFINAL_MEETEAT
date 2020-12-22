@@ -73,8 +73,27 @@ public class MyPageServiceImpl implements MyPageService{
 	}
 	
 	@Override
+	public boolean pwChk(User user) {
+		if(myPageDao.pwChk(user)>=1) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public void deleteUser(User user) {
+		myPageDao.deleteUser(user);
+		
+	}
+	
+	@Override
 	public List<Map<String, Object>> myPostList(int user_no) {
 
 		return myPageDao.selectMyPostByNo(user_no);
+	}
+	
+	@Override
+	public List<Map<String, Object>> myCommentList(int user_no) {
+		return myPageDao.selectMyCommentByNo(user_no);
 	}
 }

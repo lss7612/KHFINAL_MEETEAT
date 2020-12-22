@@ -30,4 +30,24 @@ public interface MyPageService {
 	 */
 	public List<Map<String, Object>> myPostList(int user_no);
 
+	/**
+	 * 내가 쓴 댓글 조회
+	 * @param user_no
+	 * @return
+	 */
+	public List<Map<String, Object>> myCommentList(int user_no);
+
+	/**
+	 * 비밀번호 체크
+	 * @param user
+	 * @return
+	 */
+	public boolean pwChk(User user);
+
+	/**
+	 * 회원 탈퇴(삭제)
+	 * @param user
+	 */
+	public void deleteUser(User user);
+
 }

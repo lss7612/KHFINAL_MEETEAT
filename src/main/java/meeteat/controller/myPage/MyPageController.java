@@ -39,6 +39,9 @@ public class MyPageController {
 		List<Map<String, Object>> postList = myPageService.myPostList(user_no);
 		model.addAttribute("pList", postList);
 		
+		//내가 쓴 댓글 조회
+		List<Map<String, Object>> commentList = myPageService.myCommentList(user_no);
+		model.addAttribute("cList", commentList);		
 	}
 	
 	@RequestMapping(value = "/mypage/myedit")
@@ -62,5 +65,50 @@ public class MyPageController {
 
 		return "redirect:/mypage/mypage";
 	}
+
+	@RequestMapping(value = "/mypage/mydelete")
+	public void mydelete(HttpSession session, Model model) {
+		int user_no = Integer.parseInt(session.getAttribute("user_no").toString());
+
+		logger.info("유저번호 : " + user_no);
+		Map<String, Object> user = myPageService.infoByNo(user_no);
+
+		logger.info("유저 정보 : " + user);
+
+		model.addAttribute("u", user);
+	}
+	
+	@RequestMapping(value = "/mypage/mydelete", method = RequestMethod.POST)
+	public String mydeleteProc(HttpSession session, User user, Model model) {
+
+		boolean pwChk = myPageService.pwChk(user);
+		
+		model.addAttribute("pwChk", pwChk);
+
+		if(pwChk) {
+			
+			myPageService.deleteUser(user);
+
+			session.invalidate();
+			return "login/login";
+		}else {
+
+			return "redirect:/mypage/mydelete";
+		}
+
+	}
+	@RequestMapping(value="/mypage/mypost")
+	public void myPost() {
+		
+	}
+	
+	@RequestMapping(value="/mypage/mycmmt")
+	public void myCmmt() {
+		
+		
+	}
+	
+	@RequestMapping(value="/mypage/mypay")
+	public void myPay() {}
 
 }
