@@ -115,6 +115,6 @@
 	</insert>
 	
 	<delete id="exitChatRoomByUserNo" parameterType="hashmap">
-		delete tb_chattinguser2 where chatting_no={#chatting_no} and user_no = #{user_no}
+		delete tb_chattinguser2 where chatting_no = #{chatting_no} and user_no = #{user_no}
 	</delete>
 </mapper>

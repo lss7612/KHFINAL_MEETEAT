@@ -20,7 +20,7 @@ function submitChatForm(e){
 
 </head>
 <body>
-<h1>채팅목록</h1>
+<h1 style="margin-left : 20px;">채팅목록</h1>
 <hr>
 <c:set var="now" value="<%=new Date() %>"/>
 

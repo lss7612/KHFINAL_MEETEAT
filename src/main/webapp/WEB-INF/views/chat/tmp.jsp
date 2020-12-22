@@ -16,7 +16,7 @@ $(document).ready(function(){
 <body>
 <h1>채팅방 입장 대기중...</h1>
 <form id="chattingForm" action = "/chat/room" method="post">
-	<input type="text" name="chatting_id" value="${chatting_id }">
+	<input type="hidden" name="chatting_id" value="${chatting_id }">
 </form>
 </body>
 </html>

@@ -9,6 +9,7 @@ html{
     overflow : auto;
     overflow-x : hidden;
     background-color: #ececc2;
+    margin-left : 40px;
 }
 
 #chatList::-webkit-scrollbar{
