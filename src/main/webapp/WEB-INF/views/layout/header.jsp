@@ -124,6 +124,9 @@ $(document).ready(function () {
 	
 	<div id="top_menu">
 	<div class="top_menu_sub">
+	<a href="/WEB-INF/views/layout/404error.jsp" style="font-size: 3px; color: #170B3B;">404</a>
+	<a href="/WEB-INF/views/layout/500error.jsp" style="font-size: 3px; color: #170B3B;">500</a>
+		
 		<c:choose>
 		<c:when test="${empty isLogin }">
 			<a href="#">회원가입</a>
