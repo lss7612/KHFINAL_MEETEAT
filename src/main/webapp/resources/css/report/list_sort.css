@@ -12,6 +12,9 @@
 	float : right;
 	width : 110px;
 }
+.reportColName{
+	text-align : center!important;
+}
 
 tr td {
 	vertical-align: middle!important;
@@ -34,4 +37,8 @@ tr td {
 .reportContentView{
 	width : 250px;
 	text-overflow : ellipsis;
+}
+
+.float-clear{
+	clear : both;
 }
