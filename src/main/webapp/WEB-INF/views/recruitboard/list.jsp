@@ -60,7 +60,7 @@
 <table id="board_table" class="table table-striped table-hover" style="margin: 0 auto;">
 
 <thead>
-<tr style="background:#ffa000">
+<tr style="background:#f5da81">
 	<th style="width:5%;"><i style="color:white;" class="fas fa-list-ol"></i></th>
 	<th style="width:5%;"><i style="color:white;" class="fas fa-thumbs-up"></i></th>
 	<th style="width:5%;"><i style="color:white;" class="fas fa-clock"></i></th>

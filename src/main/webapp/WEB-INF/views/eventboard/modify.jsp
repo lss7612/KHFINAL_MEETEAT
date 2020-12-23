@@ -16,10 +16,11 @@
 	<span style="font-weight:bold; font-size:30px;">글 등록중입니다. 조금만 기다려주세요.</span>
 </div>
 
+<div id="divpage">
 <div id="eventWriteWrapper">
 
 <div class="base_padding">
-<h2>이벤트</h2>
+<h2><a href="/eventboard/holding">이벤트</a></h2>
 </div>
 <hr>
 
@@ -173,5 +174,5 @@ $('.se2_inputarea').css('min-width','550px');
 	</div>
 </form>
 
-
+</div>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
