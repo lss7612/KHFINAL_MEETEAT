@@ -170,6 +170,9 @@ function goChatList(){
 <!-- 				<div class="toChatContent toBallon"> -->
 <!-- 				</div> -->
 <!-- 			</div> -->
+<!-- 			<div class='noticeArea'><span> 채팅방에 입장하셨습니다.</span></div> -->
+<!-- 			<div class='noticeArea'><span>"+user_nick+"님이 채팅방에 입장하셨습니다.</span></div> -->
+<!-- 			<div class='noticeArea'><span>"+user_nick+"님이 채팅방에서 퇴장하셨습니다.</span></div> -->
 		</div>
 		<div id="usingArea">
 			<input type="text" id="writeMsg" onKeyDown="enterKeyAtChat();" />
