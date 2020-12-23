@@ -15,11 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import meeteat.controller.myPage.MyPageController;
 import meeteat.dao.myPage.face.MyPageDao;
 import meeteat.dto.user.User;
 import meeteat.service.myPage.face.MyPageService;
-import meeteat.util.Paging;
+import meeteat.util.MyPaging;
+
 
 @Service
 public class MyPageServiceImpl implements MyPageService{
@@ -103,23 +103,24 @@ public class MyPageServiceImpl implements MyPageService{
 		return myPageDao.selectMyCommentByNo(user_no);
 	}
 
-//	@Override
-//	public Paging getPaging(Paging curPage, String search, String category, int user_no) {
-//		
-//		HashMap<String, Object> param = new HashMap<>();
-//		
-//		// 검색, 카테고리, curpage
-//		param.put("user_no", user_no);
-//		param.put("search", search);
-//		param.put("category", category);
-//		param.put("curPage", curPage);
-//		
-//		int totalCount = myPageDao.selectCntAllPost(param);
-//		logger.info("서비스 임플 토탈 카운드 : " + totalCount);
-//		
-//		Paging paging = new Paging(totalCount, curPage.getCurPage());
-//		logger.info("서비스 임플 paging : " + paging);
-//		
-//		return paging;
-//	}
+	@Override
+	public MyPaging getPaging(MyPaging curPage) {
+		
+		int totalCount = myPageDao.selectCntAllPost(curPage);
+		
+		MyPaging paging = new MyPaging(totalCount, curPage.getCurPage(), curPage.getCategory(), curPage.getSearch(), curPage.getUser_no());
+		
+		return paging;
+	}
+	
+	@Override
+	public List<Map<String, Object>> myAllPostList(MyPaging paging) {
+		return myPageDao.myAllPostList(paging);
+	}
+	
+	@Override
+	public void deleteMyPost(HashMap<String, Object> map) {
+		myPageDao.deleteMyPost(map);
+		
+	}
 }

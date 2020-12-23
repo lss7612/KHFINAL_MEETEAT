@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import meeteat.dto.user.User;
+import meeteat.util.MyPaging;
 
 public interface MyPageDao {
 
@@ -50,15 +51,24 @@ public interface MyPageDao {
 	 */
 	public void deleteUser(User user);
 
+	/**
+	 * 마이 포스트 페이징 계산
+	 * @param param
+	 * @return
+	 */
+	public int selectCntAllPost(MyPaging curPage);
 
-//	/**
-//	 * 마이 포스트 페이징 계산
-//	 * @param param
-//	 * @return
-//	 */
-//	public int selectCntAllPost(HashMap<String, Object> param);
+	/**
+	 * 내 전체 글 조회
+	 * @param paging
+	 * @return
+	 */
+	public List<Map<String, Object>> myAllPostList(MyPaging paging);
 
-
-
+	/**
+	 * 선택한 게시글 삭제
+	 * @param map
+	 */
+	public void deleteMyPost(HashMap<String, Object> map);
 
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -18,8 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.dto.user.User;
 import meeteat.service.myPage.face.MyPageService;
-import meeteat.util.Paging;
-
+import meeteat.util.MyPaging;
 
 @Controller
 public class MyPageController {
@@ -100,17 +100,39 @@ public class MyPageController {
 
 	}
 	@RequestMapping(value="/mypage/mypost")
-	public void myPost(HttpSession session, Model model, Paging curPage
-			, String search
-			, String category) {
-		int user_no = Integer.parseInt(session.getAttribute("user_no").toString());
+	public void myPost(HttpSession session, Model model, MyPaging curPage) {
 		
-//		Paging paging = myPageService.getPaging();
+		//페이징 계산 페이징 
+		System.out.println(curPage);
+		curPage.setUser_no(Integer.parseInt(session.getAttribute("user_no").toString()));
 		
+		MyPaging paging = myPageService.getPaging(curPage);
 		
-//		logger.info("paging" + paging);
+//		paging.setSearch(curPage.getSearch());
+//		paging.setCategory(curPage.getCategory());
+//		paging.setUser_no(Integer.parseInt(session.getAttribute("user_no").toString()));
+
+		model.addAttribute("myPostPaging", paging);
 		
+		// 전체 작성글 리스트
+		List<Map<String, Object>> myAllPostList = myPageService.myAllPostList(paging);
 		
+		model.addAttribute("myAllPList", myAllPostList);
+		
+	}
+	
+	@RequestMapping(value="/mypage/mypost" , method=RequestMethod.POST)
+	public String myPostProc(HttpServletRequest req) {
+		
+		String[] postArr = req.getParameterValues("checkbox");
+		//	System.out.println(Arrays.toString(postArr));
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("postArr", postArr);
+
+		myPageService.deleteMyPost(map);
+
+		return "redirect:/mypage/mypost";	
 	}
 	
 	@RequestMapping(value="/mypage/mycmmt")
