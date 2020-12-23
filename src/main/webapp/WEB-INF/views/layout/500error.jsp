@@ -9,6 +9,7 @@
 
 <div id="divpage">
 
+<br>
 <img class="error500" src="/resources/img/500error.png"><br><br>
 <button class="errorbtn"><a href="javascript:history.back();">Back</a></button>
 <button class="errorbtn"><a href="http://localhost:8088/">Main</a></button>

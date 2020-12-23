@@ -40,6 +40,7 @@ $("#topupBtn").click(function() {
 
 </script>
 
+
 <!-- ------------------------------------------------------------------------ -->
 
 <script type="text/javascript">
@@ -137,12 +138,15 @@ $(document).ready(function () {
 			<a href="/login/login">로그인</a>
 		</c:when>
 		<c:otherwise>
-        <a href="/mypage/mypage">마이페이지</a>
+			<c:if test="${user_grade eq 0 }">
+				<a href="https://www.naver.com/">관리자페이지</a>
+			</c:if>
+	       		<a href="/mypage/mypage">마이페이지</a>
 				<a href="/login/logout">로그아웃</a>
 		</c:otherwise>
 	</c:choose>
-<!-- 		<a href="#">회원가입</a> -->
-<!-- 		<a href="#">로그인</a> -->
+
+
 	</div>
 	</div>
 	
@@ -161,7 +165,9 @@ $(document).ready(function () {
 				</ul>
 			</li>
 				
-			<li><a href="/matefind/list">메이트찾기</a></li>
+			<li>
+				<a href="/matefind/list">메이트찾기</a>
+			</li>
 				
 			<li>
 				<a href="#">커뮤니티</a>

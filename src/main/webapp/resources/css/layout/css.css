@@ -2,7 +2,9 @@
 
 * {
 	margin: 0px; 
-	padding: 0px; }
+	padding: 0px; 
+	font-family: 'NEXON Lv2 Gothic';
+}
 	
 header > ul {
 	display:inline-block; }
@@ -15,11 +17,12 @@ header{
 /* 	padding:20px 0; */
 	width:100%;
 	text-align:center;
+	font-family: 'NEXON Lv2 Gothic';
 }
 
 header > div{
 	margin: 0 auto;
-	margin:10px 0;
+/* 	margin:10px 0; */
 }
 
 a {
@@ -32,8 +35,8 @@ a {
 	}
 	
 #logo img{
-    width:180px;
-    height:180px;
+    width:205px;
+    height:205px;
 }
 
 #top_menu {
@@ -86,6 +89,7 @@ footer {
     font-size: 12px;
     line-height: 18px;
     position: relative;
+    font-family: 'NEXON Lv2 Gothic';
 }
 
 footer div {
@@ -148,6 +152,7 @@ ul.navvvv > li ul.subb {
     position: absolute;
     top: 35px;
     left: 0;
+    z-index: 10;
 }
 
 ul.navvvv > li:hover ul.subb { 
@@ -179,7 +184,7 @@ ul.navvvv > li ul.subb > li:hover {
 	margin: 0px auto;
 	border-left: 1px solid #E6E6E6;
     border-right: 1px solid #E6E6E6;
-	padding-top: 70px;
+	padding-top: 30px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 70px;
@@ -248,41 +253,44 @@ ul.navvvv > li ul.subb > li:hover {
 	
 	display: block;
     margin: 0px auto;
-    width: 895px;
-    height: 680px;
+    width: 774px;
+    height: 592px;
 }
 
 .error500 {
 	display: block;
     margin: 0px auto;
-    width: 895px;
-    height: 776px;
+    width: 772px;
+    height: 679px;
 }
 
 
 
 .errorbtn a{
 	color: black;
+	font-family: 'NEXON Lv2 Gothic';
 }
 
 .errorbtn{
-  background:#F5DA81;
-  color:#fff;
-  border:none;
-  position:relative;
-  height:60px;
-  font-size:1.6em;
-  padding:0 2em;
-  cursor:pointer;
-  transition:800ms ease all;
-  outline:none;
-	left: 33%;
+    background: #F5DA81;
+    color: #fff;
+    border: none;
+    position: relative;
+    height: 55px;
+    font-size: 17px;
+    padding: 0 30px;
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+    left: 38%;
     margin-left: 20px;
+    font-family: 'NEXON Lv2 Gothic';
 }
 
 .errorbtn:hover{
   background:#fff;
   color:#1AAB8A;
+  font-family: 'NEXON Lv2 Gothic';
 }
 
 .errorbtn:before, .errorbtn:after{
@@ -294,6 +302,7 @@ ul.navvvv > li ul.subb > li:hover {
   width:0;
   background: #F5DA81;
   transition:400ms ease all;
+  font-family: 'NEXON Lv2 Gothic';
 }
 
 .errorbtn:after{
@@ -301,27 +310,41 @@ ul.navvvv > li ul.subb > li:hover {
   top:inherit;
   left:0;
   bottom:0;
+  font-family: 'NEXON Lv2 Gothic';
 }
 
 .errorbtn:hover:before, .errorbtn:hover:after{
   width:100%;
   transition:800ms ease all;
+  font-family: 'NEXON Lv2 Gothic';
 }
 
 
 
+@font-face {
+    font-family: 'BMHANNAAir';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
+@font-face {
+    font-family: 'NEXON Lv2 Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+@font-face {
+    font-family: 'RIDIBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

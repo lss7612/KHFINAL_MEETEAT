@@ -2,12 +2,8 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<c:import url="/WEB-INF/views/layout/header.jsp" />
 
-
-
-<!DOCTYPE html>
-<html>
-<head>
 
 <!-- jQuery 2.2.4.min -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -15,8 +11,6 @@
 <!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-<meta charset="UTF-8">
-<title>Insert title here</title>
 
 <style type="text/css">
 
@@ -141,11 +135,7 @@ function createChat(){
 //채팅하기 클릭시 동작하는 스크립트 끝
 </script>
 
-</head>
-<body>
 
-
-<c:import url="/WEB-INF/views/layout/header.jsp" />
 
 
 <div class="container">
