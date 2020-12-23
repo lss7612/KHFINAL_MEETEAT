@@ -175,3 +175,23 @@ function closeReplyList(commentOriginNo){
 	
 	$('#'+id).html('')
 }
+
+function reportBtn(e){
+	
+	var target = $(e).prev().prev().val();
+	//console.log("user_no : "+target);
+	//console.log("url : "+window.location.href)
+
+	//팝업 
+	var frmPop = e.parentElement;
+	//console.log(frmPop);
+	window.open("http://localhost:8088/report/doReport","report"
+			, "width=500px,height=466px")
+	frmPop.action = "http://localhost:8088/report/doReport";
+	frmPop.target = "report";
+	//${user_no}에 작성자 번호에 맞는 변수명을 적어주시면 됩니당.
+	frmPop.user_no.value = target; 
+	//console.log(frmPop.user_no.value);
+	//현재글 URL정보 전달
+	frmPop.url.value = window.location.href;
+}

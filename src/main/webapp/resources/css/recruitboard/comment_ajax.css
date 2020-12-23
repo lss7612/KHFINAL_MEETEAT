@@ -5,3 +5,13 @@ span.cursorPointer {
 .none_width{
 	font-size:0;
 }
+
+.commentReport{
+	cursor : pointer;
+}
+
+.commentReportBtn{
+	background-color: #f5da81;
+	border: 0px;
+	font-size : large;
+}

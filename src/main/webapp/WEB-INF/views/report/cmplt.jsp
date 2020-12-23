@@ -15,13 +15,15 @@
 
 </head>
 <body>
+<div id="reportTitleArea">
 <h1 id="reportTitle">🚨신고가 완료되었습니다. </h1>
+</div>
 <hr>
 <br>
 <div id="content">
 	<p id="countdown"><strong>5</strong>초 후에 창이 닫힙니다.</p>
 </div>
-<br><br><br><br><br><br><br><br><br>
+<br><br><br>
 <div id="buttonArea">
 	<button id="closeBtn" onclick="popupClose();" class="btn btn-primary" >창 닫기</button>
 </div>

@@ -23,7 +23,9 @@ function popupClose(){
 </script>
 </head>
 <body>
+<div id="reportTitleArea">
 <h1 id="reportTitle">🚨신고하기</h1>
+</div>
 <hr>
 <div id="reportTargetView">
 	<strong>대상</strong> : <span id="reportTargetId">${user.USER_NICK }(${user.USER_ID })</span><br>
