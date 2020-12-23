@@ -157,7 +157,7 @@ $(document).ready(function () {
 				<ul class="subb">
 					<li><a href="#">공지사항</a>
 					<li><a href="#">1:1 문의</a>
-					<li><a href="eventboard/holding">이벤트</a>
+					<li><a href="/eventboard/holding">이벤트</a>
 				</ul>
 			</li>
 				

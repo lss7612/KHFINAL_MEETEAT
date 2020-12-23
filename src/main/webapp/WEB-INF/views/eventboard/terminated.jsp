@@ -4,12 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 
 <link rel="stylesheet" href="/resources/css/common/common.css" >
 <link rel="stylesheet" href="/resources/css/eventboard/holdingAndTerminate.css" >
 <script type="text/javascript" src="/resources/js/eventboard/holdingAndTerminate.js" ></script>
 
+<div id="divpage">
 <div id="eventWrapper">
 <c:set var="now" value="<%= new Date() %>"/>
 <fmt:formatDate var="fmt_now_second" value="${now }" pattern="yyyyMMddHHmmss"/>
@@ -17,7 +18,7 @@
 
 
 <div class="bold_padding">
-<h2>이벤트</h2>
+<h2><a href="/eventboard/holding">이벤트</a></h2>
 </div>
 
 <%-- 사이드바 부분 --%>
@@ -111,7 +112,8 @@
 </div>
 
 
-
+<div class="clearfix"></div>
 </div><%-- Wrapper END --%>
-</body>
-</html>
+</div><%-- divpage END --%>
+
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>

@@ -5,11 +5,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 <link rel="stylesheet" href="/resources/css/recruitboard/list.css">
 <script type="text/javascript" src="/resources/js/recruitboard/list.js"></script>
 
-
+<div id="divpage">
 <div class="wrapper">
 
 <div class="none-height">
@@ -240,5 +240,8 @@
 
 <a href="/recruitboard/write"><button class="btn btn-primary pull-right">글쓰기</button></a>
 </div>
-</body>
-</html>
+</div>
+
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>
+
+

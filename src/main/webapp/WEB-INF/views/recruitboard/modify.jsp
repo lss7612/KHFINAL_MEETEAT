@@ -2,11 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 <!-- 적용css, js -->
 <link rel="stylesheet" href="/resources/css/recruitboard/write.css">
 <script type="text/javascript" src="/resources/js/recruitboard/write.js"></script>
 <script type="text/javascript" src="/resources/js/recruitboard/modify.js"></script>
+<!-- 스마트에디터 -->
+<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 <%-- 로딩 모달 --%>
 <div class="modal_img_upload invisible">
@@ -14,6 +16,7 @@
 	<span style="font-weight:bold; font-size:30px;">글 등록중입니다. 조금만 기다려주세요.</span>
 </div>
 
+<div id="divpage">
 <div id="write_wrapper">
 
 <div class="invisible" style="height:0">
@@ -223,10 +226,8 @@ oEditors[0].exec("LOAD_CONTENTS_FIELD");
 		<input type="file" id="form_img3" name="img3" accept="image/gif, image/jpeg, image/jpg, image/png" class="form-control" alertComment="최대인원" placeholder="미구현"/>
 	</div>
 </form>
-
-</body>
-</html>
-
+</div>
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>
 
 
 
