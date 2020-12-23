@@ -3,11 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 <link rel="stylesheet" href="/resources/css/common/common.css">
 <link rel="stylesheet" href="/resources/css/eventboard/view.css">
 <script type="text/javascript" src="/resources/js/eventboard/view.js"></script>
+<%-- 스마트에디터 --%>
+<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
+<div id="divpage">
 <div id="view_wrapper">
 
 <h2 class=""><a href="/eventboard/terminated">이벤트</a></h2>
@@ -161,6 +164,6 @@ $('iframe').css('height','100px');
 
 </div>
 
-</div>
-</body>
-</html>
+</div><%-- wrapper end --%>
+</div><%-- divpage end --%>
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>

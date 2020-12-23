@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 <link rel="stylesheet" href="/resources/css/common/common.css" >
 <link rel="stylesheet" href="/resources/css/eventboard/popup.css" >
 <script type="text/javascript" src="/resources/js/eventboard/popup.js" ></script>
 
-
+<div id="divpage">
 <div id="popupManageWrapper">
 
 <div>
@@ -44,7 +44,10 @@
 	</div>
 	
 </div>
-</div>
 
-</body>
-</html>
+<div class="clearfix"></div>
+
+</div><%-- popupManageWrapper END --%>
+</div><%-- divpage --%>
+
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>

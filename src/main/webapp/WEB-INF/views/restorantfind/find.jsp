@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"></c:import>
+<c:import url="/WEB-INF/views/layout/header.jsp"></c:import>
 <link rel="stylesheet" href="/resources/css/common/common.css">
 <script type="text/javascript" src="/resources/js/restorantfind/find.js"></script>
 <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=el0h9yyc4x"></script>
@@ -16,10 +16,11 @@
 </head>
 <body>
 
+<div id="divpage">
 <div id="findRestorantWrapper" style="width:60%; min-width:850px; margin:0 auto;">
 
 
-<h2>맛집검색</h2>
+<h2><a href="/restorantfind/find">맛집검색</a></h2>
 <hr>
 
 <%-- 검색부분 --%>
@@ -120,9 +121,15 @@
 	</div>
 	
 	<div id="seeMoreBlogResult" style="width:60%; text-align:center; border-radius:8px; cursor:pointer" class="pull-right light_margin light_padding invisible none_height">더보기</div>
+	<div class="clearfix"></div>
 </div>
 
 </div>
+</div><%-- divpage end --%>
 
-</body>
-</html>
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>
+
+
+
+
+

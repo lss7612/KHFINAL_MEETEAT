@@ -8,7 +8,7 @@ $(document).ready(function () {
 	console.log(windowHeight)
 	console.log(windowWidth)
 	
-	$('.modal_img_upload').css('padding-top',windowHeight/4)
+	$('.modal_img_upload').css('padding-top',windowHeight/6)
  	
 	$('#form_meet_time').change(function(){
 		let pickDate = $(this).val()
