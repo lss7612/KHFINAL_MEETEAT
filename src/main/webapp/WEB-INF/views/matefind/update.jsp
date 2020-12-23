@@ -46,10 +46,29 @@ $(document).ready(function() {
 		//스마트에디터의 내용을 <textarea>에 적용하기
 		submitContents($("#btnWrite"));
 		
-		//form submit 수행하기
-		$("form").submit();
+		var is_empty = false;
+		$('#form').find('input[type!="hidden"]').each(function(){
+		    if(!$(this).val()) {
+				is_empty = true;
+		    }
+		});
+		
+		$('#form').find('select').each(function() {
+			if($(this).val() == "") {
+				is_empty = true;
+			}
+		})
+		 
+		if(is_empty) {
+		    alert('값을 전부 입력하시오');
+		    return false;
+		} else {
+			$("form").submit();
+		}
+		
 		
 	})
+	
 
 	$("#cancel").click(function() {
 		history.go(-1);
@@ -61,7 +80,9 @@ $(document).ready(function() {
 </head>
 <body>
 
-<div class="container">
+<c:import url="/WEB-INF/views/layout/header.jsp" />
+
+<div class="container" id="divpage">
 
 <br><br>
 
@@ -82,6 +103,7 @@ $(document).ready(function() {
 		<div class="col">
 			<label class="input-group-text" for="category">만남유형</label>
 			<select class="form-select" name="category">
+				<option value="">선택</option>
 				<option value="식사">식사</option>
 				<option value="카페">카페</option>
 				<option value="술">술</option>
@@ -89,6 +111,7 @@ $(document).ready(function() {
 			
 			<label class="input-group-text" for="mate_list">모집인원</label>
 			<select class="form-select" name="mate_list">
+				<option value="">선택</option>
 				<option value="1">1명</option>
 				<option value="2">2명</option>
 				<option value="3">3명</option>
@@ -368,5 +391,4 @@ $(document).ready(function() {
 
 </div><!-- //container -->
 
-</body>
-</html>
+<c:import url="/WEB-INF/views/layout/footer.jsp" />

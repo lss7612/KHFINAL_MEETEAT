@@ -37,6 +37,8 @@ public interface MateFindService {
 
 	public List<Recommend> attendeeList(Recommend recommend);
 
-	public List<MateFindBoard> filterList(HashMap<String, Object> map);
+	public List<MateFindBoard> filterList(MateFindBoard mateFindBoard);
+
+	public List<MateFindBoard> filterListPaging(HashMap<String, Object> map);
 
 }

@@ -46,6 +46,10 @@ body {
 	margin: 10px 0px 0px;
 }
 
+#title {
+	margin-top: 0px;
+}
+
 .info {
 	margin: 6px 0px 0px;
 }
@@ -96,20 +100,25 @@ $(document).ready(function(){
 		
 		$.ajax({
 			
-			url: '/matefind/sortajax',
-			type: 'get',
-			data: {
-				"party_location": $("#party_location").val()
-				, "meet_time": $("#meet_time").val()
-				, "category": $("#category").val()
-			}, 
+			url: '/matefind/sortajax'
+			, type: 'get'
+			, data: {
+				party_location: $("#party_location").val()
+				, meet_time: $("#meet_time").val()
+				, category: $("#category").val()
+			} 
 			
-			dataType: 'json',
-			success: function() {
+			, dataType: 'json'
+			, success: function(res) {
 				
-			},
+				console.log("filterList 성공")
+				
+				$(document.body).append(res);
+				
+			}
 			
-			error: {
+			, error: {
+// 				console.log("filterList 실패")
 				
 			}
 			
@@ -148,12 +157,12 @@ function createChat(){
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 
 
-<div class="container">
+<div class="container" id="divpage">
 
-<h1>메이트찾기</h1>
+<!-- <h1>메이트찾기</h1> -->
 
 
-<hr>
+<!-- <hr> -->
 
 	<div class="filter">
 	<h4>필터</h4>
@@ -215,7 +224,7 @@ function createChat(){
 		
 			<img class="thumbnail-img" style="margin-bottom: 10px;" alt="썸네일이미지" src="https://www.bloter.net/wp-content/uploads/2016/08/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0-%EC%82%AC%EC%A7%84.jpg">
 			
-			<h2 style="white-space:nowrap; text-overflow: ellipsis; overflow: hidden;">${list.article_title }</h2>
+			<h2 id="title" style="white-space:nowrap; text-overflow: ellipsis; overflow: hidden;">${list.article_title }</h2>
 			
 		</a>
 			<div class="info">
@@ -272,7 +281,7 @@ function createChat(){
 	<div class="row">
 		<div class="col">
 		
-			<a href="/login/main"><button class="btn btn-secondary" style="float: left; margin-bottom: 50px;">로그인메인</button></a>
+<!-- 			<a href="/login/main"><button class="btn btn-secondary" style="float: left; margin-bottom: 50px;">로그인메인</button></a> -->
 			<a href="/matefind/write"><button class="btn btn-primary" style="float: right; margin-bottom: 50px;">글쓰기</button></a>
 		
 		</div>

@@ -69,7 +69,16 @@ body {
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
+/*   background-color: #f5f5f5; */
+  background-color: #fff;
+  
+/*     background-image:  linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url("https://i1.daumcdn.net/cfile2/image/995EC2465DCCBFCE10AC8C"); */
+/*     background-image:  linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url("https://lh3.googleusercontent.com/proxy/KeLe1qjOA_uziRTyN45ciRJgBqh8_MZaoD6r6FW5ODT_K_igcvUtT7Ktphlsmg511NLhiXq_rUFM-p6crbgTThs8n4BjScV9XsotXY00QrDi0gS5lLFLi6IQ"); */
+    background-image:  linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url("https://img.insight.co.kr/static/2017/03/14/700/FVB3R1EI6E270F71EU10.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
 }
   
 .form-horizontal {
@@ -79,6 +88,7 @@ body {
 	  margin: auto;
 	  border: 1px solid #adb5bd;
 	  border-radius: 5px;
+	  background-color: #F5F5F5;
 }
 
 .form-group > .col {

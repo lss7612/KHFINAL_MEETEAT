@@ -61,6 +61,12 @@ $(document).ready(function() {
 				is_empty = true;
 		    }
 		});
+		
+		$('#form').find('select').each(function() {
+			if($(this).val() == "") {
+				is_empty = true;
+			}
+		})
 		 
 		if(is_empty) {
 		    alert('값을 전부 입력하시오');
@@ -96,9 +102,9 @@ $(document).ready(function() {
 </head>
 <body>
 
-<div class="container">
+<c:import url="/WEB-INF/views/layout/header.jsp" />
 
-<br><br>
+<div class="container" id="divpage">
 
 <form action="/matefind/write" method="post" id="form">
 
@@ -115,6 +121,7 @@ $(document).ready(function() {
 		<div class="col">
 			<label class="input-group-text" for="category">만남유형</label>
 			<select class="form-select" name="category">
+				<option value="">선택</option>
 				<option value="식사">식사</option>
 				<option value="카페">카페</option>
 				<option value="술">술</option>
@@ -122,6 +129,7 @@ $(document).ready(function() {
 			
 			<label class="input-group-text" for="mate_list">모집인원</label>
 			<select class="form-select" name="mate_list">
+				<option value="">선택</option>
 				<option value="1">1명</option>
 				<option value="2">2명</option>
 				<option value="3">3명</option>
@@ -184,7 +192,7 @@ $(document).ready(function() {
 	<label for="map" class="form-label" style="float: left; margin-top: 40px;">위치</label>
 	<div class="search" id="mapSearch" style="float: left;">
 		<input id="address" type="text" placeholder="검색할 주소">
-		<input id="submit" type="button" value="주소 검색">
+		<input id="submit" type="button" onkeypress="prevent()" onkeydown="prevent()" value="주소 검색">
 	</div>
 
 	<!-- 네이버지도 -->
@@ -355,13 +363,13 @@ $(document).ready(function() {
 	    searchCoordinateToAddress(e.coord);
 	  });
 	
-	  $('#address').on('keydown', function(e) {
-	    var keyCode = e.which;
+// 	  $('#address').on('keydown', function(e) {
+// 	    var keyCode = e.which;
 	
-	    if (keyCode === 13) { // Enter Key
-	      searchAddressToCoordinate($('#address').val());
-	    }
-	  });
+// 	    if (keyCode === 13) { // Enter Key
+// 	      searchAddressToCoordinate($('#address').val());
+// 	    }
+// 	  });
 	
 	  $('#submit').on('click', function(e) {
 	    e.preventDefault();
@@ -389,10 +397,27 @@ $(document).ready(function() {
 
 
 </form>
+
+
+<!-- toast 메세지 -->
+<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+  <div class="toast-header">
+    <img src="..." class="rounded mr-2" alt="...">
+    <strong class="mr-auto">MEET EAT</strong>
+    <small>11 mins ago</small>
+    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="toast-body">
+    빈칸이 없도록 입력해주세요.
+  </div>
+</div>
+<!--// toast 메세지 끝-->
+
 	
 
 
 </div><!-- //container -->
 
-</body>
-</html>
+<c:import url="/WEB-INF/views/layout/footer.jsp" />

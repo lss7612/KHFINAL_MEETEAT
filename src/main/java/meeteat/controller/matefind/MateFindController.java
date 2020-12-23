@@ -184,6 +184,7 @@ public class MateFindController {
 		recommend.setArticle_no(article_no);
 		recommend.setBoard_no(2);
 		recommend.setUser_no(guestUserNo);
+
 		
 		if(mateFindService.hasData(recommend)) {
 			
@@ -205,6 +206,8 @@ public class MateFindController {
 		
 	}
 	
+	
+/*
 	@RequestMapping(value = "/sortajax")
 	public void sortAjax(@RequestParam("party_location") String party_location
 						, @RequestParam("meet_time") String meet_time
@@ -218,16 +221,17 @@ public class MateFindController {
 		// if "" == isEmpty
 		
 		if("아침".equals(meet_time)) {
-			// 6 ~ 12
+			// 6 ~ 12 BETWEEN 06:00 AND 12:00
 			
 		} else if("점심".equals(meet_time)) {
-			// 12 ~ 18
+			// 12 ~ 18 BETWEEN 12:00 AND 18:00
 			
 		} else if("저녁".equals(meet_time)) {
-			// 18 ~ 24
+			// 18 ~ 24 BETWEEN 18:00 AND 00:00
 			
 		} else if("새벽".equals(meet_time)) {
-			// 24 ~ 6
+			// 24 ~ 6 BETWEEN 00:00 AND 06:00
+
 		}
 		
 		Paging paging = mateFindService.getPaging(curPage);
@@ -243,6 +247,64 @@ public class MateFindController {
 		List<MateFindBoard> filterList = mateFindService.filterList(map);
 		
 		model.addAttribute("filterList", filterList);
+		
+		
+	}
+*/
+	
+	@RequestMapping(value = "/sortajax")
+	public String sortAjax(@RequestParam("party_location") String party_location
+						, @RequestParam("meet_time") String meet_time
+						, @RequestParam("category") String category
+						, Paging curPage
+						, Model model) {
+		
+		logger.info(party_location);
+		logger.info(meet_time);
+		logger.info(category);
+		// if "" == isEmpty
+		
+		if("아침".equals(meet_time)) {
+			// 6 ~ 12 BETWEEN 06:00 AND 12:00
+			
+		} else if("점심".equals(meet_time)) {
+			// 12 ~ 18 BETWEEN 12:00 AND 18:00
+			
+		} else if("저녁".equals(meet_time)) {
+			// 18 ~ 24 BETWEEN 18:00 AND 00:00
+			
+		} else if("새벽".equals(meet_time)) {
+			// 24 ~ 6 BETWEEN 00:00 AND 06:00
+
+		}
+		
+		
+//Paging 위한
+		Paging paging = mateFindService.getPaging(curPage);
+		model.addAttribute("paging", paging);
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("party_location", party_location);
+		map.put("meet_time", meet_time);
+		map.put("category", category);
+		map.put("startNo", paging.getStartNo());
+		map.put("endNo", paging.getEndNo());
+		
+//		List<MateFindBoard> filterList = mateFindService.filterListPaging(map);
+		
+		MateFindBoard mateFindBoard = new MateFindBoard();
+		
+		mateFindBoard.setParty_location(party_location);
+		mateFindBoard.setCategory(category);
+//meet_time 미설정으로 해놨음!!
+		mateFindBoard.setMeet_time("");
+		
+		
+		List<MateFindBoard> filterList = mateFindService.filterList(mateFindBoard);
+		
+		model.addAttribute("mateFindList", filterList);
+		
+		return "matefind/matefindList";
 		
 		
 	}

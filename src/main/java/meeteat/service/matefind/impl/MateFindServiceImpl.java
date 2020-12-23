@@ -122,10 +122,16 @@ public class MateFindServiceImpl implements MateFindService {
 	}
 	
 	@Override
-	public List<MateFindBoard> filterList(HashMap<String, Object> map) {
+	public List<MateFindBoard> filterListPaging(HashMap<String, Object> map) {
 		
-		return mateFindDao.filterList(map);
+		return mateFindDao.filterListPaging(map);
 
+	}
+	
+	@Override
+	public List<MateFindBoard> filterList(MateFindBoard mateFindBoard) {
+		
+		return mateFindDao.filterList(mateFindBoard);
 	}
 	
 	

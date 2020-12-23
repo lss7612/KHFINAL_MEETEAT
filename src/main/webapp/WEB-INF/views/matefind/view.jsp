@@ -42,12 +42,13 @@ function goList() {
 }
 
 </script>
+
 </head>
 <body>
 
-<div class="container">
+<c:import url="/WEB-INF/views/layout/header.jsp" />
 
-<br><br>
+<div class="container" id="divpage">
 
 	<div class="row">
 		<div class="col-2">
@@ -345,8 +346,6 @@ function goList() {
 
 </div>
 
-</body>
-
 <style type="text/css">
 
 .active {
@@ -395,7 +394,7 @@ function deleteAttendee() {
 
 $(document).ready(function() {
 
-	if(${isAttendee}) {
+	if(${isAttendee }) {
 		
 		addAttendee()
 		
@@ -412,6 +411,9 @@ $(document).ready(function() {
 			type: 'get',
 			
 			success: function(result) {
+				
+// 				console.log(booelanResult);
+// 				console.log(booelanResult2);
 				
 				if(result) {
 					
@@ -451,4 +453,5 @@ $(document).ready(function() {
 })
 </script>
 
-</html>
+
+<c:import url="/WEB-INF/views/layout/footer.jsp" />
