@@ -6,6 +6,8 @@
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 
 <div id="divpage">
+
+
 </div>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp" />

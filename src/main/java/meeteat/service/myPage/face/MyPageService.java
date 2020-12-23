@@ -1,11 +1,14 @@
 package meeteat.service.myPage.face;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.dto.user.User;
+import meeteat.util.MyPaging;
+import meeteat.util.Paging;
 
 public interface MyPageService {
 
@@ -49,5 +52,29 @@ public interface MyPageService {
 	 * @param user
 	 */
 	public void deleteUser(User user);
+
+	/**
+	 * 페이징 계산
+	 * @param curPage
+	 * @param search
+	 * @param category
+	 * @return
+	 */
+	public MyPaging getPaging(MyPaging curPage);
+
+	/**
+	 * 내 전체 글 목록 
+	 * @param paging
+	 * @return
+	 */
+	public List<Map<String, Object>> myAllPostList(MyPaging paging);
+
+	/**
+	 * 선택한 게시글 삭제
+	 * @param map
+	 */
+	public void deleteMyPost(HashMap<String, Object> map);
+
+
 
 }

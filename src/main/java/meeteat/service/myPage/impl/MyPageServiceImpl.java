@@ -2,12 +2,15 @@ package meeteat.service.myPage.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import meeteat.dao.myPage.face.MyPageDao;
 import meeteat.dto.user.User;
 import meeteat.service.myPage.face.MyPageService;
+import meeteat.util.MyPaging;
+
 
 @Service
 public class MyPageServiceImpl implements MyPageService{
+	private static final Logger logger = LoggerFactory.getLogger(MyPageServiceImpl.class);
 	
 	@Autowired private MyPageDao myPageDao;
 	@Autowired ServletContext context;
@@ -95,5 +101,26 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public List<Map<String, Object>> myCommentList(int user_no) {
 		return myPageDao.selectMyCommentByNo(user_no);
+	}
+
+	@Override
+	public MyPaging getPaging(MyPaging curPage) {
+		
+		int totalCount = myPageDao.selectCntAllPost(curPage);
+		
+		MyPaging paging = new MyPaging(totalCount, curPage.getCurPage(), curPage.getCategory(), curPage.getSearch(), curPage.getUser_no());
+		
+		return paging;
+	}
+	
+	@Override
+	public List<Map<String, Object>> myAllPostList(MyPaging paging) {
+		return myPageDao.myAllPostList(paging);
+	}
+	
+	@Override
+	public void deleteMyPost(HashMap<String, Object> map) {
+		myPageDao.deleteMyPost(map);
+		
 	}
 }

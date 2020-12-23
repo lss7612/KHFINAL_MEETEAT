@@ -5,6 +5,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="meeteat.dao.myPage.face.MyPageDao">
+
+	<sql id="search">
+		<if test="search != null and !''.equals(search)">
+			AND (article_title LIKE '%'||#{search}||'%'
+			OR article_content Like '%'||#{search}||'%')
+		</if> 
+	</sql>
+	
+	<sql id="category">
+		<if test="category != null and !''.equals(category)">
+			AND category  Like '%'||#{category}||'%' 
+		</if>
+	</sql>
+	
 	<select id="selectByNo" parameterType="int" resultType="HashMap">
 		SELECT u.*
 			,(SELECT grade_name FROM tb_grade2 g WHERE g.user_grade = u.user_grade) grade_name
@@ -48,4 +62,43 @@
 		WHERE user_no = #{user_no}
 		ORDER BY c.comment_no DESC
 	</select>
+	
+	<select id="selectCntAllPost" parameterType="meeteat.util.MyPaging" resultType="int">
+		SELECT count(*) from( 
+			SELECT * FROM tb_board2
+			WHERE user_no = #{user_no}
+			<include refid="search"/>
+			<include refid="category"/>
+		)CNT
+	</select>
+	
+	<select id="myAllPostList" parameterType="meeteat.util.MyPaging" resultType="HashMap">
+		SELECT * FROM (
+				SELECT rownum rnum, B.*
+				FROM(
+					SELECT board.article_title, board.article_content, board.create_date , board.article_no
+					, (SELECT board_name FROM tb_boardclass2 WHERE board_no = board.board_no) board_name
+					FROM tb_board2 board
+					WHERE user_no = #{user_no}
+					<include refid="search"/>
+					<include refid="category"/>
+				) B
+				ORDER BY rnum
+		) R
+		<where>
+			rnum BETWEEN #{startNo } AND #{endNo }			
+		</where>
+		
+	</select>
+	
+	<delete id="deleteMyPost" parameterType="HashMap">
+		DELETE FROM tb_board2
+		<if test="postArr != null">
+		WHERE article_no IN
+			<foreach collection="postArr" item="article_no" 
+			open="(" close=")" separator=",">
+			#{article_no}
+			</foreach>
+		</if>
+	</delete>
 </mapper>
