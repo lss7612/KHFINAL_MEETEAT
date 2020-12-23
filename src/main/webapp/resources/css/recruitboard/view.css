@@ -152,19 +152,19 @@
 }
 
 .color_dark{
-	background:#c67100;
+	background:#c0a952;
 }
 
 .color_base{
-	background:#ffa000;
+	background:#f5da81;
 }
 
 .color-light{
-	background:#ffd149;
+	background:#ffffb2;
 }
 
 .color_primary{
-	background:#ffa000;
+	background:#f5da81;
 }
 
 .border{
@@ -173,6 +173,6 @@
 
 .btn-primary{
 	color: black;
-	background:#ffa000 !important;
+	background:#f5da81 !important;
 	border-color:#ccc;
 }
