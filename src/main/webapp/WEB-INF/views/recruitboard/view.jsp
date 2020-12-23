@@ -173,7 +173,7 @@ function reportPopup(){
 	
 	//팝업 
 	window.open("http://localhost:8088/report/doReport","report"
-			, "width=500px,height=425px")
+			, "width=500px,height=466px")
 	frmPop.action = "http://localhost:8088/report/doReport";
 	frmPop.target = "report";
 	frmPop.user_no.value = ${result.USER_NO };
