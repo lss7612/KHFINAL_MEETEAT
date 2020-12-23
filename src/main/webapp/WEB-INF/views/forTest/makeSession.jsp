@@ -44,7 +44,7 @@ function createChat(){
 //게시글 신고하기버튼 클릭시 동작할 함수
 function reportPopup(){
 	var frmPop = document.frmPopup;
-	
+	console.log(frmPop);
 	//팝업 
 	window.open("http://localhost:8088/report/doReport","report"
 			, "width=500px,height=425px")

@@ -1,10 +1,13 @@
-#closeBtn{
-	position : absolute;
-	left:35%;
-}
-#reportTitle{
-	padding-left : 20px;
+#reportTitleArea{
+	background-color : #f5da81;
+	padding-top : 10px;
+	padding-bottom : 10px;
 }
 #content{
-	padding-left : 20px;
+	text-align : center;
+    font-size: large;
+}
+
+#buttonArea{
+	text-align :center;
 }

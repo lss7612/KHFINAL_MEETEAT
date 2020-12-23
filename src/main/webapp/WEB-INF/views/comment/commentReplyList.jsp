@@ -37,6 +37,13 @@
 			<span class=" ">
 			<fmt:formatDate value="${list.CREATE_DATE }" pattern="yy/MM/dd hh:mm" />
 			</span>
+			<div class="commentReport" style="display : inline-block;" >
+				<form method="POST">
+					<input type="hidden" name="user_no" value="${list.USER_NO }"/>
+					<input type="hidden" name="url" />
+					<button class="commentReportBtn" onclick="reportBtn(this)">🚨</button>
+				</form>
+			</div>
 		</div>
 		
 	</div>
@@ -84,9 +91,6 @@ $(document).ready(function(){
 	
 	
 })
-
-
-
 function deleteComment(commentNo) {
 	$.ajax({
 		type: "get"
@@ -106,11 +110,9 @@ function deleteComment(commentNo) {
 		}
 	})
 }
-
 function closeOtherUpdateForms(){
 	$('.replyOrUpdateFormforReply').html('')
 }
-
 function openUpdateForm(commentNo) {
 	let id = 'replyOrUpdateFormforReply'+commentNo
 	console.log(id)
@@ -131,7 +133,6 @@ function openUpdateForm(commentNo) {
 	})
 	
 }
-
 function openReplyForm(commentNo, articleNo, boardNo) {
 	let id = 'replyOrUpdateForm'+commentNo
 	console.log(id)
@@ -154,6 +155,5 @@ function openReplyForm(commentNo, articleNo, boardNo) {
 	
 	
 }
-
 
 </script>
