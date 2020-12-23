@@ -2,17 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:import url="/WEB-INF/views/layout/header.jsp" />
+
 <!-- 부트스트랩 3.3.2 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-<c:import url="/WEB-INF/views/layout/header.jsp" />
-
 <style>
 #container {
 	position: relative;
-	z-index: 20;
+/* 	z-index: 20; */
 	max-width: 954px;
 	margin: 0 auto;
 }
