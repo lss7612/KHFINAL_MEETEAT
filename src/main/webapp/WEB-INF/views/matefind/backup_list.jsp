@@ -46,6 +46,10 @@ body {
 	margin: 10px 0px 0px;
 }
 
+#title {
+	margin-top: 0px;
+}
+
 .info {
 	margin: 6px 0px 0px;
 }
@@ -87,7 +91,7 @@ body {
 
 $(document).ready(function(){
 	
-	$("#party_location").change(function() {
+	$("select").change(function() {
 		
 		console.log("party_location [change]")
 		console.log($("#party_location").val())
@@ -97,6 +101,7 @@ $(document).ready(function(){
 		$.ajax({
 			
 			url: '/matefind/sortajax',
+			type: 'get',
 			data: {
 				"party_location": $("#party_location").val()
 				, "meet_time": $("#meet_time").val()
@@ -147,21 +152,20 @@ function createChat(){
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 
 
-<div class="container">
+<div class="container" id="divpage">
 
-<h1>메이트찾기</h1>
+<!-- <h1>메이트찾기</h1> -->
 
 
-<hr>
+<!-- <hr> -->
 
 	<div class="filter">
 	<h4>필터</h4>
 	
-	<form action="/matefind/search" method="post">
 		<div class="input-group mb-3">
 		  <label class="input-group-text" for="party_location">지역</label>
 		  <select class="form-select" id="party_location" name="party_location">
-		    <option selected>전체</option>
+		    <option selected value="">전체</option>
 		    <option value="서울특별시">서울특별시</option>
 		    <option value="부산광역시">부산광역시</option>
 		    <option value="대구광역시">대구광역시</option>
@@ -185,26 +189,24 @@ function createChat(){
 	
 		  <label class="input-group-text" for="meet_time">시간</label>
 		  <select class="form-select" id="meet_time" name="meet_time">
-		    <option selected>전체</option>
-		    <option value="1">아침</option>
-		    <option value="2">점심</option>
-		    <option value="3">저녁</option>
-		    <option value="4">새벽</option>
+		    <option value="">전체</option>
+		    <option value="아침">아침</option>
+		    <option value="점심">점심</option>
+		    <option value="저녁">저녁</option>
+		    <option value="새벽">새벽</option>
 		  </select>
 	
 		  <span style="width: 50px;"></span>
 	
 		  <label class="input-group-text" for="category">종류</label>
 		  <select class="form-select" id="category" name="category">
-		    <option selected>전체</option>
+		    <option value="">전체</option>
 		    <option value="식사">식사</option>
 		    <option value="술">술</option>
 		    <option value="카페/디저트">카페/디저트</option>
 		  </select>
 		</div>
-		<button type="button" class="btn btn-primary">검색하기</button>
 	
-	</form>
 	</div>
 
 <br><br>
@@ -217,7 +219,7 @@ function createChat(){
 		
 			<img class="thumbnail-img" style="margin-bottom: 10px;" alt="썸네일이미지" src="https://www.bloter.net/wp-content/uploads/2016/08/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0-%EC%82%AC%EC%A7%84.jpg">
 			
-			<h2 style="white-space:nowrap; text-overflow: ellipsis; overflow: hidden;">${list.article_title }</h2>
+			<h2 id="title" style="white-space:nowrap; text-overflow: ellipsis; overflow: hidden;">${list.article_title }</h2>
 			
 		</a>
 			<div class="info">
@@ -274,7 +276,7 @@ function createChat(){
 	<div class="row">
 		<div class="col">
 		
-			<a href="/login/main"><button class="btn btn-secondary" style="float: left; margin-bottom: 50px;">로그인메인</button></a>
+<!-- 			<a href="/login/main"><button class="btn btn-secondary" style="float: left; margin-bottom: 50px;">로그인메인</button></a> -->
 			<a href="/matefind/write"><button class="btn btn-primary" style="float: right; margin-bottom: 50px;">글쓰기</button></a>
 		
 		</div>

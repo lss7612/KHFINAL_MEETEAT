@@ -235,6 +235,7 @@ public class LoginController {
 			user = loginService.selectUser(user);
 			session.setAttribute("isLogin", true);
 			session.setAttribute("user_no", user.getUser_no());
+			session.setAttribute("user_grade", user.getUser_grade());
 
 			return "redirect:/login/main";
 			
@@ -243,6 +244,7 @@ public class LoginController {
 			user = loginService.selectUser(user);
 			session.setAttribute("isLogin", true);
 			session.setAttribute("user_no", user.getUser_no());
+			session.setAttribute("user_grade", user.getUser_grade());
 			
 			loginService.signUp(user);
 			return "redirect:/login/main";

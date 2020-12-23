@@ -163,22 +163,22 @@ th, td {
 		<thead>
 			<th>유저번호</th>
 			<th>아이디</th>
-			<th>이름</th>
 			<th>닉네임</th>
 			<th>성별</th>
 			<th>나이대</th>
 			<th>이메일</th>
+			<th>유저등급</th>
 			<th>프로필사진</th>
 		</thead>
 		
 		<tbody>
 			<td>${user_no }</td>
 			<td>${user_id }</td>
-			<td>${user_name }</td>
 			<td>${user_nick }</td>
 			<td>${user_gender }</td>
 			<td>${user_age }</td>
 			<td>${user_email }</td>
+			<td>${user_grade }</td>
 			<td><img src="${user_image }" style="width: 100px; height: 100px;"/></td>
 		</tbody>
 		
