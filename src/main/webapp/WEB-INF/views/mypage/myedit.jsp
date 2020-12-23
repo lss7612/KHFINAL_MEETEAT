@@ -22,6 +22,8 @@ $(document).ready(function() {
 	          }
 	       }
 	})
+	
+	
 })
 
 </script>
@@ -70,7 +72,7 @@ $(document).ready(function() {
 				</div>
 				<div class="box_set">
 					<strong class="tit_set">비밀번호</strong>
-					<span class="txt_set"><input type="password" name="user_pw" id = "userpw" value=${userinfo.USER_PW }/></span>
+					<span class="txt_set"><input type="password" name="user_pw" id = "userpw"/></span>
 				</div>
 				
 				<div id = "alert-success"><p style = "color: blue; text-align: right;">비밀번호가 일치합니다.</p></div>
@@ -83,7 +85,7 @@ $(document).ready(function() {
 			</div><br>
 
 				
-				<button class="btn btn-success btn-sm pull-right">수정 완료</button>
+				<button id="editBtn" class="btn btn-success btn-sm pull-right">수정 완료</button>
 				<div><button class="btn btn-danger btn-sm pull-right" onclick="location.href='/mypage/mydelete'">회원 탈퇴</button></div>
 				<div><button onclick="location.href='/mypage/mypage'" class="btn btn-warning btn-sm pull-left">돌아가기</button><br></div>
 			</fieldset>
