@@ -93,6 +93,11 @@ td:nth-child(2) {
 	overflow: hidden;
 }
 
+th{
+
+	background-color: #F5DA81;
+}
+
 #myinfo{
 
 	display: inline-block;

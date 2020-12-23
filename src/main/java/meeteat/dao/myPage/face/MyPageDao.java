@@ -1,5 +1,6 @@
 package meeteat.dao.myPage.face;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,16 @@ public interface MyPageDao {
 	 * @param user
 	 */
 	public void deleteUser(User user);
+
+
+//	/**
+//	 * 마이 포스트 페이징 계산
+//	 * @param param
+//	 * @return
+//	 */
+//	public int selectCntAllPost(HashMap<String, Object> param);
+
+
 
 
 }

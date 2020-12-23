@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.dto.user.User;
+import meeteat.util.Paging;
 
 public interface MyPageService {
 
@@ -49,5 +50,16 @@ public interface MyPageService {
 	 * @param user
 	 */
 	public void deleteUser(User user);
+
+	/**
+	 * 페이징 계산
+	 * @param curPage
+	 * @param search
+	 * @param category
+	 * @return
+	 */
+//	public Paging getPaging(Paging curPage, String search, String category, int user_no);
+
+
 
 }

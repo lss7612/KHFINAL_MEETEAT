@@ -48,4 +48,11 @@
 		WHERE user_no = #{user_no}
 		ORDER BY c.comment_no DESC
 	</select>
+	
+<!-- 	<select id="selectCntAllPost" parameterType="HashMap" resultType="int"> -->
+<!-- 		SELECT count(*)(  -->
+<!-- 			SELECT * FROM tb_board2 -->
+<!-- 			WHERE user_no = #{user_no} -->
+<!-- 		)CNT -->
+<!-- 	</select> -->
 </mapper>

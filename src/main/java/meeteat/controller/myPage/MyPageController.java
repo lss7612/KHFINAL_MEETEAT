@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.dto.user.User;
 import meeteat.service.myPage.face.MyPageService;
+import meeteat.util.Paging;
+
 
 @Controller
 public class MyPageController {
@@ -98,7 +100,16 @@ public class MyPageController {
 
 	}
 	@RequestMapping(value="/mypage/mypost")
-	public void myPost() {
+	public void myPost(HttpSession session, Model model, Paging curPage
+			, String search
+			, String category) {
+		int user_no = Integer.parseInt(session.getAttribute("user_no").toString());
+		
+//		Paging paging = myPageService.getPaging();
+		
+		
+//		logger.info("paging" + paging);
+		
 		
 	}
 	
