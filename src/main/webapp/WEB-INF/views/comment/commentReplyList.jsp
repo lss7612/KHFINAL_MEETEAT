@@ -37,6 +37,14 @@
 			<span class=" ">
 			<fmt:formatDate value="${list.CREATE_DATE }" pattern="yy/MM/dd hh:mm" />
 			</span>
+			|
+			<div class="commentReport" style="display : inline-block;" >
+				<form method="POST">
+					<input type="hidden" name="user_no" value="${list.USER_NO }"/>
+					<input type="hidden" name="url" />
+					<button class="commentReportBtn" onclick="reportBtn(this)">🚨</button>
+				</form>
+			</div>
 		</div>
 		
 	</div>
@@ -56,7 +64,7 @@
 	</div>
 	
 	<%-- 대댓글입력란 --%>
-	<div id="replyOrUpdateFormforReply${list.COMMENT_NO }" style="width:90%; margin: 0 auto;">
+	<div id="replyOrUpdateFormforReply${list.COMMENT_NO }" class="replyOrUpdateFormforReply" style="width:90%; margin: 0 auto;">
 	</div>
 	
 	
@@ -72,6 +80,7 @@ $(document).ready(function(){
 	//코멘트(대댓글)수정을 클릭했을 때
 	$('.updateReply').click(function(){
 		console.log($(this).attr('comment_no'))
+		closeOtherUpdateForms()
 		openUpdateForm($(this).attr('comment_no'))
 	})
 	
@@ -83,9 +92,6 @@ $(document).ready(function(){
 	
 	
 })
-
-
-
 function deleteComment(commentNo) {
 	$.ajax({
 		type: "get"
@@ -105,7 +111,9 @@ function deleteComment(commentNo) {
 		}
 	})
 }
-
+function closeOtherUpdateForms(){
+	$('.replyOrUpdateFormforReply').html('')
+}
 function openUpdateForm(commentNo) {
 	let id = 'replyOrUpdateFormforReply'+commentNo
 	console.log(id)
@@ -126,7 +134,6 @@ function openUpdateForm(commentNo) {
 	})
 	
 }
-
 function openReplyForm(commentNo, articleNo, boardNo) {
 	let id = 'replyOrUpdateForm'+commentNo
 	console.log(id)
@@ -149,6 +156,5 @@ function openReplyForm(commentNo, articleNo, boardNo) {
 	
 	
 }
-
 
 </script>

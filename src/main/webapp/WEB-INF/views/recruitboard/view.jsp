@@ -3,12 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 <link rel="stylesheet" href="/resources/css/recruitboard/view.css">
 <script type="text/javascript" src="/resources/js/recruitboard/view.js"></script>
+<!-- 스마트에디터 -->
+<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 
-
+<div id="divpage">
 <div id="view_wrapper">
 
 <h2 class=""><a href="/recruitboard/list">모집게시판</a></h2>
@@ -171,7 +173,7 @@ function reportPopup(){
 	
 	//팝업 
 	window.open("http://localhost:8088/report/doReport","report"
-			, "width=500px,height=425px")
+			, "width=502px,height=506px")
 	frmPop.action = "http://localhost:8088/report/doReport";
 	frmPop.target = "report";
 	frmPop.user_no.value = ${result.USER_NO };
@@ -194,5 +196,5 @@ function reportPopup(){
 </div>
 
 </div>
-</body>
-</html>
+</div>
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="meeteat.dao.login.face.LoginDao">
+
+	<select id="login" parameterType="meeteat.dto.user.User" resultType="int">
+		SELECT COUNT(*) FROM tb_user2
+		WHERE user_id = #{user_id }
+			AND user_pw = #{user_pw }
+	</select>
+	
+	<select id="selectUser" parameterType="meeteat.dto.user.User" resultType="meeteat.dto.user.User">
+		SELECT * FROM tb_user2
+		WHERE user_id = #{user_id }
+			AND user_pw = #{user_pw }
+	</select>
+
+	<select id="selectUserByUserNo" parameterType="meeteat.dto.user.User" resultType="meeteat.dto.user.User">
+		SELECT * FROM tb_user2
+		WHERE user_no = #{user_no }
+	</select>
+	
+	<select id="userIdCheck" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM tb_user2
+		WHERE user_id = #{user_id }
+	</select>
+
+	<select id="userNickCheck" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM tb_user2
+		WHERE user_nick = #{user_nick }
+	</select>
+	
+	<insert id="signUp">
+		INSERT INTO tb_user2 (user_no, user_id, user_pw, user_nick, user_age, user_gender, user_email, user_profileorigin, user_profilestored, user_blockcnt, user_grade)
+		VALUES (tb_user2_seq.nextval, #{user_id}, #{user_pw}, #{user_nick}, #{user_age}, #{user_gender}, #{user_email}, #{user_profileorigin}, #{user_profilestored}, 0, 2)
+	</insert>
+	
+</mapper>

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link rel="stylesheet" href="/resources/css/common/common.css">
+<link rel="stylesheet" href="/resources/css/recruitboard/comment_ajax.css">
 <script type="text/javascript" src="/resources/js/recruitboard/comment_ajax.js"></script>
 
 <div id="commentList_ajax">
@@ -39,6 +40,14 @@
 			<span class=" ">
 			<fmt:formatDate value="${list.CREATE_DATE }" pattern="yy/MM/dd hh:mm" />
 			</span>
+			|
+			<div class="commentReport" style="display : inline-block;" >
+				<form method="POST">
+					<input type="hidden" name="user_no" value="${list.USER_NO }"/>
+					<input type="hidden" name="url" />
+					<button class="commentReportBtn" onclick="reportBtn(this)">🚨</button>
+				</form>
+			</div>
 		</div>
 		
 	</div>
@@ -76,7 +85,7 @@
 	</div>
 	
 	<%-- 대댓글입력란 --%>
-	<div id="replyOrUpdateForm${list.COMMENT_NO }" style="width:90%; margin: 0 auto;">
+	<div id="replyOrUpdateForm${list.COMMENT_NO }" class="replyOrUpdateForm" style="width:90%; margin: 0 auto;">
 	</div>
 	
 	
@@ -84,4 +93,3 @@
 </div>
 </c:forEach>
 </div>
-

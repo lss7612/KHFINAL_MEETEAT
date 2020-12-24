@@ -1,0 +1,71 @@
+#eventModalWrapper {
+	width:100%;
+	height:100%;
+    background: #ccc;
+    background-color: rgba( 255, 255, 255, 0.5 );
+    position:absolute;
+    z-index: 100;
+}
+
+
+#centerDiv{
+	overflow: hidden;
+	width: 805px;
+	height:500px;
+	border: 1px solid #ccc;
+	background-color: white;
+	margin:0 auto;
+}
+
+
+#eventImgBox{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	width: 500px;
+	height: 400px;
+}
+
+.eventPopupImg {
+/* 	left: 50px; */
+	width: 500px;
+}
+
+.eventListBox{
+	width:300px;
+	height:490px;
+	overflow:scroll;
+}
+
+.eventListBox div{
+	width: 280px;
+}
+
+.eventTitle {
+	width:290px;
+	margin:0 auto
+}
+
+#modalExitButtonDiv{
+	width: 800px;
+	text-align:right;
+	font-size:50px;
+	margin:0 auto;
+}
+#modalExitButtonDiv > i {
+	cursor: pointer;
+}
+
+#deleteTodayButton {
+	cursur:pointer;
+	width:800px;
+	margin: 0 auto;
+}
+
+
+
+
+
+
+
+

@@ -6,8 +6,8 @@
 
 <style>
 .active > a {
-	background-color: #ffa000 !important;
-	border-color: #ffa000 !important;
+	background-color: #f5da81 !important;
+	border-color: #f5da81 !important;
 }
 </style>
 

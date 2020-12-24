@@ -3,11 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 <link rel="stylesheet" href="/resources/css/common/common.css">
 <link rel="stylesheet" href="/resources/css/eventboard/view.css">
 <script type="text/javascript" src="/resources/js/eventboard/view.js"></script>
+<%-- 스마트에디터 --%>
+<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
+<div id="divpage">
 <div id="view_wrapper">
 
 <h2 class=""><a href="/eventboard/holding">이벤트</a></h2>
@@ -87,18 +90,13 @@
 
 <hr>
 <%-- 코멘트영역 --%>
-<div id="view_comment" style="width:95%; margin:0 auto;">
-
-
-
-</div>
 <div style="width:90%; margin:0 auto;">
 <div class="col-md-4 pull-right"style="margin:5px 0 0 0; padding:10px 10px 0; font-size:20px;text-align:right;"><i id="refrash_comment_botton"  style="cursor: pointer;" class="fas fa-sync-alt"></i></div>
 <div class="col-md-4 pull-left" style="margin:5px 0 0 0; padding:14px 10px 0; font-size:18px;text-align:left;">${result.CNT_COMMENT }개의 덧글</div>
 <div class="clearfix"></div>
 </div>
 
-<%-- 댓글내용영역 --%>
+<%-- 댓글 불러오는 내용영역 --%>
 <div id="commentList" style="width:90%; margin:0 auto;">
 </div>
 
@@ -161,6 +159,7 @@ $('iframe').css('height','100px');
 
 </div>
 
-</div>
-</body>
-</html>
+</div><%-- wrapper end --%>
+</div><%-- divpage end --%>
+
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>

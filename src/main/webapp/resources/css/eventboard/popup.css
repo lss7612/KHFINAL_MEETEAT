@@ -1,24 +1,38 @@
 #popupManageWrapper{
-	width:60%;
+	width:100%;
 	margin: 0 auto;
-	min-width:700px;
+	min-width:1100px;
 }
 
-#workBoxes > div {
+#eventSideBar{
+	width:25%
+}
+
+.eventManageButton{
+	cursor:pointer;
+	border:1px solid #ccc;
+	border-radius:10px;
+	width: 50%;
+	margin: 0 auto;
+	text-align:center;
+}
+
+#workBoxes{
+	width:70%;
+	min-width:785px;
 }
 
 #popup{
-	width: 45%;
+	width: 70%;
 	border:1px solid #ccc;
-	height:500px;
+	height:680px;
 	overflow: scroll;
+	margin: 0 auto;
 }
 
-#notPopup{
-	width: 45%;
-	border:1px solid #ccc;
-	height:500px;
+#ajaxList{
 	overflow: scroll;
+	height:300px;
 }
 
 #popupOperator{
@@ -31,9 +45,13 @@
 	border-radius: 10px;
 }
 
-.selected {
+.willAdd {
 	background:#b2fef7;
 	border: 1px solid #b2fef7;
+}
+.willDelete {
+	background:#f06292;
+	border: 1px solid #f06292;
 }
 
 .notSelected{

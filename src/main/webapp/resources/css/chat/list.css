@@ -1,0 +1,84 @@
+
+* {
+	font-family: 'NEXON Lv2 Gothic';
+}
+
+#chatList{
+	height : 500px;
+	width : 600px;
+	border : solid #b9d9e0;
+    overflow : auto;
+    overflow-x : hidden;
+    background-color: #ececc2;
+    margin-left : 40px;
+}
+
+#chatList::-webkit-scrollbar{
+	width: 10px;
+    background-color: #ececc2;
+}
+
+#chatList::-webkit-scrollbar-thumb {
+	background-color: #dcdcdc;
+    border-radius: 10px;
+}
+
+.innerList{
+	height : 100px;
+	border : black;
+	border-style : solid;
+	border-top-width : 0; 
+	border-bottom-width : 1px;
+	border-left-width : 0;
+	border-right-width : 0;
+	position : relative;
+}
+
+.profileImg{
+	height : 60px;
+	width : 60px;
+    border-radius: 70%;
+	border: 1px solid white;
+	float : left;
+	margin-top : 6px;
+	margin-left : 6px;
+}
+
+.roomName{
+	max-width : 200px;
+	margin-left : 3px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.innerContentArea{
+	position : absolute;
+	right : 10px;
+	bottom : 1px;
+	margin-bottom : 5px;
+}
+
+.innerTime{
+	font-size : small;
+	margin-right : 10px;
+}
+
+.innerContent{
+	display : inline-block;
+	max-width : 200px;
+	height : 20px;
+	overflow : hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.innerList:hover{
+	background:#efc27e;
+}
+
+@font-face {
+    font-family: 'NEXON Lv2 Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

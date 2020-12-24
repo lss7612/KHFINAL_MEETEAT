@@ -40,6 +40,14 @@
 			<span class=" ">
 			<fmt:formatDate value="${list.CREATE_DATE }" pattern="yy/MM/dd hh:mm" />
 			</span>
+			|
+			<div class="commentReport" style="display : inline-block;" >
+				<form method="POST">
+					<input type="hidden" name="user_no" value="${list.USER_NO }"/>
+					<input type="hidden" name="url" />
+					<button class="commentReportBtn" onclick="reportBtn(this)">🚨</button>
+				</form>
+			</div>
 		</div>
 		
 	</div>
@@ -68,7 +76,7 @@
 		
 		</c:if>
 		
-		
+		<%-- 대댓글 리스트 불러오는 공간 --%>
 		<div class="" id="replysForOriginno${list.COMMENT_NO }">
 		</div>
 		
@@ -77,7 +85,7 @@
 	</div>
 	
 	<%-- 대댓글입력란 --%>
-	<div id="replyOrUpdateForm${list.COMMENT_NO }" style="width:90%; margin: 0 auto;">
+	<div id="replyOrUpdateForm${list.COMMENT_NO }" class="replyOrUpdateForm" style="width:90%; margin: 0 auto;">
 	</div>
 	
 	

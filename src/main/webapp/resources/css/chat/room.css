@@ -1,0 +1,203 @@
+#goChatList{
+	width : 42px;
+	height : 39px;
+	float : left;
+}
+
+* {
+	font-family: 'NEXON Lv2 Gothic';
+}
+
+#roomTitle{
+	width : 600px;
+	height : 40px;
+	display : table-cell;
+	vertical-align : middle;
+}
+
+#roomTitleContent{
+	font-size : x-large;
+	margin-left : 5px;
+}
+
+#chattingContent{
+	width : 100%;
+	height : 520px;
+}
+
+#chatArea{
+	float : left;
+	height : 600px;
+	min-width : 510px;
+	max-width : 580px;
+	border : solid 1px;
+}
+
+#etcArea{
+    float: left;
+    height: auto;
+    margin-left: 10px;
+    width: 150px;
+}
+
+#exitBtn{
+    background-color: #ea0000;;
+    color: white;
+    border-radius: 5px;
+    width : 100%;
+	height: 50px;
+	margin-bottom : 10px;
+}
+
+#userListArea{
+	border : solid 1px;
+}
+
+#checkme{
+    font-size: smaller;
+}
+
+#chatting{
+	height: 85%;
+	min-width : 510px;
+	max-width : 580px;
+    background-color: #ececc2;
+    overflow : auto;
+    overflow-x : hidden;
+}
+
+#chatting::-webkit-scrollbar{
+	width: 10px;
+    background-color: #ececc2;
+}
+
+#chatting::-webkit-scrollbar-thumb {
+	background-color: #dcdcdc;
+    border-radius: 10px;
+}
+
+
+#usingArea{
+	height : 15%;
+	background-color : #ece2e2;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+}
+
+#writeMsg{
+    height: 80%;
+    width: 80%;
+    margin-top : 1%;
+    margin-left : 1%;
+    vertical-align: middle;
+}
+
+#sendBtn{
+    margin-top : 1%;
+	width : 15%;
+	height : 80%;
+	background-color: skyblue;
+	vertical-align: middle;
+}
+
+.noticeArea{
+    height: 4%;
+    width: auto;
+    background-color: gainsboro;
+    border-radius: 3px;
+    text-align: center;
+    margin-bottom: 1%;
+    clear : both;
+}
+
+.fromMsg, .toMsg{
+	padding : 1.5%;
+	display : block;
+	height : auto;
+	width : 100%;
+}
+
+.fromMsg{
+    min-height: 62px;
+}
+.toMsg{
+	text-align : right;
+}
+
+.imgDiv{
+    overflow: hidden;
+}
+.profileImg{
+	height : 60px;
+	width : 60px;
+    border-radius: 70%;
+	border: 1px solid white;
+	float : left;
+	margin-right: 5%;
+	
+}
+
+.fromChatContent, .toChatContent{
+    height: auto;
+	min-width : 15px;
+	min-height : 21px;
+	padding : 10px;
+	word-break : break-word;
+    display : inline-block;
+	position:relative;
+	border-radius: 10px;
+	text-align : initial;
+}
+
+.fromChatContent{
+    background-color: #e4cae8;
+	max-width : 280px;
+}
+
+.toChatContent{
+    background-color: #d4dfe4;
+	margin-right : 5%;
+	max-width : 350px;
+}
+
+.fromChatContent:after {
+	border-top:15px solid #e4cae8;
+	border-left: 15px solid transparent;
+	border-right: 0px solid transparent;
+	border-bottom: 0px solid transparent;
+	content:"";
+	position:absolute;
+	top:10px;
+	left:-15px;
+}
+
+.toChatContent:after{
+	border-top: 15px solid #d4dfe4;
+    border-left: 0px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 0px solid transparent;
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 100%;
+    text-align :initial;
+}
+
+.fromMsgTime, .toMsgTime {
+	font-size: small;
+}
+
+.fromMsgTime{
+	margin-left : 10px;
+}
+.toMsgTime{
+	margin-right : 10px;
+}
+
+
+@font-face {
+    font-family: 'NEXON Lv2 Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

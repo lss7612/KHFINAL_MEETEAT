@@ -5,13 +5,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript"
+ src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+ 
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	if(confirm('결제회원만 접근 가능합니다.\n 결제하시겠습니까?')){
+		location.href='/mypay/mypay'
+	} else {
+		window.history.back()
+	}
+	
+})
+
+</script>
 </head>
 <body>
-<div style="text-align:center; width:50%; margin:0 auto;" id="searchMsg" >
-	<br>
-	<img alt="" src="/resources/img/error.jpg">
-	<h4>결제하셔야 접속이 가능합니다...</h4>
-	<a href="/"><span>결제할래요..</span></a>
-</div>
 </body>
 </html>

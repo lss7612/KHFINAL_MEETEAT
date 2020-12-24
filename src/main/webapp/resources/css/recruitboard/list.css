@@ -1,5 +1,5 @@
 .wrapper {
-	width:50%;
+	width:100%;
 	min-width:500px;
 	margin: 0 auto;
 }
@@ -95,7 +95,7 @@
 
 .btn-primary{
 	color: black;
-	background:#ffa000 !important;
+	background:#f5da81 !important;
 	border-color:#ccc;
 }
 

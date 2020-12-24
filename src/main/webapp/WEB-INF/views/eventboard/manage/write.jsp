@@ -3,10 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 <link rel="stylesheet" href="/resources/css/common/common.css" >
 <link rel="stylesheet" href="/resources/css/eventboard/write.css" >
 <script type="text/javascript" src="/resources/js/eventboard/write.js" ></script>
+<%-- 스마트에디터 --%>
+<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 <%-- 로딩 모달 --%>
 <div class="modal_img_upload invisible">
@@ -14,10 +16,12 @@
 	<span style="font-weight:bold; font-size:30px;">글 등록중입니다. 조금만 기다려주세요.</span>
 </div>
 
+<div id="divpage">
+
 <div id="eventWriteWrapper">
 
 <div class="base_padding">
-<h2>이벤트</h2>
+<h2><a href="/eventboard/holding">이벤트</a></h2>
 </div>
 <hr>
 
@@ -119,5 +123,6 @@ $('.se2_inputarea').css('min-width','550px');
 	</div>
 </form>
 
-</body>
-</html>
+</div>
+
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>

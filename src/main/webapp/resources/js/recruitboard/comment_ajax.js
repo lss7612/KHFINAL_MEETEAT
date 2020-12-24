@@ -15,6 +15,7 @@ $(document).ready(function(){
 	//코멘트수정을 클릭했을 때
 	$('.updateComment').click(function(){
 		console.log($(this).attr('comment_no'))
+		closeOtherForms()
 		openUpdateForm($(this).attr('comment_no'))
 	})
 	
@@ -28,6 +29,7 @@ $(document).ready(function(){
 	//코멘트답글을 클릭했을 때
 	$('.commentReply').click(function(){
 		console.log($(this).attr('comment_no'))
+		closeOtherForms();
 		openReplyForm($(this).attr('comment_no'), $(this).attr('article_no'), $(this).attr('board_no'))
 	})
 	
@@ -94,6 +96,7 @@ function deleteComment(commentNo) {
 	})
 }
 
+
 function openUpdateForm(commentNo) {
 	let id = 'replyOrUpdateForm'+commentNo
 	console.log(id)
@@ -113,6 +116,10 @@ function openUpdateForm(commentNo) {
 		}
 	})
 	
+}
+
+function closeOtherForms(){
+	$('.replyOrUpdateForm').html('')
 }
 
 function openReplyForm(commentNo, articleNo, boardNo) {
@@ -167,4 +174,24 @@ function closeReplyList(commentOriginNo){
 	let id = 'replysForOriginno' + commentOriginNo
 	
 	$('#'+id).html('')
+}
+
+function reportBtn(e){
+	
+	var target = $(e).prev().prev().val();
+	//console.log("user_no : "+target);
+	//console.log("url : "+window.location.href)
+
+	//팝업 
+	var frmPop = e.parentElement;
+	//console.log(frmPop);
+	window.open("http://localhost:8088/report/doReport","report"
+			, "width=502px,height=506px")
+	frmPop.action = "http://localhost:8088/report/doReport";
+	frmPop.target = "report";
+	//${user_no}에 작성자 번호에 맞는 변수명을 적어주시면 됩니당.
+	frmPop.user_no.value = target; 
+	//console.log(frmPop.user_no.value);
+	//현재글 URL정보 전달
+	frmPop.url.value = window.location.href;
 }

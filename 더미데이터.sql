@@ -643,6 +643,122 @@ to_date('2020-8-17 12:00', 'YYYY-MM-DD HH24:MI'), null ,
 0,141,to_date('2020-05-21 1200', 'YYYY-MM-DDHH24MI'));
 
 
+-- 채팅방 개설
+insert into tb_chatting2 (chatting_id) values('852943e9d4cb4392ab0a8f22e9a28c23');
+insert into tb_chatting2 (chatting_id) values('bb7c15cbf9504bf3826208098fe91f25');
+insert into tb_chatting2 (chatting_id) values('f459334d815b4a31b80b61c7cb179e25');
+insert into tb_chatting2 (chatting_id) values('c9718498a25e4f109dc12958a90ddc6d');
+insert into tb_chatting2 (chatting_id) values('1a13d7933b644c66a33fb27cc81dbfb5');
+insert into tb_chatting2 (chatting_id) values('c3a616c31ecb4c929a13b26a528e8ccc');
+insert into tb_chatting2 (chatting_id) values('fa42ada03fb7495eb4514075ea98a36b');
+insert into tb_chatting2 (chatting_id) values('4cebdd2490af45a6a12729029b1fa70f');
+insert into tb_chatting2 (chatting_id) values('aef24e22369e43c88de2d13e01f22fbf');
+insert into tb_chatting2 (chatting_id, chatting_name) values('f459334d815b4109dc19029b1f22fbf0', '관리자와 결제회원, 일반회원의 채팅방');
+insert into tb_chatting2 (chatting_id, chatting_name) values('c3a616c31ecb4c929a13b26a528e8asd', '회원 단체 채팅방');
+insert into tb_chatting2 (chatting_id, chatting_name) values('c3a616c31ecb4c929a13b26a528e8asd', '회원 단체 채팅방2');
+
+select * from tb_chatting2
+order by chatting_no desc;
+
+
+
+-- 1대1 채팅방 참여자 정보
+insert into tb_chattinguser2 (chatting_no, user_no) values( 1, 10);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 1, 11);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 2, 30);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 2, 31);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 3, 14);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 3, 11);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 4, 10);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 4, 14);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 5, 14);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 5, 30);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 6, 1);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 6, 2);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 7, 1);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 7, 3);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 8, 2);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 8, 3);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 9, 3);
+insert into tb_chattinguser2 (chatting_no, user_no) values( 9, 4);
+
+--1대다 채팅방 참여자 정보
+insert into tb_chattinguser2 (chatting_no, user_no) values(23, 1);
+insert into tb_chattinguser2 (chatting_no, user_no) values(23, 2);
+insert into tb_chattinguser2 (chatting_no, user_no) values(23, 3);
+
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 1);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 2);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 3);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 4);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 5);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 6);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 7);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 8);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 9);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 10);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 11);
+
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 1);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 2);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 3);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 4);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 5);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 6);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 7);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 8);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 9);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 10);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 11);
+
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 1);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 2);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 3);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 4);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 15);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 16);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 17);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 18);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 19);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 110);
+insert into tb_chattinguser2 (chatting_no, user_no) values(62, 111);
+
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 1);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 2);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 3);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 4);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 25);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 26);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 37);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 48);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 59);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 140);
+insert into tb_chattinguser2 (chatting_no, user_no) values(63, 161);
+
+
+
+
+
+--1대다 채팅방에 메시지 예시
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date)
+values(23, 1, 'ㅎㅇㅎㅇ', sysdate);
+
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date)
+values(23, 2, 'Hello', sysdate);
+
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date)
+values(23, 3, '안뇽', sysdate);
+select * from tb_chattingcontent2;
+
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date)
+values(61, 1, 'Hello', sysdate);
+
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date)
+values(62, 1, 'Heeello', sysdate);
+
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date)
+values(63, 1, 'Hellooooo', sysdate);
+
 
 select * from tb_board2;
 commit;

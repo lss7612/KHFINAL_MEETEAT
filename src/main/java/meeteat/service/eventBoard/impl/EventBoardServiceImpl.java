@@ -1,6 +1,7 @@
 package meeteat.service.eventBoard.impl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -42,7 +43,12 @@ public class EventBoardServiceImpl implements EventBoardService {
 	@Override
 	public List<HashMap<String, Object>> getHoldingEventList(Paging paging, int board_no, SearchParam searchParam) {
 		
-		return eventBoardDao.getHoldingEventList();
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		
+		param.put("startNo", paging.getStartNo());
+		param.put("endNo", paging.getEndNo());
+		
+		return eventBoardDao.getHoldingEventList(param);
 		
 	}
 
@@ -67,6 +73,8 @@ public class EventBoardServiceImpl implements EventBoardService {
 		eventBoardDao.insertEventBoard(param);
 		
 		imageService.saveFile(session, ext01, ext02, ext03, "6", ""+article_no);
+		
+		eventBoardDao.insertPopup(param);//해시맵에 넣어서 보내줘야함
 		
 	}
 
@@ -94,8 +102,48 @@ public class EventBoardServiceImpl implements EventBoardService {
 	@Override
 	public List<HashMap<String, Object>> getTerminatedEventList(Paging paging, int board_no, SearchParam searchParam) {
 		
-		return eventBoardDao.getTerminatedEventList();
+		HashMap<String, Object> param = new HashMap<String, Object>();
 		
+		param.put("startNo", paging.getStartNo());
+		param.put("endNo", paging.getEndNo());
+		return eventBoardDao.getTerminatedEventList(param);
+		
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getLists(int is_popup) {
+
+		List<HashMap<String, Object>> list = eventBoardDao.getPopupList(is_popup);
+		
+		return list;
+	}
+
+	@Override
+	public void update(int is_popup,List<String> list) {
+
+		Iterator<String> e = list.iterator();
+
+		for(int i = 0; i < list.size(); i++) {
+			
+			HashMap<String, Object> param = new HashMap<String, Object>();
+			param.put("is_popup", is_popup);
+			param.put("article_no", list.get(i));
+			
+			eventBoardDao.updatePopup(param);
+			
+		}
+			
+		
+		
+		
+	}
+
+	@Override
+	public int anyPopupList() {
+		
+		
+		
+		return eventBoardDao.selectPopupListCnt();
 	}
 
 	

@@ -4,12 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 
 <link rel="stylesheet" href="/resources/css/common/common.css" >
 <link rel="stylesheet" href="/resources/css/eventboard/holdingAndTerminate.css" >
 <script type="text/javascript" src="/resources/js/eventboard/holdingAndTerminate.js" ></script>
 
+<div id="divpage">
 <div id="eventWrapper">
 <c:set var="now" value="<%= new Date() %>"/>
 <fmt:formatDate var="fmt_now_second" value="${now }" pattern="yyyyMMddHHmmss"/>
@@ -17,14 +18,18 @@
 
 
 <div class="bold_padding">
-<h2>이벤트</h2>
+<h2><a href="/eventboard/holding">이벤트</a></h2>
 </div>
 
 <%-- 사이드바 부분 --%>
 <div id="eventSideBar" class="pull-left vertical_bolder_padding horizontal_light_padding" >
-<div class="base_bar_height base_padding" style="font-size:1.1em; font-weight:bold">목록</div>
-<div class="base_bar_height base_padding"><a href="/eventboard/holding">진행중인 이벤트</a></div>
-<div class="base_bar_height base_padding"><a href="/eventboard/terminated">종료된 이벤트</a></div>
+	<div class="base_bar_height base_padding" style="font-size:1.1em; font-weight:bold">목록</div>
+	<div class="base_bar_height base_padding"><a href="/eventboard/holding">진행중인 이벤트</a></div>
+	<div class="base_bar_height base_padding" style="font-weight:bold"><a href="/eventboard/terminated">종료된 이벤트</a></div>
+	
+	<c:if test="${user_grade eq 0 }">
+	<div class="base_bar_height base_padding"><a href="/eventboard/manage/popup">이벤트 팝업관리</a></div>
+	</c:if>
 
 </div>
 
@@ -103,10 +108,12 @@
 
 <%-- 페이징 부분 --%>
 <div>
+	<c:import url="terminated_paging.jsp"></c:import>
 </div>
 
 
-
+<div class="clearfix"></div>
 </div><%-- Wrapper END --%>
-</body>
-</html>
+</div><%-- divpage END --%>
+
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>
