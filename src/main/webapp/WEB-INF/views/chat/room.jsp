@@ -86,8 +86,10 @@ function onMessage(e){
     console.log("jsonStr.writer : "+jsonStr.writer);
     if(jsonStr.writer == ${user_no}){
     	console.log("내가 보낸메시지 : "+jsonStr.msg);
+    	console.log("메시지 전송 날자 : "+jsonStr.msgDate);
     } else {
     	console.log("다른 사람이 보낸 메시지")
+    	console.log("메시지 전송 날자 : "+jsonStr.msgDate);
     }
     
     chatroom = document.getElementById("chatting");
@@ -173,6 +175,7 @@ function goChatList(){
 <!-- 			<div class='noticeArea'><span> 채팅방에 입장하셨습니다.</span></div> -->
 <!-- 			<div class='noticeArea'><span>"+user_nick+"님이 채팅방에 입장하셨습니다.</span></div> -->
 <!-- 			<div class='noticeArea'><span>"+user_nick+"님이 채팅방에서 퇴장하셨습니다.</span></div> -->
+<!-- 		<div class='noticeArea'><span> yyyy년 MM월 dd일 </span></div> -->
 		</div>
 		<div id="usingArea">
 			<input type="text" id="writeMsg" onKeyDown="enterKeyAtChat();" />

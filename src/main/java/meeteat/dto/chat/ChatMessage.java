@@ -6,9 +6,11 @@ public class ChatMessage {
 	private String type;
 	private int writer;
 	private String msg;
+	private String msgDate;
 	@Override
 	public String toString() {
-		return "ChatMessage [chatRoomNo=" + chatRoomNo + ", type=" + type + ", writer=" + writer + ", msg=" + msg + "]";
+		return "ChatMessage [chatRoomNo=" + chatRoomNo + ", type=" + type + ", writer=" + writer + ", msg=" + msg
+				+ ", msgDate=" + msgDate + "]";
 	}
 	public int getChatRoomNo() {
 		return chatRoomNo;
@@ -34,6 +36,10 @@ public class ChatMessage {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	
-	
+	public String getMsgDate() {
+		return msgDate;
+	}
+	public void setMsgDate(String msgDate) {
+		this.msgDate = msgDate;
+	}
 }
