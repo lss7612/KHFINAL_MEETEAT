@@ -941,6 +941,10 @@ begin
 end; 
 /
 
+--이벤트 보드 시퀀스
+DROP SEQUENCE tb_eventBoard_seq;
+CREATE SEQUENCE tb_eventBoard_seq;
+
 -- 자동생성된 트리거 삭제 코드
 DROP TRIGGER "TB_RESULTREPORTREASON2_AI_TRG";
 DROP TRIGGER "TB_RECOMMEND2_AI_TRG";
