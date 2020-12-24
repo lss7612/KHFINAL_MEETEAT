@@ -55,7 +55,7 @@
 	</select>
 	
 	<select id="selectMyCommentByNo" parameterType="int" resultType="HashMap">
-		SELECT c.comment_content,
+		SELECT c.comment_content, c.create_date,
 	    	(SELECT board_name FROM tb_boardclass2  WHERE board_no = c.board_no) board_name
 	   	  , (SELECT article_title FROM tb_board2  WHERE article_no = c.article_no) article_title
 		FROM tb_comment2 c

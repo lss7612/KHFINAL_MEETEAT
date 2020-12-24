@@ -20,79 +20,6 @@ document.getElementById('submit').onclick = function() {
 
 </script>
 <style>
-.clearfix() {
-  &:before,
-  &:after {
-    content: " ";
-    display: table;
-  }
-  &:after {
-    clear: both;
-  }
-}
-
-.change_info{
-    overflow: inherit;
-    position: relative;
-    top: 210px;
-/*     left: 440px;  */
-    height: 100px;
-/*      background-position: -250px -80px;  */
-
-}
-
-.user_id .user_nick {
- 	text-align: pull-left; 
-}
-
-
-.tit_set {
-	font-weight: bold; 
-}
-
-.txt_set{
- 	float: right;  
- 	color: #5066aa; 
- 	margin-bottom : 10px;
-}
-
-.box_set{
- 	display: flow-root; 
- 	position: 10px 25px 10px 0; 
- 	border-bottom: 1px solid #ebebeb; 
- 	font-size: 12px; 
- 	color: #252525;  
- 	font-weight: normal; 
- 	padding-inline-start: 2.75em;
-	padding-inline-end: 2.75em;
-	padding-block-start: 1.35em;
-	min-inline-size: min-content;
-
-}
-
-.box_manage{
-	margin-top: 48px;
-	text-align: left;
-	max-width: 530px;
-	margin-left: 280px;
-		
-}
-
-#alert-success, #alert-fail{
-	display:none;
-	
-}
-
-#container{
-	position: relative;
-	z-index: 20;
-	max-width:954px;
-	margin: 0 auto;
-}
-#content{
-	position: relative;
-	padding: 32px 51px 95px;
-}
 div{
 	displayy: block;
 }
@@ -132,27 +59,16 @@ form{
 	display: block;
 }
 
-.fs{
-	padding: 30px;
+
+input{
+	font-size: 15px
 }
 
-.tbl_model{
-	position: relative;
-	width: 100%;
-	table-layout: fixed;
-	border-spacing: 0;
-	border-collapse: collapse;
-	word-break: keep-all;
-	border: 0;
-	border-bottom: 1px solid #e5e5e5;
-}
+.container{
 
-input, textarea, button{
-	font-size: 12px
-}
-
-.border{
-	border: 1px solid #F5DA81;s
+	text-align: center;
+	max-width: 500;
+		
 }
 
 </style>
@@ -166,16 +82,20 @@ input, textarea, button{
 </div>
 
 
-<h3>아이디와 비밀번호를 입력해주세요</h3>
+<h4>아이디와 비밀번호를 입력해주세요</h4>
 <form action="/mypage/mydelete" method="POST">
 <input type="hidden" name="user_no" value="${u.USER_NO}">
 
-ID: <input type="text" name="user_id" id="user_id"><br>
-PW: <input type="password" name="user_pw" id="user_pw"><br>
-
-<button id="submit" name="submit">탈퇴하기</button><br>
+<div class="container">
+	<div class="submitForm">
+		<input type="text" name="user_id" id="user_id" placeholder="아이디 입력">
+		<input type="password" name="user_pw" id="user_pw" placeholder="비밀번호 입력">
+	</div>
+	
+	<button id="submit" name="submit" class="btn btn-danger btn-sm pull-right">탈퇴하기</button>
+	<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm pull-left">돌아가기</a>
+</div>
 </form>
-<button><a href="/mypage/mypage">마이페이지로 돌아가기</button>
 
 </div>
 

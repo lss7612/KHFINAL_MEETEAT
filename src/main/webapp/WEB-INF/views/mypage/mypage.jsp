@@ -6,6 +6,37 @@
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 <link rel="stylesheet" href="/resources/css/mypage/mypage.css">
 
+<style>
+td{
+	text-align: center;
+	
+	white-space:nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+td:nth-child(0) {
+	text-align: center;
+	
+	white-space:nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+
+</style>
+<script type="text/javascript">
+
+// $(document).ready(function(){
+	
+// 	if(confirm('결제회원만 접근 가능합니다.\n 결제하시겠습니까?')){
+// 		location.href='/mypay/mypay'
+// 	} else {
+// 		window.history.back()
+// 	}
+	
+// })
+
+</script>
 <div id="divpage">
 
 <div class="c_header">
@@ -125,25 +156,25 @@
 			
 			<div class="sh_content">
 			<c:choose>
-				<c:when test="${empty cList} ">
+				<c:when test="${empty cList }">
 					<h3>등록하신 댓글이 없습니다</h3>
 				</c:when>
 				<c:otherwise>
 					<table class="table table-condensed">
 						<tr>
 							<th style="width: 20%">게시판 이름</th>
-							<th style="width: 40%">글 제목</th>
-							<th style="width: 40%">댓글 내용</th>
+							<th style="width: 50%">댓글 내용</th>
+							<th style="width: 30%">작성일</th>
 						</tr>
 
 						<c:forEach items="${cList}" var="c" varStatus="status" begin="0" end="4">
 						<tr>
 							<td>${c.BOARD_NAME}</td>
-							<td>${c.ARTICLE_TITLE}</td>
 							<td>${c.COMMENT_CONTENT}</td>
+							<td><fmt:formatDate value="${c.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
 						</tr>
 						</c:forEach>
-					</table>					
+					</table>
 				</c:otherwise>
 			</c:choose>
 			</div>

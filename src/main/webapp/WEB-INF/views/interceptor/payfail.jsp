@@ -14,7 +14,7 @@
 $(document).ready(function(){
 	
 	if(confirm('결제회원만 접근 가능합니다.\n 결제하시겠습니까?')){
-		location.href='/mypage/mypay'
+		location.href='/mypay/mypay'
 	} else {
 		window.history.back()
 	}

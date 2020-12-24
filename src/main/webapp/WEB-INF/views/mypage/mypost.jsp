@@ -104,7 +104,7 @@ $(document).ready(function() {
 
  
 <div class="form-inline">
-<button onclick="location.href='/mypage/mypage'" class="btn btn-primary btn-sm pull-left">돌아가기</button>
+	<a href="javascript:history.back();" role="button" class="btn btn-primary btn-sm pull-left">돌아가기</a>
  </div>
 
 <jsp:include page="/WEB-INF/views/mypage/mypost_paging.jsp" />
