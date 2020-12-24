@@ -2,8 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
-<c:import url="/WEB-INF/views/layout/header.jsp" />
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- jQuery 2.2.4.min -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -145,7 +144,7 @@ function createChat(){
 </script>
 
 
-
+<c:import url="/WEB-INF/views/layout/header.jsp" />
 
 <div class="container" id="divpage">
 
@@ -224,6 +223,8 @@ function createChat(){
 						overflow: hidden;"># ${list.party_location }</p>
 				<p># ${list.meet_time }</p>
 				<p># ${list.category }</p>
+<%-- 				<c:set value="${list.meet_time }" var="date"></c:set> --%>
+<%-- 				<fmt:formatDate type="both" value="${date }" pattern ="yyyy-MM-dd"/> --%>
 				
 			</div>
 			

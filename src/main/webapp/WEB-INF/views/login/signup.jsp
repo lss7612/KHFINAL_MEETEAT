@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MEET & EAT</title>
 
 <!-- jQuery 2.2.4.min -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -14,7 +15,22 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
+
+
+
 <style type="text/css">
+@font-face {
+    font-family: 'NEXON Lv2 Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+	font-family: 'NEXON Lv2 Gothic';
+}
+
+
 html,body {
   height: 100%;
 }
@@ -62,7 +78,8 @@ body {
 </head>
 <body>
 
-<div class="container">
+
+<div class="container" id="divpage">
 
 <div id="logo">
 	<a href="http://localhost:8088/"><img src="/resources/img/logo.png" alt="Logo"></a>
@@ -147,6 +164,23 @@ body {
 </div><!-- //container -->
 
 <script type="text/javascript">
+
+function checkEmail(str) {                                                 
+
+     var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+     if(!reg_email.test(str)) {   
+    	 
+          return false;       
+          
+     } else {               
+    	 
+          return true;         
+     }                            
+
+}             
+
+
 $(document).ready(function() {
 	
 	var idx = true;
@@ -185,7 +219,13 @@ $(document).ready(function() {
 		}
 		
 		else {
-			$('#signUpForm').submit();
+			if(checkEmail($('#user_email').val())) {
+				$('#signUpForm').submit();
+			} else {
+				$('#submitResult').text("이메일형식에 맞게 작성해주세요");
+				$('#submitResult').css("color", "red");
+				return false;
+			}
 		}
 		
 	});

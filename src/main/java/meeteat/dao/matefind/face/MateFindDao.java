@@ -41,4 +41,6 @@ public interface MateFindDao {
 
 	public List<MateFindBoard> filterList(MateFindBoard mateFindBoard);
 
+	public void deleteMateFind(MateFindBoard mateFindBoard);
+
 }

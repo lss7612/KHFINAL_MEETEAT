@@ -226,7 +226,7 @@
 			AND article_no = #{article_no }
 	</update>
 	
-	<update id="mateFindDelete" parameterType="meeteat.dto.mateFindBoard.MateFindBoard">
+	<update id="deleteMateFind" parameterType="meeteat.dto.mateFindBoard.MateFindBoard">
 		UPDATE tb_board2
 		SET is_delete = 1
 		WHERE board_no = 2

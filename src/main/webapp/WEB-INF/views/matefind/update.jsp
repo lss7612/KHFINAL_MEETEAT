@@ -23,8 +23,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 
-<title>Insert title here</title>
-
 <style type="text/css">
 
 body {
@@ -41,13 +39,27 @@ function goList() {
 
 $(document).ready(function() {
 	
+	
+	$("#categorySel option[value='${view.category }']").attr("selected", "selected");
+	$("#mateList option[value='${view.mate_list}']").attr("selected", "selected");
+	
+	$("#mateList").find('.mlv').each(function() {
+		if($(this).val() == ${attendeeCount }) {
+			return false;
+		} else {
+			$(this).attr("disabled", "disabled");
+		}
+		
+	})
+	
+	
 	$("#btnWrite").click(function() {
 		
 		//스마트에디터의 내용을 <textarea>에 적용하기
 		submitContents($("#btnWrite"));
 		
 		var is_empty = false;
-		$('#form').find('input[type!="hidden"]').each(function(){
+		$('#form').find('.noEmpty').each(function(){
 		    if(!$(this).val()) {
 				is_empty = true;
 		    }
@@ -60,10 +72,24 @@ $(document).ready(function() {
 		})
 		 
 		if(is_empty) {
-		    alert('값을 전부 입력하시오');
+			alert('내용을 모두 입력해주세요.');
 		    return false;
 		} else {
 			$("form").submit();
+		}
+		
+		
+	})
+	
+	$("#deleteBtn").click(function() {
+		
+		var clickResult = confirm("정말 삭제하시겠습니까?") 
+		console.log(clickResult);
+		
+		if(clickResult) {
+			location.href = "/matefind/delete?article_no=" + ${view.article_no };
+		} else {
+			return false;
 		}
 		
 		
@@ -86,12 +112,12 @@ $(document).ready(function() {
 
 <br><br>
 
-<form action="/matefind/update" method="post">
+<form action="/matefind/update" method="post" id="form">
 
 	<div class="row">
 		<div class="col-2">
 			<h4>글번호 [ ${view.article_no} ]</h4>
-			<input type="hidden" name="article_no" value="${view.article_no}">
+			<input type="hidden" id="articleNo" name="article_no" value="${view.article_no}">
 			<input type="hidden" name="user_no" value="${view.user_no}">
 		</div>
 		<div class="col-8"></div>
@@ -102,7 +128,7 @@ $(document).ready(function() {
 	<div class="row" style="width: 150px;">
 		<div class="col">
 			<label class="input-group-text" for="category">만남유형</label>
-			<select class="form-select" name="category">
+			<select class="form-select" id="categorySel" name="category">
 				<option value="">선택</option>
 				<option value="식사">식사</option>
 				<option value="카페">카페</option>
@@ -110,15 +136,15 @@ $(document).ready(function() {
 			</select>
 			
 			<label class="input-group-text" for="mate_list">모집인원</label>
-			<select class="form-select" name="mate_list">
-				<option value="">선택</option>
-				<option value="1">1명</option>
-				<option value="2">2명</option>
-				<option value="3">3명</option>
-				<option value="4">4명</option>
-				<option value="5">5명</option>
-				<option value="6">6명</option>
-				<option value="7">7명</option>
+			<select class="form-select" id="mateList" name="mate_list">
+				<option class="mlv" value="">선택</option>
+				<option class="mlv" value="1">1명</option>
+				<option class="mlv" value="2">2명</option>
+				<option class="mlv" value="3">3명</option>
+				<option class="mlv" value="4">4명</option>
+				<option class="mlv" value="5">5명</option>
+				<option class="mlv" value="6">6명</option>
+				<option class="mlv" value="7">7명</option>
 			</select>
 		</div>
 	</div>
@@ -126,12 +152,12 @@ $(document).ready(function() {
 <hr>
 
 	<label for="title" class="form-label" style="float: left;">제목</label>
-	<input type="text" class="form-control" id="title" name="article_title" value="${view.article_title }">	
+	<input type="text" class="form-control noEmpty" id="title" name="article_title" value="${view.article_title }">	
 	
 	<br>
 	
 	<label for="content" class="form-label" style="float: left;">내용</label>
-	<textarea rows="10" style="width: 100%" id="content" name="article_content">${view.article_content }</textarea>
+	<textarea rows="10" style="width: 100%" class="noEmpty" id="content" name="article_content">${view.article_content }</textarea>
 	
 	<!-- 스마트 에디터 적용하는 코드 -->
 	<script type="text/javascript">
@@ -165,7 +191,7 @@ $(document).ready(function() {
 <!-- 	<hr> -->
 	
 	<label for="date" class="form-label" style="float: left; margin-top: 20px;">시간</label>
-	<input class="form-control" id="date" type="datetime-local" value="${view.meet_time }" name="meet_time" style="width: 300px;">
+	<input class="form-control noEmpty" id="date" type="datetime-local" value="${view.meet_time }" name="meet_time" style="width: 300px;">
 	
 	
 
@@ -375,14 +401,13 @@ $(document).ready(function() {
 <!-- 버튼 영역v2 -->
 	<div class="row">
 		<div class="col">
-		
-			<button class="btn btn-secondary" onclick=goList() style="float: left;">목록으로</button>
+			
+			<a class="btn btn-secondary" href="/matefind/list" style="float: left;">목록으로</a>
 					
-			<button class="btn btn-primary" id="btnWrite">수정하기</button>		
-			<button class="btn btn-secondary" id="cancel">취소하기</button>
+			<button class="btn btn-primary" id="btnWrite">수정하기</button>
+			<input type="reset" id="cancel" class="btn btn-secondary" value="취소하기">
 			
-			<button class="btn btn-danger" style="float: right;">삭제하기</button>
-			
+			<input type="button" id="deleteBtn" class="btn btn-danger" style="float: right;" value="삭제하기">
 		
 		</div>
 	</div>	

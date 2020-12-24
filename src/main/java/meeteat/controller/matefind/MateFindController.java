@@ -61,26 +61,6 @@ public class MateFindController {
 		
 		viewBoard.setMate_list(viewBoard.getMate_list().replaceAll(" ", ""));
 		
-		// list Recommend 테이브블에서 참여하기 누른 사람 user_no 가져오기
-		
-//		String[] list = viewBoard.getMate_list().split(",");
-//		int[] guestList = new int[list.length];
-//		
-//		List<User> userList = new ArrayList<>();
-//
-//		for(int i = 0; i < list.length; i++) {
-//			
-//			guestList[i] = Integer.valueOf(list[i]);
-//			
-//			User user = new User();
-//			user.setUser_no(guestList[i]);
-//			
-//			userList.add(loginService.selectUserByUserNo(user));
-//			
-//		}
-//		model.addAttribute("guestList", guestList);
-//		model.addAttribute("guestUserList", userList);
-
 
 		// 글 작성자 정보
 		User user = new User();
@@ -121,7 +101,10 @@ public class MateFindController {
 		
 		mateFindBoard.setMeet_time(mateFindBoard.getMeet_time().replace(" ", "T"));
 		
+		int attendeeCount = mateFindService.attendeeCount(mateFindBoard);
+		
 		model.addAttribute("view", mateFindBoard);
+		model.addAttribute("attendeeCount", attendeeCount);
 		
 	}
 	
@@ -144,6 +127,23 @@ public class MateFindController {
 		
 		return "redirect:/matefind/view?article_no=" + mateFindBoard.getArticle_no();
 	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String mateFindDelete (@RequestParam("article_no") int article_no) {
+		
+		MateFindBoard mateFindBoard = new MateFindBoard();
+		
+		mateFindBoard.setArticle_no(article_no);
+		
+		int num = mateFindBoard.getArticle_no();
+		
+		logger.info("이거에요 : " + num);
+		
+		mateFindService.deleteMateFind(mateFindBoard);
+		
+		return "redirect:/matefind/list";
+	}
+	
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public void mateFindWrite() {

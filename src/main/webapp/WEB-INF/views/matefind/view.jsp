@@ -41,6 +41,24 @@ function goList() {
 	location.href="/matefind/list";
 }
 
+$(document).ready(function() {
+	
+	$("#deleteBtn").click(function() {
+		
+		var clickResult = confirm("정말 삭제하시겠습니까?") 
+		console.log(clickResult);
+		
+		if(clickResult) {
+			location.href = "/matefind/delete?article_no=" + ${view.article_no };
+		} else {
+			return false;
+		}
+		
+		
+	})
+	
+})
+
 </script>
 
 </head>
@@ -288,7 +306,7 @@ function goList() {
 	
 	
 <!-- 버튼 영역v2 -->
-	<div class="row" style="margin-bottom: 100px;">
+	<div class="row">
 		<div class="col">
 			<button class="btn btn-secondary" onclick=goList() style="float: left;">목록으로</button>	
 			
@@ -321,7 +339,7 @@ function goList() {
 				<c:when test="${user_no  eq writer}">
 					<div style="float: right;">
 						<a href="/matefind/update?article_no=${view.article_no }"><button class="btn btn-warning">수정하기</button></a>
-						<button class="btn btn-danger">삭제하기</button>
+						<input type="button" id="deleteBtn" class="btn btn-danger" value="삭제하기">
 					</div>	
 				</c:when>
 				<c:otherwise>

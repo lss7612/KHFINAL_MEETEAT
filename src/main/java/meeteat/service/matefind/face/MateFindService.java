@@ -41,4 +41,6 @@ public interface MateFindService {
 
 	public List<MateFindBoard> filterListPaging(HashMap<String, Object> map);
 
+	public void deleteMateFind(MateFindBoard mateFindBoard);
+
 }
