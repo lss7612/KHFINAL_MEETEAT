@@ -26,19 +26,34 @@
 	 	<!-- 영정인터셉터 등록 -->
 		<interceptor>
 			<mapping path="/recruitboard/**"/>
+			<mapping path="/mypage/**"/>
+			<mapping path="/eventboard/**"/>
+			<mapping path="/chat/**"/>
+			<mapping path="/notice/**"/>
+			<mapping path="/inquiry/**"/>
+			<mapping path="/manage/**"/>
+			<mapping path="/report/**"/>
+			<mapping path="/restorantfind/**"/>
+			<mapping path="/matefind/**"/>
+			<mapping path="/admin/**"/>
+			<mapping path="/review/**"/>
 			<exclude-mapping path=""/>
 			<beans:bean class="meeteat.interceptor.BanInterceptor"/>
 		</interceptor>
 	 	<!-- 로그인인터셉터 등록 -->
 		<interceptor>
+			<mapping path="/mypage/**"/>
 			<mapping path="/chat/**"/><!-- 채팅 -->
-			<mapping path="/searchrestorant/**"/><!-- 이상성 : 맛집검색 -->
+			<mapping path="/restorantfind/**"/><!-- 이상성 : 맛집검색 -->
 			<exclude-mapping path=""/>
 			<beans:bean class="meeteat.interceptor.LoginInterceptor"/>
 		</interceptor>
 	 	<!-- 결제유저인터셉터 등록 -->
 		<interceptor>
 			<mapping path="/recruitboard/**"/>
+			<mapping path="/matefind/**"/>
+			<mapping path="/review/**"/>
+			<mapping path="/chat/**"/>
 			<exclude-mapping path="/interceptor/payfail"/>
 			<beans:bean class="meeteat.interceptor.PayInterceptor"/>
 		</interceptor>

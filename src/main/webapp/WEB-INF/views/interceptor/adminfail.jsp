@@ -5,13 +5,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript"
+ src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+ 
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	alert('접근권한이 없습니다.')
+	window.history.back()
+	
+})
+
+</script>
+
 </head>
 <body>
-<div style="text-align:center; width:50%; margin:0 auto;" id="searchMsg" >
-	<br>
-	<img alt="" src="/resources/img/error.jpg">
-	<h4>접근권한이 없습니다...</h4>
-	<a href="/"><span>이전페이지로..</span></a>
-</div>
 </body>
 </html>
