@@ -107,8 +107,7 @@ public class ChatController {
 		//세션에서 회원정보 갖고오기
 		int user_no = Integer.parseInt(""+session.getAttribute("user_no"));
 		
-		//0. 현재 url에 
-		
+				
 		//chatting_id로 채팅방 정보 가져오기
 		HashMap<String, Object> roomInfo = chatService.getChatRoomInfoById(chatting_id);
 		logger.info("> > >접속한 채팅방의 정보 : "+roomInfo+" < < <");
@@ -124,11 +123,12 @@ public class ChatController {
 		//방의 이전 메시지 로드(필요시 구현)
 		List<HashMap<String,Object>> oldChat;
 		oldChat = chatService.getOldChatList(chatting_no);
+		logger.info(" > > > 과거 메시지 < < <");
 		logger.info(""+oldChat);
 		
 		//전달시각 저장
 		Date time = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd a hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("a hh:mm");
 		List<String> trimOldChat = oldChatTrim(oldChat, user_no, sdf);
 		
 		//model 객체 등록
@@ -213,8 +213,22 @@ public class ChatController {
 		List<String> trim = new ArrayList<>();
 		String msgTime = null;
 		Date time = null;
+		
+		//날자 변경 안내를 위한 초기값 설정
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
+		time =(Date)oldChat.get(0).get("MSG_DATE");
+		String standard = sdf2.format(time);
+		
 		for(int i=0; i<oldChat.size();i++) {
 			time = (Date)oldChat.get(i).get("MSG_DATE");
+			
+			//기준 날짜와 현재 반복의 날자가 같으면 날자 변경을 추가해준다.
+			if( !standard.equals(sdf2.format(time)) || i == 0) {
+				trim.add("<div class='noticeArea'><span>"+sdf2.format(time).substring(0,4)+"년 "+sdf2.format(time).substring(5,7)+"월 "+sdf2.format(time).substring(8,10)+"일 </span></div>");
+				standard = sdf2.format(time);
+			}
+			
+			System.out.println(oldChat.get(i).get("MSG_DATE"));
 			msgTime = sdf.format(time);
 			if(Integer.parseInt(""+oldChat.get(i).get("USER_NO")) == user_no) {
 				trim.add("<div class=\"toMsg\">"

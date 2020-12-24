@@ -72,9 +72,11 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		
 		//전달시각 저장
 		Date time = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd a hh:mm");
-		String msgTime = sdf.format(time);
+		SimpleDateFormat sdf = new SimpleDateFormat("a hh:mm");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
 		
+		String msgTime = sdf.format(time);
+		String msgDate = sdf2.format(time);
 		
 		//JSON형태로 전달받은 메시지 변환
 		ObjectMapper mapper = new ObjectMapper();
@@ -113,6 +115,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						logger.info("> > > 내가 보낸 메시지 < < <");
 						String chatMsg = myMsg(chatMessage, msgTime);
 						cMsg.setMsg(chatMsg);
+						cMsg.setMsgDate(msgDate);
 						//TextMessage로 변환
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
 						logger.info(" > > > tMsg : "+tMsg.getPayload());
@@ -124,6 +127,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						logger.info("> > > 상태 : "+is_state+" < < <");
 						String enterMsg = enterMsgToMe(user_nick);
 						cMsg.setMsg(enterMsg);
+						cMsg.setMsgDate(msgDate);
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsBytes(cMsg));
 						sess.sendMessage(tMsg);
 					}
@@ -140,6 +144,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						//*****메시지 세션에 뿌리는 방법
 						String enterMsg = enterMsgToRoom(user_nick);
 						cMsg.setMsg(enterMsg);
+						cMsg.setMsgDate(msgDate);
 						logger.info(" > > > chatMessage : "+cMsg);
 						//TextMessage로 변환
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
@@ -151,6 +156,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						//*****메시지 세션에 뿌리는 방법
 						String leaveMsg = leaveMsgToRoom(user_nick);
 						cMsg.setMsg(leaveMsg);
+						cMsg.setMsgDate(msgDate);
 						logger.info(" > > > chatMessage : "+cMsg);
 						//TextMessage로 변환
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
@@ -161,6 +167,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						//*****메시지 세션에 뿌리는 방법
 						String chatMsg = otherMsg(chatMessage, user_nick, msgTime);
 						cMsg.setMsg(chatMsg);
+						cMsg.setMsgDate(msgDate);
 						logger.info(" > > > chatMessage : "+cMsg);
 						//TextMessage로 변환
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
