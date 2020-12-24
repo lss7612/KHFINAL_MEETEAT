@@ -6,7 +6,6 @@
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 <link rel="stylesheet" href="/resources/css/mypage/mypage.css">
 
-
 <div id="divpage">
 
 <div class="c_header">
@@ -18,7 +17,7 @@
 		<!-- 회원 정보 -->
 		<div class="sh_group">
 			<div class="sh_header">
-				<h2>회원 정보 <a href="/mypage/myedit" class="btn btn-default pull-right btn-sm" role="button">수정</a></h2>
+				<h2>회원 정보 <a href="/mypage/myedit" class="btn btn-default pull-right btn-sm" role="button">수정하기</a></h2>	
 			</div><hr>
 
 			<div id="myinfo">
@@ -44,12 +43,23 @@
 		<!-- 내 결제 정보 -->
 		<div class="sh_group">
 			<div class="sh_header">
-				<h2>결제 정보 <a href="/mypage/mypay" class="btn btn-default pull-right btn-sm" role="button">결제하기</a></h2>
+				<h2>결제 정보 
+					<c:if test="${userinfo.USER_GRADE eq 2}">
+						<a href="/mypay/mypay" class="btn btn-default pull-right btn-sm" role="button">정기 결제</a>
+					</c:if>
+					<c:if test="${userinfo.USER_GRADE eq 1}">
+						<a href="/mypay/payFail" class="btn btn-default pull-right btn-sm" role="button">정기결제 해지</a>
+					</c:if>
+					<c:if test="${userinfo.USER_GRADE eq 3}">
+						<div>결제 정보가 없습니다</div>
+					</c:if>				
+				</h2>
+<!-- 				<a href="/mypage/mypay" class="btn btn-default pull-right btn-sm" role="button">결제하기</a> -->
 			</div><hr>
 			
 			<div class="content">
 			<c:choose>
-				<c:when test="${empty list} ">
+				<c:when test=" ">
 					<h3>결제 정보가 없습니다</h3>
 					</c:when>
 				<c:otherwise>
@@ -116,7 +126,7 @@
 			<div class="sh_content">
 			<c:choose>
 				<c:when test="${empty cList} ">
-					<h3>등록하신 글이 없습니다</h3>
+					<h3>등록하신 댓글이 없습니다</h3>
 				</c:when>
 				<c:otherwise>
 					<table class="table table-condensed">

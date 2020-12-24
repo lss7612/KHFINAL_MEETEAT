@@ -5,7 +5,6 @@
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 
-<div id="divpage">
-</div>
-
+<h1>결제 실패</h1>
+<hr>
 <c:import url="/WEB-INF/views/layout/footer.jsp" />

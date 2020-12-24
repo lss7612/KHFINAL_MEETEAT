@@ -76,7 +76,7 @@
 		SELECT * FROM (
 				SELECT rownum rnum, B.*
 				FROM(
-					SELECT board.article_title, board.article_content, board.create_date , board.article_no
+					SELECT board.article_title, board.article_content, board.create_date , board.article_no, board.board_no
 					, (SELECT board_name FROM tb_boardclass2 WHERE board_no = board.board_no) board_name
 					FROM tb_board2 board
 					WHERE user_no = #{user_no}

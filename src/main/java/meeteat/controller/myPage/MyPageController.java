@@ -141,7 +141,5 @@ public class MyPageController {
 		
 	}
 	
-	@RequestMapping(value="/mypage/mypay")
-	public void myPay() {}
 
 }

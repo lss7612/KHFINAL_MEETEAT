@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
+<link rel="stylesheet" href="/resources/css/mypage/mypost.css">
 
 <!-- 부트스트랩 3.3.2 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -21,60 +22,23 @@ $(document).ready(function() {
 		
 		if($("#search").value()==null){
 			alert("검색어를 입력해주세요");
-			return;
+			return false;
 		}else{
 		location.href="/mypage/mypost?search="+$("#search").val();
 		}
 	});
 	
 	$("#deleteBtn").click(function(){
-		if($('#checkbox').value()==null){
-			alert("선택하신 글이 없습니다");
-			return;
+		if($("input:checkbox[name=checkbox]").is(":checked")==true){
+			alert("삭제가 완료되었습니다.");			
+			location.href="/mypage/mypost";		
 		}else{
-		location.href="/mypage/mypost";
-			
+			alert("선택하신 글이 없습니다.");
+			return false;
 		}
 	})
 })
 </script>
-
-<style type="text/css">
-table {
- 	table-layout: fixed;
- 	max-width: 90% 
-}
-
-table, th, td {
-	text-align: center;
-}
-td:nth-child(4) {
-	white-space: nowrap;	
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-td:nth-child(5) {
-	text-align: left;
-	
-	white-space:nowrap;	
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-
-.sh_header {
-	top: -4px;
-	right: -4px;
-	padding: 5px;
-	padding: 5px;
-/* 	line-height: 19px; */
-/* 	letter-spacing: 3px; */
-	color: #666;
-}
-th{
-	background-color: #F5DA81;
-}
-</style>
-
 
 <div id="divpage">
 <div class="sh_header">
@@ -102,8 +66,8 @@ th{
    <tr>
       <th style="width: 5%">선택</th>
       <th style="width: 5%">글번호</th>
-      <th style="width: 15%">게시판 이름</th>
-      <th style="width: 15%">글 제목</th>
+      <th style="width: 10%">게시판 이름</th>
+      <th style="width: 20%">글 제목</th>
       <th style="width: 45%">글 내용</th>
       <th style="width: 15%">작성일</th>
    </tr>
@@ -114,14 +78,28 @@ th{
       </td>
       <td>${b.ARTICLE_NO }</td>
       <td>${b.BOARD_NAME}</td>
-      <td>${b.ARTICLE_TITLE}</td>
+      <td>
+      	<c:choose>
+      		<c:when test="${b.BOARD_NO eq 2 }"> <!-- 메이트찾기 게시판 -->   	
+      			<a href="/matefind/view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
+      		</c:when>
+      		<c:when test="${b.BOARD_NO eq 3 }"> <!-- 파티모집 -->	
+      			<a href="/recruitboard/view?board_no=3&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>     	
+      		</c:when>
+      		<c:when test="${b.BOARD_NO eq 4 }"> <!-- 후기게시판 -->
+      			<a href="//view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
+      		</c:when>
+      		<c:when test="${b.BOARD_NO eq 5 }"> <!-- 문의게시판 -->
+      			<a href="//view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
+      		</c:when>
+      </c:choose>
+      </td>
       <td>${b.ARTICLE_CONTENT}</td>
       <td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
    </tr>
 </c:forEach>
 </table>
 <button class="btn btn-danger btn-sm pull-right" id="deleteBtn">선택한 게시글 삭제</button>
-**선택 게시글  아직 미완성,, 바로삭제됨
 </form>
 
  
