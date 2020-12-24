@@ -186,7 +186,7 @@ function reportBtn(e){
 	var frmPop = e.parentElement;
 	//console.log(frmPop);
 	window.open("http://localhost:8088/report/doReport","report"
-			, "width=500px,height=466px")
+			, "width=502px,height=506px")
 	frmPop.action = "http://localhost:8088/report/doReport";
 	frmPop.target = "report";
 	//${user_no}에 작성자 번호에 맞는 변수명을 적어주시면 됩니당.

@@ -44,10 +44,10 @@ function createChat(){
 //게시글 신고하기버튼 클릭시 동작할 함수
 function reportPopup(){
 	var frmPop = document.frmPopup;
-	console.log(frmPop);
+
 	//팝업 
 	window.open("http://localhost:8088/report/doReport","report"
-			, "width=500px,height=425px")
+			, "width=502px,height=506px")
 	frmPop.action = "http://localhost:8088/report/doReport";
 	frmPop.target = "report";
 	//${user_no}에 작성자 번호에 맞는 변수명을 적어주시면 됩니당.
@@ -74,11 +74,15 @@ function reportPopup(){
 } 
 
 #userHiddenMenu > li{
-	background-color : #ff8f11;
+	background-color : #F5DA81;
 	position : relative;
 	cursor : pointer;
-	border : solid #e46508 1px;
-	padding : 3px 3px 3px 3px;
+	border : solid 0px;
+	padding: 5px 10px 5px 10px;
+}
+
+#userHiddenMenu > li:hover{
+	background-color : #eee;
 }
 /* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
 

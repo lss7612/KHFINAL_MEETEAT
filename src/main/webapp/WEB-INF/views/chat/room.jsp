@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html style="background-color : #c3bdc5">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>채팅방 접속</title>

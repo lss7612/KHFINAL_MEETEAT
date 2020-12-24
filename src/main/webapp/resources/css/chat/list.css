@@ -1,5 +1,6 @@
-html{
-	background-color : #c3bdc5;
+
+* {
+	font-family: 'NEXON Lv2 Gothic';
 }
 
 #chatList{
@@ -73,4 +74,11 @@ html{
 
 .innerList:hover{
 	background:#efc27e;
+}
+
+@font-face {
+    font-family: 'NEXON Lv2 Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
