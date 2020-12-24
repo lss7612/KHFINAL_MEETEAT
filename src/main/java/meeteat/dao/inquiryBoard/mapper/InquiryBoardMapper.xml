@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="meeteat.dao.inquiryBoard.face.InquiryBoardDao">
+	
+	<resultMap type="meeteat.dto.inquiryBoard.InquiryBoard" id="InquiryBoard">
+		<id property="article_no" column="article_no" />
+		<id property="board_no" column="board_no" />
+		
+		<result property="article_title" column="article_title" />
+		<result property="article_content" column="article_content" />
+		<result property="user_no" column="user_no" />
+		<result property="create_date" column="create_date" />
+		<result property="revision_date" column="revision_date" />
+		<result property="is_delete" column="is_delete" />
+		<result property="article_hit" column="article_hit" />
+		<result property="post_group" column="post_group" />
+		<result property="post_step" column="post_step"/>
+		<result property="post_indent" column="post_indent" />
+	</resultMap>
+
+
+	<sql id="selectInquiry">
+		SELECT
+            article_no
+            , article_title
+            , article_content
+            , board_no
+            , user_no
+            , create_date
+            , revision_date
+            , is_delete
+            , article_hit
+            , post_group
+			, post_step
+			, post_indent
+            , (SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
+        FROM tb_board2 b
+	</sql>
+	
+	<sql id="searchTitle">
+			AND is_delete = 0
+ 		<if test='keyword != null and keyword.equals("")'>
+			AND (article_title LIKE '%'||#{keyword, jdbcType=VARCHAR}||'%' 
+			OR article_content LIKE '%'||#{keyword, jdbcType=VARCHAR}||'%') 
+		</if>
+	</sql>
+	
+
+	<select id="selectCntAll" resultType="int">
+		SELECT count(*) FROM (
+			<include refid="selectInquiry"/>
+			WHERE board_no = 5
+				AND is_delete = 0
+		)
+	</select>
+	
+	<select id="selectIquiryList" parameterType="hashmap" resultType="hashmap">
+		SELECT * FROM ( 
+		    SELECT rownum rnum, I.*
+		    FROM (
+			    SELECT
+		            article_no
+		            , article_title
+		            , article_content
+		            , board_no
+		            , user_no
+		            , create_date
+		            , revision_date
+		            , is_delete
+		            , article_hit
+		            , post_group
+					, post_step
+					, post_indent
+		            , (SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
+	        	FROM tb_board2 b
+	        	WHERE board_no = #{board_no}
+					<include refid="searchTitle"/>
+		      	ORDER BY post_group DESC, post_step ASC
+		    ) I
+		    ORDER BY rnum
+		)S
+		<where> 
+			rnum BETWEEN #{startNo } AND #{endNo }
+		</where>
+	</select>
+	
+	<insert id="inquiryWrite" parameterType="meeteat.dto.inquiryBoard.InquiryBoard">
+		INSERT INTO tb_board2 ( 
+			article_no, article_title, article_content, board_no, user_no, create_date, revision_date, is_delete, article_hit, post_group, post_step, post_indent)
+		VALUES (#{article_no},  NVL(#{article_title}, '(제목없음)'), #{article_content}, #{board_no}, #{user_no},
+			 sysdate, sysdate, #{is_delete}, #{article_hit}, #{article_no}, 0, 0)
+	</insert>
+	  
+	<update id="upDateHit" parameterType="hashmap">
+		UPDATE tb_board2
+		SET article_hit = article_hit + 1
+		WHERE board_no = #{board_no} 
+			AND article_no = #{article_no}
+	</update>
+
+	<select id="getInquiryView" parameterType="hashmap" resultType="hashmap">
+		<include refid="selectInquiry"/>
+		WHERE board_no = #{board_no}
+			AND article_no = #{article_no}
+	</select>
+	
+	<update id="upDateInquiryBoard" parameterType="meeteat.dto.inquiryBoard.InquiryBoard">
+		UPDATE tb_board2
+		SET article_title = #{article_title}, article_content = #{article_content}, revision_date = sysdate
+		WHERE article_no = #{article_no}
+		AND board_no = #{board_no}
+	</update>
+	
+	<update id="deleteInquiry" parameterType="hashmap">
+		UPDATE tb_board2
+			SET is_delete = 1
+		WHERE article_no = #{article_no}
+		AND board_no = #{board_no}
+	</update>
+	
+	<select id="getNextVal" resultType="int">
+		SELECT tb_inquiryBoard_seq.nextval From dual
+	</select>
+	
+	
+	<update id="replyByUpdate" parameterType="meeteat.dto.inquiryBoard.InquiryBoard">
+		UPDATE tb_board2
+		SET post_step = post_step+1
+		WHERE post_group = (SELECT post_group FROM tb_board2 WHERE board_no=#{board_no} AND  article_no=#{article_no})
+			AND post_step > (SELECT post_step FROM tb_board2 WHERE board_no=#{board_no} AND article_no=#{article_no})
+	</update>
+	
+	
+	<insert id="replyArticle" parameterType="meeteat.dto.inquiryBoard.InquiryBoard" >
+		INSERT INTO tb_board2 (
+			article_no, article_title, article_content, board_no, user_no, create_date, revision_date, is_delete, article_hit, post_group, post_step, post_indent)
+		VALUES (tb_inquiryBoard_seq.nextval,  NVL(#{article_title}, '(제목없음)'), #{article_content}, 5, #{user_no}, SYSDATE, SYSDATE, #{is_delete}, #{article_hit}
+				, (SELECT post_group FROM tb_board2 WHERE board_no=#{board_no} AND article_no=#{article_no})
+				, (SELECT post_step FROM tb_board2 WHERE board_no=#{board_no} AND article_no=#{article_no})+1
+				, (SELECT post_indent FROM tb_board2 WHERE board_no=#{board_no} AND article_no=#{article_no})+1)
+	</insert>
+	
+	<select id="articleno" parameterType="int" resultType="meeteat.dto.inquiryBoard.InquiryBoard">
+		SELECT * FROM tb_board2
+		WHERE board_no = #{board_no}
+			AND article_no = #{article_no}
+	</select>
+</mapper>
+  
