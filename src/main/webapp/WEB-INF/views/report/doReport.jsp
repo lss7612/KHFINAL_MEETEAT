@@ -11,20 +11,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="/resources/js/report/doReport.js"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/report/doReport.css">
 
-<script type="text/javascript">
-function popupClose(){
-	console.log("클릭");
-	window.open('','_self').close();
-
-}
-
-</script>
 </head>
 <body>
 <div id="reportTitleArea">
-<h1 id="reportTitle">🚨신고하기</h1>
+<h1 id="reportTitle">🚨 회원 신고</h1>
 </div>
 <hr>
 <div id="reportTargetView">

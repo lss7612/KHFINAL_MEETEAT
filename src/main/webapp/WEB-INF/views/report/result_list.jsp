@@ -50,8 +50,8 @@ function enterKey(){
 	<th>회원 아이디</th>
 	<th>회원 번호</th>
 	<th>처리 일시 </th>
-	<th>처리 사유 번호 </th>
-	<th>처리 사유 내용</th>
+	<th>처리 종류 번호 </th>
+	<th>처리 내용</th>
 </tr>
 <c:forEach items="${list }" var="hashmap">
 	<tr>
