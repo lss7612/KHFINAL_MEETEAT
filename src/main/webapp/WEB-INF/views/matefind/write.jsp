@@ -53,10 +53,11 @@ $(document).ready(function() {
 	$("#btnWrite").click(function() {
 		
 		//스마트에디터의 내용을 <textarea>에 적용하기
-		submitContents($("#btnWrite"));
+		submitContents($("#content"));
 		
 		var is_empty = false;
-		$('#form').find('input[type!="hidden"]').each(function(){
+		
+		$('#form').find('.noEmpty').each(function(){
 		    if(!$(this).val()) {
 				is_empty = true;
 		    }
@@ -67,9 +68,11 @@ $(document).ready(function() {
 				is_empty = true;
 			}
 		})
+		
+
 		 
 		if(is_empty) {
-		    alert('값을 전부 입력하시오');
+		    alert('내용을 모두 입력해주세요.');
 		    return false;
 		} else {
 			$("form").submit();
@@ -82,14 +85,6 @@ $(document).ready(function() {
 	$("#cancel").click(function() {
 		history.go(-1);
 	})
-	
-	
-// 	$('#btnWrite').keydown(function() {
-// 		  if (event.keyCode === 13) {
-// 		    event.preventDefault();
-// 		  };
-// 	});
-	
 	
 	
 	
@@ -142,11 +137,11 @@ $(document).ready(function() {
 	</div>
 
 	<label for="title" class="form-label" style="float: left; margin-top: 30px;">제목</label>
-	<input type="text" class="form-control" id="title" name="article_title">	
+	<input type="text" class="form-control noEmpty" id="title" name="article_title">	
 	
 	
 	<label for="content" class="form-label" style="float: left; margin-top: 30px;">내용</label>
-	<textarea rows="10" style="width: 100%" id="content" name="article_content"></textarea>
+	<textarea rows="10" style="width: 100%" class="noEmpty" id="content" name="article_content"></textarea>
 	
 	<!-- 스마트 에디터 적용하는 코드 -->
 	<script type="text/javascript">
@@ -184,7 +179,7 @@ $(document).ready(function() {
 	</div>
 
 	<div class="row">
-		<input class="form-control" id="date" type="datetime-local" name="meet_time" style="width: 300px; display: block;">
+		<input class="form-control noEmpty" id="date" type="datetime-local" name="meet_time" style="width: 300px; display: block;">
 	</div>
 
 	<!-- 네이버지도 검색창 -->

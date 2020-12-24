@@ -68,6 +68,13 @@ public class MateFindServiceImpl implements MateFindService {
 	}
 	
 	@Override
+	public void deleteMateFind(MateFindBoard mateFindBoard) {
+
+		mateFindDao.deleteMateFind(mateFindBoard);
+		
+	}
+	
+	@Override
 	public MateFindBoard read(MateFindBoard mateFindBoard) {
 		
 		return mateFindDao.selectByArticleNo(mateFindBoard);

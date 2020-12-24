@@ -17,7 +17,7 @@
 <meta charset="UTF-8">
 <meta name="google-signin-client_id" content="149157505636-uj4fla31cohbbmom9j868qjvnig7tmfi.apps.googleusercontent.com">
 
-<title>Insert title here</title>
+<title>MEET & EAT</title>
 
 <!-- jQuery 2.2.4.min -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -57,6 +57,18 @@ function onSignIn(googleUser) {
 </script>
 
 <style type="text/css">
+
+@font-face {
+    font-family: 'NEXON Lv2 Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+	font-family: 'NEXON Lv2 Gothic';
+}
+
 
 html,body {
   height: 100%;
