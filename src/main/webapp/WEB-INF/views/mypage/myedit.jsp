@@ -11,7 +11,8 @@ $(document).ready(function() {
 	$("input").keyup(function(){
 	      var pw1 = $("#user_pw").val();
 	      var pw2 = $("#checkpw").val();
-	   
+	      var idx1 = true;
+	      
 	      if(pw1 != "" || pw2 != "") {
 	          if(pw1 == pw2){ 
 	             $('#alert-success').show();
@@ -19,6 +20,7 @@ $(document).ready(function() {
 	          } else{
 	             $('#alert-success').hide();
 	             $('#alert-fail').show();
+	             return false;
 	          }
 	       }
 	})
@@ -61,8 +63,6 @@ $(document).ready(function() {
 })
 
 </script>
-
-
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 <link rel="stylesheet" href="/resources/css/mypage/myedit.css">
@@ -110,25 +110,24 @@ $(document).ready(function() {
 				<div class="box_set">
 					<strong class="tit_set">비밀번호</strong>
 					<span class="txt_set"><input type="password" name="user_pw" id = "user_pw" /></span>
-				</div>
-				
-				
+				</div>		
 				<div class="box_set">
 					<strong class="tit_set">비밀번호 확인</strong>
+					<span class="txt_set"><input type="password" name="checkpw" id = "checkpw"/></span>
+				</div>
+				<div class="box_set">					
 					<div id = "alert-success"><p style = "color: blue; text-align: right;">비밀번호가 일치합니다.</p></div>
 					<div id = "alert-fail"><p style = "color: red; text-align: right;">비밀번호가 일치하지 않습니다.</p></div>	
-					<span class="txt_set"><input type="password" name="checkpw" id = "checkpw"/></span>
-					<div id="submitResult">　</div>
+					<div id="submitResult" style="text-align: right;">　</div>
 				</div>
-			</div><br>
-
 				
+			</div><br>
 				<button id="editBtn" class="btn btn-success btn-sm pull-right">수정 완료</button>
-				<div><button class="btn btn-danger btn-sm pull-right" onclick="location.href='/mypage/mydelete'">회원 탈퇴</button></div>
-				<div><button onclick="location.href='/mypage/mypage'" class="btn btn-warning btn-sm pull-left">돌아가기</button><br></div>
+				<a href="javascript:history.back();" role="button" class="btn btn-primary btn-sm pull-right" style="margin-right:20px;">돌아가기</a>
+				<a href="/mypage/mydelete" role="button" class="btn btn-danger btn-sm pull-left" style="margin-right:20px;">회원 탈퇴</a>
+				
 			</fieldset>
-		</form>
-		
+		</form>		
 	</div>
 </div>
 
