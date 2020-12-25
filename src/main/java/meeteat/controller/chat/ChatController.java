@@ -126,6 +126,14 @@ public class ChatController {
 		logger.info(" > > > 과거 메시지 < < <");
 		logger.info(""+oldChat);
 		
+		//채팅방의 마지막 메시지 전달 날자 저장하기
+		Date lastMsgDate = new Date();
+		String lmd = null;
+		lmd = getLastMsgDate(oldChat, lastMsgDate);
+		
+		System.out.println("마지막 메세지 전달 날자 : "+lmd);
+		
+		
 		//전달시각 저장
 		Date time = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("a hh:mm");
@@ -134,6 +142,7 @@ public class ChatController {
 		//model 객체 등록
 		model.addAttribute("roomInfo", roomInfo);
 		model.addAttribute("chatUserList", chatUserList);
+		model.addAttribute("lastMsgDate", lmd);
 		model.addAttribute("oldChat", trimOldChat);
 		
 		return "chat/room";
@@ -228,7 +237,6 @@ public class ChatController {
 				standard = sdf2.format(time);
 			}
 			
-			System.out.println(oldChat.get(i).get("MSG_DATE"));
 			msgTime = sdf.format(time);
 			if(Integer.parseInt(""+oldChat.get(i).get("USER_NO")) == user_no) {
 				trim.add("<div class=\"toMsg\">"
@@ -247,5 +255,15 @@ public class ChatController {
 			}
 		}
 		return trim;
+	}
+	
+	//채팅방의 마지막 메세지 날자 갖고오기
+	private String getLastMsgDate(List<HashMap<String, Object>> oldChat, Date lastMsgDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+		for(int i=oldChat.size()-1; i < oldChat.size();i++ ) {
+			lastMsgDate = (Date) oldChat.get(i).get("MSG_DATE");
+			sdf.format(lastMsgDate);
+		}
+		return sdf.format(lastMsgDate);
 	}
 }

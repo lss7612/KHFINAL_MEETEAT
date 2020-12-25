@@ -73,7 +73,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		//전달시각 저장
 		Date time = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("a hh:mm");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy년 MM월 dd일");
 		
 		String msgTime = sdf.format(time);
 		String msgDate = sdf2.format(time);
@@ -83,8 +83,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		ChatMessage chatMessage = mapper.readValue(message.getPayload(), ChatMessage.class);
 		logger.info("msg roomno : "+chatMessage.getChatRoomNo());
 		logger.info("msg type : "+chatMessage.getType());
-		logger.info("msg type : "+chatMessage.getWriter());
+		logger.info("msg writer : "+chatMessage.getWriter());
 		logger.info("msg msg : "+chatMessage.getMsg());
+		int writer = chatMessage.getWriter();
 		String user_nick = chatService.getUserNick(chatMessage.getWriter());
 		
 		
@@ -115,6 +116,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						logger.info("> > > 내가 보낸 메시지 < < <");
 						String chatMsg = myMsg(chatMessage, msgTime);
 						cMsg.setMsg(chatMsg);
+						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
 						//TextMessage로 변환
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsString(cMsg));
@@ -127,6 +129,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						logger.info("> > > 상태 : "+is_state+" < < <");
 						String enterMsg = enterMsgToMe(user_nick);
 						cMsg.setMsg(enterMsg);
+						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsBytes(cMsg));
 						sess.sendMessage(tMsg);
@@ -144,6 +147,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						//*****메시지 세션에 뿌리는 방법
 						String enterMsg = enterMsgToRoom(user_nick);
 						cMsg.setMsg(enterMsg);
+						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
 						logger.info(" > > > chatMessage : "+cMsg);
 						//TextMessage로 변환
@@ -156,6 +160,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						//*****메시지 세션에 뿌리는 방법
 						String leaveMsg = leaveMsgToRoom(user_nick);
 						cMsg.setMsg(leaveMsg);
+						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
 						logger.info(" > > > chatMessage : "+cMsg);
 						//TextMessage로 변환
@@ -167,6 +172,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						//*****메시지 세션에 뿌리는 방법
 						String chatMsg = otherMsg(chatMessage, user_nick, msgTime);
 						cMsg.setMsg(chatMsg);
+						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
 						logger.info(" > > > chatMessage : "+cMsg);
 						//TextMessage로 변환
