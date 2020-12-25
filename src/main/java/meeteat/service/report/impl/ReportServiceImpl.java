@@ -51,12 +51,6 @@ public class ReportServiceImpl implements ReportService{
 	}
 	
 	@Override
-	public List<HashMap<String, String>> getListByUserId(String user_id) {
-		return reportDao.searchListByUserId(user_id);
-	}
-	
-	
-	@Override
 	public ResultReportReason getResultReason() {
 		ResultReportReason rrr;
 		return rrr = reportDao.getResultReasonList();

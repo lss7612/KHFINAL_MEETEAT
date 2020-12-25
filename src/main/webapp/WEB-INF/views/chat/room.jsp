@@ -51,7 +51,7 @@ function send(){
     	console.log("빈문자는 전달되지 않습니다.");
     	return false;
     }
-    //webSocket.send(sendMsg);
+    
     webSocket.send(JSON.stringify(sendMsg));
 	msg ="";
 	$("#writeMsg").val('');
@@ -61,8 +61,6 @@ function send(){
 //연결 종료시 동작하는 함수
 function disconnect(){
 	var sendMsg = {chatRoomNo:${roomInfo.CHATTING_NO}, type:'LEAVE', writer:${user_no} }
-// 	var sendMsg = "{writer:${user_no}}"
-//     webSocket.send(sendMsg);
     webSocket.send(JSON.stringify(sendMsg));
     webSocket.close();
 }
@@ -70,32 +68,38 @@ function disconnect(){
 //소켓 연결시 동작하는 함수
 function onOpen(){
 	var sendMsg = {chatRoomNo:${roomInfo.CHATTING_NO}, type:'ENTER', writer:${user_no}}
-// 	var sendMsg = "{writer:${id}}"
-//	webSocket.send(sendMsg);
     webSocket.send(JSON.stringify( sendMsg ));
 }
 
 //메시지 도착시 동작하는 함수
+var lmd = "${lastMsgDate}";
 function onMessage(e){
+// 	console.log("lmd : "+lmd);
     data = e.data;
     console.log("e : "+e);
     console.log("data : "+data);
-    console.log("웹소켓에서 전달해준 메세지 : "+data.msg);
-    var jsonStr = JSON.parse(data)
-    console.log("jsonStr : "+jsonStr);
-    console.log("jsonStr.writer : "+jsonStr.writer);
-    if(jsonStr.writer == ${user_no}){
-    	console.log("내가 보낸메시지 : "+jsonStr.msg);
-    	console.log("메시지 전송 날자 : "+jsonStr.msgDate);
-    } else {
-    	console.log("다른 사람이 보낸 메시지")
-    	console.log("메시지 전송 날자 : "+jsonStr.msgDate);
-    }
+//     console.log("웹소켓에서 전달해준 메세지 : "+data.msg);
     
+    var jsonStr = JSON.parse(data)
+    
+//     console.log("jsonStr : "+jsonStr);
+//     console.log("jsonStr.writer : "+jsonStr.writer);
+//     console.log("session user_no : "+${user_no});
+//     console.log("메시지 전송 날자 : "+jsonStr.msgDate);
+//     console.log("기존 기준 날자 : "+lmd);
+    var msgDate = jsonStr.msgDate;
+   	lmd = dateSet(lmd, msgDate)
+
+    
+//    	console.log("lmd : "+lmd);
     chatroom = document.getElementById("chatting");
     chatroom.innerHTML = chatroom.innerHTML + jsonStr.msg;
     $('#chatting').scrollTop($('#chatting')[0].scrollHeight);
+    return lmd;
 }
+
+//Closure
+var f = onMessage(e);
 
 //웹소켓 종료시 동작하는 함수
 function onClose(){
@@ -114,8 +118,20 @@ function exitRoom(){
 function goChatList(){
 	location.href="/chat/list";
 }
-</script>
 
+function dateSet(lmd, msgDate){
+	if(lmd == msgDate){
+		console.log("메시지 날자가 같습니다.");
+		return lmd;
+	} else {
+		console.log("메시지 날자가 다릅니다.");
+		console.log("lmd : "+lmd);
+		lmd = msgDate
+		$("#chatting").append("<div class='noticeArea'><span>"+msgDate+" </span></div>")
+		return lmd;
+	}
+}
+</script>
 
 </head>
 <body>

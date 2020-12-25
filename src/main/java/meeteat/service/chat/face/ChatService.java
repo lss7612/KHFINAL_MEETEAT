@@ -91,7 +91,7 @@ public interface ChatService {
 	/**
 	 * 채팅방 참여 여부 확인
 	 * @param user_no : 회원번호 
-	 * @return true or false
+	 * @return true(방 참여중) or false
 	 */
 	public boolean findJoinUser(int user_no, int chatting_no);
 
