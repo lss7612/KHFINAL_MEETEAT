@@ -16,7 +16,10 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	console.log('${boardAdminParam}')
+	if('${myParam.postCategory}'==$("#postCategory > option").val())
+		$(this).attr('selected','selected')
+		
 	//검색 버틀 클릭
 	$("#btnSearch").click(function() {
 		
@@ -40,23 +43,34 @@ $(document).ready(function() {
 })
 </script>
 
+<style>
+th{
+	text-align: center;
+}
+</style>
+
 <div id="divpage">
 <div class="sh_header">
 	<h2>내가 작성한 글</h2>
+	<hr>	
 </div>
 
 <div id="searchForm" style="text-align: right;">
 <form action="/mypage/mypost" method="GET">
-<select id ="category" name="category">
-    <option value="">전체</option>
-    <option value="메이트">메이트찾기</option>
-    <option value="모집">모집</option>
-    <option value="후기">후기</option>
-    <option value="문의">문의</option>
-</select>
+<!-- 	<select id ="postCategory" name="postCategory"> -->
+<!--     	<option value="">전체</option> -->
+<!--     	<option value="2" -->
+<%--     		<c:if test="${myParam.postCategory == '2' }">selected</c:if>>메이트찾기</option> --%>
+<!--     	<option value="3" -->
+<%--     		<c:if test="${myParam.postCategory == '3' }">selected</c:if>>모집게시판</option> --%>
+<!--     	<option value="4" -->
+<%--     		<c:if test="${myParam.postCategory == '4' }">selected</c:if>>후기게시판</option> --%>
+<!--     	<option value="5" -->
+<%--     		<c:if test="${myParam.postCategory == '5' }">selected</c:if>>문의게시판</option> --%>
+<!-- 	</select> -->
 
-<input type="text" id="search" name="search" placeholder="제목+내용 검색"/>
-<button class="btn">검색</button>
+	<input type="text" id="postSearch" name="postSearch" placeholder="제목+내용 검색"/>
+<button class="btn btn-default btn-sm">검색</button>
 </form>
 
 </div><br>
@@ -71,31 +85,44 @@ $(document).ready(function() {
       <th style="width: 45%">글 내용</th>
       <th style="width: 15%">작성일</th>
    </tr>
-<c:forEach items="${myAllPList}" var="b">
-   <tr>
-      <td>
-      	<input type="checkbox" name="checkbox" id="checkbox" value="${b.ARTICLE_NO}">
-      </td>
-      <td>${b.ARTICLE_NO }</td>
-      <td>${b.BOARD_NAME}</td>
-      <td>
-      	<c:choose>
-      		<c:when test="${b.BOARD_NO eq 2 }"> <!-- 메이트찾기 게시판 -->   	
-      			<a href="/matefind/view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
-      		</c:when>
-      		<c:when test="${b.BOARD_NO eq 3 }"> <!-- 파티모집 -->	
-      			<a href="/recruitboard/view?board_no=3&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>     	
-      		</c:when>
-      		<c:when test="${b.BOARD_NO eq 4 }"> <!-- 후기게시판 -->
-      			<a href="//view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
-      		</c:when>
-      		<c:when test="${b.BOARD_NO eq 5 }"> <!-- 문의게시판 -->
-      			<a href="//view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
-      		</c:when>
+
+<c:forEach items="${postAllList}" var="b">
+   <tr>      
+      <c:choose>
+      	<c:when test="${b.IS_DELETE eq 1 }">
+      		<td></td>
+      		<td>${b.ARTICLE_NO }</td>
+      		<td>${b.BOARD_NAME}</td>
+      		<td style="text-align: center; color: red;">삭제된 게시글입니다.</td>
+      		<td style="text-align: center; color: red;">삭제된 게시글입니다.</td>
+      		<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>      		
+      	</c:when>
+      	<c:otherwise>
+      		<td>
+      			<input type="checkbox" name="checkbox" id="checkbox" value="${b.ARTICLE_NO}">
+      		</td>
+      		<td>${b.ARTICLE_NO }</td>
+      		<td>${b.BOARD_NAME}</td>
+	      	<td>
+	      		<c:choose>
+	      			<c:when test="${b.BOARD_NO eq 2 }"> <!-- 메이트찾기 게시판 -->   	
+	      				<a href="/matefind/view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
+	      			</c:when>
+		      		<c:when test="${b.BOARD_NO eq 3 }"> <!-- 파티모집 -->	
+		      			<a href="/recruitboard/view?board_no=3&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>     	
+		      		</c:when>
+		      		<c:when test="${b.BOARD_NO eq 4 }"> <!-- 후기게시판 -->
+		      			<a href="/">${b.ARTICLE_TITLE}</a> 
+		      		</c:when>
+		      		<c:when test="${b.BOARD_NO eq 5 }"> <!-- 문의게시판 -->
+		      			<a href="/inquiry/view?board_no=5&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
+	      			</c:when>
+	     		 </c:choose>
+	      </td>
+	      <td>${b.ARTICLE_CONTENT}</td>
+	      <td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
+      	</c:otherwise>
       </c:choose>
-      </td>
-      <td>${b.ARTICLE_CONTENT}</td>
-      <td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
    </tr>
 </c:forEach>
 </table>
@@ -104,7 +131,7 @@ $(document).ready(function() {
 
  
 <div class="form-inline">
-	<a href="javascript:history.back();" role="button" class="btn btn-primary btn-sm pull-left">돌아가기</a>
+	<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm pull-left">돌아가기</a>
  </div>
 
 <jsp:include page="/WEB-INF/views/mypage/mypost_paging.jsp" />

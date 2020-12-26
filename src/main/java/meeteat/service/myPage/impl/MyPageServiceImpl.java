@@ -2,6 +2,7 @@ package meeteat.service.myPage.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.dao.myPage.face.MyPageDao;
+import meeteat.dto.myPage.MyPageParam;
 import meeteat.dto.user.User;
 import meeteat.service.myPage.face.MyPageService;
-import meeteat.util.MyPaging;
+import meeteat.util.Paging;
 
 
 @Service
@@ -102,25 +104,74 @@ public class MyPageServiceImpl implements MyPageService{
 	public List<Map<String, Object>> myCommentList(int user_no) {
 		return myPageDao.selectMyCommentByNo(user_no);
 	}
+	
+	@Override
+	public Paging getPostPaging(Paging curPage, MyPageParam myPageParam) {
+		// 전체 게시글 수 조회
+		int totalCount = myPageDao.selectCntAllPost(myPageParam);
+		
+		//페이징 객체 생성
+		Paging paging = new Paging(totalCount, curPage.getCurPage());
+				
+		return paging;
+	}
 
 	@Override
-	public MyPaging getPaging(MyPaging curPage) {
+	public List<HashMap<String, Object>> postAllList(Paging paging, MyPageParam myPageParam) {
 		
-		int totalCount = myPageDao.selectCntAllPost(curPage);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("user_no", myPageParam.getUser_no());
+		map.put("board_no", myPageParam.getBoard_no());
+//		map.put("is_delete", 0);
+		map.put("startNo", paging.getStartNo());
+		map.put("endNo", paging.getEndNo());
+		map.put("postCategory", myPageParam.getPostCategory());
+		map.put("postSearch", myPageParam.getPostSearch());
 		
-		MyPaging paging = new MyPaging(totalCount, curPage.getCurPage(), curPage.getCategory(), curPage.getSearch(), curPage.getUser_no());
+		logger.info("보드 넘버" + myPageParam.getBoard_no());
+		List<HashMap<String, Object>> result = new ArrayList<>();
+		result = myPageDao.getAllPostList(map);
 		
+		return result;
+	}
+
+	@Override
+	public void deleteMyPost(HashMap<String, Object> map) {
+		myPageDao.deleteMyPost(map);
+	}
+	
+	@Override
+	public Paging getCmmtPaging(Paging curPage, MyPageParam myPageParam) {
+		// 전체 게시글 수 조회
+		int totalCount = myPageDao.selectCntAllCmmt(myPageParam);
+				
+		//페이징 객체 생성
+		Paging paging = new Paging(totalCount, curPage.getCurPage());
+					
 		return paging;
 	}
 	
 	@Override
-	public List<Map<String, Object>> myAllPostList(MyPaging paging) {
-		return myPageDao.myAllPostList(paging);
+	public List<HashMap<String, Object>> cmmtAllList(Paging paging, MyPageParam myPageParam) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("user_no", myPageParam.getUser_no());
+		map.put("board_no", myPageParam.getBoard_no());
+//		map.put("is_delete", 0);
+		map.put("startNo", paging.getStartNo());
+		map.put("endNo", paging.getEndNo());
+		map.put("postCategory", myPageParam.getPostCategory());
+		map.put("postSearch", myPageParam.getPostSearch());
+		
+		logger.info("보드 넘버" + myPageParam.getBoard_no());
+		List<HashMap<String, Object>> result = new ArrayList<>();
+		result = myPageDao.getAllCmmtList(map);
+		
+		return result;
 	}
 	
 	@Override
-	public void deleteMyPost(HashMap<String, Object> map) {
-		myPageDao.deleteMyPost(map);
-		
+	public void deleteMyCmmt(HashMap<String, Object> map) {
+		myPageDao.deleteMyCmmt(map);		
 	}
+
 }

@@ -7,17 +7,21 @@
 <mapper namespace="meeteat.dao.myPage.face.MyPageDao">
 
 	<sql id="search">
-		<if test="search != null and !''.equals(search)">
-			AND (article_title LIKE '%'||#{search}||'%'
-			OR article_content Like '%'||#{search}||'%')
+		<if test="postSearch != null and !''.equals(postSearch)">
+			AND (article_title LIKE '%'||#{postSearch}||'%'
+			OR article_content Like '%'||#{postSearch}||'%')
 		</if> 
 	</sql>
+
 	
-	<sql id="category">
-		<if test="category != null and !''.equals(category)">
-			AND category  Like '%'||#{category}||'%' 
-		</if>
-	</sql>
+<!-- 	<sql id="category"> -->
+<!-- 		<if test="postCategory != null"> -->
+<!-- 			AND board_no = 2 -->
+<!-- 			OR board_no = 3 -->
+<!-- 			OR board_no = 4 -->
+<!-- 			OR board_no = 5 -->
+<!-- 		</if> -->
+<!-- 	</sql> -->
 	
 	<select id="selectByNo" parameterType="int" resultType="HashMap">
 		SELECT u.*
@@ -47,7 +51,7 @@
 	</delete>
 	
 	<select id="selectMyPostByNo" parameterType="int" resultType="HashMap">
-		SELECT board.article_title, board.create_date 
+		SELECT board.article_title, board.create_date , is_delete
 			, (SELECT board_name FROM tb_boardclass2 WHERE board_no = board.board_no) board_name
 		FROM tb_board2 board
 		WHERE user_no = #{user_no}
@@ -55,33 +59,36 @@
 	</select>
 	
 	<select id="selectMyCommentByNo" parameterType="int" resultType="HashMap">
-		SELECT c.comment_content, c.create_date,
-	    	(SELECT board_name FROM tb_boardclass2  WHERE board_no = c.board_no) board_name
+		SELECT c.comment_content, c.create_date, is_delete
+	      , (SELECT board_name FROM tb_boardclass2  WHERE board_no = c.board_no) board_name
 	   	  , (SELECT article_title FROM tb_board2  WHERE article_no = c.article_no) article_title
 		FROM tb_comment2 c
 		WHERE user_no = #{user_no}
 		ORDER BY c.comment_no DESC
 	</select>
 	
-	<select id="selectCntAllPost" parameterType="meeteat.util.MyPaging" resultType="int">
+	<select id="selectCntAllPost" parameterType="meeteat.dto.myPage.MyPageParam" resultType="int">
 		SELECT count(*) from( 
 			SELECT * FROM tb_board2
 			WHERE user_no = #{user_no}
 			<include refid="search"/>
-			<include refid="category"/>
+<!-- 			<include refid="category"/> -->
 		)CNT
 	</select>
 	
-	<select id="myAllPostList" parameterType="meeteat.util.MyPaging" resultType="HashMap">
+	<select id="getAllPostList" parameterType="HashMap" resultType="HashMap">
 		SELECT * FROM (
 				SELECT rownum rnum, B.*
 				FROM(
-					SELECT board.article_title, board.article_content, board.create_date , board.article_no, board.board_no
+					SELECT board.article_title, board.article_content, board.create_date , board.article_no, board.board_no, is_delete
 					, (SELECT board_name FROM tb_boardclass2 WHERE board_no = board.board_no) board_name
 					FROM tb_board2 board
 					WHERE user_no = #{user_no}
+
 					<include refid="search"/>
-					<include refid="category"/>
+<!-- 					<include refid="category"/> -->
+					ORDER BY article_no DESC
+					
 				) B
 				ORDER BY rnum
 		) R
@@ -91,8 +98,8 @@
 		
 	</select>
 	
-	<delete id="deleteMyPost" parameterType="HashMap">
-		DELETE FROM tb_board2
+	<update id="deleteMyPost" parameterType="HashMap">
+		UPDATE tb_board2 SET is_delete = 1
 		<if test="postArr != null">
 		WHERE article_no IN
 			<foreach collection="postArr" item="article_no" 
@@ -100,5 +107,52 @@
 			#{article_no}
 			</foreach>
 		</if>
-	</delete>
+	</update>
+	
+	
+	<select id="selectCntAllCmmt" parameterType="meeteat.dto.myPage.MyPageParam" resultType="int">
+		SELECT count(*) from( 
+			SELECT * FROM tb_comment2
+			WHERE user_no = #{user_no}
+				<if test="postSearch != null and !''.equals(postSearch)">
+					AND comment_content Like '%'||#{postSearch}||'%'
+				</if> 
+<!-- 			<include refid="category"/> -->
+		)CNT
+	</select>
+	
+	<select id="getAllCmmtList" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM (
+				SELECT rownum rnum, B.*
+				FROM(
+					SELECT cmmt.comment_content, cmmt.comment_no, cmmt.create_date, cmmt.board_no, cmmt.article_no, cmmt.is_delete
+	      			, (SELECT board_name FROM tb_boardclass2  WHERE board_no = cmmt.board_no) board_name
+	   	  			, (SELECT article_title FROM tb_board2  WHERE article_no = cmmt.article_no) article_title
+					FROM tb_comment2 cmmt
+					WHERE user_no = #{user_no}							
+						<if test="postSearch != null and !''.equals(postSearch)">
+							AND comment_content Like '%'||#{postSearch}||'%'
+						</if> 
+					ORDER BY article_no DESC
+					
+				) B
+				ORDER BY rnum
+		) R
+		<where>
+			rnum BETWEEN #{startNo } AND #{endNo }			
+		</where>		
+	</select>
+	
+	<update id="deleteMyCmmt" parameterType="HashMap">
+		UPDATE tb_comment2 SET is_delete = 1
+		<if test="cmmtArr != null">
+		WHERE comment_no IN
+			<foreach collection="cmmtArr" item="comment_no" 
+			open="(" close=")" separator=",">
+			#{comment_no}
+			</foreach>
+		</if>
+	</update>
+
+	
 </mapper>

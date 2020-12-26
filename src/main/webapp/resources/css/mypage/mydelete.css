@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+#submitResult{
+	display:none;
+}
+
+div{
+	display: block;
+}
+
+.c_header{
+	padding-bottom: 50px;
+	color: #666;
+	padding-left: 30px;
+}
+
+.c_header .contxt{
+	line-height: 19px;
+	padding-top: 10px;
+	letter-spacing: -1px;
+}
+
+.contxt{
+	padding-left: 10px;
+	
+}
+
+p{
+	display: block;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	margin: 0;
+	padding: 0;
+}
+
+strong{
+	font-weight: bold;
+}
+
+form{
+	display: block;
+	padding: 0 auto;
+}
+
+
+input{
+	font-size: 15px
+}
+
+.container{
+
+	text-align: center;
+	padding: 30px 0;
+	margin: 0 auto;
+	display: block;
+	border: 1px solid #F5DA81;
+	max-width: 80%;
+		
+}
+
+.form-group div{
+	text-align: center;
+	padding: 35px 0;
+	margin: 30px 0;
+}
