@@ -87,7 +87,7 @@ $(document).ready(function() {
 					<span class="txt_set">
 						<label for="file"></label>
 <!-- 						<input type="file" name="file" id="file" required accept="image/*"/> -->
-						<input type="file" name="file" id="file"/>
+						<input type="file" name="file" id="file" required accept="image/*"/>
 					</span>
 				</div>
 				<div class="box_set">
@@ -109,7 +109,7 @@ $(document).ready(function() {
 				</div>
 				<div class="box_set">
 					<strong class="tit_set">비밀번호</strong>
-					<span class="txt_set"><input type="password" name="user_pw" id = "user_pw" /></span>
+					<span class="txt_set"><input type="password" name="user_pw" id = "user_pw" required/></span>
 				</div>		
 				<div class="box_set">
 					<strong class="tit_set">비밀번호 확인</strong>

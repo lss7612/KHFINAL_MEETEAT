@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import meeteat.dto.myPage.MyPageParam;
 import meeteat.dto.user.User;
-import meeteat.util.MyPaging;
 
 public interface MyPageDao {
 
@@ -56,19 +56,45 @@ public interface MyPageDao {
 	 * @param param
 	 * @return
 	 */
-	public int selectCntAllPost(MyPaging curPage);
+	public int selectCntAllPost(MyPageParam myPageParam);
+//	public int selectCntAllPost(MyPaging curPage);
 
 	/**
 	 * 내 전체 글 조회
 	 * @param paging
 	 * @return
 	 */
-	public List<Map<String, Object>> myAllPostList(MyPaging paging);
+	public List<HashMap<String, Object>> getAllPostList(HashMap<String, Object> map);
+//	public List<Map<String, Object>> myAllPostList(MyPaging paging);
 
 	/**
 	 * 선택한 게시글 삭제
 	 * @param map
 	 */
 	public void deleteMyPost(HashMap<String, Object> map);
+
+	/**
+	 * 댓글 페이징 계산
+	 * @param myPageParam
+	 * @return
+	 */
+	public int selectCntAllCmmt(MyPageParam myPageParam);
+
+
+	/**
+	 * 내 댓글 전체 조회
+	 * @param map
+	 * @return
+	 */
+	public List<HashMap<String, Object>> getAllCmmtList(HashMap<String, Object> map);
+
+
+	/**
+	 * 내 댓글 삭제 
+	 * @param map
+	 */
+	public void deleteMyCmmt(HashMap<String, Object> map);
+
+
 
 }

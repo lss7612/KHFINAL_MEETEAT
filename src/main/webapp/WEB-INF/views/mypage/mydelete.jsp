@@ -4,98 +4,68 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
+<link rel="stylesheet" href="/resources/css/mypage/mydelete.css">
+
 
 <script>
-
-document.getElementById('submit').onclick = function() {
-    var ID = document.getElementById('user_id').value;
-    var pass = document.getElementById('user_pw').value;
-    if (ID === "${user_no}" && pass === "${user_pw}") {
-        alert("로그인 성공!");
-    }
-    else {
-        alert("로그인 실패!");
-    }
-}
-
+// function delEvent(){
+// 	alert("탈퇴가 완료되었습니다!")
+// }
 </script>
-<style>
-div{
-	displayy: block;
-}
 
-.c_header{
-	padding-bottom: 0px;
-	color: #666;
-	padding-left: 30px;
-}
-
-.c_header .contxt{
-	line-height: 19px;
-	padding-top: 10px;
-	letter-spacing: -1px;
-}
-
-.contxt{
-	padding-left: 10px;
-	
-}
-
-p{
-	display: block;
-	margin-block-start: 1em;
-	margin-block-end: 1em;
-	margin-inline-start: 0px;
-	margin-inline-end: 0px;
-	margin: 0;
-	padding: 0;
-}
-
-strong{
-	font-weight: bold;
-}
-
-form{
-	display: block;
-}
-
-
-input{
-	font-size: 15px
-}
-
-.container{
-
-	text-align: center;
-	max-width: 500;
+<script>
+$(document).ready(function() {
+	$('#submit').click(function(){
 		
-}
+		var idx = true;
+		
+		if($.trim($('#user_pw').val()) == ''){
+			$('#user_pw').focus();
+			return false;
+			
+		} 
+		else {
+			alert("탈퇴가 완료되었습니다.")
+			return true;
+		}
+		
+	});
+})
+</script>
 
-</style>
 <div id="divpage">
 <div class="c_header">
-	<h1>비밀 번호 확인</h1>
+	<h1>회원 탈퇴</h1>
 	<p class="contxt">
 	<Strong style="font-size: 25px; color: #F5DA81;"> ${u.USER_ID  }</Strong>
-		님, 회원탈퇴를 진행하면 정보를 되돌릴 수 없습니다.
+		님, 회원 탈퇴를 진행하면 결제정보 및 회원정보를 되돌릴 수 없습니다.
 	</p>
+	<p class="contxt" style="padding-left: 20px;">탈퇴를 위해 회원님의 비밀번호를 입력해주세요</p>
 </div>
 
-
-<h4>아이디와 비밀번호를 입력해주세요</h4>
+<div>
 <form action="/mypage/mydelete" method="POST">
 <input type="hidden" name="user_no" value="${u.USER_NO}">
+<input type="hidden" name="user_id" id="user_id" value="${u.USER_ID }">
 
 <div class="container">
-	<div class="submitForm">
-		<input type="text" name="user_id" id="user_id" placeholder="아이디 입력">
-		<input type="password" name="user_pw" id="user_pw" placeholder="비밀번호 입력">
+	<div class="form-group">
+		<label style="padding-right: 150px;">회원 아이디</label>
+		<Strong style="font-size: 20px; color: #666;"> ${u.USER_ID  }</Strong>
 	</div>
-	
-	<button id="submit" name="submit" class="btn btn-danger btn-sm pull-right">탈퇴하기</button>
-	<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm pull-left">돌아가기</a>
+	<div class="form-group">
+		<label style="padding-right: 60px;">회원 비밀번호</label>		
+		<input type="password" name="user_pw" id="user_pw" placeholder="비밀번호를 입력해주세요">
+	</div>
+	<div id="submitResult" style="text-align: center;">　</div>
+
+</div><br>
+<div style="text-align: center;">
+		<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm" id="back">돌아가기</a>
+		<button id="submit" name="submit" class="btn btn-danger btn-sm" onclick="delEvent();">탈퇴하기</button>
 </div>
 </form>
+</div>
 
 </div>
 

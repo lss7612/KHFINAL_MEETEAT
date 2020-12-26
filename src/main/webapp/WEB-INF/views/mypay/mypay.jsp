@@ -13,7 +13,7 @@
 가격 얼마구
 정기결제하면 글 조회 가능하구 채팅가능하고 어쩌구 저쩌구 
 결제 하시겠습니까?
-<button><a href="/mypay/mypayReq">정기 구독하기</a></button>
-<button><a href="/mypage/mypage">마이페이지 돌아가기</a></button>
+<a href="/mypay/mypayReq" role="button">정기 구독하기</a>
+<a href="/mypage/mypage" role="button">마이페이지 돌아가기</a>
 
 <c:import url="/WEB-INF/views/layout/footer.jsp" />

@@ -1,5 +1,6 @@
 package meeteat.controller.myPage;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import meeteat.dto.myPage.MyPageParam;
 import meeteat.dto.user.User;
 import meeteat.service.myPage.face.MyPageService;
-import meeteat.util.MyPaging;
+import meeteat.util.Paging;
 
 @Controller
 public class MyPageController {
@@ -100,24 +102,29 @@ public class MyPageController {
 
 	}
 	@RequestMapping(value="/mypage/mypost")
-	public void myPost(HttpSession session, Model model, MyPaging curPage) {
+	public void myPost(HttpSession session
+						, Model model
+						, Paging curPage
+						, HttpServletRequest req
+						,MyPageParam myPageParam
+						) {
 		
-		//페이징 계산 페이징 
-		System.out.println(curPage);
-		curPage.setUser_no(Integer.parseInt(session.getAttribute("user_no").toString()));
-		
-		MyPaging paging = myPageService.getPaging(curPage);
-		
-//		paging.setSearch(curPage.getSearch());
-//		paging.setCategory(curPage.getCategory());
-//		paging.setUser_no(Integer.parseInt(session.getAttribute("user_no").toString()));
-
+		myPageParam.setUser_no(Integer.parseInt(session.getAttribute("user_no").toString()));
+//		myPageParam.setBoard_no(Integer.parseInt(req.getAttribute("board_no").toString()));
+	
+		logger.info("보드 넘버 " + myPageParam.getBoard_no());
+		//페이징
+		Paging paging = myPageService.getPostPaging(curPage, myPageParam);
 		model.addAttribute("myPostPaging", paging);
 		
-		// 전체 작성글 리스트
-		List<Map<String, Object>> myAllPostList = myPageService.myAllPostList(paging);
+		//검색 목록 페이지
+		paging.setSearch(curPage.getSearch());
 		
-		model.addAttribute("myAllPList", myAllPostList);
+		//전체 게시글 조회
+		List<HashMap<String, Object>> postAllList = myPageService.postAllList(paging, myPageParam); 
+		model.addAttribute("postAllList", postAllList);
+		model.addAttribute("myParam", myPageParam);
+
 		
 	}
 	
@@ -125,7 +132,7 @@ public class MyPageController {
 	public String myPostProc(HttpServletRequest req) {
 		
 		String[] postArr = req.getParameterValues("checkbox");
-		//	System.out.println(Arrays.toString(postArr));
+		System.out.println(Arrays.toString(postArr));
 
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("postArr", postArr);
@@ -136,10 +143,48 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="/mypage/mycmmt")
-	public void myCmmt() {
+	public void myCmmt(Model model
+						, HttpSession session
+						, Paging curPage
+						, HttpServletRequest req
+						,MyPageParam myPageParam) {
 		
+		myPageParam.setUser_no(Integer.parseInt(session.getAttribute("user_no").toString()));
+//		myPageParam.setBoard_no(Integer.parseInt(req.getAttribute("board_no").toString()));
+		
+		logger.info("" + myPageParam);
+		
+		//페이징
+		Paging paging = myPageService.getCmmtPaging(curPage, myPageParam);
+		model.addAttribute("myCmmtPaging", paging);
+		
+		//검색 목록 페이지
+		paging.setSearch(curPage.getSearch());
+		
+		//전체 댓글 조회
+		List<HashMap<String, Object>> cmmtAllList = myPageService.cmmtAllList(paging, myPageParam); 
+		model.addAttribute("cmmtAllList", cmmtAllList);
+		model.addAttribute("myParam", myPageParam);
+		
+		//내가 쓴 글 조회
+		int user_no = Integer.parseInt(session.getAttribute("user_no").toString());
+		List<Map<String, Object>> postList = myPageService.myPostList(user_no);
+		model.addAttribute("pList", postList);
 		
 	}
 	
+	@RequestMapping(value="/mypage/mycmmt" , method=RequestMethod.POST)
+	public String myCmmtProc(HttpServletRequest req) {
+		
+		String[] cmmtArr = req.getParameterValues("checkbox");
+		System.out.println(Arrays.toString(cmmtArr));
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("cmmtArr", cmmtArr);
+
+		myPageService.deleteMyCmmt(map);
+
+		return "redirect:/mypage/mycmmt";	
+	}
 
 }

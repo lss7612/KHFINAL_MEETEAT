@@ -48,7 +48,7 @@ td:nth-child(0) {
 		<!-- 회원 정보 -->
 		<div class="sh_group">
 			<div class="sh_header">
-				<h2>회원 정보 <a href="/mypage/myedit" class="btn btn-default pull-right btn-sm" role="button">수정하기</a></h2>	
+				<h2>내 프로필 정보 <a href="/mypage/myedit" class="btn btn-default pull-right btn-sm" role="button">수정하기</a></h2>	
 			</div><hr>
 
 			<div id="myinfo">
@@ -74,7 +74,7 @@ td:nth-child(0) {
 		<!-- 내 결제 정보 -->
 		<div class="sh_group">
 			<div class="sh_header">
-				<h2>결제 정보 
+				<h2>내 결제 정보 
 					<c:if test="${userinfo.USER_GRADE eq 2}">
 						<a href="/mypay/mypay" class="btn btn-default pull-right btn-sm" role="button">정기 결제</a>
 					</c:if>
@@ -118,7 +118,7 @@ td:nth-child(0) {
 		<!-- 내가 작성한 글  -->
 		<div class="sh_group">
 			<div class="sh_header">
-				<h2>작성글 <a href="/mypage/mypost" class="btn btn-default pull-right btn-sm" role="button">더 보기</a></h2>
+				<h2>내가 작성한 글 <a href="/mypage/mypost" class="btn btn-default pull-right btn-sm" role="button">더 보기</a></h2>
 			</div><hr>
 			
 			<div class="sh_content">
@@ -133,14 +133,21 @@ td:nth-child(0) {
 							<th style="width: 50%">글 제목</th>
 							<th style="width: 30%">작성일</th>
 						</tr>
+							<c:forEach items="${pList}" var="b" varStatus="status" begin="0" end="4">
+							<tr>
+								<td>${b.BOARD_NAME}</td>
+								<c:choose>
+									<c:when test="${b.IS_DELETE eq 0 }">
+										<td>${b.ARTICLE_TITLE}</td>
+									</c:when>
+									<c:otherwise>
+										<td style="color: red;">삭제된 게시글입니다.</td>
+									</c:otherwise>
+								</c:choose>
+								<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
+							</tr>
+							</c:forEach>
 
-						<c:forEach items="${pList}" var="b" varStatus="status" begin="0" end="4">
-						<tr>
-							<td>${b.BOARD_NAME}</td>
-							<td>${b.ARTICLE_TITLE}</td>
-							<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
-						</tr>
-						</c:forEach>
 					</table>
 
 				</c:otherwise>
@@ -151,30 +158,38 @@ td:nth-child(0) {
 		<!-- 내가 작성한 댓글 -->	
 		<div class="sh_group">
 			<div class="sh_header">
-				<h2>작성댓글<a href="/mypage/mycmmt" class="btn btn-default pull-right btn-sm" role="button">더 보기</a></h2>
+				<h2>내가 작성한 댓글<a href="/mypage/mycmmt" class="btn btn-default pull-right btn-sm" role="button">더 보기</a></h2>
 			</div><hr>
 			
 			<div class="sh_content">
 			<c:choose>
 				<c:when test="${empty cList }">
-					<h3>등록하신 댓글이 없습니다</h3>
+					<h3>등록하신 글이 없습니다</h3>
 				</c:when>
 				<c:otherwise>
 					<table class="table table-condensed">
 						<tr>
 							<th style="width: 20%">게시판 이름</th>
-							<th style="width: 50%">댓글 내용</th>
+							<th style="width: 50%">댓글 제목</th>
 							<th style="width: 30%">작성일</th>
 						</tr>
+							<c:forEach items="${cList}" var="c" varStatus="status" begin="0" end="4">
+							<tr>
+								<td>${c.BOARD_NAME}</td>
+								<c:choose>
+									<c:when test="${c.IS_DELETE eq 0 }">
+										<td>${c.COMMENT_CONTENT}</td>
+									</c:when>
+									<c:otherwise>
+										<td style="color: red;">삭제된 댓글입니다.</td>
+									</c:otherwise>
+								</c:choose>
+								<td><fmt:formatDate value="${c.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
+							</tr>
+							</c:forEach>
 
-						<c:forEach items="${cList}" var="c" varStatus="status" begin="0" end="4">
-						<tr>
-							<td>${c.BOARD_NAME}</td>
-							<td>${c.COMMENT_CONTENT}</td>
-							<td><fmt:formatDate value="${c.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
-						</tr>
-						</c:forEach>
 					</table>
+
 				</c:otherwise>
 			</c:choose>
 			</div>
