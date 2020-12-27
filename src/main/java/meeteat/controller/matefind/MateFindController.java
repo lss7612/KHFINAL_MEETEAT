@@ -206,6 +206,23 @@ public class MateFindController {
 		
 	}
 	
+	@RequestMapping(value = "/attendeeList")
+	public String attendeeList(@RequestParam("article_no") int article_no
+							, Model model) {
+		
+		logger.info("attendeeList 여기왔음");
+		
+		MateFindBoard viewBoard = new MateFindBoard();
+		
+		viewBoard.setArticle_no(article_no);
+		
+		// 참여자 정보 가져오는 Join 테이블
+		List<MateFindBoard> attendUserList = mateFindService.attendUserInfo(viewBoard);
+		model.addAttribute("attendUserList", attendUserList);
+		
+		return "matefind/attendeeList";
+	}
+	
 	
 /*
 	@RequestMapping(value = "/sortajax")

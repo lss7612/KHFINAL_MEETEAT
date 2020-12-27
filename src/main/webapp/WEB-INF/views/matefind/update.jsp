@@ -24,10 +24,19 @@
 
 
 <style type="text/css">
-
 body {
 	margin: 0 auto;
 	text-align: center;
+}
+
+.search {
+	position: relative;
+	top: 80px;
+	z-index: 10;
+}
+
+#map {
+	z-index: 5;
 }
 
 </style>
@@ -35,6 +44,15 @@ body {
 <script type="text/javascript">
 function goList() {
 	location.href="/matefind/list";
+}
+
+function prevent() {
+	
+	if(window.event.keyCode == 13) {
+		window.event.keyCode = 0;
+	} else {
+		return;
+	}
 }
 
 $(document).ready(function() {
@@ -110,8 +128,6 @@ $(document).ready(function() {
 
 <div class="container" id="divpage">
 
-<br><br>
-
 <form action="/matefind/update" method="post" id="form">
 
 	<div class="row">
@@ -125,7 +141,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 	
-	<div class="row" style="width: 150px;">
+	<div class="row">
 		<div class="col">
 			<label class="input-group-text" for="category">만남유형</label>
 			<select class="form-select" id="categorySel" name="category">
@@ -146,6 +162,7 @@ $(document).ready(function() {
 				<option class="mlv" value="6">6명</option>
 				<option class="mlv" value="7">7명</option>
 			</select>
+			<h5>모집인원은 현재 참여하고있는 인원보다 적게 설정할 수 없습니다.</h5>
 		</div>
 	</div>
 	
@@ -190,23 +207,21 @@ $(document).ready(function() {
 <!-- 	</div> -->
 <!-- 	<hr> -->
 	
-	<label for="date" class="form-label" style="float: left; margin-top: 20px;">시간</label>
-	<input class="form-control noEmpty" id="date" type="datetime-local" value="${view.meet_time }" name="meet_time" style="width: 300px;">
+	<label for="date" class="form-label" style="float: left; margin-top: 40px;">시간</label>
+	<input class="form-control noEmpty" id="date" type="datetime-local" value="${view.meet_time }" name="meet_time">
 	
 	
 
 	<!-- 네이버지도 검색창 -->
-	<!-- #수정# absolute - relative 로 지도에 띄우기 -->
 	<label for="map" class="form-label" style="float: left; margin-top: 40px;">위치</label>
 	<div class="search" id="mapSearch" style="float: left;">
 		<input id="address" type="text" placeholder="검색할 주소">
 		<input id="submit" type="button" value="주소 검색">
 	</div>
-
+	
 	<!-- 네이버지도 -->
 	<div id="map" style="width:100%;height:400px; margin-top: 20px;"></div>
 	
-	<!-- 검색했을 때 적용됨 -->
 	<input type="text" class="form-control" readonly="readonly" id="party_location" name="party_location" value="${view.party_location }">
 
 	
@@ -373,13 +388,13 @@ $(document).ready(function() {
 	    searchCoordinateToAddress(e.coord);
 	  });
 	
-	  $('#address').on('keydown', function(e) {
-	    var keyCode = e.which;
+// 	  $('#address').on('keydown', function(e) {
+// 	    var keyCode = e.which;
 	
-	    if (keyCode === 13) { // Enter Key
-	      searchAddressToCoordinate($('#address').val());
-	    }
-	  });
+// 	    if (keyCode === 13) { // Enter Key
+// 	      searchAddressToCoordinate($('#address').val());
+// 	    }
+// 	  });
 	
 	  $('#submit').on('click', function(e) {
 	    e.preventDefault();
@@ -404,7 +419,7 @@ $(document).ready(function() {
 			
 			<a class="btn btn-secondary" href="/matefind/list" style="float: left;">목록으로</a>
 					
-			<button class="btn btn-primary" id="btnWrite">수정하기</button>
+			<button class="btn btn-primary" id="btnWrite" onkeypress="prevent()">수정하기</button>
 			<input type="reset" id="cancel" class="btn btn-secondary" value="취소하기">
 			
 			<input type="button" id="deleteBtn" class="btn btn-danger" style="float: right;" value="삭제하기">

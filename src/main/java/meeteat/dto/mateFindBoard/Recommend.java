@@ -1,14 +1,19 @@
 package meeteat.dto.mateFindBoard;
 
+import meeteat.dto.user.User;
+
 public class Recommend {
 	
 	private int article_no;
 	private int board_no;
 	private int user_no;
 	
+	private User user;
+	
 	@Override
 	public String toString() {
-		return "Recommend [article_no=" + article_no + ", board_no=" + board_no + ", user_no=" + user_no + "]";
+		return "Recommend [article_no=" + article_no + ", board_no=" + board_no + ", user_no=" + user_no + ", user="
+				+ user + "]";
 	}
 
 	public int getArticle_no() {
@@ -34,6 +39,15 @@ public class Recommend {
 	public void setUser_no(int user_no) {
 		this.user_no = user_no;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	
 	
 

@@ -32,6 +32,19 @@ body {
 	text-align: center;
 }
 
+.search {
+	position: relative;
+	top: 80px;
+	left: 20px;
+	z-index: 10;
+}
+
+
+#map { 
+	z-index: 5;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -174,16 +187,10 @@ $(document).ready(function() {
 	</div>
 	<hr>
 	
-	<div class="row">
-		<label for="date" class="form-label" style="float: left; margin-top: 40px;">시간</label><br>
-	</div>
-
-	<div class="row">
-		<input class="form-control noEmpty" id="date" type="datetime-local" name="meet_time" style="width: 300px; display: block;">
-	</div>
+	<label for="date" class="form-label" style="float: left; margin-top: 40px;">시간</label>
+	<input class="form-control noEmpty" id="date" type="datetime-local" name="meet_time">
 
 	<!-- 네이버지도 검색창 -->
-	<!-- #수정# absolute - relative 로 지도에 띄우기 -->
 	<label for="map" class="form-label" style="float: left; margin-top: 40px;">위치</label>
 	<div class="search" id="mapSearch" style="float: left;">
 		<input id="address" type="text" placeholder="검색할 주소">
@@ -383,7 +390,7 @@ $(document).ready(function() {
 	
 <br><br><br><br>
 
-	<div class="row" style="margin-bottom: 100px;">
+	<div class="row">
 		<div class="col">
 			<button class="btn btn-primary" id="btnWrite" onkeypress="prevent()" onkeydown="prevent()">작성하기</button>
 			<input type="reset" id="cancel" class="btn btn-secondary" value="취소하기">
