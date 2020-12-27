@@ -3,18 +3,28 @@
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 
-<body>
-	<c:forEach var="resultHistory" items="${resultHistory}" >
-		<li class="result-item">
-		    <p class="result-day">${resultHistory.REG_DATE} <span>${resultHistory.ORDER_TYPE}</span></p>
-		    <dl class="result-detail">
-		        <dt>품명</dt>
-		        <dd>${resultHistory.PRODUCT_TYPE}</dd>
-		        <dt>금액</dt>
-		        <dd>${resultHistory.AMOUNT}</dd>
-		    </dl>
-		</li>
-	</c:forEach>
+<style type="text/css">
 
 
-</body>
+</style>
+
+<div class="row">
+<c:forEach items="${attendUserList }" var="attendUserList">
+	
+	<!-- user_no는 나중에 사진으로 대체 되어야함 -->
+	<div class="col-2">
+		<img style="width: 50px; height: 50px;" src="${attendUserList.user.user_profilestored }" alt="유저프로필사진">	
+	</div>
+	
+	<div class="col-2">
+		<h3>${attendUserList.user.user_id }</h3>
+	</div>
+	
+	<div class="col-2">
+		<h3>${attendUserList.user.user_nick }</h3>
+	</div>
+	
+</c:forEach>
+</div>
+
+

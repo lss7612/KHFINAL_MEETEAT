@@ -33,6 +33,17 @@ body {
 	color: gray;
 }
 
+.container hr {
+	align-content: center;
+	width: 100%;
+	height: 10px; 
+	border: 0;
+    border-top: 1px solid #abd5bd;
+    border-bottom: 1px solid #abd5bd;
+	background-color: #ced4da; margin: 8px 0px;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -105,15 +116,16 @@ $(document).ready(function() {
 	
 	<!-- host -->
 	<div class="row">
+	
 		<!-- user_no는 나중에 사진으로 대체 되어야함 -->
-		<div class="col-4">
+		<div class="col-2">
 			<img style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	
 		</div>
 		
-		<div class="col-4">
+		<div class="col-2">
 			<h3>${hostInfo.user_id }</h3>
 		</div>
-		<div class="col-4">
+		<div class="col-2">
 			<h3>${hostInfo.user_nick }</h3>
 		</div>
 	</div>
@@ -130,6 +142,9 @@ $(document).ready(function() {
 		</div>
 	</div>
 	
+	<div id="attendeeAjax"></div>
+
+<%--
 	<div class="row">
 		
 		<c:forEach items="${attendUserList }" var="attendUserList">
@@ -149,7 +164,7 @@ $(document).ready(function() {
 		
 	</div>
 	<!-- //guest -->
-	
+--%>
 	
 	<hr>
 	
@@ -161,7 +176,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 
-	<div class="row" style="background-color: #E0E0E0; margin: 20px; 10px;">
+	<div class="row" style="background-color: #E0E0E0 ;margin: 20px; 10px;">
 		${view.article_content }
 	</div>
 	
@@ -180,7 +195,7 @@ $(document).ready(function() {
 	<div id="map" style="width:100%;height:400px; margin-top: 20px;"></div>
 	
 	<!-- 검색했을 때 적용됨 -->
-	<input type="text" class="form-control" readonly="readonly" id="party_location" name="party_location" value="${view.party_location }">
+	<input type="text" class="form-control" readonly="readonly" id="party_location" name="party_location" style="margin-bottom: 50px;" value="${view.party_location }">
 
 	
 	<script>
@@ -302,9 +317,6 @@ $(document).ready(function() {
 	
 	
 	
-<br><br><br><br>
-	
-	
 <!-- 버튼 영역v2 -->
 	<div class="row">
 		<div class="col">
@@ -409,16 +421,38 @@ function deleteAttendee() {
 	
 }
 
+function loadAttendeeList() {
+	
+	$.ajax({
+		url: '/matefind/attendeeList',
+		data: { article_no : $('#article_no').val() },
+		dataType: 'html',
+		type: 'get',
+		success: function(res) {
+			console.log("[ajax] /matefind/attendeeList 전송성공");
+			$("#attendeeAjax").empty();
+			$("#attendeeAjax").append(res);
+		},
+	    error:function(request,status,error){
+			console.log("[ajax] /matefind/attendeeList 전송실패");
+	         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    }
+	})
+	
+}
+
 
 $(document).ready(function() {
+	
+	loadAttendeeList();
 
 	if(${isAttendee }) {
 		
-		addAttendee()
+		addAttendee();
 		
 	} else {
 		
-		deleteAttendee()
+		deleteAttendee();
 	}
 	
 	$('#btnAttend').click(function() {
@@ -455,16 +489,17 @@ $(document).ready(function() {
 					// recommend - user join결과 불러오기
 				}
 				
+				loadAttendeeList();
+				
 			},
 			error: function() {
 				console.log("[ajax] /matefind/attend 전송실패")
 				
 			}
 			
-			
-			
-			
 		})
+		
+		
 		
 	})
 	

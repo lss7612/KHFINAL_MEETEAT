@@ -32,7 +32,7 @@
 		WHERE user_nick = #{user_nick }
 	</select>
 	
-	<insert id="signUp">
+	<insert id="signUp" parameterType="meeteat.dto.user.User">
 		INSERT INTO tb_user2 (user_no, user_id, user_pw, user_nick, user_age, user_gender, user_email, user_profileorigin, user_profilestored, user_blockcnt, user_grade)
 		VALUES (tb_user2_seq.nextval, #{user_id}, #{user_pw}, #{user_nick}, #{user_age}, #{user_gender}, #{user_email}, #{user_profileorigin}, #{user_profilestored}, 0, 2)
 	</insert>

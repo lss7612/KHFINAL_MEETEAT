@@ -25,6 +25,7 @@ body {
 
 .thumbnail-wrapper {
 	width: 350px;
+	margin-top: 30px;
 	margin-bottom: 70px;
 	padding-left: 8px;
 	padding-right: 8px;
@@ -153,10 +154,12 @@ function createChat(){
 
 <!-- <hr> -->
 
-	<div class="filter">
+<div class="row">
+	<div class="filter col">
 	<h4>필터</h4>
 	
-		<div class="input-group mb-3">
+	<div class="row">
+		<div class="input-group mb-3 ">
 		  <label class="input-group-text" for="party_location">지역</label>
 		  <select class="form-select" id="party_location" name="party_location">
 		    <option selected value="">전체</option>
@@ -178,9 +181,10 @@ function createChat(){
 		    <option value="경상남도">경상남도</option>
 		    <option value="제주특별자치도">제주특별자치도</option>
 		  </select>
-		  
+		</div>
+	</div>
 		  <span style="width: 50px;"></span>
-	
+	<div class="row">
 		  <label class="input-group-text" for="meet_time">시간</label>
 		  <select class="form-select" id="meet_time" name="meet_time">
 		    <option value="">전체</option>
@@ -189,9 +193,11 @@ function createChat(){
 		    <option value="저녁">저녁</option>
 		    <option value="새벽">새벽</option>
 		  </select>
+	</div>
 	
 		  <span style="width: 50px;"></span>
 	
+	<div class="row">
 		  <label class="input-group-text" for="category">종류</label>
 		  <select class="form-select" id="category" name="category">
 		    <option value="">전체</option>
@@ -199,12 +205,12 @@ function createChat(){
 		    <option value="술">술</option>
 		    <option value="카페/디저트">카페/디저트</option>
 		  </select>
-		</div>
-	
 	</div>
+	
+	</div><!-- //filter 끝 -->
+</div><!-- row 끝 -->
 
 <br><br>
-
 
 	<c:forEach items="${mateFindList }" var="list">
 	

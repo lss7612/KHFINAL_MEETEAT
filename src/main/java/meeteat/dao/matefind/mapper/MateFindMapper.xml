@@ -38,6 +38,13 @@
 		<result column="board_no" property="board_no"/>
 	</resultMap>
 	
+	<resultMap type="meeteat.dto.mateFindBoard.Recommend" id="RecommendJoin">
+		<result column="user_no" property="user_no"/>
+		<result column="article_no" property="article_no"/>
+		<result column="board_no" property="board_no"/>
+		<collection resultMap="UserJoin" property="user"/>
+	</resultMap>
+	
 	<resultMap type="meeteat.dto.mateFindBoard.MateFindBoard" id="MateFindBoardJoin">
 		<result column="article_no" property="article_no"/>
 		<result column="article_title" property="article_title"/>
