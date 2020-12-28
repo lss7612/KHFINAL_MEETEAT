@@ -124,7 +124,9 @@ function reportPopup(){
 <h2><a href="/restorantfind/find">맛집찾기!</a></h2>
 <h2><a href="#" onclick="chatListPopup();">채팅목록으로!</a></h2>
 <h2><a href="/matefind/list">메이트찾기게시판으로</a></h2>
-
+<h2><a href="/notice/list">공지사항게시판으로!</a></h2>
+<h2><a href="/inquiry/list">문의게시판으로!</a></h2>
+<h2><a href="/admin/board/list">게시판관리자페이지로!</a></h2>
 
 
 

@@ -44,18 +44,23 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 	}
 
 	@Override
-	public List<HashMap<String, String>> InquiryList(Paging paging, int board_no) {
+	public List<HashMap<String, String>> InquiryList(Paging paging, int board_no, int article_secret) {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("board_no", 5);
 		map.put("is_delete", 0);
+		map.put("article_secret", article_secret);
 		map.put("startNo", paging.getStartNo());
 		map.put("endNo", paging.getEndNo());
 		map.put("keyword", paging.getKeyword());
 		map.put("search", paging.getSearch());
 		
+		logger.info(">>>>>>>>>>>>>>List" + article_secret);
+		
+		//DB - 게시글 목록 받음
 		List<HashMap<String, String>> result = new ArrayList<>();
+		
 		
 		result = inquiryBoardDao.selectIquiryList(map);
 		
