@@ -5,23 +5,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="meeteat.dao.inquiryBoard.face.InquiryBoardDao">
-	
-	<resultMap type="meeteat.dto.inquiryBoard.InquiryBoard" id="InquiryBoard">
-		<id property="article_no" column="article_no" />
-		<id property="board_no" column="board_no" />
-		
-		<result property="article_title" column="article_title" />
-		<result property="article_content" column="article_content" />
-		<result property="user_no" column="user_no" />
-		<result property="create_date" column="create_date" />
-		<result property="revision_date" column="revision_date" />
-		<result property="is_delete" column="is_delete" />
-		<result property="article_hit" column="article_hit" />
-		<result property="post_group" column="post_group" />
-		<result property="post_step" column="post_step"/>
-		<result property="post_indent" column="post_indent" />
-	</resultMap>
-
 
 	<sql id="selectInquiry">
 		SELECT
@@ -37,8 +20,9 @@
             , post_group
 			, post_step
 			, post_indent
+			, article_secret
             , (SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
-        FROM tb_board2 b
+        FROM tb_board2 b 
 	</sql>
 	
 	<sql id="searchTitle">
@@ -75,6 +59,7 @@
 		            , post_group
 					, post_step
 					, post_indent
+					, article_secret
 		            , (SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
 	        	FROM tb_board2 b
 	        	WHERE board_no = #{board_no}
@@ -90,9 +75,9 @@
 	
 	<insert id="inquiryWrite" parameterType="meeteat.dto.inquiryBoard.InquiryBoard">
 		INSERT INTO tb_board2 ( 
-			article_no, article_title, article_content, board_no, user_no, create_date, revision_date, is_delete, article_hit, post_group, post_step, post_indent)
+			article_no, article_title, article_content, board_no, user_no, create_date, revision_date, is_delete, article_hit, post_group, post_step, post_indent, article_secret)
 		VALUES (#{article_no},  NVL(#{article_title}, '(제목없음)'), #{article_content}, #{board_no}, #{user_no},
-			 sysdate, sysdate, #{is_delete}, #{article_hit}, #{article_no}, 0, 0)
+			 sysdate, sysdate, #{is_delete}, #{article_hit}, #{article_no}, 0, 0, #{article_secret})
 	</insert>
 	  
 	<update id="upDateHit" parameterType="hashmap">

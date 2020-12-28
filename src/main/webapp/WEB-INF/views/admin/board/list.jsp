@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 
 <style type="text/css">
 table {
@@ -141,8 +141,8 @@ function isDelete() {
 		
 		<div class="col-md-4">
 			<select class="form-control input-sm" name="manageSearch" id="manageSearch">
-				<option value="tatalList"
-				<c:if test="${boardAdminParam.manageSearch == 'tatalList' || empty boardAdminParam.manageCategory}">selected</c:if>>전체</option>
+				<option value="totalList"
+				<c:if test="${boardAdminParam.manageSearch == 'totalList' || empty boardAdminParam.manageCategory}">selected</c:if>>전체</option>
 				
 				<option value="article_title" 
 				<c:if test="${boardAdminParam.manageSearch == 'article_title' }">selected</c:if>>제목</option>
@@ -205,7 +205,7 @@ function isDelete() {
 					</td>
 					<td>${list.USER_NICK }</td>
 					<td>
-						<fmt:formatDate value="${list.CREATE_DATE }" pattern="yy-MM-dd HH:mm:ss" />
+						<fmt:formatDate value="${list.CREATE_DATE }" pattern="yy-MM-dd HH:mm" />
 					</td>
 					<td>${list.ARTICLE_HIT }</td>
 				</tr>
@@ -240,5 +240,4 @@ function isDelete() {
 
 </div> <!-- container end  -->
 
-</body>
-</html>
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>
