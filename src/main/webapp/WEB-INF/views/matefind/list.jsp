@@ -94,7 +94,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			
-			url: '/matefind/sortajax'
+			url: '/matefind/listFilter'
 			, type: 'get'
 			, data: {
 				party_location: $("#party_location").val()
@@ -102,12 +102,14 @@ $(document).ready(function(){
 				, category: $("#category").val()
 			} 
 			
-			, dataType: 'json'
+			, dataType: 'html'
 			, success: function(res) {
 				
 				console.log("filterList 성공")
 				
-				$(document.body).append(res);
+				$('#filterList').empty();
+				$('#filterList').append(res);
+// 				$(document.body).append(res);
 				
 			}
 			
@@ -118,7 +120,33 @@ $(document).ready(function(){
 			
 		}); // ajax 끝
 		
-	});
+// 		$.ajax({
+			
+// 			url: '/matefind/sortajax'
+// 			, type: 'get'
+// 			, data: {
+// 				party_location: $("#party_location").val()
+// 				, meet_time: $("#meet_time").val()
+// 				, category: $("#category").val()
+// 			} 
+			
+// 			, dataType: 'json'
+// 			, success: function(res) {
+				
+// 				console.log("filterList 성공")
+				
+// 				$(document.body).append(res);
+				
+// 			}
+			
+// 			, error: {
+// // 				console.log("filterList 실패")
+				
+// 			}
+			
+// 		}); // ajax 끝
+		
+	});	// select change 끝
 
 	
 	//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
@@ -212,6 +240,8 @@ function createChat(){
 
 <br><br>
 
+	<div id="filterList"></div>
+
 	<c:forEach items="${mateFindList }" var="list">
 	
 	<div class="thumbnail-wrapper">
@@ -227,10 +257,14 @@ function createChat(){
 				<p style="	white-space:nowrap;	
 						text-overflow: ellipsis;
 						overflow: hidden;"># ${list.party_location }</p>
-				<p># ${list.meet_time }</p>
+				<fmt:parseDate value="${list.meet_time }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/>
+				<p># <fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일"/></p>
+				<p># <fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/></p>
 				<p># ${list.category }</p>
+				
+<%-- 				<p># ${list.meet_time }</p> --%>
+<!-- 				2021-02-15 16:40:00.0 -->
 <%-- 				<c:set value="${list.meet_time }" var="date"></c:set> --%>
-<%-- 				<fmt:formatDate type="both" value="${date }" pattern ="yyyy-MM-dd"/> --%>
 				
 			</div>
 			

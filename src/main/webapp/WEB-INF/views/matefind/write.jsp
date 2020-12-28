@@ -270,8 +270,8 @@ $(document).ready(function() {
 			  $('#party_location').val(address.roadAddress)
 			  
 			  var addressResult = address.roadAddress.split(' ');
-			  var category = addressResult[0];
-			  $('#category').val(category);
+// 			  var category = addressResult[0];
+// 			  $('#category').val(category);
 			  
 	        
 	    } else {
@@ -279,8 +279,8 @@ $(document).ready(function() {
 	    	$('#party_location').val(address.jibunAddress)
 	    	  
 	    	  var addressResult = address.jibunAddress.split(' ');
-			  var category = addressResult[0];
-			  $('#category').val(category);
+// 			  var category = addressResult[0];
+// 			  $('#category').val(category);
 	    	
 	    }
 	    

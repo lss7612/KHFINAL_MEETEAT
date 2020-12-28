@@ -47,6 +47,16 @@ public class MateFindServiceImpl implements MateFindService {
 	}
 	
 	@Override
+	public Paging getFilterPaging(Paging curPage, MateFindBoard mateFindBoard) {
+		
+		int totalCount = mateFindDao.selectCntFilterList(mateFindBoard);
+		
+		Paging paging = new Paging(totalCount, curPage.getCurPage());
+		
+		return paging;
+	}
+	
+	@Override
 	public List<MateFindBoard> pagingList(Paging paging) {
 
 		return mateFindDao.selectPagingList(paging);
@@ -59,6 +69,13 @@ public class MateFindServiceImpl implements MateFindService {
 		
 		return mateFindDao.selectByArticleNo(viewBoard);
 	}
+	
+	@Override
+	public MateFindBoard boardSetByArticleNo(MateFindBoard viewBoard) {
+		
+		return mateFindDao.selectByArticleNo(viewBoard);
+	}
+	
 	
 	@Override
 	public void update(MateFindBoard mateFindBoard) {
@@ -139,6 +156,13 @@ public class MateFindServiceImpl implements MateFindService {
 	public List<MateFindBoard> filterList(MateFindBoard mateFindBoard) {
 		
 		return mateFindDao.filterList(mateFindBoard);
+	}
+	
+	@Override
+	public List<MateFindBoard> filterPagingList(HashMap<String, Object> map) {
+		
+		return mateFindDao.filterPagingList(map);
+		
 	}
 	
 	

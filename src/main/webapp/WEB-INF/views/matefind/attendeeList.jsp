@@ -3,10 +3,11 @@
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 
-<style type="text/css">
-
-
-</style>
+<div class="row">
+	<div class="col">
+		<h3 style="float: left;">guest [ ${attendeeCount } / ${attendeeMax } ]</h3>
+	</div>
+</div>
 
 <div class="row">
 <c:forEach items="${attendUserList }" var="attendUserList">

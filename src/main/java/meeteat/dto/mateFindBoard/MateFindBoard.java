@@ -40,6 +40,8 @@ public class MateFindBoard {
 	
 	private Recommend recommend;
 	
+	private Paging paging;
+	
 	
 	public MateFindBoard() {
 	}
@@ -303,6 +305,7 @@ public class MateFindBoard {
 	public void setRecommend(Recommend recommend) {
 		this.recommend = recommend;
 	}
+	
 	
 	
 	

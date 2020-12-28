@@ -43,6 +43,13 @@ body {
 	background-color: #ced4da; margin: 8px 0px;
 }
 
+.mateInfo {
+	float: left;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	padding-right: 500px;
+}
+
 
 </style>
 
@@ -92,7 +99,7 @@ $(document).ready(function() {
 	
 <hr>
 
-	<div class="row" style="margin-bottom: 30px;">
+	<div class="row" style="margin-bottom: 20px;">
 		<div class="col">
 			<h1 style="float: left;">${view.article_title }</h1>
 		</div>
@@ -100,7 +107,22 @@ $(document).ready(function() {
 	
 	<div class="row">
 		<div class="col">
-			<h4 style="float: left;">#${view.party_location }  #${view.meet_time }  #${view.category }</h4>
+			<h4 class="mateInfo">#${view.party_location }</h4>
+			
+			<fmt:parseDate value="${jstlMeetTime }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/>
+			<h4 class="mateInfo">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일"/></h4>
+			<h4 class="mateInfo">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/></h4>
+			
+			<h4 class="mateInfo">#${view.category }</h4>
+			
+<!-- 			<h4 style="float: left;">#${view.party_location } </h4> -->
+			
+<%-- 			<fmt:parseDate value="${jstlMeetTime }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/> --%>
+<%-- 			<h4 style="float: left;">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일"/> </h4> --%>
+<%-- 			<h4 style="float: left;">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/> </h4> --%>
+			
+<!-- 			<h4 style="float: left;">#${view.category }</h4> -->
+			
 		</div>
 	</div>
 	
@@ -108,11 +130,10 @@ $(document).ready(function() {
 	<hr>
 	<div class="row">
 		<div class="col-3">
-			<h3 style="float: left;">host 
-<%-- 			[ ${view.user_no } ] --%>
-			</h3>
+			<h3 style="float: left;">host</h3>
 		</div>
 	</div>
+	
 	
 	<!-- host -->
 	<div class="row">
@@ -135,15 +156,15 @@ $(document).ready(function() {
 	<hr>
 	
 	
-	<!-- guest -->
-	<div class="row">
-		<div class="col">
-			<h3 style="float: left;">guest [ ${attendeeCount } / ${attendeeMax } ]</h3>
-		</div>
-	</div>
 	
 	<div id="attendeeAjax"></div>
 
+	<!-- guest -->
+<!-- 	<div class="row"> -->
+<!-- 		<div class="col"> -->
+<%-- 			<h3 style="float: left;">guest [ ${attendeeCount } / ${attendeeMax } ]</h3> --%>
+<!-- 		</div> -->
+<!-- 	</div> -->
 <%--
 	<div class="row">
 		
@@ -389,6 +410,10 @@ $(document).ready(function() {
 
 //게시글 신고하기버튼 클릭시 동작할 함수
 function reportPopup(){
+	
+	console.log("${user_no}");
+	console.log("${writer}");
+	
 	var frmPop = document.frmPopup;
 	
 	//팝업 
@@ -397,7 +422,7 @@ function reportPopup(){
 	frmPop.action = "http://localhost:8088/report/doReport";
 	frmPop.target = "report";
 	//${user_no}에 작성자 번호에 맞는 변수명을 적어주시면 됩니당.
-	frmPop.user_no.value = ${user_no};
+	frmPop.user_no.value = ${writer};
 	//현재글 URL정보 전달
 	frmPop.url.value = window.location.href
 }
@@ -444,6 +469,7 @@ function loadAttendeeList() {
 
 $(document).ready(function() {
 	
+	// guest 목록 초기화 불러오기
 	loadAttendeeList();
 
 	if(${isAttendee }) {
@@ -464,42 +490,27 @@ $(document).ready(function() {
 			
 			success: function(result) {
 				
-// 				console.log(booelanResult);
-// 				console.log(booelanResult2);
-				
 				if(result) {
 					
-					addAttendee()
 					// 미참여중 참여시키기
-// 					$('#btnAttend').val("참여취소");
-// 					$("#btnAttend").addClass("btn-secondary")
-// 					$("#btnAttend").removeClass("btn-primary")
-					
-					
-					// recommend - user join결과 불러오기
+					addAttendee()
 
 				} else {
 					
-					deleteAttendee()
 					// 이미 참여중 참여취소시키기
-// 					$('#btnAttend').val("참여하기");
-// 					$("#btnAttend").removeClass("btn-secondary")
-// 					$("#btnAttend").addClass("btn-primary")
-					
-					// recommend - user join결과 불러오기
+					deleteAttendee()
+
 				}
 				
 				loadAttendeeList();
 				
 			},
 			error: function() {
-				console.log("[ajax] /matefind/attend 전송실패")
+				console.log("[ajax] /matefind/attend 전송실패");
 				
 			}
 			
 		})
-		
-		
 		
 	})
 	
