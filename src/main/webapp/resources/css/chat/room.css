@@ -194,6 +194,28 @@
 	margin-right : 10px;
 }
 
+.chatListUserNick{
+	cursor : pointer;
+}
+
+.userHiddenMenu{
+	list-style : none;
+	position : absolute;
+	display : none;
+	margin : 0px;
+}
+.userHiddenMenu > li{
+	background-color : #F5DA81;
+	position : relative;
+	cursor : pointer;
+	border : solid 0px;
+	padding: 5px 10px 5px 10px;
+}
+
+.userHiddenMenu > li:hover{
+	background-color : #eee;
+}
+
 
 @font-face {
     font-family: 'NEXON Lv2 Gothic';
