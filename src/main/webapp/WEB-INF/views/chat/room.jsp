@@ -218,7 +218,7 @@ function dateSet(lmd, msgDate){
 		</div>
 		<div id="usingArea">
 			<input type="text" id="writeMsg" onKeyDown="enterKeyAtChat();" />
-			<button id="sendBtn" onclick="send();">전송</button>
+			<button type="button" id="sendBtn" onclick="send();">전송</button>
 		</div>
 	</div>
 	<div id="etcArea">
