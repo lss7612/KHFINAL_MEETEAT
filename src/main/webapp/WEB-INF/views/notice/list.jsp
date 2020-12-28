@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 
 <style type="text/css">
 table {
@@ -95,5 +95,4 @@ $(document).ready(function() {
 
 </div> <!-- container end  -->
 
-</body>
-</html>
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>

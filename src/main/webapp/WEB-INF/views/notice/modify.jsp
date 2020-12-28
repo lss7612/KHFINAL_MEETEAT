@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 
 
 <script type="text/javascript">
@@ -31,16 +31,18 @@ $(document).ready(function() {
 });
 </script>
 
+<br>
 
 <div class="container">
 
-<h1 class="pull-left">공지사항 수정</h1>
+<h2 class="pull-left">공지사항 수정</h2>
 <div class="clearfix"></div>
-<hr>
+
+<br>
 
 	<form action="/notice/modify" method="post">
 	
-		<input type="text" name="article_no" value="${result.ARTICLE_NO }"/>
+		<%-- <input type="text" name="article_no" value="${result.ARTICLE_NO }"/> --%>
 	
 		<div class="form-group">
 			<label for="title">제목</label>
@@ -53,12 +55,14 @@ $(document).ready(function() {
 		</div>
 		
 		<div class="text-center">
-			<button class="btn btn-warning" id="updateBtn">수정</button>
-			<input type="reset" class="btn btn-primary" id="cancel" value="취소" />
+			<button class="btn btn-warning btn-sm" id="updateBtn">수정</button>
+			<input type="reset" class="btn btn-primary btn-sm" id="cancel" value="취소" />
 		</div>
 		
 	</form>
 </div>
+
+<br><br>
 
 <!-- 스마트에디터 초기화코드 -->
 <script type="text/javascript">
@@ -71,5 +75,4 @@ nhn.husky.EZCreator.createInIFrame({
 });
 </script>
 
-</body>
-</html>
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>
