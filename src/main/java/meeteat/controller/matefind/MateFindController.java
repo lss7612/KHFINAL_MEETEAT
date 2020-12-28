@@ -33,6 +33,8 @@ public class MateFindController {
 	@Autowired MateFindService mateFindService;
 	@Autowired LoginService loginService;
 
+
+
 	@RequestMapping(value = "/list")
 	public void mateFindList(Paging curPage, Model model) {
 		
@@ -42,7 +44,92 @@ public class MateFindController {
 //		List<MateFindBoard> mateFindList = mateFindService.list();
 		List<MateFindBoard> mateFindList = mateFindService.pagingList(paging);
 		
+		
+//		logger.info(mateFindList.get(0).getMeet_time());
+		
+		
 		model.addAttribute("mateFindList", mateFindList);
+		
+	}
+	
+
+	
+//	@RequestMapping(value = "/list")
+//	public String mateFindList(@RequestParam("party_location") String party_location
+//								, @RequestParam("meet_time") String meet_time
+//								, @RequestParam("category") String category
+//								, Paging curPage
+//								, Model model) {
+//		
+//		return "redirect:/matefind/listFilter?curPage="+curPage.getCurPage()+"&party_location="+party_location+"&category="+category+"&meet_time=''";
+//		
+//	}
+	
+	@RequestMapping(value = "/listFilter")
+	public String MateFindListFilter(@RequestParam("party_location") String party_location
+									, @RequestParam("meet_time") String meet_time
+									, @RequestParam("category") String category
+									, Paging curPage
+									, Model model) {
+		
+		MateFindBoard mateFindBoard = new MateFindBoard();
+		
+		mateFindBoard.setParty_location(party_location);
+		mateFindBoard.setCategory(category);
+		mateFindBoard.setMeet_time("");
+		
+		Paging paging = mateFindService.getFilterPaging(curPage, mateFindBoard);
+		model.addAttribute("paging", paging);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("party_location", party_location);
+		map.put("meet_time", "");
+		map.put("category", category);
+		map.put("startNo", paging.getStartNo());
+		map.put("endNo", paging.getEndNo());
+		
+		if("아침".equals(meet_time)) {
+			// 6 ~ 12 BETWEEN 06:00 AND 12:00
+			map.put("startTime", "0600");
+			map.put("endTime", "1200");
+			map.put("meet_time", "20201228");
+			
+		} else if("점심".equals(meet_time)) {
+			// 12 ~ 18 BETWEEN 12:00 AND 18:00
+			map.put("startTime", "1200");
+			map.put("endTime", "1800");
+			map.put("meet_time", "20201228");
+			
+		} else if("저녁".equals(meet_time)) {
+			// 18 ~ 24 BETWEEN 18:00 AND 00:00
+			map.put("startTime", "1800");
+			map.put("endTime", "0000");
+			map.put("meet_time", "20201228");
+			
+		} else if("새벽".equals(meet_time)) {
+			// 24 ~ 6 BETWEEN 00:00 AND 06:00
+			map.put("startTime", "0000");
+			map.put("endTime", "2600");
+			map.put("meet_time", "20201228");
+
+		} else {
+			map.put("meet_time", "");
+		}
+		
+		
+		List<MateFindBoard> list = mateFindService.filterPagingList(map);
+		
+		for(int i = 0; i < list.size(); i++) {
+			logger.info("##얍## : " + list.get(i).toString());
+		}
+		
+		model.addAttribute("mateFindFilterList", list);
+		model.addAttribute("party_location", party_location);
+		model.addAttribute("category", category);
+		model.addAttribute("meet_time", meet_time);
+		
+		
+		return "matefind/mateFindFilterList";
 		
 	}
 	
@@ -58,6 +145,17 @@ public class MateFindController {
 		viewBoard.setMeet_time(viewBoard.getMeet_time().replace(" ", "T"));
 		
 		model.addAttribute("view", viewBoard);
+		
+		String jstlMeetTime = viewBoard.getMeet_time();
+		
+		jstlMeetTime = jstlMeetTime.replaceAll(" ", "");
+		jstlMeetTime = jstlMeetTime.replaceAll("-", "");
+		jstlMeetTime = jstlMeetTime.replaceAll("T", "");
+		jstlMeetTime = jstlMeetTime.replaceAll(":", "");
+		
+		logger.info(jstlMeetTime);
+		
+		model.addAttribute("jstlMeetTime", jstlMeetTime);
 		
 		viewBoard.setMate_list(viewBoard.getMate_list().replaceAll(" ", ""));
 		
@@ -219,6 +317,19 @@ public class MateFindController {
 		// 참여자 정보 가져오는 Join 테이블
 		List<MateFindBoard> attendUserList = mateFindService.attendUserInfo(viewBoard);
 		model.addAttribute("attendUserList", attendUserList);
+		
+		
+		// 참여자 수 가져오기
+		int attendeeCount = mateFindService.attendeeCount(viewBoard);
+		
+		logger.info("참여자 수 : " + attendeeCount);
+		
+		viewBoard = mateFindService.boardSetByArticleNo(viewBoard);
+		
+		int attendeeMax = Integer.valueOf(viewBoard.getMate_list());
+		
+		model.addAttribute("attendeeMax", attendeeMax);
+		model.addAttribute("attendeeCount", attendeeCount);
 		
 		return "matefind/attendeeList";
 	}

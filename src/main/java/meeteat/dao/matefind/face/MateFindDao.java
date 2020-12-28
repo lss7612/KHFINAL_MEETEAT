@@ -43,4 +43,8 @@ public interface MateFindDao {
 
 	public void deleteMateFind(MateFindBoard mateFindBoard);
 
+	public int selectCntFilterList(MateFindBoard mateFindBoard);
+
+	public List<MateFindBoard> filterPagingList(HashMap<String, Object> map);
+
 }
