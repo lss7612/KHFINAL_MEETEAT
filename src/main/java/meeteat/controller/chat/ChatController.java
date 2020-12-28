@@ -41,7 +41,7 @@ public class ChatController {
 		//***************************
 		//구현 테스트를 위해 user1(대화 상대)번호를 임의로 고정
 		//완료시 지우면 된다.
-		user1 = 12;
+		//user1 = 12;
 		//***************************
 		
 		logger.info("> > > 접속 유저 번호 : "+user0+" < < <");
@@ -126,24 +126,33 @@ public class ChatController {
 		logger.info(" > > > 과거 메시지 < < <");
 		logger.info(""+oldChat);
 		
-		//채팅방의 마지막 메시지 전달 날자 저장하기
-		Date lastMsgDate = new Date();
-		String lmd = null;
-		lmd = getLastMsgDate(oldChat, lastMsgDate);
-		
-		System.out.println("마지막 메세지 전달 날자 : "+lmd);
-		
-		
-		//전달시각 저장
-		Date time = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("a hh:mm");
-		List<String> trimOldChat = oldChatTrim(oldChat, user_no, sdf);
-		
-		//model 객체 등록
-		model.addAttribute("roomInfo", roomInfo);
-		model.addAttribute("chatUserList", chatUserList);
-		model.addAttribute("lastMsgDate", lmd);
-		model.addAttribute("oldChat", trimOldChat);
+		if(oldChat.size() != 0) {
+			logger.info("> > > 기존 대화가 존재합니다. < < <");
+			//채팅방의 마지막 메시지 전달 날자 저장하기
+			Date lastMsgDate = new Date();
+			String lmd = null;
+			lmd = getLastMsgDate(oldChat, lastMsgDate);
+			
+			System.out.println("마지막 메세지 전달 날자 : "+lmd);
+			
+			
+			//전달시각 저장
+			Date time = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("a hh:mm");
+			List<String> trimOldChat = oldChatTrim(oldChat, user_no, sdf);
+			
+			//model 객체 등록
+			model.addAttribute("roomInfo", roomInfo);
+			model.addAttribute("chatUserList", chatUserList);
+			model.addAttribute("lastMsgDate", lmd);
+			model.addAttribute("oldChat", trimOldChat);
+			
+		} else {
+			logger.info("> > > 이전 대화가 없습니다. < < <");
+			model.addAttribute("roomInfo", roomInfo);
+			model.addAttribute("chatUserList", chatUserList);
+			
+		}
 		
 		return "chat/room";
 	}

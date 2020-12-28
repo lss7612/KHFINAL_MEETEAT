@@ -29,7 +29,30 @@ $(document).ready(function(){
     	console.log(webSocket);
     }
     $('#chatting').scrollTop($('#chatting')[0].scrollHeight);
+    
+    //채팅목록에서 닉네임 클릭시 나타나는 유저메뉴
+    
+    $(".chatListUserMenu >td>span").click(function(){
+    	
+    	var submenu = $(this).next("ul");
+    	
+    	if(submenu.is(":visible")){
+			submenu.slideUp();
+		} else{
+			submenu.slideDown();
+		}
+    	
+    })
 })
+
+//회원 목록에서 채팅하기 클릭시 동작할 함수
+function createChat(e){
+	var user_no = $(e).attr("user_no")
+	console.log("user_no : "+user_no);
+	window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
+			, "width = 710px, height = 665px");
+
+}
 
 
 //input 박스에서 enter키 입력하면 동작하는 함수
@@ -213,8 +236,13 @@ function dateSet(lmd, msgDate){
 						</tr>
 				 	</c:when>
 				 	<c:when test="${user_no ne user.USER_NO }">
-						<tr>
-							<td>${user.USER_NICK } </td>
+						<tr class="chatListUserMenu">
+							<td>
+								<span class="chatListUserNick">${user.USER_NICK }</span>
+								<ul class="userHiddenMenu">
+									<li onclick="createChat(this);" user_no="${user.USER_NO }">채팅하기</li>
+								</ul>
+							</td>
 						</tr>
 				 	
 				 	</c:when>
