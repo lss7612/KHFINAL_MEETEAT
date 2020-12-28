@@ -241,12 +241,13 @@ public class LoginController {
 			
 		} else {
 			
+			loginService.signUp(user);
+
 			user = loginService.selectUser(user);
 			session.setAttribute("isLogin", true);
 			session.setAttribute("user_no", user.getUser_no());
 			session.setAttribute("user_grade", user.getUser_grade());
 			
-			loginService.signUp(user);
 			return "redirect:/login/main";
 			
 		}
