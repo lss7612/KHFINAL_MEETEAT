@@ -60,7 +60,7 @@
 </div>
 <br>
 
-<form action="/admin/report/result" method="post">
+<form id="reportResultForm" action="/admin/report/result" method="post">
 
 <table id="reportList" class="table table-bordered table-hover">
 <tr>
@@ -109,7 +109,7 @@
 	</tr>
 </c:forEach>
 </table>
-<button id="doProcess" class="btn btn-danger" >유저 처리</button>
+<button type="button" id="doProcess" class="btn btn-danger" onclick="doUserProcess();">유저 처리</button>
 </form>
 <br>
 <jsp:include page="/WEB-INF/views/report/list_sort_paging.jsp"/>

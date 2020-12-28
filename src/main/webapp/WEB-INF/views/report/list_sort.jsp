@@ -47,6 +47,16 @@ function selectValue(str){
 	})
 }
 
+function doUserProcess(){
+	var state = confirm("해당 유저를 영구정지 하시겠습니까?")
+	if (state){
+		alert("처리가 완료되었습니다.")
+		reportResultForm.submit();
+	} else {
+		return false;
+	}
+	
+}
 
 </script>
 
