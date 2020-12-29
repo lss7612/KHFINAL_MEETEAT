@@ -45,6 +45,8 @@
 			<mapping path="/mypage/**"/>
 			<mapping path="/chat/**"/><!-- 채팅 -->
 			<mapping path="/restorantfind/**"/><!-- 이상성 : 맛집검색 -->
+			<mapping path="/notice/**"/><!-- 공지사항 -->
+			<mapping path="/inquiry/**"/><!-- 문의사항 -->
 			<exclude-mapping path=""/>
 			<beans:bean class="meeteat.interceptor.LoginInterceptor"/>
 		</interceptor>

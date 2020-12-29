@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import meeteat.dto.inquiryBoard.InquiryBoard;
 import meeteat.service.inquiryBoard.face.InquiryBoardService;
@@ -33,6 +34,7 @@ public class InquiryBoardController {
 				, Paging curPage
 				, HttpSession session
 				, HttpServletRequest request
+				, InquiryBoard inquiryBoard
 				) {
 		
 		//페이징 처리
@@ -45,7 +47,12 @@ public class InquiryBoardController {
 		
 		///게시물 목록
 		int board_no = 5;
-		List<HashMap<String, String>> list = inquiryBoardService.InquiryList(paging, board_no);
+		int article_secret = inquiryBoard.getArticle_secret();; // 컬럼 타입 변경 ok <<<<<<<<<<<< 여기 부터 작업하기
+		
+		logger.info("********************" + article_secret);
+		
+		
+		List<HashMap<String, String>> list = inquiryBoardService.InquiryList(paging, board_no, article_secret);
 		model.addAttribute("list", list);
 		
 		//검색 기능
@@ -76,8 +83,11 @@ public class InquiryBoardController {
 			, HttpSession session
 			, String user_nick
 			, Model model
+			, int article_secret
 			) {
 	
+		logger.info(">>>>>>>>>>>>>>>>Write" + article_secret); // 1 값이 넘어옴 (비밀글)
+		
 		inquiryBoard.setUser_no((int) session.getAttribute("user_no"));
 		inquiryBoardService.inquiryWrite(inquiryBoard);
 		

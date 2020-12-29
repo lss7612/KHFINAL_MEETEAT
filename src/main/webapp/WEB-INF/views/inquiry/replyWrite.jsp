@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -23,12 +23,14 @@ $(document).ready(function() {
 })
 </script>
 
+<br>
 
 <div class="container">
 
-<h1 class="pull-left">문의사항 답글쓰기</h1>
+<h2 class="pull-left">문의사항 답글쓰기</h2>
 <div class="clearfix"></div>
-<hr>
+
+<br>
 
 	<form action="/inquiry/replyWrite" method="post" enctype="multipart/form-data">
 	
@@ -39,8 +41,6 @@ $(document).ready(function() {
 		<input type="hidden" name="post_step" value="${result.POST_STEP }">
 		<input type="hidden" name="post_indent" value="${result.POST_INDENT }">
 		
-	
-	
 	
 		<div class="form-group">
 			<label for="title">제목</label>
@@ -63,12 +63,14 @@ $(document).ready(function() {
 		</div>
 		
 		<div class="text-center">
-				<button class="btn btn-warning" id="writeBtn">작성</button>
-				<input type="reset" class="btn btn-primary" id="cancel" value="취소" />
+				<button class="btn btn-warning btn-sm" id="writeBtn">작성</button>
+				<input type="reset" class="btn btn-primary btn-sm" id="cancel" value="취소" />
 		</div>
 		
 	</form>
 </div>
+
+<br><br>
 
 <!-- 스마트 에디터 적용하는 코드 -->
 <script type="text/javascript">
@@ -94,6 +96,4 @@ function submitContents(elClickedObj) {
 </script>
 
 
-
-</body>
-</html>
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>
