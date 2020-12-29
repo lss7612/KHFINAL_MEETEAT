@@ -6,24 +6,7 @@
 
 <c:import url="/WEB-INF/views/layout/header.jsp"/>
 
-<style type="text/css">
-table {
-	table-layout: fixed;
-}
-
-table, th {
-	text-align: center;
-}
-
-td:nth-child(2) {
-	text-align: left;
-	
-	white-space:nowrap;	
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-</style>
-
+<link rel="stylesheet" href="/resources/css/boardAdmin/list.css">
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -105,11 +88,11 @@ function isDelete() {
 				}
 				, success : function(is_delete){
 					if(is_delete = 1) {
-						alert("삭제 성공");
+						alert("삭제가 완료되었습니다.");
 						location.replace("list")
 					}
 					else {
-						alert("삭제 실패");
+						alert("삭제를 실패하였습니다.");
 					}
 				}
 			})
@@ -118,29 +101,49 @@ function isDelete() {
 }
 </script>
 
+<br>
+
 <div class="container">
-	<h1 class="pull-left">게시판 관리자 페이지</h1>
+	<h2 class="pull-left">게시판 관리자 페이지</h2>
 	<div class="clearfix"></div>
-	<hr>
+	<br>
 	
 <!-- 검색기능 -->
 	<form action="/admin/board/list" method="get">
 	
-		<div class="col-md-4 form-group">
+		<div class="col-md-4 form-group form-group-sm">
 			<select class="form-control input-sm" name="manageCategory" id="manageCategory">
 				<option value="">게시판 선택</option>
 				
+				<!-- 공지사항 게시판 -->
 				<option value="1" 
 					<c:if test="${boardAdminParam.manageCategory == '1' }">selected</c:if>>공지사항 게시판</option> 
+				
+				<!-- 메이트찾기 게시판 -->
+				<option value="2" 
+					<c:if test="${boardAdminParam.manageCategory == '2' }">selected</c:if>>메이트 찾기 게시판</option> 
+
+				<!-- 파티모집 -->
+				<option value="3"
+					<c:if test="${boardAdminParam.manageCategory == '3' }">selected</c:if>>파티모집 게시판</option>
+				
+				<!-- 후기게시판 -->
+				<option value="4"
+					<c:if test="${boardAdminParam.manageCategory == '4' }">selected</c:if>>후기 게시판</option>
+	
+				<!-- 문의게시판 -->
 				<option value="5"
 					<c:if test="${boardAdminParam.manageCategory == '5' }">selected</c:if>>문의사항 게시판</option>
 	
-	<%-- 			<option value="event"<c:if test="${search == 'eventBoard' }">selected</c:if>>이벤트 게시판</option> --%>
+				<!-- 이벤트 등록 게시판 -->
+<!-- 				<option value="6" -->
+<%-- 					<c:if test="${boardAdminParam.manageCategory == '6' }">selected</c:if>>이벤트 게시판</option> --%>
+					
 			</select>
 		</div>
 		
-		<div class="col-md-4">
-			<select class="form-control input-sm" name="manageSearch" id="manageSearch">
+		<div class="col-md-3">
+			<select class="form-control input-sm form-group-sm" name="manageSearch" id="manageSearch">
 				<option value="totalList"
 				<c:if test="${boardAdminParam.manageSearch == 'totalList' || empty boardAdminParam.manageCategory}">selected</c:if>>전체</option>
 				
@@ -156,21 +159,23 @@ function isDelete() {
 		</div>
 		
 		<div class="col-md-4">
-			<input type="text" class="form-control" name="manageKeyword" id="manageKeyword" placeholder="검색" value="${boardAdiminParam.manageKeyword }"/>
+			<input type="text" class="form-control input-sm form-group-sm" name="manageKeyword" id="manageKeyword" placeholder="검색" value="${boardAdiminParam.manageKeyword }"/>
 			
-			<button type="submit" class="btn" value="검색">검색</button>
+		</div>
+		<div>
+			<button type="submit" class="btn btn-sm" value="검색">검색</button>
 		</div>
 	</form>
 	
 	
-	<form action="/admin/board/list" method="post">
 <!-- 게시물 목록 표시 -->
+	<form action="/admin/board/list" method="post">
 	<table class="table table-striped table-hover table-condensed">
 		<thead>
 			<tr>
 				<th style="width: 5%"><input type="checkbox" id="allCheck" name="allCheck"></th>
-				<th style="width: 10%">번호</th>
-				<th style="width: 15%">게시판명</th>
+				<th style="width: 5%">번호</th>
+				<th style="width: 13%">게시판명</th>
 				<th style="width: 40%">제목</th>
 				<th style="width: 15%">작성자</th>
 				<th style="width: 15%">작성일</th>
@@ -182,9 +187,9 @@ function isDelete() {
 			<c:forEach items="${list }" var="list">
 				<tr>
 					<td><input type="checkbox" name="delmod" value="${list.ARTICLE_NO }" board_no="${list.BOARD_NO }" /></td>
-					<td>${list.ARTICLE_NO }</td>
+					<td style="text-align: center;" >${list.ARTICLE_NO }</td>
 					<td>${list.BOARD_NAME }</td>
-					<td>
+					<td style="text-align: left;">
 						<c:if test="${list.POST_STEP > 0 }">
 							<c:forEach begin="1" end="${list.POST_STEP }" >
 								&nbsp;&nbsp;
@@ -195,9 +200,23 @@ function isDelete() {
 							<c:when test="${list.BOARD_NO eq 1}">
 								<a href="/notice/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
 							</c:when>
+							
+							<c:when test="${list.BOARD_NO eq 2}">
+								<a href="/matefind/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
+							</c:when>
+							
+							<c:when test="${list.BOARD_NO eq 3}">
+								<a href="/recruitboard/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
+							</c:when>
+							
+							<c:when test="${list.BOARD_NO eq 4 }">
+								<a href="//view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
+							</c:when>
+							
 							<c:when test="${list.BOARD_NO eq 5 }">
 								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
 							</c:when>
+							
 							<c:otherwise>
 								<a href="/admin/board/list">${list.ARTICLE_TITLE }</a>
 							</c:otherwise>
@@ -222,14 +241,14 @@ function isDelete() {
 		</c:choose>
 		<c:choose>
 			<c:when test="${result.BOARD_NO eq 1}">
-				<a href="/notice/write"><button id="noticeWriteBtn" class="btn btn-primary">글작성</button></a>
+				<a href="/notice/write"><button id="noticeWriteBtn" class="btn btn-primary btn-sm">글작성</button></a>
 			</c:when>
 			<c:when test="${result.BOARD_NO eq 5}">
-				<a href="/inquiry/write"><button id="inquiryWriteBtn" class="btn btn-primary">글작성</button></a>
+				<a href="/inquiry/write"><button id="inquiryWriteBtn" class="btn btn-primary btn-sm">글작성</button></a>
 			</c:when>
 			<c:otherwise>
 <!-- 				<button id="inquiryWriteBtn" class="btn btn-primary">글작성</button> -->
-				<input type="button" value="선택삭제" class="btn btn-danger" onclick="isDelete()">
+				<input type="button" value="선택삭제" class="btn btn-danger btn-sm" onclick="isDelete()">
 			</c:otherwise>
 		</c:choose>
 	</div>
@@ -240,4 +259,7 @@ function isDelete() {
 
 </div> <!-- container end  -->
 
+<br><br>
+
+<!-- footer 영역 -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

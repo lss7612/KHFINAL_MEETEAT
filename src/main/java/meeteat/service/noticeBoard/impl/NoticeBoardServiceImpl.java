@@ -1,12 +1,9 @@
 package meeteat.service.noticeBoard.impl;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -15,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.dao.noticeBoard.face.NoticeBoardDao;
 import meeteat.dto.noticeBoard.NoticeBoard;
@@ -98,8 +94,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 		//조회수
 		noticeBoardDao.upDateHit(map);
 		
-		System.out.println(map);
-		
+		logger.info("check_noticeView_article_no" + map);
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
@@ -118,11 +113,11 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 		map.put("article_no", article_no);
 		map.put("user_no", session.getAttribute("user_no"));
 
-		System.out.println(map);
+		logger.info("check_getnoticeModify_article_no" + map);
 		
 		Map<String, Object> result = new HashMap<>();
 		
-		System.out.println(result);
+		logger.info("check_getnoticeModify_article_no" + result);
 		
 		result = noticeBoardDao.getNoticeView(map);
 		
@@ -159,6 +154,34 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 		if(session.getAttribute("user_nick").equals(user_nick)) return true;
 		
 		return false;
+	}
+
+	@Override
+	public NoticeBoard getPrevArticle(int article_no, int board_no) {
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		Integer articleNo = article_no;
+		Integer boardNo = board_no;
+		
+		map.put("article_no", articleNo.toString());
+		map.put("board_no", boardNo.toString());
+		
+		return noticeBoardDao.getPrevArticle(map);
+	}
+
+	@Override
+	public NoticeBoard getNextArticle(int article_no, int board_no) {
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		Integer articleNo = article_no;
+		Integer boardNo = board_no;
+		
+		map.put("article_no", articleNo.toString());
+		map.put("board_no", boardNo.toString());
+		
+		return noticeBoardDao.getNextArticle(map);
 	}
 		
 }

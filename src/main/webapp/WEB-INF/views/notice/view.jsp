@@ -6,58 +6,81 @@
 
 <c:import url="/WEB-INF/views/layout/header.jsp"/>
 
+<link rel="stylesheet" href="/resources/css/notice/view.css">
+
 <script type="text/javascript">
-
-
-
+	function stepView(article_no) {
+		var form = document.getElementById("viewForm");
+		form.article_no.value = article_no;
+		form.submit();
+	}
 </script>
 
+<br>
+
 <div class="container">
-	<h1 class="pull-left">공지사항</h1>
+	<h2 class="pull-left">공지사항</h2>
 	<div class="clearfix"></div>
-	<hr>
+	<br>
 	
-	<!-- 게시글 내용 영역 -->
-	<table class="table table-bordered">
+<!-- 게시글 내용 영역 -->
+	<div id="title">
+			<h4 style="font-weight:bold;">${result.ARTICLE_TITLE }</h4>
+		</div>
+		
+		<hr>
+		
+		<div id="userInfo" class="pull-right" style="text-align:right;">
+			<span><i class="far fa-user-circle"></i>${result.USER_NICK }</span>
+			<span><i class="far fa-clock"></i>
+				<fmt:formatDate value="${result.CREATE_DATE }" pattern="yy/MM/dd" /> </span>
+			<span>조회수 : ${result.ARTICLE_HIT }</span>
+		</div>
+		
+		<br>
+		
+		<div id="content" class="light_margin bold_padding vertical_bold_margin" style="padding:5px; text-align:left; margin-top: 50px;">
+			<span>${result.ARTICLE_CONTENT }</span>
+		</div>
+		
+		<br><br><br>
+		
+		<form action="/notice/view" id="viewForm" method="get">
+		
+		<div id="next-prev">
+			<c:if test="${nextArticle != null }">
+				<p>다음글 : <a href="javascript:stepView('${nextArticle.article_no }')">${nextArticle.article_title }</a></p>
+			</c:if>
+			
+			<c:if test="${prevArticle != null }">
+				<p>이전글 : <a href="javascript:stepView('${prevArticle.article_no }')">${prevArticle.article_title }</a></p>
+			</c:if>
+		</div>		
+		
+			<p>
+				<input type="hidden" name="article_no" />
+				<input type="hidden" name="board_no" value="${result.BOARD_NO }" />
+			</p>
+		</form>
+
+	<br><br>
 	
-		<tr>
-			<td class="info" style="width: 20%">제목</td><td>${result.ARTICLE_TITLE }</td>
-		</tr>
-		
-		<tr>
-			<td class="info">닉네임</td><td>${result.USER_NICK }</td>
-		</tr>
-		
-		<tr>
-			<td class="info">조회수</td><td>${result.ARTICLE_HIT }</td>
-		</tr>
-		
-		<tr><td class="info" colspan="4">본문</td></tr>
-		<tr><td colspan="4">${result.ARTICLE_CONTENT }</td></tr>
-	</table>
-	
-	<!-- 버튼 영역 -->
+<!-- 버튼 영역 -->
 <div class="text-center">
-	<a href="/notice/list"><button class="btn btn-primary">목록</button></a>
+
+	<a href="/notice/list"><button class="btn btn-primary btn-sm">목록</button></a>
 	
-	<!-- 본인과 관리자만 사용 가능 -->
+<!-- 본인과 관리자만 사용 가능 -->
 	<c:if test="${result.USER_NICK eq sessionScope.user_nick || user_grade eq 0 }">
-		<a href="/notice/modify?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }"><button class="btn btn-warning">수정</button> </a>
-		<a href="/notice/delete?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }"><button class="btn btn-danger">삭제</button> </a>
+		<a href="/notice/modify?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }"><button class="btn btn-warning btn-sm">수정</button> </a>
+		<a href="/notice/delete?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }"><button class="btn btn-danger btn-sm">삭제</button> </a>
 	</c:if>
+	
 </div>
 	
 </div>
 
+<br><br>
+
+<!-- footer 영역 -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
-
-
-
-
-
-
-
-
-
-
-
