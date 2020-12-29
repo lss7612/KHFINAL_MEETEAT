@@ -34,12 +34,15 @@ $(document).ready(function(){
     
     $(".chatListUserMenu >td>span").click(function(){
     	
-    	var submenu = $(this).next("ul");
-    	
+    	var submenu = $(this).next().next("ul");
+    	console.log(submenu);
+    	console.log($(submenu));
     	if(submenu.is(":visible")){
 			submenu.slideUp();
 		} else{
 			submenu.slideDown();
+			$(submenu).css({"display" : "inline-block"
+				, "left" : "40px"});
 		}
     	
     })
@@ -224,7 +227,7 @@ function dateSet(lmd, msgDate){
 	<div id="etcArea">
 		<button id="exitBtn" onclick="exitRoom()">채팅방 나가기</button>
 		<div id="userListArea">
-			<table>
+			<table id="chatUserList">
 				<tr>
 					<th>회원 목록</th>
 				</tr>
@@ -237,8 +240,9 @@ function dateSet(lmd, msgDate){
 				 	</c:when>
 				 	<c:when test="${user_no ne user.USER_NO }">
 						<tr class="chatListUserMenu">
-							<td>
+							<td style="position : relative;">
 								<span class="chatListUserNick">${user.USER_NICK }</span>
+								<br>
 								<ul class="userHiddenMenu">
 									<li onclick="createChat(this);" user_no="${user.USER_NO }">채팅하기</li>
 								</ul>

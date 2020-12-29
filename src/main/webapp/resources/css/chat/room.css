@@ -100,6 +100,10 @@
 	vertical-align: middle;
 }
 
+#chatUserList{
+	width : 100%;
+}
+
 .noticeArea{
     height: 4%;
     width: auto;
@@ -203,6 +207,7 @@
 	position : absolute;
 	display : none;
 	margin : 0px;
+    padding-inline-start: 0px;
 }
 .userHiddenMenu > li{
 	background-color : #F5DA81;
