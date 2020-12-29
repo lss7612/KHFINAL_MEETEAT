@@ -19,11 +19,19 @@
 		<%-- 댓글 정보 --%>
 		<div id="" class=".col-md-4 pull-left commendWriter">
 		<c:if test="${list.IS_DELETE eq 0 }">
-			<c:if test="${user_nick eq list.USER_NICK }">
-				<i style="color:blue; "class="fas fa-user-edit"></i>
-			</c:if>
-			<span>${list.USER_NICK }</span>
-			<c:if test="${list.REVISION_DATE ne null}"><span>(수정됨)</span></c:if>
+			<ul class="userMenuList">
+				<li class="userMenu">
+					<c:if test="${user_nick eq list.USER_NICK }">
+						<i style="color:blue; "class="fas fa-user-edit"></i>
+					</c:if>
+					<span style="cursor:pointer;">${list.USER_NICK }</span>
+					<ul class="userHiddenMenu" >
+					<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 값에 입력해준다. -->
+					<li onclick="createChat(this);" user_no="${list.USER_NO }">채팅하기</li>
+					</ul>
+					<c:if test="${list.REVISION_DATE ne null}"><span>(수정됨)</span></c:if>
+				</li>
+			</ul>		
 		</c:if>
 		<c:if test="${list.IS_DELETE ne 0 }">
 			<span style="color:white">삭제된 코멘트입니다.</span>
