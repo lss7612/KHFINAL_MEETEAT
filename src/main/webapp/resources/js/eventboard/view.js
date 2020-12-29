@@ -2,6 +2,17 @@ $(document).ready(function(){
 	
 	/* 게시글 영역 */
 	
+	$("#userMenu>span").click(function(){
+		
+		//2. 슬라이드 형식으로 나타나기
+		var submenu = $(this).next("ul");
+		if(submenu.is(":visible")){
+			submenu.slideUp();
+		} else{
+			submenu.slideDown();
+		}
+	})
+	
 	//페이지 불러왔을 때 코멘트 가져오기
 	getCommentList()
 	
@@ -67,6 +78,13 @@ $(document).ready(function(){
 	 
 })
 
+
+function createChat(e){
+	var user_no = $(e).attr("user_no")
+	console.log("usre_no : "+user_no)
+	window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
+			, "width = 710px, height = 665px");
+}
 
 //**********[text에 스마트에디터 값 적용하기]**********//
 function putOnRealTextArea(){
