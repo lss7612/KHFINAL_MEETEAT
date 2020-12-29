@@ -27,9 +27,9 @@
 	
 	<sql id="searchTitle">
 			AND is_delete = 0
- 		<if test='keyword != null and keyword.equals("")'>
-			AND (article_title LIKE '%'||#{keyword, jdbcType=VARCHAR}||'%' 
-			OR article_content LIKE '%'||#{keyword, jdbcType=VARCHAR}||'%') 
+ 		<if test="keyword != null and keyword.equals('')">
+			AND (article_title LIKE '%'||#{keyword}||'%' 
+			OR article_content LIKE '%'||#{keyword}||'%') 
 		</if>
 	</sql>
 	
@@ -38,7 +38,7 @@
 		SELECT count(*) FROM (
 			<include refid="selectInquiry"/>
 			WHERE board_no = 5
-				AND is_delete = 0
+				<include refid="searchTitle"/>
 		)
 	</select>
 	
@@ -111,14 +111,12 @@
 		SELECT tb_inquiryBoard_seq.nextval From dual
 	</select>
 	
-	
 	<update id="replyByUpdate" parameterType="meeteat.dto.inquiryBoard.InquiryBoard">
 		UPDATE tb_board2
 		SET post_step = post_step+1
 		WHERE post_group = (SELECT post_group FROM tb_board2 WHERE board_no=#{board_no} AND  article_no=#{article_no})
 			AND post_step > (SELECT post_step FROM tb_board2 WHERE board_no=#{board_no} AND article_no=#{article_no})
 	</update>
-	
 	
 	<insert id="replyArticle" parameterType="meeteat.dto.inquiryBoard.InquiryBoard" >
 		INSERT INTO tb_board2 (
@@ -134,5 +132,46 @@
 		WHERE board_no = #{board_no}
 			AND article_no = #{article_no}
 	</select>
+	
+	<select id="getPrevArticle" parameterType="hashmap" resultType="meeteat.dto.inquiryBoard.InquiryBoard">
+		SELECT article_no, article_title
+		FROM (
+			SELECT rownum rnum, a.*
+			FROM (
+				SELECT article_no, article_title
+				FROM tb_board2
+				WHERE board_no = #{board_no}
+					AND article_no &lt; #{article_no}
+				ORDER BY article_no DESC
+			)a
+		)
+		WHERE rnum = 1
+	</select>
+	
+	<select id="getNextArticle" parameterType="hashmap" resultType="meeteat.dto.inquiryBoard.InquiryBoard">
+		SELECT article_no, article_title
+		FROM (
+			SELECT rownum rnum, a.*
+			FROM (
+				SELECT article_no, article_title
+				FROM tb_board2
+				WHERE board_no = #{board_no}
+					AND article_no &gt; #{article_no}
+				ORDER BY article_no DESC
+			)a
+		)
+		WHERE rnum = 1
+	</select>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
   

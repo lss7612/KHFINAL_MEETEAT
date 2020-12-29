@@ -15,7 +15,6 @@ $(document).ready(function() {
 	})
 	
 })
-
 </script>
 
 <br>
@@ -46,21 +45,30 @@ $(document).ready(function() {
 							</c:forEach>
 							<i class="far fa-comment-dots"></i> [답변] : 
 						</c:if>
-<%-- 						<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}">${list.ARTICLE_TITLE }</a> --%>
-
 
 						<c:choose>
-							<c:when test="${list.USER_NICK ne sessionScope.user_nick && list.ARTICLE_SECRET eq 1 }">
-								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}">
-								<i class="fas fa-lock"></i>&nbsp;&nbsp;비밀글입니다.</a>
+							<c:when test="${user_grade eq 0 }">
+								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}">${list.ARTICLE_TITLE }</a>
 							</c:when>
+							
+							<c:when test="${list.USER_NICK ne sessionScope.user_nick && list.ARTICLE_SECRET eq 1 }">
+								<i class="fas fa-lock"></i>&nbsp;&nbsp;비밀글입니다.
+							</c:when>
+							
 							<c:when test="${list.USER_NICK ne sessionScope.user_nick && list.ARTICLE_SECRET eq 0 }">
 								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}">${list.ARTICLE_TITLE }</a>
 							</c:when>
+							
+							<c:when test="${list.USER_NICK eq sessionScope.user_nick && list.ARTICLE_SECRET eq 1 }">
+								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}">${list.ARTICLE_TITLE }</a>
+							</c:when>
+							
+							<c:when test="${list.USER_NICK eq sessionScope.user_nick && list.ARTICLE_SECRET eq 0 }">
+								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}">${list.ARTICLE_TITLE }</a>
+							</c:when>
 						</c:choose>
-
+						
 					</td>
-<%-- 					<td><a href="/inquiry/view?article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a></td> --%>
 					<td>${list.USER_NICK }</td>
 					<td>
 						<fmt:formatDate value="${list.CREATE_DATE }" pattern="yy-MM-dd HH:mm" />
@@ -82,7 +90,6 @@ $(document).ready(function() {
 
 
 <!-- 검색기능 -->
-
 <form action="/inquiry/list" method="get" class="form-inline text-center">
 	<div class="searchbox form-group form-group-sm ">
 		<select class="search form-control" style="width: 100px;" name="search" id="search">

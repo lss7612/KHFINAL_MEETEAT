@@ -35,7 +35,7 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 		//전체 게시글 수 조회
 		int totalCount = inquiryBoardDao.selectCntAll();  
 		
-		System.out.println("dkdkdkdkdkkddkkdkd" + totalCount);
+		logger.info("check_getInquiryPaging" + totalCount);
 		
 		//페이징 객체 생성
 		Paging paging = new Paging(totalCount, curPage.getCurPage());
@@ -56,11 +56,9 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 		map.put("keyword", paging.getKeyword());
 		map.put("search", paging.getSearch());
 		
-		logger.info(">>>>>>>>>>>>>>List" + article_secret);
+		logger.info("check_inquiryList_article_secret" + article_secret);
 		
-		//DB - 게시글 목록 받음
 		List<HashMap<String, String>> result = new ArrayList<>();
-		
 		
 		result = inquiryBoardDao.selectIquiryList(map);
 		
@@ -71,13 +69,14 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 	public HashMap<String, Object> inquiryWrite(InquiryBoard inquiryBoard) {
 		
 		inquiryBoard.setBoard_no(5);
+		
 		int article_no = inquiryBoardDao.getNextVal();
 		inquiryBoard.setArticle_no(article_no);
 		
 		int user_no = inquiryBoard.getUser_no();
 		inquiryBoard.setUser_no(user_no);
 		
-		System.out.println("ddddddddddddffff" + user_no);
+		logger.info("check_inquiryWrite_user_no" + user_no);
 		
 		inquiryBoardDao.inquiryWrite(inquiryBoard);
 	
@@ -107,8 +106,7 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 		//조회수
 		inquiryBoardDao.upDateHit(map);
 		
-		System.out.println(map);
-		
+		logger.info("check_inquiryView_map" + map);
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
@@ -135,7 +133,7 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 		map.put("article_no", article_no);
 		map.put("user_no", session.getAttribute("user_no"));
 
-		System.out.println(map);
+		logger.info("check_getInquiryModify_map" + map);
 		
 		Map<String, Object> result = new HashMap<>();
 		
@@ -194,15 +192,44 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 		map.put("post_step", post_step);
 		map.put("post_indent", post_indent);
 		
-		System.out.println(map);
+		logger.info("check_getInquiryParam_map" + map);
 		
 		Map<String, Object> result = new HashMap<>();
 		
-		System.out.println(result);
+		logger.info("check_getInquiryParam_result" + result);
 		
 		result = inquiryBoardDao.getInquiryView(map);
 		
 		return result;
+	}
+
+//	이전글&다음글
+	@Override
+	public InquiryBoard getPrevArticle(int article_no, int board_no) {
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		Integer articleNo = article_no;
+		Integer boardNo = board_no;
+		
+		map.put("article_no", articleNo.toString());
+		map.put("board_no", boardNo.toString());
+		
+		return inquiryBoardDao.getPrevArticle(map);
+	}
+
+	@Override
+	public InquiryBoard getNextArticle(int article_no, int board_no) {
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		Integer articleNo = article_no;
+		Integer boardNo = board_no;
+		
+		map.put("article_no", articleNo.toString());
+		map.put("board_no", boardNo.toString());
+		
+		return inquiryBoardDao.getNextArticle(map);
 	}
 
 	

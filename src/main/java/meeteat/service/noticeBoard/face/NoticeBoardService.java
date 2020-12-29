@@ -76,4 +76,20 @@ public interface NoticeBoardService {
 	 */
 	public Boolean isWriter(String user_nick, HttpSession session);
 
+	/**
+	 * 이전글 보기
+	 * @param article_no
+	 * @param board_no
+	 * @return
+	 */
+	public NoticeBoard getPrevArticle(int article_no, int board_no);
+
+	/**
+	 * 다음글 보기
+	 * @param article_no
+	 * @param board_no
+	 * @return
+	 */
+	public NoticeBoard getNextArticle(int article_no, int board_no);
+
 }

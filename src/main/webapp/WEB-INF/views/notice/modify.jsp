@@ -6,6 +6,8 @@
 
 <c:import url="/WEB-INF/views/layout/header.jsp"/>
 
+<%-- 스마트에디터 --%>
+<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 <script type="text/javascript">
 //스마트 에디터 스크립트
@@ -51,7 +53,7 @@ $(document).ready(function() {
 		
 		<div class="form-group">
 			<label for="content">내용</label>
-			<textarea rows="10" class="form-control" id="article_content" name="article_content" style="width: 100%">${result.ARTICLE_CONTENT}"</textarea>
+			<textarea rows="10" class="form-control" id="article_content" name="article_content" style="width: 100%">${result.ARTICLE_CONTENT}</textarea>
 		</div>
 		
 		<div class="text-center">
@@ -75,4 +77,5 @@ nhn.husky.EZCreator.createInIFrame({
 });
 </script>
 
+<!-- footer 영역 -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
