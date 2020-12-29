@@ -27,7 +27,7 @@ public interface MateFindService {
 
 	public Paging getPaging(Paging curPage);
 
-	public Paging getFilterPaging(Paging curPage, MateFindBoard mateFindBoard);
+	public Paging getFilterPaging(Paging curPage, HashMap<String, Object> pagingMap);
 
 	public List<MateFindBoard> pagingList(Paging paging);
 

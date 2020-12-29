@@ -58,7 +58,7 @@ public class Paging {
 		//기본값 설정
 		if(curPage==0)		setCurPage(1);//첫 페이지 기본값 세팅
 		if(pageCount==0)	setPageCount(10);//화면에 보여질 페이지수 기본값 세팅
-		if(listCount==0)	setListCount(3);//화면에 보여질 게시글수 기본값 세팅
+		if(listCount==0)	setListCount(9);//화면에 보여질 게시글수 기본값 세팅
 		
 		//총 페이지수 계산
 		totalPage = totalCount / listCount;
