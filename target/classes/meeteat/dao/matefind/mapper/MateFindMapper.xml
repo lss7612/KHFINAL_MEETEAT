@@ -133,7 +133,7 @@
 				OR party_location = #{party_location })
 			</if>
 			<if test='!meet_time.equals("")'>
-				AND meet_time = #{meet_time }
+				AND TO_CHAR(meet_time, 'hh24mi') BETWEEN #{startTime} AND #{endTime}
 			</if>
 			<if test='!category.equals("")'>
 				AND category = #{category }
@@ -170,9 +170,7 @@
 							OR party_location = #{party_location })
 						</if>
 						<if test='!meet_time.equals("") and meet_time != null'>
-<!-- 							AND meet_time = #{meet_time } -->
-							AND meet_time BETWEEN TO_DATE(#{startTime}, 'hh24mi')
-								AND TO_DATE{#{endTime}, 'hh24mi')
+							AND TO_CHAR(meet_time, 'hh24mi') BETWEEN #{startTime} AND #{endTime}
 						</if>
 						<if test='!category.equals("") and category != null'>
 							AND category = #{category }
@@ -195,7 +193,7 @@
 
 
 	
-	<select id="selectCntFilterList" parameterType="meeteat.dto.mateFindBoard.MateFindBoard" resultType="int">
+	<select id="selectCntFilterList" parameterType="hashmap" resultType="int">
 		SELECT count(*) FROM (
 			SELECT 
 				mf.article_no			as article_no
@@ -220,7 +218,7 @@
 					OR party_location = #{party_location })
 				</if>
 				<if test='!meet_time.equals("") and meet_time != null'>
-					AND meet_time = #{meet_time }
+					AND TO_CHAR(meet_time, 'hh24mi') BETWEEN #{startTime} AND #{endTime}
 				</if>
 				<if test='!category.equals("") and category != null'>
 					AND category = #{category }

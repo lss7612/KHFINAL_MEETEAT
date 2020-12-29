@@ -33,39 +33,18 @@ public class MateFindController {
 	@Autowired MateFindService mateFindService;
 	@Autowired LoginService loginService;
 
-
-
-
+	
 	@RequestMapping(value = "/list")
-	public void mateFindList(Paging curPage, Model model) {
-		
-		Paging paging = mateFindService.getPaging(curPage);
-		model.addAttribute("paging", paging);
-		
-//		List<MateFindBoard> mateFindList = mateFindService.list();
-		List<MateFindBoard> mateFindList = mateFindService.pagingList(paging);
+	public String mateFindList(@RequestParam(value = "party_location", required = false) String party_location
+								, @RequestParam(value = "meet_time", required = false) String meet_time
+								, @RequestParam(value = "category", required = false) String category
+								, Paging curPage
+								, Model model) {
 		
 		
-//		logger.info(mateFindList.get(0).getMeet_time());
-		
-		
-		model.addAttribute("mateFindList", mateFindList);
+		return "redirect:/matefind/filterlist?curPage=" + curPage.getCurPage() + "&party_location=&category=&meet_time=";
 		
 	}
-	
- 
-	
-//	@RequestMapping(value = "/list")
-//	public String mateFindList(@RequestParam(value = "party_location", required = false) String party_location
-//								, @RequestParam(value = "meet_time", required = false) String meet_time
-//								, @RequestParam(value = "category", required = false) String category
-//								, Paging curPage
-//								, Model model) {
-//		
-//		
-//		return "redirect:/matefind/filterlist?curPage=1&party_location=&category=&meet_time=";
-//		
-//	}
 	
 	@RequestMapping(value = "/filterlist")
 	public String filterList(@RequestParam(value = "party_location", required = false) String party_location
@@ -73,50 +52,52 @@ public class MateFindController {
 							, @RequestParam(value = "category", required = false) String category
 							, Paging curPage
 							, Model model) {
-
-		MateFindBoard mateFindBoard = new MateFindBoard();
 		
-		mateFindBoard.setParty_location(party_location);
-		mateFindBoard.setCategory(category);
-		mateFindBoard.setMeet_time("");
-		
-		Paging paging = mateFindService.getFilterPaging(curPage, mateFindBoard);
-		model.addAttribute("paging", paging);
-		
+		HashMap<String, Object> pagingMap = new HashMap<>();
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("party_location", party_location);
-		map.put("meet_time", "");
-		map.put("category", category);
-		map.put("startNo", paging.getStartNo());
-		map.put("endNo", paging.getEndNo());
+		
+		pagingMap.put("party_location", party_location);
+		pagingMap.put("meet_time", meet_time);
+		pagingMap.put("category", category);
 		
 		if("아침".equals(meet_time)) {
 			// 6 ~ 12 BETWEEN 06:00 AND 12:00
 			map.put("startTime", "0600");
 			map.put("endTime", "1200");
-			map.put("meet_time", "20201228");
+			pagingMap.put("startTime", "0600");
+			pagingMap.put("endTime", "1200");
 			
 		} else if("점심".equals(meet_time)) {
 			// 12 ~ 18 BETWEEN 12:00 AND 18:00
 			map.put("startTime", "1200");
 			map.put("endTime", "1800");
-			map.put("meet_time", "20201228");
+			pagingMap.put("startTime", "1200");
+			pagingMap.put("endTime", "1800");
 			
 		} else if("저녁".equals(meet_time)) {
 			// 18 ~ 24 BETWEEN 18:00 AND 00:00
 			map.put("startTime", "1800");
-			map.put("endTime", "0000");
-			map.put("meet_time", "20201228");
+			map.put("endTime", "2359");
+			pagingMap.put("startTime", "1800");
+			pagingMap.put("endTime", "2359");
 			
 		} else if("새벽".equals(meet_time)) {
 			// 24 ~ 6 BETWEEN 00:00 AND 06:00
 			map.put("startTime", "0000");
-			map.put("endTime", "2600");
-			map.put("meet_time", "20201228");
-
-		} else {
-			map.put("meet_time", "");
+			map.put("endTime", "0600");
+			pagingMap.put("startTime", "0000");
+			pagingMap.put("endTime", "0600");
+			
 		}
+		
+		Paging paging = mateFindService.getFilterPaging(curPage, pagingMap);
+		model.addAttribute("paging", paging);
+		
+		map.put("party_location", party_location);
+		map.put("meet_time", meet_time);
+		map.put("category", category);
+		map.put("startNo", paging.getStartNo());
+		map.put("endNo", paging.getEndNo());
 		
 		
 		List<MateFindBoard> list = mateFindService.filterPagingList(map);
@@ -131,7 +112,8 @@ public class MateFindController {
 		model.addAttribute("meet_time", meet_time);
 		
 		
-		return "matefind/mateFindFilterList";
+//		return "matefind/mateFindFilterList";
+		return "matefind/filterlistview";
 		
 	}
 	
@@ -142,49 +124,51 @@ public class MateFindController {
 								, Paging curPage
 								, Model model) {
 		
-		MateFindBoard mateFindBoard = new MateFindBoard();
-		
-		mateFindBoard.setParty_location(party_location);
-		mateFindBoard.setCategory(category);
-		mateFindBoard.setMeet_time("");
-		
-		Paging paging = mateFindService.getFilterPaging(curPage, mateFindBoard);
-		model.addAttribute("paging", paging);
-		
+		HashMap<String, Object> pagingMap = new HashMap<>();
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("party_location", party_location);
-		map.put("meet_time", "");
-		map.put("category", category);
-		map.put("startNo", paging.getStartNo());
-		map.put("endNo", paging.getEndNo());
+		
+		pagingMap.put("party_location", party_location);
+		pagingMap.put("meet_time", meet_time);
+		pagingMap.put("category", category);
 		
 		if("아침".equals(meet_time)) {
 			// 6 ~ 12 BETWEEN 06:00 AND 12:00
 			map.put("startTime", "0600");
 			map.put("endTime", "1200");
-			map.put("meet_time", "20201228");
+			pagingMap.put("startTime", "0600");
+			pagingMap.put("endTime", "1200");
 			
 		} else if("점심".equals(meet_time)) {
 			// 12 ~ 18 BETWEEN 12:00 AND 18:00
 			map.put("startTime", "1200");
 			map.put("endTime", "1800");
-			map.put("meet_time", "20201228");
+			pagingMap.put("startTime", "1200");
+			pagingMap.put("endTime", "1800");
 			
 		} else if("저녁".equals(meet_time)) {
 			// 18 ~ 24 BETWEEN 18:00 AND 00:00
 			map.put("startTime", "1800");
-			map.put("endTime", "0000");
-			map.put("meet_time", "20201228");
+			map.put("endTime", "2359");
+			pagingMap.put("startTime", "1800");
+			pagingMap.put("endTime", "2359");
 			
 		} else if("새벽".equals(meet_time)) {
 			// 24 ~ 6 BETWEEN 00:00 AND 06:00
 			map.put("startTime", "0000");
-			map.put("endTime", "2600");
-			map.put("meet_time", "20201228");
-
-		} else {
-			map.put("meet_time", "");
+			map.put("endTime", "0600");
+			pagingMap.put("startTime", "0000");
+			pagingMap.put("endTime", "0600");
+			
 		}
+		
+		Paging paging = mateFindService.getFilterPaging(curPage, pagingMap);
+		model.addAttribute("paging", paging);
+		
+		map.put("party_location", party_location);
+		map.put("meet_time", meet_time);
+		map.put("category", category);
+		map.put("startNo", paging.getStartNo());
+		map.put("endNo", paging.getEndNo());
 		
 		
 		List<MateFindBoard> list = mateFindService.filterPagingList(map);
@@ -404,51 +388,6 @@ public class MateFindController {
 		return "matefind/attendeeList";
 	}
 	
-	
-/*
-	@RequestMapping(value = "/sortajax")
-	public void sortAjax(@RequestParam("party_location") String party_location
-						, @RequestParam("meet_time") String meet_time
-						, @RequestParam("category") String category
-						, Paging curPage
-						, Model model) {
-		
-		logger.info(party_location);
-		logger.info(meet_time);
-		logger.info(category);
-		// if "" == isEmpty
-		
-		if("아침".equals(meet_time)) {
-			// 6 ~ 12 BETWEEN 06:00 AND 12:00
-			
-		} else if("점심".equals(meet_time)) {
-			// 12 ~ 18 BETWEEN 12:00 AND 18:00
-			
-		} else if("저녁".equals(meet_time)) {
-			// 18 ~ 24 BETWEEN 18:00 AND 00:00
-			
-		} else if("새벽".equals(meet_time)) {
-			// 24 ~ 6 BETWEEN 00:00 AND 06:00
-
-		}
-		
-		Paging paging = mateFindService.getPaging(curPage);
-		model.addAttribute("paging", paging);
-
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("party_location", party_location);
-		map.put("meet_time", meet_time);
-		map.put("category", category);
-		map.put("startNo", paging.getStartNo());
-		map.put("endNo", paging.getEndNo());
-		
-		List<MateFindBoard> filterList = mateFindService.filterList(map);
-		
-		model.addAttribute("filterList", filterList);
-		
-		
-	}
-*/
 	
 	@RequestMapping(value = "/sortajax")
 	public String sortAjax(@RequestParam("party_location") String party_location

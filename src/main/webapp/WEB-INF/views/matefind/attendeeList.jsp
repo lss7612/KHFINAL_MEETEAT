@@ -14,7 +14,8 @@
 	
 	<!-- user_no는 나중에 사진으로 대체 되어야함 -->
 	<div class="col-2">
-		<img style="width: 50px; height: 50px;" src="${attendUserList.user.user_profilestored }" alt="유저프로필사진">	
+<%-- 		<img class="pof_pic" style="width: 50px; height: 50px;" src="${attendUserList.user.user_profilestored }" alt="유저프로필사진">	 --%>
+		<img class="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${attendUserList.user.user_profilestored }" alt="유저프로필사진">	
 	</div>
 	
 	<div class="col-2">

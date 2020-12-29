@@ -126,8 +126,12 @@ body {
 <!--     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
   
-  <input type="hidden" name="user_profileorigin" value="https://i.pinimg.com/474x/34/c2/f9/34c2f984350ed23d1efa7094d7923c5a.jpg">
-  <input type="hidden" name="user_profilestored" value="https://i.pinimg.com/474x/34/c2/f9/34c2f984350ed23d1efa7094d7923c5a.jpg">
+<!--   <input type="hidden" name="user_profileorigin" value="https://i.pinimg.com/474x/34/c2/f9/34c2f984350ed23d1efa7094d7923c5a.jpg"> -->
+<!--   <input type="hidden" name="user_profilestored" value="https://i.pinimg.com/474x/34/c2/f9/34c2f984350ed23d1efa7094d7923c5a.jpg"> -->
+
+<!-- 2020 12 29 프로필 기본이미지로 수정 -->
+  <input type="hidden" name="user_profileorigin" value="기본이미지.jpg">
+  <input type="hidden" name="user_profilestored" value="기본이미지.jpg22aa9420a19d">
 
   <div class="form-group">
     <label for="user_age">나이대</label>
