@@ -10,7 +10,7 @@
 		<%-- 첫 페이지가 아닐 때 버튼 노출 --%>
 		<c:if test="${paging.curPage ne 1 }">
 <!-- 			<li><a href="/report/list/sort"> <span>&larr;</span></a></li> -->
-			<li><a href="/admin/report/list/sort?search=${search }"> <span>&larr;</span></a></li>
+			<li><a href="/admin/report/list/sort?curPage=1&sortPart=${sortPart}&sortType=${sortType}&search=${search }"> <span>&larr;</span></a></li>
 		</c:if>
 		<%-- 이전 페이지 버튼 --%>
 		<%-- 첫 페이지면 금지 표시 --%>

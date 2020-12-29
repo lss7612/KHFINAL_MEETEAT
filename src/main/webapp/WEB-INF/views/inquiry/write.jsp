@@ -4,31 +4,40 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<c:import url="/WEB-INF/views/forTest/header.jsp"/>
+<c:import url="/WEB-INF/views/layout/header.jsp"/>
+
+<%-- 스마트에디터 --%>
+<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
 	
 	$("#writeBtn").click(function() {
+		
 		//스마트에디터의 내용을 <textare>에 적용하기
 		submitContents( $("#writeBtn") );
 		
 		//form submit 수행하기
 		$("form").submit();
+	
 	})
+
 	
 	$("#cancel").click(function() {
 		history.go(-1);
 	})
+
 })
 </script>
 
+<br>
 
 <div class="container">
 
-<h1 class="pull-left">문의사항 글쓰기</h1>
+<h2 class="pull-left">문의사항 글쓰기</h2>
 <div class="clearfix"></div>
-<hr>
+
+<br>
 
 	<form action="/inquiry/write" method="post" enctype="multipart/form-data">
 	
@@ -37,10 +46,10 @@ $(document).ready(function() {
 			<input type="text" class="form-control" id="article_title" name="article_title" placeholder="제목을 입력하세요"/>
 		</div>
 		
-		<div class="form-group">
-			<label for="userNick">작성자</label>
-			<input type="text" class="form-control" id="user_nick" name="user_nick" value="${user_nick }" readonly="readonly"/>
+		<div>
+			<input type="checkbox" name="article_secret" id="article_secret" value="1"/> 비밀글 설정
 		</div>
+		<br>
 		
 		<!-- <div class="form-group">
 			<label for="fileUpload">파일 첨부</label>
@@ -53,13 +62,14 @@ $(document).ready(function() {
 		</div>
 		
 		<div class="text-center">
-				<button class="btn btn-warning" id="writeBtn">작성</button>
-				<input type="reset" class="btn btn-primary" id="cancel" value="취소" />
+				<button class="btn btn-warning btn-sm" id="writeBtn">작성</button>
+				<input type="reset" class="btn btn-primary btn-sm" id="cancel" value="취소" />
 		</div>
 		
 	</form>
 </div>
 
+<br><br>
 <!-- 스마트 에디터 적용하는 코드 -->
 <script type="text/javascript">
 var oEditors = [];
@@ -83,7 +93,4 @@ function submitContents(elClickedObj) {
 }
 </script>
 
-
-
-</body>
-</html>
+<c:import url="/WEB-INF/views/layout/footer.jsp"/>

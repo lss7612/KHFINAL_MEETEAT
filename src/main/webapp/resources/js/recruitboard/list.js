@@ -1,5 +1,20 @@
 $(document).ready(function(){
 	
+	$(".user_nick_cell").click(function(){
+		
+		// 열려있는 모든 슬라이드 닫기
+		$('td > ul').slideUp();
+		
+		//2. 슬라이드 형식으로 나타나기
+		var submenu = $(this).next("ul");
+		if(submenu.is(":visible")){
+			submenu.slideUp();
+		} else{
+			submenu.slideDown();
+		}
+	})
+	
+	
 	/*지역 선택 시 해당 지역으로 검색한다.*/
 	$('#location table tr td span').click(function(){
 		console.log('clicked')
@@ -50,6 +65,13 @@ $(document).ready(function(){
 	
 	
 })
+
+function createChat(e){
+	var user_no = $(e).attr("user_no")
+	console.log("usre_no : "+user_no)
+	window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
+			, "width = 710px, height = 665px");
+}
 
 /*보이는 카테고리의 글씨와 체크되어있는 radio버튼을 일치시킨다.*/
 function changeChecked(){

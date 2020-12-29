@@ -13,7 +13,7 @@ public interface InquiryBoardService {
 
 	public Paging getInquiryPaging(Paging curPage);
 
-	public List<HashMap<String, String>> InquiryList(Paging paging, int board_no);
+	public List<HashMap<String, String>> InquiryList(Paging paging, int board_no, int article_secret);
 
 	public HashMap<String, Object> inquiryWrite(InquiryBoard inquiryBoard);
 
