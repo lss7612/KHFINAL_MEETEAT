@@ -78,38 +78,7 @@ body {
 
 <script type="text/javascript">
 
-function loadInitList() {
-	$.ajax({
-		url: '/matefind/listFilter'
-			, type: 'get'
-			, data: {
-				party_location: $("#party_location").val()
-				, meet_time: $("#meet_time").val()
-				, category: $("#category").val()
-			} 
-			
-			, dataType: 'html'
-			, success: function(res) {
-				
-				console.log("filterList 성공")
-				
-				$('#filterList').empty();
-				$('#filterList').append(res);
-// 				$(document.body).append(res);
-				
-			}
-			
-			, error: {
-// 				console.log("filterList 실패")
-				
-			}
-	});
-}
-
 $(document).ready(function(){
-	
-	loadInitList();
-	console.log('${paging.curPage }');
 	
 	$("select").change(function() {
 		
@@ -126,7 +95,6 @@ $(document).ready(function(){
 				party_location: $("#party_location").val()
 				, meet_time: $("#meet_time").val()
 				, category: $("#category").val()
-				, curPage: '${paging.curPage }'
 			} 
 			
 			, dataType: 'html'
@@ -271,17 +239,14 @@ function createChat(){
 		    <option value="">전체</option>
 		    <option value="식사">식사</option>
 		    <option value="술">술</option>
-		    <option value="카페">카페/디저트</option>
+		    <option value="카페/디저트">카페/디저트</option>
 		  </select>
 	</div>
 	
 
 <hr>
 
-<!-- Ajax 필터링 된 List 불러오는 곳 -->
 	<div id="filterList"></div>
-
-<h1 style="color: red;"> ======= 여기는 기본 LIST ======= </h1>
 
 	<c:forEach items="${mateFindList }" var="list">
 	
@@ -342,9 +307,7 @@ function createChat(){
 		
 	
 	</c:forEach>
-
-
-
+	
 <div class="row">
 	<div class="col" style="text-align: center;">
 		<jsp:include page="./paging.jsp" />

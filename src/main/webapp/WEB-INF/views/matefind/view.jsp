@@ -50,6 +50,12 @@ body {
 	padding-right: 500px;
 }
 
+.pof_pic{
+	width: 120px;
+	height:120px; 
+	border-radius:100px; 
+}
+
 
 </style>
 
@@ -115,14 +121,6 @@ $(document).ready(function() {
 			
 			<h4 class="mateInfo">#${view.category }</h4>
 			
-<!-- 			<h4 style="float: left;">#${view.party_location } </h4> -->
-			
-<%-- 			<fmt:parseDate value="${jstlMeetTime }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/> --%>
-<%-- 			<h4 style="float: left;">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일"/> </h4> --%>
-<%-- 			<h4 style="float: left;">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/> </h4> --%>
-			
-<!-- 			<h4 style="float: left;">#${view.category }</h4> -->
-			
 		</div>
 	</div>
 	
@@ -140,7 +138,8 @@ $(document).ready(function() {
 	
 		<!-- user_no는 나중에 사진으로 대체 되어야함 -->
 		<div class="col-2">
-			<img style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	
+<%-- 			<img class="pof_pic" style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	 --%>
+			<img class="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${hostInfo.user_profilestored }" alt="유저프로필사진">	
 		</div>
 		
 		<div class="col-2">
@@ -156,36 +155,9 @@ $(document).ready(function() {
 	<hr>
 	
 	
-	
+	<!-- guest -->
 	<div id="attendeeAjax"></div>
 
-	<!-- guest -->
-<!-- 	<div class="row"> -->
-<!-- 		<div class="col"> -->
-<%-- 			<h3 style="float: left;">guest [ ${attendeeCount } / ${attendeeMax } ]</h3> --%>
-<!-- 		</div> -->
-<!-- 	</div> -->
-<%--
-	<div class="row">
-		
-		<c:forEach items="${attendUserList }" var="attendUserList">
-			
-			<!-- user_no는 나중에 사진으로 대체 되어야함 -->
-			<div class="col-2">
-				<img style="width: 50px; height: 50px;" src="${attendUserList.user.user_profilestored }" alt="유저프로필사진">	
-			</div>
-			
-			<div class="col-2">
-				<h3>${attendUserList.user.user_id }</h3>
-			</div>
-			<div class="col-2">
-				<h3>${attendUserList.user.user_nick }</h3>
-			</div>
-		</c:forEach>
-		
-	</div>
-	<!-- //guest -->
---%>
 	
 	<hr>
 	

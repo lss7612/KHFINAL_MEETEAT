@@ -129,10 +129,11 @@
 			WHERE mf.board_no = 2
 				AND is_delete = 0
 			<if test='!party_location.equals("")'>
-				AND SUBSTR(party_location, 0, INSTR(party_location, ' ', 1, 1) - 1) = #{party_location }
+				AND (SUBSTR(party_location, 0, INSTR(party_location, ' ', 1, 1) - 1) = #{party_location }
+				OR party_location = #{party_location })
 			</if>
 			<if test='!meet_time.equals("")'>
-				AND meet_time = #{meet_time }
+				AND TO_CHAR(meet_time, 'hh24mi') BETWEEN #{startTime} AND #{endTime}
 			</if>
 			<if test='!category.equals("")'>
 				AND category = #{category }
@@ -164,15 +165,14 @@
 						ON u.user_no = mf.user_no
 					WHERE mf.board_no = 2
 						AND is_delete = 0
-						<if test='!party_location.equals("")'>
-							AND SUBSTR(party_location, 0, INSTR(party_location, ' ', 1, 1) - 1) = #{party_location }
+						<if test='!party_location.equals("") and party_location != null'>
+							AND (SUBSTR(party_location, 0, INSTR(party_location, ' ', 1, 1) - 1) = #{party_location }
+							OR party_location = #{party_location })
 						</if>
-						<if test='!meet_time.equals("")'>
-<!-- 							AND meet_time = #{meet_time } -->
-							AND meet_time BETWEEN TO_DATE(#{startTime}, 'hh24mi')
-								AND TO_DATE{#{endTime}, 'hh24mi')
+						<if test='!meet_time.equals("") and meet_time != null'>
+							AND TO_CHAR(meet_time, 'hh24mi') BETWEEN #{startTime} AND #{endTime}
 						</if>
-						<if test='!category.equals("")'>
+						<if test='!category.equals("") and category != null'>
 							AND category = #{category }
 						</if>
 				ORDER BY article_no DESC
@@ -193,7 +193,7 @@
 
 
 	
-	<select id="selectCntFilterList" parameterType="meeteat.dto.mateFindBoard.MateFindBoard" resultType="int">
+	<select id="selectCntFilterList" parameterType="hashmap" resultType="int">
 		SELECT count(*) FROM (
 			SELECT 
 				mf.article_no			as article_no
@@ -213,13 +213,14 @@
 					ON u.user_no = mf.user_no
 				WHERE mf.board_no = 2
 					AND is_delete = 0
-				<if test='!party_location.equals("")'>
-					AND SUBSTR(party_location, 0, INSTR(party_location, ' ', 1, 1) - 1) = #{party_location }
+				<if test='!party_location.equals("") and party_location != null'>
+					AND (SUBSTR(party_location, 0, INSTR(party_location, ' ', 1, 1) - 1) = #{party_location }
+					OR party_location = #{party_location })
 				</if>
-				<if test='!meet_time.equals("")'>
-					AND meet_time = #{meet_time }
+				<if test='!meet_time.equals("") and meet_time != null'>
+					AND TO_CHAR(meet_time, 'hh24mi') BETWEEN #{startTime} AND #{endTime}
 				</if>
-				<if test='!category.equals("")'>
+				<if test='!category.equals("") and category != null'>
 					AND category = #{category }
 				</if>
 			ORDER BY article_no DESC
@@ -269,6 +270,7 @@
 			, category = #{category }
 			, meet_time = TO_DATE(#{meet_time}, 'YYYY-MM-DD HH24MI')
 			, mate_list = #{mate_list}
+			, revision_date = sysdate
 		WHERE board_no = 2
 			AND article_no = #{article_no }
 	</update>
@@ -290,7 +292,13 @@
 					, category
 					, meet_time
 					, terminate_date
-					, mate_list )
+					, mate_list 
+					<!-- 12/29 default처리 부분 넣기 -->
+					, create_date
+					, revision_date
+					, is_delete
+					, article_hit
+					)
 		VALUES (TB_BOARD_SEQ.nextval
 				, #{article_title}
 				, #{article_content}
@@ -300,7 +308,13 @@
 				, #{category}
 				, TO_DATE(#{meet_time}, 'YYYY-MM-DD HH24MI')
 				, TO_DATE(#{meet_time}, 'YYYY-MM-DD HH24MI')
-				, #{mate_list} )
+				, #{mate_list} 
+				<!-- 12/29 default처리 부분 넣기 -->
+				, sysdate
+				, sysdate
+				, 0
+				, 0
+				)
 	</insert>
 
 

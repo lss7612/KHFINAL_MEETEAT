@@ -16,13 +16,15 @@ public class InquiryBoard {
 	private String post_group;
 	private String post_step;
 	private String post_indent;
+	private int article_secret;
 	
 	@Override
 	public String toString() {
 		return "InquiryBoard [article_no=" + article_no + ", article_title=" + article_title + ", article_content="
 				+ article_content + ", board_no=" + board_no + ", user_no=" + user_no + ", create_date=" + create_date
 				+ ", revision_date=" + revision_date + ", is_delete=" + is_delete + ", article_hit=" + article_hit
-				+ ", post_group=" + post_group + ", post_step=" + post_step + ", post_indent=" + post_indent + "]";
+				+ ", post_group=" + post_group + ", post_step=" + post_step + ", post_indent=" + post_indent
+				+ ", article_secret=" + article_secret + "]";
 	}
 
 	public int getArticle_no() {
@@ -120,5 +122,16 @@ public class InquiryBoard {
 	public void setPost_indent(String post_indent) {
 		this.post_indent = post_indent;
 	}
+
+	public int getArticle_secret() {
+		return article_secret;
+	}
+
+	public void setArticle_secret(int article_secret) {
+		this.article_secret = article_secret;
+	}
+	
+	
+	
 	
 }

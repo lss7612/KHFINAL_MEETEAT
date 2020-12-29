@@ -6,87 +6,6 @@
 <!-- FontAwsome -->
 <script src="https://kit.fontawesome.com/2dc2c9d106.js" crossorigin="anonymous"></script>
 
-
-<script type="text/javascript">
-//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
-$(document).ready(function(){
-	$("#userMenu>span").click(function(){
-		
-		//2. 슬라이드 형식으로 나타나기
-		var submenu = $(this).next("ul");
-		if(submenu.is(":visible")){
-			submenu.slideUp();
-		} else{
-			submenu.slideDown();
-		}
-	})
-})
-//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
-
-//채팅목록 팝업으로 띄워주는 함수
-function chatListPopup(){
-	var frmPop = document.frmPopup;
-	window.open("http://localhost:8088/chat/list", "chatList"
-			, "width = 710px, height = 665px");
-}
-//채팅목록 팝업 종료
-
-//채팅하기 클릭시 동작하는 스크립트
-function createChat(){
-	window.open("http://localhost:8088/chat/create?user_no=${user_no}", "chatCreate"
-			, "width = 710px, height = 665px");
-	//location.href="/chat/create?user_no=${user_no}"
-}
-//채팅하기 클릭시 동작하는 스크립트 끝
-</script>
-
-<script type="text/javascript">
-//게시글 신고하기버튼 클릭시 동작할 함수
-function reportPopup(){
-	var frmPop = document.frmPopup;
-
-	//팝업 
-	window.open("http://localhost:8088/report/doReport","report"
-			, "width=502px,height=506px")
-	frmPop.action = "http://localhost:8088/report/doReport";
-	frmPop.target = "report";
-	//${user_no}에 작성자 번호에 맞는 변수명을 적어주시면 됩니당.
-	frmPop.user_no.value = ${user_no};
-	//현재글 URL정보 전달
-	frmPop.url.value = window.location.href
-}
-// 신고하기 동작 함수 끝
-</script>
-
-
-<style type="text/css">
-/* 회원 아이디 클릭시 나타나는 목록 CSS */
-#userMenuList{
-   list-style:none;
-   padding : 0 0 0 0;
-}
-
-#userHiddenMenu{ 
-	list-style:none;
-   	display:none;
-	padding : 0 0 0 40px; 
-	position : absolute; 
-} 
-
-#userHiddenMenu > li{
-	background-color : #F5DA81;
-	position : relative;
-	cursor : pointer;
-	border : solid 0px;
-	padding: 5px 10px 5px 10px;
-}
-
-#userHiddenMenu > li:hover{
-	background-color : #eee;
-}
-/* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
-
-</style>
 <%-- 모달(팝업) 모듈 import --%>
 <c:if test="${empty cookie.popup }">
 <c:import url="eventPopupModule.jsp"></c:import>
@@ -124,17 +43,91 @@ function reportPopup(){
 <h2><a href="/restorantfind/find">맛집찾기!</a></h2>
 <h2><a href="#" onclick="chatListPopup();">채팅목록으로!</a></h2>
 <h2><a href="/matefind/list">메이트찾기게시판으로</a></h2>
+<h2><a href="/notice/list">공지사항게시판으로!</a></h2>
+<h2><a href="/inquiry/list">문의게시판으로!</a></h2>
+<h2><a href="/admin/board/list">게시판관리자페이지로!</a></h2>
 
-
+<script type="text/javascript">
+//채팅목록 팝업으로 띄워주는 함수
+function chatListPopup(){
+	var frmPop = document.frmPopup;
+	window.open("http://localhost:8088/chat/list", "chatList"
+			, "width = 710px, height = 665px");
+}
+//채팅목록 팝업 종료
+</script>
 
 
 <!-- 게시글 신고 버튼 구역 -->
+게시글 신고 버튼 : 
 <form name="frmPopup" method="POST">
 	<input type="hidden" name= "user_no">
 	<input type="hidden" name= "url" />
 <button onclick="reportPopup();" class="btn btn-danger" >신고</button>
 </form>
 <!-- 게시글 신고 버튼 구역  종료-->
+<br>
+<!-- 댓글 신고 버튼 구역 -->
+댓글 신고 버튼 : 
+|
+<div class="commentReport" style="display : inline-block;" >
+	<form method="POST">
+		<!-- ***** 댓글 내용 전달해주는 model객체 명에 맞게 변경해서 user_no를 갖고온다. *** -->
+		<input type="hidden" name="user_no" value="${list.USER_NO }"/>
+		<input type="hidden" name="url" />
+		<button class="commentReportBtn" onclick="reportBtn(this)">🚨</button>
+	</form>
+</div>
+<!-- 댓글 신고 버튼 구역 종료 -->
+<style type="text/css">
+/* 댓글 신고 CSS 시작*/
+.commentReport{
+	cursor : pointer;
+}
+
+.commentReportBtn{
+	background-color: #f5da81;
+	border: 0px;
+	font-size : large;
+}
+/* 댓글 신고 CSS종료*/
+</style>
+
+<script type="text/javascript">
+//게시글 신고하기버튼 클릭시 동작할 함수
+function reportPopup(){
+	var frmPop = document.frmPopup;
+
+	//팝업 
+	window.open("http://localhost:8088/report/doReport","report"
+			, "width=502px,height=506px")
+	frmPop.action = "http://localhost:8088/report/doReport";
+	frmPop.target = "report";
+	//${user_no}에 작성자 번호에 맞는 변수명을 적어주시면 됩니당.
+	frmPop.user_no.value = ${user_no};
+	//현재글 URL정보 전달
+	frmPop.url.value = window.location.href
+}
+// 신고하기 동작 함수 끝
+
+// 댓글 신고하기 버튼 클릭시 동작할 함수
+
+function reportBtn(e){
+	
+	var target = $(e).prev().prev().val();
+
+	//팝업 
+	var frmPop = e.parentElement;
+	window.open("http://localhost:8088/report/doReport","report"
+			, "width=502px,height=506px")
+	frmPop.action = "http://localhost:8088/report/doReport";
+	frmPop.target = "report";
+	frmPop.user_no.value = target; 
+	//현재글 URL정보 전달
+	frmPop.url.value = window.location.href;
+}
+//댓글 신고하기 버튼 클릭시 동작할 함수 종료
+</script>
 <hr>
 
 <!-- 작성글 내용 페이지에서 작성자 닉네임클릭했을 시 나타나는 메뉴 -->
@@ -142,12 +135,69 @@ function reportPopup(){
 	<li id="userMenu">
 		<span>작성자닉네임</span>
 		<ul id="userHiddenMenu" >
-			<li onclick="createChat();" >채팅하기</li>
+			<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 값에 입력해준다. -->
+			<li onclick="createChat(this);" user_no="${user.USER_NO }">채팅하기</li>
 		</ul>
 	</li>
 	
 </ul>
 <!-- 작성글 내용 페이지에서 작성자 닉네임클릭했을 시 나타나는 메뉴 끝-->
+
+<style type="text/css">
+/* 회원 아이디 클릭시 나타나는 목록 CSS */
+#userMenuList{
+   list-style:none;
+   padding : 0 0 0 0;
+}
+
+#userHiddenMenu{ 
+	list-style:none;
+   	display:none;
+	padding : 0 0 0 40px; 
+	position : absolute; 
+} 
+
+#userHiddenMenu > li{
+	background-color : #F5DA81;
+	position : relative;
+	cursor : pointer;
+	border : solid 0px;
+	padding: 5px 10px 5px 10px;
+}
+
+#userHiddenMenu > li:hover{
+	background-color : #eee;
+}
+/* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
+</style>
+
+<script type="text/javascript">
+//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
+$(document).ready(function(){
+	$("#userMenu>span").click(function(){
+		
+		//2. 슬라이드 형식으로 나타나기
+		var submenu = $(this).next("ul");
+		if(submenu.is(":visible")){
+			submenu.slideUp();
+		} else{
+			submenu.slideDown();
+		}
+	})
+})
+//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
+
+
+//채팅하기 클릭시 동작하는 스크립트
+function createChat(e){
+	var user_no = $(e).attr("user_no")
+	console.log("usre_no : "+user_no)
+	window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
+			, "width = 710px, height = 665px");
+}
+//채팅하기 클릭시 동작하는 스크립트 끝
+</script>
+
 <hr>
 <c:if test="${isLogin }">
 <div>
