@@ -61,6 +61,9 @@ function prevent() {
 	}
 }
 
+$(document).keypress(function(e) { if (e.keyCode == 13) e.preventDefault(); });
+
+
 $(document).ready(function() {
 	
 	$("#btnWrite").click(function() {

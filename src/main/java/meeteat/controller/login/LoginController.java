@@ -103,13 +103,6 @@ public class LoginController {
 			session.setAttribute("user_age", user.getUser_age());
 			session.setAttribute("user_email", user.getUser_email());
 			
-//			model.addAttribute("user_id", user.getUser_id());
-//			model.addAttribute("user_nick", user.getUser_nick());
-//			model.addAttribute("user_gender", user.getUser_gender());
-//			model.addAttribute("user_age", user.getUser_age());
-//			model.addAttribute("user_email", user.getUser_email());
-
-			
 			logger.info("유저번호 : " + session.getAttribute("user_no"));
 			logger.info("유저닉네임 : " + session.getAttribute("user_nick"));
 			logger.info("유저등급 : " + session.getAttribute("user_grade"));
