@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import meeteat.dto.inquiryBoard.InquiryBoard;
 import meeteat.dto.noticeBoard.NoticeBoard;
 import meeteat.service.noticeBoard.face.NoticeBoardService;
 import meeteat.util.Paging;
@@ -76,7 +77,7 @@ public class NoticeBoardController {
 			, HttpSession session
 			, String user_nick
 			, Model model
-			, @RequestParam("noticeFile") MultipartFile fileupload) {
+			) {
 		
 		noticeBoard.setUser_no((int) session.getAttribute("user_no"));
 		noticeBoardService.noticeWrite(noticeBoard);
@@ -89,11 +90,26 @@ public class NoticeBoardController {
 			NoticeBoard noticeBoard
 			, Model model
 			, HttpSession session
-			, int article_no ) {
+			, int article_no
+			, HttpServletRequest request
+			) {
 		
 		//상세페이지
 		HashMap<String, Object> result = noticeBoardService.noticeView(noticeBoard, article_no);
 		model.addAttribute("result", result);
+		
+		int board_no = Integer.parseInt(request.getParameter("board_no").trim());
+		article_no = Integer.parseInt(request.getParameter("article_no").trim());
+		
+		//이전글&다음글
+		NoticeBoard prevArticle = noticeBoardService.getPrevArticle(article_no, board_no);
+		NoticeBoard nextArticle = noticeBoardService.getNextArticle(article_no, board_no);
+		
+		model.addAttribute("prevArticle", prevArticle);
+		model.addAttribute("nextArticle", nextArticle);
+		
+		logger.info("check_view_article_no" + article_no);
+		logger.info("check_view_board_no" + board_no);
 		
 	}
 		
@@ -133,8 +149,7 @@ public class NoticeBoardController {
 		String board_no = "1";
 		String article_no =""+noticeBoard.getArticle_no();
 		
-		System.out.println(article_no);
-		
+		logger.info("check_modify_article_no" + article_no);
 		
 		return "redirect:/notice/view?board_no=" + board_no + "&article_no=" + article_no;
 	}

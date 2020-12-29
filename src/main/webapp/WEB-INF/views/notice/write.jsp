@@ -26,12 +26,13 @@ $(document).ready(function() {
 })
 </script>
 
+<br>
 
 <div class="container">
 
-<h1 class="pull-left">공지사항 글쓰기</h1>
+<h2 class="pull-left">공지사항 글쓰기</h2>
 <div class="clearfix"></div>
-<hr>
+<br>
 
 	<form action="/notice/write" method="post" enctype="multipart/form-data">
 		<div class="form-group">
@@ -40,22 +41,19 @@ $(document).ready(function() {
 		</div>
 		
 		<div class="form-group">
-			<label for="fileUpload">파일 첨부</label>
-			<input type="file" class="form-control" id="noticeFile" name="noticeFile"/>
-		</div>
-		
-		<div class="form-group">
 			<label for="content">내용</label>
 			<textarea rows="10" class="form-control" id="article_content" name="article_content" style="width: 100%" placeholder="내용을 입력하세요"></textarea>
 		</div>
 		
 		<div class="text-center">
-				<button class="btn btn-warning" id="writeBtn">작성</button>
-				<input type="reset" class="btn btn-primary" id="cancel" value="취소" />
+				<button class="btn btn-warning btn-sm" id="writeBtn">작성</button>
+				<input type="reset" class="btn btn-primary btn-sm" id="cancel" value="취소" />
 		</div>
 		
 	</form>
 </div>
+
+<br><br>
 
 <!-- 스마트 에디터 적용하는 코드 -->
 <script type="text/javascript">
@@ -81,4 +79,5 @@ function submitContents(elClickedObj) {
 </script>
 
 
+<!-- footer 영역 -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

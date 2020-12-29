@@ -47,10 +47,9 @@ public class InquiryBoardController {
 		
 		///게시물 목록
 		int board_no = 5;
-		int article_secret = inquiryBoard.getArticle_secret();; // 컬럼 타입 변경 ok <<<<<<<<<<<< 여기 부터 작업하기
+		int article_secret = inquiryBoard.getArticle_secret();
 		
-		logger.info("********************" + article_secret);
-		
+		logger.info("check_list_article_secret" + article_secret);
 		
 		List<HashMap<String, String>> list = inquiryBoardService.InquiryList(paging, board_no, article_secret);
 		model.addAttribute("list", list);
@@ -71,6 +70,8 @@ public class InquiryBoardController {
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("search", search);
 			
+			logger.info(">>>>>>>>>>>>>>keyword" + keyword);
+			logger.info(">>>>>>>>>>>>>>search" + search);
 		}
 	}
 	
@@ -86,7 +87,7 @@ public class InquiryBoardController {
 			, int article_secret
 			) {
 	
-		logger.info(">>>>>>>>>>>>>>>>Write" + article_secret); // 1 값이 넘어옴 (비밀글)
+		logger.info("check_Write_article_secret" + article_secret);
 		
 		inquiryBoard.setUser_no((int) session.getAttribute("user_no"));
 		inquiryBoardService.inquiryWrite(inquiryBoard);
@@ -110,8 +111,15 @@ public class InquiryBoardController {
 		int board_no = Integer.parseInt(request.getParameter("board_no").trim());
 		article_no = Integer.parseInt(request.getParameter("article_no").trim());
 		
-		System.out.println(article_no);
-		System.out.println(board_no);
+		//이전글&다음글
+		InquiryBoard prevArticle = inquiryBoardService.getPrevArticle(article_no, board_no);
+		InquiryBoard nextArticle = inquiryBoardService.getNextArticle(article_no, board_no);
+		
+		model.addAttribute("prevArticle", prevArticle);
+		model.addAttribute("nextArticle", nextArticle);
+		
+		logger.info("check_view_article_no" + article_no);
+		logger.info("check_view_board_no" + board_no);
 		
 	}
 		
@@ -132,7 +140,8 @@ public class InquiryBoardController {
 			}
 		}
 		
-		logger.info("board_no = " + board_no + ", article_no : " + article_no);
+		logger.info("check_modify_board_no = " + board_no + ", article_no : " + article_no);
+		
 		Map<String, Object> result = inquiryBoardService.getInquiryModify(board_no, article_no, session);
 		
 		result.put("article_no", article_no);
@@ -151,8 +160,7 @@ public class InquiryBoardController {
 		String board_no = "5";
 		String article_no =""+inquiryBoard.getArticle_no();
 		
-		System.out.println(article_no);
-		
+		logger.info("check_modify_POST_article_no" + article_no);
 		
 		return "redirect:/inquiry/view?board_no=" + board_no + "&article_no=" + article_no;
 	}
@@ -169,7 +177,6 @@ public class InquiryBoardController {
 	public void error() {}
 	
 	
-	//reply
 	@RequestMapping(value = "/replyWrite", method = RequestMethod.GET)
 	public void replyWrite(
 				HttpServletRequest req
@@ -177,7 +184,6 @@ public class InquiryBoardController {
 				, String post_step
 				, String post_group
 				, String post_indent
-				
 				, int board_no
 				, int article_no
 				, HttpSession session
@@ -190,6 +196,7 @@ public class InquiryBoardController {
 		board_no = Integer.parseInt((String) req.getParameter("board_no"));
 		
 		result.put("article_no", article_no);
+		
 		model.addAttribute("result", result);
 		
 		logger.info("board_no = " + article_no + "/ post_group = " + post_group + "/ post_step = " + post_group + "/ post_indent =" + post_indent );
