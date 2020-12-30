@@ -231,7 +231,7 @@ function createChat(e){
 }
 //채팅하기 클릭시 동작하는 스크립트 끝
 </script>
-
+  
 <hr>
 <c:if test="${isLogin }">
 <div>

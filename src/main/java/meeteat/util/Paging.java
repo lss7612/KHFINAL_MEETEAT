@@ -17,7 +17,7 @@ public class Paging {
 	
 	private String search; // 검색어 선택 메뉴
 	private String keyword; // 검색어
-	
+
 	public Paging() { }
 	
 	//총 게시글 수만 입력하는 생성자
@@ -178,6 +178,5 @@ public class Paging {
 				+ totalPage + ", pageCount=" + pageCount + ", startPage=" + startPage + ", endPage=" + endPage
 				+ ", startNo=" + startNo + ", endNo=" + endNo + ", search=" + search + ", keyword=" + keyword + "]";
 	}
-	
-	
+
 }

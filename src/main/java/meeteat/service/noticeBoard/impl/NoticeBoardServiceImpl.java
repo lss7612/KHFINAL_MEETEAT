@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import meeteat.dao.noticeBoard.face.NoticeBoardDao;
 import meeteat.dto.noticeBoard.NoticeBoard;
+import meeteat.dto.noticeBoard.NoticeParam;
 import meeteat.service.noticeBoard.face.NoticeBoardService;
 import meeteat.util.Paging;
 
@@ -27,12 +28,12 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 	@Autowired ServletContext context;
 	
 	@Override
-	public Paging getNoticePaging(Paging curPage) {
+	public Paging getNoticePaging(Paging curPage, NoticeParam noticeParam) {
 		
 		System.out.println(curPage);
 		
 		//전체 게시글 수 조회
-		int totalCount = noticeBoardDao.selectCntAll();  
+		int totalCount = noticeBoardDao.selectCntAll(noticeParam);  
 		
 		//페이징 객체 생성
 		Paging paging = new Paging(totalCount, curPage.getCurPage());
@@ -41,7 +42,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 	}
 	
 	@Override
-	public List<HashMap<String, String>> noticeList(Paging paging, int board_no) {
+	public List<HashMap<String, String>> noticeList(Paging paging, int board_no, NoticeParam noticeParam) {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		
@@ -49,8 +50,8 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 		map.put("is_delete", 0);
 		map.put("startNo", paging.getStartNo());
 		map.put("endNo", paging.getEndNo());
-		map.put("keyword", paging.getKeyword());
-		map.put("search", paging.getSearch());
+		map.put("noticeKeyword", noticeParam.getNoticeKeyword());
+		map.put("noticeSearch", noticeParam.getNoticeSearch());
 		
 		List<HashMap<String, String>> result = new ArrayList<>();
 		

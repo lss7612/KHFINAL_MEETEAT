@@ -57,6 +57,10 @@ $(document).ready(function() {
 	<button id="noticeWriteBtn" class="btn btn-primary pull-right btn-sm">글작성</button>
 </c:if>
 
+	<div class="form-inline" id="backhistory">
+		<a href="javascript:history.back();" role="button" class="btn btn-primary btn-sm pull-left">돌아가기</a>
+	</div>
+
 <!-- 페이징 영역 -->
 <div id="paging_area">
 <jsp:include page="/WEB-INF/views/notice/noticePaging.jsp" />
@@ -65,14 +69,14 @@ $(document).ready(function() {
 <!-- 검색기능 -->
 <form action="/notice/list" method="get" class="form-inline text-center">
 	<div class="searchbox form-group form-group-sm">
-		<select class="search form-control" style="width: 100px;" name="search" id="search">
-			<option value="article_title" <c:if test="${search == 'article_title' }">selected</c:if>>제목</option>		
-			<option value="article_content" <c:if test="${search == 'article_content' }">selected</c:if>>내용</option>		
+		<select class="search form-control" style="width: 100px;" name="noticeSearch" id="noticeSearch">
+			<option value="article_title" <c:if test="${noticeParam.noticeSearch == 'article_title' }">selected</c:if>>제목</option>		
+			<option value="article_content" <c:if test="${noticeParam.noticeSearch == 'article_content' }">selected</c:if>>내용</option>		
 		</select>
 	</div>
 	
 	<div class="form-group form-group-sm">
-		<input type="text" class="form-control" name="keyword" id="keyword" placeholder="검색어를 입력하세요." value="${keyword }" />
+		<input type="text" class="form-control" name="noticeKeyword" id="noticeKeyword" placeholder="검색" value="${noticeParam.noticeKeyword }" />
 		<button type="submit" class="btn btn-sm" value="검색">검색</button>
 	</div>
 </form>
