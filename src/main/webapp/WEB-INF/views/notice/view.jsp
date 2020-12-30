@@ -68,12 +68,17 @@
 <!-- 버튼 영역 -->
 <div class="text-center">
 
-	<a href="/notice/list"><button class="btn btn-primary btn-sm">목록</button></a>
 	
 <!-- 본인과 관리자만 사용 가능 -->
+
+	<a href="/notice/list"><button class="btn btn-primary btn-sm pull-left">목록</button></a>
+	
 	<c:if test="${result.USER_NICK eq sessionScope.user_nick || user_grade eq 0 }">
-		<a href="/notice/modify?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }"><button class="btn btn-warning btn-sm">수정</button> </a>
-		<a href="/notice/delete?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }"><button class="btn btn-danger btn-sm">삭제</button> </a>
+		<a href="/notice/delete?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }"><button class="btn btn-danger btn-sm pull-right">삭제</button> </a>
+		<a href="/notice/modify?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }"><button class="btn btn-warning btn-sm pull-right" style="margin-right: 5px;">수정</button> </a>
+		
+		<a href="/admin/board/list"><button class="btn btn-success btn-sm pull-left" style="margin-left: 5px;">관리자페이지로</button> </a>
+		
 	</c:if>
 	
 </div>

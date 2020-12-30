@@ -17,6 +17,9 @@ $(document).ready(function() {
 		//스마트에디터의 내용을 <textare>에 적용하기
 		submitContents( $("#writeBtn") );
 		
+		if($("#article_secret").prop("checked")){
+			$("#article_secret").val(1);
+		}
 		//form submit 수행하기
 		$("form").submit();
 	
@@ -26,7 +29,16 @@ $(document).ready(function() {
 	$("#cancel").click(function() {
 		history.go(-1);
 	})
+	
 
+	$("#secretchk").change(function () {
+		if($("#secretchk").is(":checked")){
+				$("#article_secret").val("1");
+			} else {
+				$("#article_secret").val("0");
+			}
+	})
+	
 })
 </script>
 
@@ -41,13 +53,15 @@ $(document).ready(function() {
 
 	<form action="/inquiry/write" method="post" enctype="multipart/form-data">
 	
+		<input type="hidden" name="article_secret" id="article_secret" value="0"/>
+		
 		<div class="form-group">
 			<label for="title">제목</label>
 			<input type="text" class="form-control" id="article_title" name="article_title" placeholder="제목을 입력하세요"/>
 		</div>
 		
 		<div>
-			<input type="checkbox" name="article_secret" id="article_secret" value="1"/> 비밀글 설정
+			<input type="checkbox" name="secretchk" id="secretchk" /> 비밀글 설정
 		</div>
 		<br>
 		

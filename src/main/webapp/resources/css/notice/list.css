@@ -25,7 +25,6 @@ table > thead:first-child > tr:first-child > th {
 
 td:nth-child(2) {
 	text-align: left;
-	
 	white-space:nowrap;	
 	text-overflow: ellipsis;
 	overflow: hidden;

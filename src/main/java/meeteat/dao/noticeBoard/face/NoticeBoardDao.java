@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import meeteat.dto.noticeBoard.NoticeBoard;
+import meeteat.dto.noticeBoard.NoticeParam;
 import meeteat.util.Paging;
 
 public interface NoticeBoardDao {
 
 	/**
 	 * 전체 게시글 수 조회
+	 * @param noticeParam 
 	 * @param curPage 현재 페이지 번호
 	 * @return 조회된 게시물 수
 	 */
-	public int selectCntAll();
+	public int selectCntAll(NoticeParam noticeParam);
 
 	/**
 	 * 공지사항 리스트 조회

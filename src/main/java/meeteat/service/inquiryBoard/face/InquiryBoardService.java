@@ -7,13 +7,14 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import meeteat.dto.inquiryBoard.InquiryBoard;
+import meeteat.dto.inquiryBoard.InquiryParam;
 import meeteat.util.Paging;
 
 public interface InquiryBoardService {
 
-	public Paging getInquiryPaging(Paging curPage);
+	public Paging getInquiryPaging(Paging curPage, InquiryParam inquiryParam);
 
-	public List<HashMap<String, String>> InquiryList(Paging paging, int board_no, int article_secret);
+	public List<HashMap<String, String>> InquiryList(Paging paging, int board_no, int article_secret, InquiryParam inquiryParam);
 
 	public HashMap<String, Object> inquiryWrite(InquiryBoard inquiryBoard);
 

@@ -86,7 +86,7 @@
 		
 <!-- 본인과 관리자만 사용 가능 -->
 		<c:if test="${result.USER_NICK eq sessionScope.user_nick || user_grade eq 0}">
-			
+
 			<form name="viewform" method="post">
 				<input type="button" class="btn btn-danger btn-sm pull-right" id="deleteBtn" value="삭제" />
 			</form>
@@ -95,6 +95,8 @@
 			
 			<a href="/inquiry/replyWrite?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }&post_group=${result.POST_GROUP}&post_step=${result.POST_STEP}&post_indent=${result.POST_INDENT}">
 			<button id="replybtn" class="btn btn-primary btn-sm pull-right">답글</button></a>
+			
+			<a href="/admin/board/list"><button class="btn btn-success btn-sm pull-left" style="margin-left: 5px;">관리자페이지로</button> </a>
 		
 		</c:if>
 		

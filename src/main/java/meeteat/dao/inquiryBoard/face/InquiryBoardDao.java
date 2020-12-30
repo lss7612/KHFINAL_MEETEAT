@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import meeteat.dto.inquiryBoard.InquiryBoard;
+import meeteat.dto.inquiryBoard.InquiryParam;
 import meeteat.util.Paging;
 
 public interface InquiryBoardDao {
 
-	public int selectCntAll();
+	public int selectCntAll(InquiryParam inquiryParam);
 
 	public List<HashMap<String, String>> selectIquiryList(HashMap<String, Object> map);
 

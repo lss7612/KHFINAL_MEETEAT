@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import meeteat.dto.inquiryBoard.InquiryBoard;
+import meeteat.dto.inquiryBoard.InquiryParam;
 import meeteat.service.inquiryBoard.face.InquiryBoardService;
 import meeteat.util.Paging;
 
@@ -35,10 +36,13 @@ public class InquiryBoardController {
 				, HttpSession session
 				, HttpServletRequest request
 				, InquiryBoard inquiryBoard
+				, InquiryParam inquiryParam
 				) {
 		
+		
+		
 		//페이징 처리
-		Paging paging = inquiryBoardService.getInquiryPaging(curPage);
+		Paging paging = inquiryBoardService.getInquiryPaging(curPage, inquiryParam);
 		model.addAttribute("paging", paging);
 		
 		//검색 목록 페이지
@@ -51,8 +55,10 @@ public class InquiryBoardController {
 		
 		logger.info("check_list_article_secret" + article_secret);
 		
-		List<HashMap<String, String>> list = inquiryBoardService.InquiryList(paging, board_no, article_secret);
+		//전체 게시물
+		List<HashMap<String, String>> list = inquiryBoardService.InquiryList(paging, board_no, article_secret ,inquiryParam);
 		model.addAttribute("list", list);
+		model.addAttribute("inquiryParam", inquiryParam);
 		
 		//검색 기능
 		String keyword = request.getParameter("keyword");
@@ -66,13 +72,15 @@ public class InquiryBoardController {
 			} else if(search.equals("article_content")) {
 				inquiryBoard2.setArticle_content(keyword);
 			}
-			
+
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("search", search);
 			
 			logger.info(">>>>>>>>>>>>>>keyword" + keyword);
 			logger.info(">>>>>>>>>>>>>>search" + search);
 		}
+		
+		
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
