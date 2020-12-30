@@ -102,4 +102,12 @@ public interface ChatService {
 	 */
 	public boolean exitChatRoom(int user_no, int chatting_no);
 
+	/**
+	 * MateFind에서 게시글 작성시 생성된 채팅방
+	 * @param user_no : 방생성 회원
+	 * @param chatting_name : 채팅방 이름
+	 * @param chatting_id : 채팅방 고유  id
+	 */
+	public void createMateChatRoom(String chatting_name, String chatting_id);
+
 }

@@ -188,23 +188,21 @@ function dateSet(lmd, msgDate){
 		onclick="goChatList();">
 	<div id="roomTitle">
 		<c:choose>
-		<c:when test="${chatUserList.size() eq 2 }">
-			<c:forEach items="${chatUserList }" var="userList">
-					<c:if test="${userList.USER_NO ne user_no}">
-						<span id="roomTitleContent">${userList.USER_NICK }님과 대화</span>
-					</c:if>
-			</c:forEach>
-		</c:when>
-		<c:when test="${chatUserList.size() gt 2 }">
-			<c:choose>
-				<c:when test="${roomInfo.CHATTING_NAME eq null }">
-					<span id="roomTitleContent" >이름없는 대화방 (${chatUserList.size() })</span>
-				</c:when>
-				<c:otherwise>
-					<span id="roomTitleContent" >${roomInfo.CHATTING_NAME }</span>
-				</c:otherwise>
-			</c:choose>
-		</c:when>
+			<c:when test="${roomInfo.CHATTING_NAME eq null }">
+				<c:choose>
+					<c:when test="${chatUserList.size() eq 2 }">
+						<c:if test="${userList.USER_NO ne user_no}">
+							<span id="roomTitleContent">${userList.USER_NICK }님과 대화</span>
+						</c:if>
+					</c:when>
+					<c:when test="${chatUserList.size() gt 2 }">
+						<span id="roomTitleContent" >이름없는 대화방 (${chatUserList.size() })</span>
+					</c:when>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+					<span id="roomTitleContent" >${roomInfo.CHATTING_NAME } (${chatUserList.size() })</span>
+			</c:otherwise>
 		</c:choose>
 	</div>
 </div>

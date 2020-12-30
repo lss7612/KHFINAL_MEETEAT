@@ -82,6 +82,20 @@ $(document).ready(function() {
 	
 })
 
+function joinChat(e){
+	var target = $(e).prev().val();
+	console.log($(e).prev())
+	console.log("target : "+target);
+
+	var frmPop = document.chatSubmitForm;
+	//팝업 
+	window.open("http://localhost:8088/chat/room", "chatRoom"
+			, "width=710px, height=665px");
+	frmPop.action = "http://localhost:8088/chat/room";
+	frmPop.target = "chatRoom";
+	frmPop.chatting_id.value = target
+}
+
 </script>
 
 </head>
@@ -115,7 +129,12 @@ $(document).ready(function() {
 		<p>날짜　　<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일 HH시 mm분"/></p>
 		<p>장소　　${view.party_location }</p>
 		<p>유형　　${view.category }</p>
-		
+		<!-- 모임 채팅방 참여 버튼 구역 -->
+		<form name="chatSubmitForm" method="post">
+			<input type="hidden" name="chatting_id" value="${chatting_id }" />
+			<button id="enterChatBtn" onclick="joinChat(this);">모임 채팅방</button>
+		</form>
+		<!-- 모임 채팅방 참여 버튼 구역 -->
 	
 	
 	</div>

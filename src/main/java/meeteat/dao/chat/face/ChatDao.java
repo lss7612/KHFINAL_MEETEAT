@@ -115,4 +115,12 @@ public interface ChatDao {
 	 */
 	public void exitChatRoomByUserNo(@Param("user_no")int user_no, @Param("chatting_no")int chatting_no);
 
+	/**
+	 * 메이트 찾기로 글 작성시 생성되는 채팅방
+	 * @param chatting_name : 채팅방 번호
+	 * @param chatting_id : 채팅방 id
+	 * @return
+	 */
+	public void createMateChatRoom(@Param("chatting_name")String chatting_name, @Param("chatting_id")String chatting_id);
+
 }

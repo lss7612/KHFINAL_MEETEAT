@@ -105,4 +105,9 @@ public class ChatServiceImpl implements ChatService{
 		return false;
 	}
 	
+	@Override
+	public void createMateChatRoom(String chatting_name, String chatting_id) {
+		chatDao.createMateChatRoom(chatting_name, chatting_id);
+	}
+	
 }
