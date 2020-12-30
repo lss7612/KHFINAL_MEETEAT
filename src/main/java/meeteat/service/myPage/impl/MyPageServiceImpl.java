@@ -35,6 +35,7 @@ public class MyPageServiceImpl implements MyPageService{
 		return myPageDao.selectByNo(user_no);
 	}
 	
+	
 	@Override
 	public void myEdit(User user, MultipartFile fileupload) {
 		//파일이 저장될 경로(real path)
@@ -172,6 +173,11 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public void deleteMyCmmt(HashMap<String, Object> map) {
 		myPageDao.deleteMyCmmt(map);		
+	}
+	
+	@Override
+	public Map<String, Object> myPayList(int user_no) {
+		return myPageDao.selectMyPayList(user_no);
 	}
 
 }

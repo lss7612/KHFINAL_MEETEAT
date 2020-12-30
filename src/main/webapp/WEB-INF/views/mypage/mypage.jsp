@@ -76,10 +76,10 @@ td:nth-child(0) {
 			<div class="sh_header">
 				<h2>내 결제 정보 
 					<c:if test="${userinfo.USER_GRADE eq 2}">
-						<a href="/mypay/mypay" class="btn btn-default pull-right btn-sm" role="button">정기 결제</a>
+						<a href="/mypay/mypay" class="btn btn-default pull-right btn-sm" role="button">결제하기</a>
 					</c:if>
 					<c:if test="${userinfo.USER_GRADE eq 1}">
-						<a href="/mypay/payFail" class="btn btn-default pull-right btn-sm" role="button">정기결제 해지</a>
+						<a href="/mypay/payCancel" class="btn btn-default pull-right btn-sm" role="button">결제 해지</a>
 					</c:if>
 					<c:if test="${userinfo.USER_GRADE eq 3}">
 						<div>결제 정보가 없습니다</div>
@@ -90,21 +90,23 @@ td:nth-child(0) {
 			
 			<div class="content">
 			<c:choose>
-				<c:when test=" ">
-					<h3>결제 정보가 없습니다</h3>
-					</c:when>
+				<c:when test="${empty payList}">									
+					<h3>결제 정보가 없습니다</h3>							
+				</c:when>
 				<c:otherwise>
 					<table class="table table-condensed">
 						<tr>
-							<th style="width: 20%">결제일</th>
-							<th style="width: 50%">결제 가격</th>
-							<th style="width: 30%">결제</th>
+							<th style="width: 15%">회원등급</th>
+							<th style="width: 15%">결제 가격</th>
+							<th style="width: 35%">결제일</th>
+							<th style="width: 35%">만료일</th>
 						</tr>
 
 						<tr>
-							<td>결제일</td>
-							<td>결제 가격</td>
-							<td>결제어쩌구</td>
+							<td>${payList.GRADE_NAME }</td>
+							<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${payList.PRICE }"></fmt:formatNumber></td>
+							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="yy/MM/dd HH:mm"/></td>
+							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="yy/MM/dd HH:mm"/></td>
 						</tr>
 					</table>					
 				</c:otherwise>

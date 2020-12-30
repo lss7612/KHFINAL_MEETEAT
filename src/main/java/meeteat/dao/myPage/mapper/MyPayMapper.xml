@@ -3,6 +3,34 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="meeteat.dao.myPage.face.MyPageDao">
+<mapper namespace="meeteat.dao.myPage.face.MyPayDao">
+	<insert id="insertPayInfo" parameterType="meeteat.dto.myPage.MyPay">
+		INSERT INTO tb_payment2 ( 
+			pay_no, user_no, pay_date, price, pay_status, merchant_uid, imp_uid)
+		VALUES (TB_PAYMENT2_SEQ.NEXTVAL,  #{user_no}, sysdate, 1900, 1, #{merchant_uid}, #{imp_uid})
+	</insert>
+	
+	<select id="payChk" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM tb_payment2
+		WHERE 1=1
+		AND user_no = #{user_no}
+		AND pay_status = 1
+	</select>
+	
+	<update id="updateUser" parameterType="int">
+		UPDATE tb_user2
+			SET user_grade = 1
+		WHERE user_no = #{user_no}		
+	</update>
+	
+	<delete id="deletePayInfo" parameterType="meeteat.dto.user.User">
+		DELETE FROM tb_payment2
+		WHERE user_no = #{user_no}
+	</delete>
 
+	<update id="updateUserInfo" parameterType="meeteat.dto.user.User">
+		UPDATE tb_user2
+			SET user_grade = 2
+		WHERE user_no = #{user_no}
+	</update>
 </mapper>

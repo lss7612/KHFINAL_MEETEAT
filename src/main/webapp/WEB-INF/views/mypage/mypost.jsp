@@ -16,6 +16,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	console.log('${boardAdminParam}')
 	if('${myParam.postCategory}'==$("#postCategory > option").val())
 		$(this).attr('selected','selected')

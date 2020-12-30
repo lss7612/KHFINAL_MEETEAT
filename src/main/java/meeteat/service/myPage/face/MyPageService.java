@@ -18,13 +18,14 @@ public interface MyPageService {
 	 * @return
 	 */
 	public Map<String, Object> infoByNo(int user_no);
-
+	
 	/**
 	 * 마이페이지 수정
 	 * @param user
 	 * @param fileupload
 	 */
 	public void myEdit(User user, MultipartFile fileupload);
+	
 
 	/**내가 쓴 글 조회
 	 * 
@@ -97,5 +98,13 @@ public interface MyPageService {
 	 * @param map
 	 */
 	public void deleteMyCmmt(HashMap<String, Object> map);
+
+	/**
+	 * 내 결제 정보 조회
+	 * @param user_no
+	 * @return
+	 */
+	public Map<String, Object> myPayList(int user_no);
+
 
 }

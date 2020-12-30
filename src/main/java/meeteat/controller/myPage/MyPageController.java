@@ -45,11 +45,15 @@ public class MyPageController {
 		
 		//내가 쓴 댓글 조회
 		List<Map<String, Object>> commentList = myPageService.myCommentList(user_no);
-		model.addAttribute("cList", commentList);		
+		model.addAttribute("cList", commentList);
+		
+		//결제 정보 
+		Map<String, Object> payList = myPageService.myPayList(user_no);
+		model.addAttribute("payList", payList);
 	}
 	
 	@RequestMapping(value = "/mypage/myedit")
-	public String myedit(HttpSession session, Model model) {
+	public String myedit(HttpSession session, Model model, User user) {
 		int user_no = Integer.parseInt(session.getAttribute("user_no").toString());
 
 		Map<String, Object> userinfo = new HashMap<>();
@@ -62,10 +66,12 @@ public class MyPageController {
 
 	@RequestMapping(value = "/mypage/myedit", method = RequestMethod.POST)
 	public String myeditProc(User user
-			, @RequestParam("file") MultipartFile fileupload) {
-
-		logger.info("user_no");
+			, @RequestParam("file") MultipartFile fileupload
+			,Model model) {
+		
+//		logger.info("user_no");
 		myPageService.myEdit(user, fileupload);
+		
 
 		return "redirect:/mypage/mypage";
 	}
@@ -87,14 +93,14 @@ public class MyPageController {
 
 		boolean pwChk = myPageService.pwChk(user);
 		
-		model.addAttribute("pwChk", pwChk);
+//		model.addAttribute("pwChk", pwChk);
 
 		if(pwChk) {
 			
 			myPageService.deleteUser(user);
-
+			
 			session.invalidate();
-			return "login/login";
+			return "/";
 		}else {
 
 			return "redirect:/mypage/mydelete";
