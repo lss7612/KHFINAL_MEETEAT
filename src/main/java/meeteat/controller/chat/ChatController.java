@@ -242,8 +242,8 @@ public class ChatController {
 		for(int i=0; i<oldChat.size();i++) {
 			time = (Date)oldChat.get(i).get("MSG_DATE");
 			//<, >을 html에서 표시할수 있도록 변경
-			String control = ( (String)oldChat.get(i).get("MSG_CONTENT")).replaceAll("<", "&lt");
-			String control2 = control.replaceAll(">", "&gt");
+			String control = ( (String)oldChat.get(i).get("MSG_CONTENT")).replaceAll("<", "&lt;");
+			String control2 = control.replaceAll(">", "&gt;");
 			oldChat.get(i).put("MSG_CONTENT", control2);
 			
 			//기준 날짜와 현재 반복의 날자가 같으면 날자 변경을 추가해준다.
