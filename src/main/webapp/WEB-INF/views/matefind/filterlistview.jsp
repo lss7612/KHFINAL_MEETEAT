@@ -4,12 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%--
 <!-- jQuery 2.2.4.min -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
+--%>
+<c:import url="/WEB-INF/views/layout/header.jsp" />
 
 <style type="text/css">
 
@@ -66,11 +68,15 @@ body {
 } 
 
 #userHiddenMenu > li{
-	background-color : #ff8f11;
+	background-color : #F5DA81;
 	position : relative;
 	cursor : pointer;
-	border : solid #e46508 1px;
-	padding : 3px 3px 3px 3px;
+	border : solid 0px;
+	padding: 5px 10px 5px 10px;
+}
+
+#userHiddenMenu > li:hover{
+	background-color : #eee;
 }
 /* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
 
@@ -93,9 +99,8 @@ function loadInitList() {
 				
 				console.log("filterList 성공")
 				
-				$('#filterList').empty();
-				$('#filterList').append(res);
-// 				$(document.body).append(res);
+				$('#filterListTable').empty();
+				$('#filterListTable').append(res);
 				
 			}
 			
@@ -108,8 +113,16 @@ function loadInitList() {
 
 $(document).ready(function(){
 	
-	loadInitList();
-	console.log('${paging.curPage }');
+// 	loadInitList();
+
+	console.log('${party_location}');
+	console.log('${category}');
+	console.log('${meet_time}');
+
+	$("#party_location option[value='${party_location }']").attr("selected", "selected");
+	$("#category option[value='${category}']").attr("selected", "selected");
+	$("#meet_time option[value='${meet_time}']").attr("selected", "selected");
+
 	
 	$("select").change(function() {
 		
@@ -126,7 +139,6 @@ $(document).ready(function(){
 				party_location: $("#party_location").val()
 				, meet_time: $("#meet_time").val()
 				, category: $("#category").val()
-				, curPage: '${paging.curPage }'
 			} 
 			
 			, dataType: 'html'
@@ -134,9 +146,8 @@ $(document).ready(function(){
 				
 				console.log("filterList 성공")
 				
-				$('#filterList').empty();
-				$('#filterList').append(res);
-// 				$(document.body).append(res);
+				$('#filterListTable').empty();
+				$('#filterListTable').append(res);
 				
 			}
 			
@@ -147,32 +158,7 @@ $(document).ready(function(){
 			
 		}); // ajax 끝
 		
-// 		$.ajax({
-			
-// 			url: '/matefind/sortajax'
-// 			, type: 'get'
-// 			, data: {
-// 				party_location: $("#party_location").val()
-// 				, meet_time: $("#meet_time").val()
-// 				, category: $("#category").val()
-// 			} 
-			
-// 			, dataType: 'json'
-// 			, success: function(res) {
-				
-// 				console.log("filterList 성공")
-				
-// 				$(document.body).append(res);
-				
-// 			}
-			
-// 			, error: {
-// // 				console.log("filterList 실패")
-				
-// 			}
-			
-// 		}); // ajax 끝
-		
+
 	});	// select change 끝
 
 	
@@ -200,35 +186,21 @@ function createChat(){
 </script>
 
 
-<c:import url="/WEB-INF/views/layout/header.jsp" />
+
 
 <div class="container" id="divpage">
 
 <h1>메이트찾기</h1>
 
 <hr>
-
-<!-- <div class="input-group mb-3"> -->
-<!--   <div class="input-group-prepend"> -->
-<!--     <label class="input-group-text" for="inputGroupSelect01">Options</label> -->
-<!--   </div> -->
-<!--   <select class="custom-select" id="inputGroupSelect01"> -->
-<!--     <option selected>Choose...</option> -->
-<!--     <option value="1">One</option> -->
-<!--     <option value="2">Two</option> -->
-<!--     <option value="3">Three</option> -->
-<!--   </select> -->
-<!-- </div> -->
-
-<!-- 	<h4>필터</h4> -->
 	
-	
+<div class="row">
 	<div class="input-group mb-3">
 		<div class="input-group-prepend">
 		  <label class="input-group-text" for="party_location">지역</label>
 		</div>
 		  <select class="custom-select" id="party_location" name="party_location">
-		    <option selected value="">전체</option>
+		    <option value="">전체</option>
 		    <option value="서울특별시">서울특별시</option>
 		    <option value="부산광역시">부산광역시</option>
 		    <option value="대구광역시">대구광역시</option>
@@ -255,13 +227,12 @@ function createChat(){
 		</div>
 		  <select class="custom-select" id="meet_time" name="meet_time">
 		    <option value="">전체</option>
-		    <option value="아침">아침</option>
-		    <option value="점심">점심</option>
-		    <option value="저녁">저녁</option>
-		    <option value="새벽">새벽</option>
+		    <option value="아침">아침 (06:00 ~ 12:00)</option>
+		    <option value="점심">점심 (12:00 ~ 18:00)</option>
+		    <option value="저녁">저녁 (18:00 ~ 00:00)</option>
+		    <option value="새벽">새벽 (00:00 ~ 06:00)</option>
 		  </select>
 	</div>
-	
 	
 	<div class="input-group mb-3">
 		<div class="input-group-prepend">
@@ -274,88 +245,21 @@ function createChat(){
 		    <option value="카페">카페/디저트</option>
 		  </select>
 	</div>
-	
+</div>
 
 <hr>
 
 <!-- Ajax 필터링 된 List 불러오는 곳 -->
-	<div id="filterList"></div>
-
-<h1 style="color: red;"> ======= 여기는 기본 LIST ======= </h1>
-
-	<c:forEach items="${mateFindList }" var="list">
-	
-	<div class="thumbnail-wrapper">
-		<a href="/matefind/view?article_no=${list.article_no }">
-		
-			<img class="thumbnail-img" style="margin-bottom: 10px;" alt="썸네일이미지" src="https://www.bloter.net/wp-content/uploads/2016/08/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0-%EC%82%AC%EC%A7%84.jpg">
-			
-			<h2 id="title" style="white-space:nowrap; text-overflow: ellipsis; overflow: hidden;">${list.article_title }</h2>
-			
-		</a>
-			<div class="info">
-			
-				<p style="	white-space:nowrap;	
-						text-overflow: ellipsis;
-						overflow: hidden;"># ${list.party_location }</p>
-				<fmt:parseDate value="${list.meet_time }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/>
-				<p># <fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일"/></p>
-				<p># <fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/></p>
-				<p># ${list.category }</p>
-				
-<%-- 				<p># ${list.meet_time }</p> --%>
-<!-- 				2021-02-15 16:40:00.0 -->
-<%-- 				<c:set value="${list.meet_time }" var="date"></c:set> --%>
-				
-			</div>
-			
-			<div class="user">
-			<hr style="margin: 4px 0px;">
-				<p class="span-parent">
-					<span class="user-left" style="float: right;">
-						<img style="width: 50px; height: 50px;" src="${list.user.user_profilestored }" alt="유저프로필사진">
-					</span>
-					
-					
-					<ul id="userMenuList">
-						<li id="userMenu">
-							<span>
-							${list.user.user_id } <br>
-							${list.user.user_nick }
-							</span>
-							<ul id="userHiddenMenu" >
-								<li onclick="createChat();" >채팅하기</li>
-							</ul>
-						</li>
-					</ul>
-<!-- 					<span class="user-right" style="float: right; height: 50px;"> -->
-<%-- 						${list.user.user_id } <br> --%>
-<%-- 						${list.user.user_nick } --%>
-<!-- 					</span> -->
-<!-- 					<ul id="userHiddenMenu" > -->
-<!-- 						<li onclick="createChat();" >채팅하기</li> -->
-<!-- 					</ul> -->
-				</p>
-			
-			</div>
-		</div>
-		
-	
-	</c:forEach>
-
-
-
-<div class="row">
-	<div class="col" style="text-align: center;">
-		<jsp:include page="./paging.jsp" />
+	<div id="filterListTable">
+		<c:import url="/WEB-INF/views/matefind/mateFindFilterList.jsp"/>
 	</div>
-</div>
+
+
 
 <!-- 버튼 영역v2 -->
 	<div class="row">
 		<div class="col">
 		
-<!-- 			<a href="/login/main"><button class="btn btn-secondary" style="float: left; margin-bottom: 50px;">로그인메인</button></a> -->
 			<a href="/matefind/write"><button class="btn btn-primary" style="float: right; margin-bottom: 50px;">글쓰기</button></a>
 		
 		</div>

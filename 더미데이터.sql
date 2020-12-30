@@ -36,7 +36,7 @@ select * from tb_resultreportreason2;
 select * from tb_user2
 order by user_no;
 
-
+insert into tb_user2(user_no, user_id, user_pw, user_nick, user_gender, user_age, user_blockcnt, user_email, user_grade) values(1, 'asdf1', 'asdf1', 'asdf1', 'F', '21', 0, 'asdf2@a.com',0);
 insert into tb_user2(user_no, user_id, user_pw, user_nick, user_gender, user_age, user_blockcnt, user_email, user_grade) values(2, 'asdf2', 'asdf2', 'asdf2', 'F', '21', 0, 'asdf2@a.com',1);
 insert into tb_user2(user_no, user_id, user_pw, user_nick, user_gender, user_age, user_blockcnt, user_email, user_grade) values(3, 'asdf3', 'asdf3', 'asdf3', 'M', '22', 0, 'asdf3@a.com',2);
 insert into tb_user2(user_no, user_id, user_pw, user_nick, user_gender, user_age, user_blockcnt, user_email, user_grade) values(4, 'asdf4', 'asdf4', 'asdf4', 'F', '23', 0, 'asdf4@a.com',3);
@@ -698,6 +698,20 @@ insert into tb_chattinguser2 (chatting_no, user_no) values(61, 8);
 insert into tb_chattinguser2 (chatting_no, user_no) values(61, 9);
 insert into tb_chattinguser2 (chatting_no, user_no) values(61, 10);
 insert into tb_chattinguser2 (chatting_no, user_no) values(61, 11);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 12);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 13);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 14);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 15);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 16);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 17);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 18);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 19);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 20);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 21);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 22);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 23);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 24);
+insert into tb_chattinguser2 (chatting_no, user_no) values(61, 25);
 
 insert into tb_chattinguser2 (chatting_no, user_no) values(61, 1);
 insert into tb_chattinguser2 (chatting_no, user_no) values(61, 2);

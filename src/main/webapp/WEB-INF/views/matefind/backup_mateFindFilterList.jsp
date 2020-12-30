@@ -4,14 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<style type="text/css">
-#pof_pic{
-	width: 120px;
-	height:120px; 
-	border-radius:100px; 
-}
-</style>
-
 <c:forEach items="${mateFindFilterList }" var="list">
 
 <div class="thumbnail-wrapper">
@@ -32,14 +24,17 @@
 			<p># <fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/></p>
 			<p># ${list.category }</p>
 			
+<%-- 				<p># ${list.meet_time }</p> --%>
+<!-- 				2021-02-15 16:40:00.0 -->
+<%-- 				<c:set value="${list.meet_time }" var="date"></c:set> --%>
+			
 		</div>
 		
 		<div class="user">
 		<hr style="margin: 4px 0px;">
 			<p class="span-parent">
 				<span class="user-left" style="float: right;">
-<%-- 					<img style="width: 50px; height: 50px;" src="${list.user.user_profilestored }" alt="유저프로필사진"> --%>
-					<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${list.user.user_profilestored }" alt="유저프로필사진">
+					<img style="width: 50px; height: 50px;" src="${list.user.user_profilestored }" alt="유저프로필사진">
 				</span>
 				
 				

@@ -35,7 +35,9 @@
 		<div  class="pull-left title_left" >
 		<ul id="userMenuList">
 			<li id="userMenu">
-					<span>${result.USER_NICK }</span>
+
+					<span style="cursor:pointer;">${result.USER_NICK }</span>
+
 					<ul id="userHiddenMenu" >
 					<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 값에 입력해준다. -->
 					<li onclick="createChat(this);" user_no="${result.USER_NO }">채팅하기</li>

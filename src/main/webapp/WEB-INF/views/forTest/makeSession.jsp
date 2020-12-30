@@ -131,33 +131,51 @@ function reportBtn(e){
 <hr>
 
 <!-- 작성글 내용 페이지에서 작성자 닉네임클릭했을 시 나타나는 메뉴 -->
-<ul id="userMenuList">
-	<li id="userMenu">
-		<span>작성자닉네임</span>
-		<ul id="userHiddenMenu" >
-			<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 값에 입력해준다. -->
-			<li onclick="createChat(this);" user_no="${user.USER_NO }">채팅하기</li>
-		</ul>
-	</li>
-	
-</ul>
+<div class="userMenu">
+	<span class="userNickMenu">작성자닉네임1</span>
+	<br>
+	<ul class="userHiddenMenu" >
+		<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 property값에 입력해준다. -->
+		<li onclick="createChat(this);" loginUserNo="${user_no }"  user_no="${user.USER_NO }">채팅하기</li>
+	</ul>
+</div>
+<div class="userMenu">
+	<span class="userNickMenu">작성자닉네임2</span>
+	<br>
+	<ul class="userHiddenMenu" >
+		<li onclick="createChat(this);" loginUserNo="${user_no }"  user_no="${user.USER_NO }">채팅하기</li>
+	</ul>
+</div>
+<div class="userMenu">
+	<span class="userNickMenu">작성자닉네임3</span>
+	<br>
+	<ul class="userHiddenMenu" >
+		<li onclick="createChat(this);" loginUserNo="${user_no }"  user_no="${user.USER_NO }">채팅하기</li>
+	</ul>
+</div>
+
 <!-- 작성글 내용 페이지에서 작성자 닉네임클릭했을 시 나타나는 메뉴 끝-->
 
 <style type="text/css">
 /* 회원 아이디 클릭시 나타나는 목록 CSS */
-#userMenuList{
-   list-style:none;
-   padding : 0 0 0 0;
+.userMenu{
+	display : inline-block;
+	width : 100%;
+	position : relative;
 }
 
-#userHiddenMenu{ 
+.userNickMenu{
+	cursor : pointer;
+}
+
+.userHiddenMenu{ 
 	list-style:none;
    	display:none;
-	padding : 0 0 0 40px; 
 	position : absolute; 
+	z-index : 1;
 } 
 
-#userHiddenMenu > li{
+.userHiddenMenu > li{
 	background-color : #F5DA81;
 	position : relative;
 	cursor : pointer;
@@ -165,7 +183,7 @@ function reportBtn(e){
 	padding: 5px 10px 5px 10px;
 }
 
-#userHiddenMenu > li:hover{
+.userHiddenMenu > li:hover{
 	background-color : #eee;
 }
 /* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
@@ -174,16 +192,27 @@ function reportBtn(e){
 <script type="text/javascript">
 //작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
 $(document).ready(function(){
-	$("#userMenu>span").click(function(){
+	//userMenu mouseleave event
+	$(".userMenu").mouseleave(function(){
+		if($(".userHiddenMenu").is(":visible")){
+			console.log("hidden menu close")
+			$(".userHiddenMenu").slideUp();
+		}
+	})
+	
+	$(".userMenu>span").click(function(){
 		
-		//2. 슬라이드 형식으로 나타나기
-		var submenu = $(this).next("ul");
+		var submenu = $(this).next().next("ul");
 		if(submenu.is(":visible")){
 			submenu.slideUp();
 		} else{
+			$(".userMenu > ul").slideUp();
 			submenu.slideDown();
+			//슬라이드 메뉴 조정할려면 left의 style값을 변경하면 됩니다.
+			$(submenu).css({"display" : "inline-block", "left" : "40px"});
 		}
 	})
+	
 })
 //작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
 
@@ -191,13 +220,18 @@ $(document).ready(function(){
 //채팅하기 클릭시 동작하는 스크립트
 function createChat(e){
 	var user_no = $(e).attr("user_no")
-	console.log("usre_no : "+user_no)
-	window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
-			, "width = 710px, height = 665px");
+	var loginUserNo = $(e).attr("loginUserNo")
+	if(loginUserNo == user_no){
+		alert("자기 자신과는 대화할 수 없습니다!")
+		return false;
+	} else {
+		window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
+				, "width = 710px, height = 665px");
+	}
 }
 //채팅하기 클릭시 동작하는 스크립트 끝
 </script>
-
+  
 <hr>
 <c:if test="${isLogin }">
 <div>
