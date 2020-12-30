@@ -42,6 +42,11 @@ body {
   align-items: center;
   padding: 30px 20px;
   background-color: #f5f5f5;
+  
+    background-image:  linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url("https://cdn.pixabay.com/photo/2017/05/18/06/29/cafe-2322672_960_720.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
 }
 
 .signUpForm {
@@ -51,6 +56,8 @@ body {
 	  margin: auto;
 	  border: 1px solid #adb5bd;
 	  border-radius: 5px;
+	  background-color: #f5f5f5;
+	  
 }
 
 #logo{
@@ -65,7 +72,8 @@ body {
 
 #logo > h3 {
 	margin: 0px;
-	color: #adb5bd;
+	color: #fff;
+/* 	color: #adb5bd; */
 }
 
 #pwCheckResult {
@@ -96,10 +104,11 @@ body {
 
   <div class="form-group">
     <label for="user_id">아이디</label>
-    <input type="text" class="form-control" id="user_id" name="user_id">
+    <input type="text" class="form-control" id="user_id" name="user_id" maxlength="15">
+    <p style="margin: 0;"> 영어소문자로 시작해야하며 영어소문자+숫자 15자 이내 </p>
+	  <div id="idCheckResult"></div>
   </div>
   
-  <div id="idCheckResult"></div>
   
   <div class="form-group">
     <label for="user_pw">비밀번호</label>
@@ -109,16 +118,18 @@ body {
   <div class="form-group">
     <label for="passwordCheck">비밀번호확인</label>
     <input type="password" class="form-control" id="passwordCheck">
+	  <div id="pwCheckResult"></div>
   </div>
 
-  <div id="pwCheckResult"></div>
 
   <div class="form-group">
     <label for="user_nick">닉네임</label>
-    <input type="text" class="form-control" id="user_nick" name="user_nick">
+    <input type="text" class="form-control" id="user_nick" name="user_nick"  onKeyUp="javascript:fnChkByte(this,'20')">
+	<p style="margin: 0;"> 닉네임은 20Bytes를 초과할 수 없습니다. </p>
+	  <div id="nickCheckResult"></div>
   </div>
-
-  <div id="nickCheckResult"></div>
+	
+	
 
   <div class="form-group">
     <label for="user_email">Email</label>
@@ -155,8 +166,8 @@ body {
 	  <label class="form-check-label" for="user_genderF">여</label>
 	</div>
 
-	<div id="submitResult" style="margin-top: 20px; margin-bottom: 10px;">　</div>
-	<div class="form-group">
+	<div id="submitResult" style="margin-bottom: 10px;">　</div>
+	<div class="form-group" align="center">
 	  <button id="signUpSubmit" class="btn btn-primary">가입하기</button>
 	  <a href="#" onClick="history.go(-1)"><input type="button" class="btn btn-danger" value="뒤로가기"/></a>
 	</div>
@@ -174,16 +185,50 @@ function checkEmail(str) {
      var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 
      if(!reg_email.test(str)) {   
-    	 
           return false;       
-          
      } else {               
-    	 
           return true;         
      }                            
 
-}             
+}
 
+
+function fnChkByte(obj, maxByte) {
+	
+    var str = obj.value;
+    var str_len = str.length;
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+    for(var i=0; i<str_len; i++) {
+    	
+        one_char = str.charAt(i);
+        
+        if(escape(one_char).length > 4) {
+            rbyte += 3;                                         //한글 3Byte
+        } else {
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+
+        if(rbyte <= maxByte) {
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+
+     if(rbyte > maxByte) {
+		  // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+// 		  alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+
+		  str2 = str.substr(0,rlen);                                  //문자열 자르기
+		  obj.value = str2;
+		  fnChkByte(obj, maxByte);
+     } else {
+//         document.getElementById('byteInfo').innerText = rbyte;
+     }
+}
 
 $(document).ready(function() {
 	
@@ -224,6 +269,7 @@ $(document).ready(function() {
 		
 		else {
 			if(checkEmail($('#user_email').val())) {
+				$('#submitResult').text("");
 				$('#signUpForm').submit();
 			} else {
 				$('#submitResult').text("이메일형식에 맞게 작성해주세요");
@@ -235,27 +281,39 @@ $(document).ready(function() {
 	});
 	
 	$('#user_id').blur(function() {
-
-		var user_id = $('#user_id').val();
 		
-		$.ajax({
-			url: '/login/idcheck?user_id='+ user_id,
-			type: "get",
-			success: function(checkResult) {
-				if(checkResult) {
-					$('#idCheckResult').text("사용중인 아이디입니다");
-					$('#idCheckResult').css("color", "red");
-					$("#signUpSubmit").attr("disabled", true);
-				} else {
-					$('#idCheckResult').text("");					
-					$("#signUpSubmit").attr("disabled", false);
+		var idReg = /^[a-z]+[a-z0-9]{4,14}$/g;
+		
+		if(!idReg.test($('#user_id').val())) {
+			$('#idCheckResult').text("아이디 형식에 맞지 않습니다.");
+			$('#idCheckResult').css("color", "red");
+			$("#signUpSubmit").attr("disabled", true);
+			
+		} else {
+			
+			var user_id = $('#user_id').val();
+			
+			$.ajax({
+				url: '/login/idcheck?user_id='+ user_id,
+				type: "get",
+				success: function(checkResult) {
+					if(checkResult) {
+						$('#idCheckResult').text("사용중인 아이디입니다");
+						$('#idCheckResult').css("color", "red");
+						$("#signUpSubmit").attr("disabled", true);
+					} else {
+						$('#idCheckResult').text("");					
+						$("#signUpSubmit").attr("disabled", false);
+					}
+				},
+				error: function() {
+					console.log("[ajax] /login/idcheck 전송실패")
+					
 				}
-			},
-			error: function() {
-				console.log("[ajax] /login/idcheck 전송실패")
-				
-			}
-		})
+			}) //ajax끝
+			
+		}
+
 	});
 	
 	$('#user_nick').blur(function() {

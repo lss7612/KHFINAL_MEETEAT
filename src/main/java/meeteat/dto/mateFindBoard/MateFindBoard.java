@@ -40,8 +40,7 @@ public class MateFindBoard {
 	
 	private Recommend recommend;
 	
-	private Paging paging;
-	
+	private File file;
 	
 	public MateFindBoard() {
 	}
@@ -51,7 +50,7 @@ public class MateFindBoard {
 	public MateFindBoard(int article_no, int board_no, int user_no, Date create_date, Date revision_date, int file_no,
 			int is_delete, int article_hit, String mate_list, String article_title, String article_content,
 			String category, String party_location, String meet_time, Date terminate_date, String article_pw,
-			int post_group, int post_step, int post_indent, User user, Recommend recommend) {
+			int post_group, int post_step, int post_indent, User user, Recommend recommend, File file) {
 		super();
 		this.article_no = article_no;
 		this.board_no = board_no;
@@ -74,6 +73,7 @@ public class MateFindBoard {
 		this.post_indent = post_indent;
 		this.user = user;
 		this.recommend = recommend;
+		this.file = file;
 	}
 
 
@@ -86,7 +86,8 @@ public class MateFindBoard {
 				+ ", article_title=" + article_title + ", article_content=" + article_content + ", category=" + category
 				+ ", party_location=" + party_location + ", meet_time=" + meet_time + ", terminate_date="
 				+ terminate_date + ", article_pw=" + article_pw + ", post_group=" + post_group + ", post_step="
-				+ post_step + ", post_indent=" + post_indent + ", user=" + user + ", recommend=" + recommend + "]";
+				+ post_step + ", post_indent=" + post_indent + ", user=" + user + ", recommend=" + recommend + ", file="
+				+ file + "]";
 	}
 
 
@@ -305,10 +306,18 @@ public class MateFindBoard {
 	public void setRecommend(Recommend recommend) {
 		this.recommend = recommend;
 	}
-	
-	
-	
-	
+
+
+
+	public File getFile() {
+		return file;
+	}
+
+
+
+	public void setFile(File file) {
+		this.file = file;
+	}
 	
 
 }

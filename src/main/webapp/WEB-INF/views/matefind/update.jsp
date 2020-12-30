@@ -32,6 +32,7 @@ body {
 .search {
 	position: relative;
 	top: 80px;
+	margin-left: 20px;
 	z-index: 10;
 }
 
