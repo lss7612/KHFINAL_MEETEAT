@@ -34,15 +34,27 @@ $(document).ready(function(){
     
     $(".chatListUserMenu >td>span").click(function(){
     	
-    	var submenu = $(this).next("ul");
+    	var submenu = $(this).next().next("ul");
+    	var tbrow = $(this).parent();
+    	
+    	console.log(submenu);
+    	console.log($(submenu));
+    	
+    	console.log(tbrow);
+    	console.log($(tbrow));
     	
     	if(submenu.is(":visible")){
 			submenu.slideUp();
+			$(tbrow).css({"padding" : "3px 3px 3px 3px"});
 		} else{
 			submenu.slideDown();
+			$(submenu).css({"display" : "inline-block", "left" : "40px"});
+			$(tbrow).css({"padding" : "5px 3px 5px 3px"});
+			
 		}
     	
     })
+    
 })
 
 //회원 목록에서 채팅하기 클릭시 동작할 함수
@@ -222,12 +234,14 @@ function dateSet(lmd, msgDate){
 		</div>
 	</div>
 	<div id="etcArea">
-		<button id="exitBtn" onclick="exitRoom()">채팅방 나가기</button>
+		<div id="chatUserListHeadArea">
+			<span id="chatUserListHead">유저목록</span>
+		</div>
 		<div id="userListArea">
-			<table>
-				<tr>
-					<th>회원 목록</th>
-				</tr>
+			<table id="chatUserList">
+<!-- 				<tr> -->
+<!-- 					<th id="chatUserListHead">회원 목록</th> -->
+<!-- 				</tr> -->
 				 <c:forEach items="${chatUserList }" var="user">
 				 <c:choose>
 				 	<c:when test="${user_no eq user.USER_NO }">
@@ -237,8 +251,9 @@ function dateSet(lmd, msgDate){
 				 	</c:when>
 				 	<c:when test="${user_no ne user.USER_NO }">
 						<tr class="chatListUserMenu">
-							<td>
+							<td style="position : relative;">
 								<span class="chatListUserNick">${user.USER_NICK }</span>
+								<br>
 								<ul class="userHiddenMenu">
 									<li onclick="createChat(this);" user_no="${user.USER_NO }">채팅하기</li>
 								</ul>
@@ -250,6 +265,8 @@ function dateSet(lmd, msgDate){
 				 </c:forEach>
 			</table>
 		</div>
+		<br>
+		<button id="exitBtn" onclick="exitRoom()">나가기 </button>
 	</div>
 </div>
 

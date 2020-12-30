@@ -103,13 +103,6 @@ public class LoginController {
 			session.setAttribute("user_age", user.getUser_age());
 			session.setAttribute("user_email", user.getUser_email());
 			
-//			model.addAttribute("user_id", user.getUser_id());
-//			model.addAttribute("user_nick", user.getUser_nick());
-//			model.addAttribute("user_gender", user.getUser_gender());
-//			model.addAttribute("user_age", user.getUser_age());
-//			model.addAttribute("user_email", user.getUser_email());
-
-			
 			logger.info("유저번호 : " + session.getAttribute("user_no"));
 			logger.info("유저닉네임 : " + session.getAttribute("user_nick"));
 			logger.info("유저등급 : " + session.getAttribute("user_grade"));
@@ -241,12 +234,13 @@ public class LoginController {
 			
 		} else {
 			
+			loginService.signUp(user);
+
 			user = loginService.selectUser(user);
 			session.setAttribute("isLogin", true);
 			session.setAttribute("user_no", user.getUser_no());
 			session.setAttribute("user_grade", user.getUser_grade());
 			
-			loginService.signUp(user);
 			return "redirect:/login/main";
 			
 		}

@@ -54,6 +54,8 @@ function prevent() {
 		return;
 	}
 }
+/* 엔터금지 */
+$(document).keypress(function(e) { if (e.keyCode == 13) e.preventDefault(); });
 
 $(document).ready(function() {
 	
