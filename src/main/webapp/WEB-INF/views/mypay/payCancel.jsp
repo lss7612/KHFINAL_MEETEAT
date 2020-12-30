@@ -6,55 +6,18 @@
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 <link rel="stylesheet" href="/resources/css/mypage/mydelete.css">
 
-
-<script>
-function delEvent(){
-	if(${pwChk}==true){		
-		alert("탈퇴가 완료되었습니다!")
-	}else{
-		alert("탈퇴에 실패하였습니다!")
-	}
-}
-</script>
-
-<script>
-// $(document).ready(function() {
-// 	$('#submit').click(function(){
-		
-// 		var idx = true;
-		
-// 		if($.trim($('#user_pw').val()) == ''){
-// 			$('#user_pw').focus();
-// 			return false;
-			
-// 		} 
-// 		else {
-			
-// 			if(${pwChk}==true){
-// 				alert("탈퇴가 완료되었습니다.")
-// 				return true;				
-// 			}else{
-// 				alert("탈퇴에 실패하였습니다")
-// 				return false;
-// 			}
-// 		}
-		
-// 	});
-// })
-</script>
-
 <div id="divpage">
 <div class="c_header">
-	<h1>회원 탈퇴</h1>
+	<h1>결제회원 해지</h1>
 	<p class="contxt">
 	<Strong style="font-size: 25px; color: #F5DA81;"> ${u.USER_ID  }</Strong>
-		님, 회원 탈퇴를 진행하면 결제정보 및 회원정보를 되돌릴 수 없습니다.
+		님, 결제 해지를 진행하면 일반 회원으로 등록되어 결제정보 및 회원정보를 되돌릴 수 없습니다.
 	</p>
-	<p class="contxt" style="padding-left: 20px;">탈퇴를 위해 회원님의 비밀번호를 입력해주세요</p>
+	<p class="contxt" style="padding-left: 20px;">결제 해지를 위해 회원님의 비밀번호를 입력해주세요</p>
 </div>
 
 <div>
-<form action="/mypage/mydelete" method="POST">
+<form action="/mypay/payCancel" method="POST">
 <input type="hidden" name="user_no" value="${u.USER_NO}">
 <input type="hidden" name="user_id" id="user_id" value="${u.USER_ID }">
 
@@ -72,7 +35,7 @@ function delEvent(){
 </div><br>
 <div style="text-align: center;">
 		<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm" id="back">돌아가기</a>
-		<button id="submit" name="submit" class="btn btn-danger btn-sm" onClick="delEvent();">탈퇴하기</button>
+		<button id="submit" name="submit" class="btn btn-danger btn-sm">해지하기</button>
 </div>
 </form>
 </div>

@@ -8,6 +8,11 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	
+// 	$('#user_pw').val('${userinfo.user_pw}');
+// 	$('#user_email').val('${userinfo.user_email}');
+// 	$('#user_nick').val('${userinfo.user_nick}');
+	
 	$("input").keyup(function(){
 	      var pw1 = $("#user_pw").val();
 	      var pw2 = $("#checkpw").val();
@@ -52,9 +57,13 @@ $(document).ready(function() {
 			$('#submitResult').css("color", "red");
 			$('#user_email').focus;
 			return false;
-		}
+		} else if($.trim($('#file').val()) == '') {
+			$('#submitResult').text("프로필 사진을 선택해주세요");
+			$('#submitResult').css("color", "red");
+			$('#file').focus;
+			return false;
 		
-		else {
+		}else {
 			$('#editForm').submit();
 		}
 		
@@ -86,7 +95,6 @@ $(document).ready(function() {
 					<strong class="tit_set">프로필 사진</strong>
 					<span class="txt_set">
 						<label for="file"></label>
-<!-- 						<input type="file" name="file" id="file" required accept="image/*"/> -->
 						<input type="file" name="file" id="file" required accept="image/*"/>
 					</span>
 				</div>

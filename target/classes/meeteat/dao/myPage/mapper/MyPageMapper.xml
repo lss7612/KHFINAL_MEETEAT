@@ -153,6 +153,14 @@
 			</foreach>
 		</if>
 	</update>
+	
+	<select id="selectMyPayList" parameterType="int" resultType="HashMap">
+		SELECT p.pay_date, p.price, p.pay_status, u.user_grade, g.grade_name
+        FROM tb_payment2 p
+        INNER JOIN tb_user2 u  ON u.user_no = p.user_no
+        INNER JOIN tb_grade2 g ON g.user_grade = u.user_grade
+        WHERE p.user_no = #{user_no}
+	</select>
 
 	
 </mapper>
