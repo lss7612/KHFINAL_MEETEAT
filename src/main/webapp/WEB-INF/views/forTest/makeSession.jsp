@@ -146,6 +146,8 @@ function reportBtn(e){
 /* 회원 아이디 클릭시 나타나는 목록 CSS */
 .userMenu{
 	display : inline-block;
+	width : 100%;
+	position : relative;
 }
 
 .userNickMenu{
@@ -185,6 +187,7 @@ $(document).ready(function(){
 			submenu.slideDown();
 			//슬라이드 메뉴 조정할려면 left의 style값을 변경하면 됩니다.
 			$(submenu).css({"display" : "inline-block", "left" : "40px"});
+// 			$(submenu).css({"display" : "inline-block"});
 		}
 	})
 })
