@@ -1,5 +1,7 @@
 package meeteat.controller.chat;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -196,6 +197,33 @@ public class ChatController {
 		model.addAttribute("roomUserInfo", roomNum);
 		
 		return "/chat/list";
+	}
+	
+	@RequestMapping(value="/room/userlist")
+	public String roomUserList(int user_no, int chatting_no, String msgType, Model model) {
+		logger.info("> > > AJAX 요청 < < <");
+		logger.info("> > > msgType : "+msgType+" < < <");
+		
+		List<HashMap<String, Object>> userList = chatService.getChattingUserList(chatting_no);
+		model.addAttribute("chatUserList", userList);
+		
+		return "/chat/room_user_list";
+	}
+	
+	@RequestMapping(value="/room/usercount")
+	public void roomUserCount(int user_no, int chatting_no, Writer out) {
+		logger.info("> > > AJAX 요청 < < <");
+		List<HashMap<String, Object>> userList = chatService.getChattingUserList(chatting_no);
+		
+		int count = userList.size();
+		logger.info("> > > 채팅방 참여 유저 수 : "+count+"< < <");
+		
+		try {
+			out.write("{\"result\":"+count+"}");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void getChatNewest(List<HashMap<String,Object>> roomNum, List<HashMap<String, Object>> chatList) {

@@ -86,6 +86,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		logger.info("msg writer : "+chatMessage.getWriter());
 		logger.info("msg msg : "+chatMessage.getMsg());
 		int writer = chatMessage.getWriter();
+		int chatting_no = chatMessage.getChatRoomNo();
 		String user_nick = chatService.getUserNick(chatMessage.getWriter());
 		
 		
@@ -115,6 +116,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 					if(chatMessage.getType().equals("CHAT")) {
 						logger.info("> > > 내가 보낸 메시지 < < <");
 						String chatMsg = myMsg(chatMessage, msgTime);
+						cMsg.setChatRoomNo(chatting_no);
 						cMsg.setMsg(chatMsg);
 						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
@@ -128,7 +130,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						logger.info("> > > 내가 보낸 메시지 < < <");
 						logger.info("> > > 상태 : "+is_state+" < < <");
 						String enterMsg = enterMsgToMe(user_nick);
+						cMsg.setChatRoomNo(chatting_no);
 						cMsg.setMsg(enterMsg);
+						cMsg.setType("ENTER");
 						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsBytes(cMsg));
@@ -146,7 +150,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						
 						//*****메시지 세션에 뿌리는 방법
 						String enterMsg = enterMsgToRoom(user_nick);
+						cMsg.setChatRoomNo(chatting_no);
 						cMsg.setMsg(enterMsg);
+						cMsg.setType("ENTER");
 						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
 						logger.info(" > > > chatMessage : "+cMsg);
@@ -159,7 +165,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						logger.info("> > > 상태 : "+is_state+" < < <");
 						//*****메시지 세션에 뿌리는 방법
 						String leaveMsg = leaveMsgToRoom(user_nick);
+						cMsg.setChatRoomNo(chatting_no);
 						cMsg.setMsg(leaveMsg);
+						cMsg.setType("LEAVE");
 						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
 						logger.info(" > > > chatMessage : "+cMsg);
@@ -171,6 +179,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 					} else if(chatMessage.getType().equals("CHAT")) {
 						//*****메시지 세션에 뿌리는 방법
 						String chatMsg = otherMsg(chatMessage, user_nick, msgTime);
+						cMsg.setChatRoomNo(chatting_no);
 						cMsg.setMsg(chatMsg);
 						cMsg.setWriter(writer);
 						cMsg.setMsgDate(msgDate);
