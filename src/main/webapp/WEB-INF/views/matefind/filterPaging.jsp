@@ -9,7 +9,7 @@
 		<%-- 처음 페이지 버튼 --%>
 		<%-- 첫 페이지가 아닐 때 버튼 노출 --%>
 		<c:if test="${paging.curPage ne 1 }">
-			<li><a href="/matefind/listFilter"> <span>&larr;</span></a></li>
+			<li><a href="/matefind/filterlist?curPage=1&party_location=${party_location}&category=${category}&meet_time=${meet_time}"> <span>&larr;</span></a></li>
 		</c:if>
 
 
@@ -19,7 +19,7 @@
 		<%-- 이전 페이지 버튼 --%>
 		<%-- 첫 페이지면 금지 표시 --%>
 		<c:if test="${paging.curPage ne 1 }">
-			<li><a href="/matefind/listFilter?curPage=${paging.curPage-1 }&party_location=${party_location}" aria-label="Previous"> <span>&laquo;</span></a></li>
+			<li><a href="/matefind/filterlist?curPage=${paging.curPage-1 }&party_location=${party_location}&category=${category}&meet_time=${meet_time}" aria-label="Previous"> <span>&laquo;</span></a></li>
 		</c:if>
 		<c:if test="${paging.curPage eq 1 }">
 			<li class="disabled"><span>&laquo;</span></li>
@@ -35,11 +35,11 @@
 			varStatus="stat">
 			
 			<c:if test="${paging.curPage eq page }">
-				<li class="active"><a href="/matefind/list?curPage=${page }&party_location=${party_location}">${page }</a></li>
+				<li class="active"><a href="/matefind/filterlist?curPage=${page }&party_location=${party_location}&category=${category}&meet_time=${meet_time}">${page }</a></li>
 			</c:if>
 			
 			<c:if test="${paging.curPage ne page }">
-				<li><a href="/matefind/listFilter?curPage=${page }&party_location=${party_location}">${page }</a></li>
+				<li><a href="/matefind/filterlist?curPage=${page }&party_location=${party_location}&category=${category}&meet_time=${meet_time}">${page }</a></li>
 			</c:if>
 			
 		</c:forEach>
@@ -51,7 +51,7 @@
 		<%-- 다음 페이지 버튼 --%>
 		<%-- 마지막 페이지면 동작 안함 --%>
 		<c:if test="${paging.curPage ne paging.totalPage }">
-			<li><a href="/matefind/listFilter?curPage=${paging.curPage+1 }&party_location=${party_location}" aria-label="Next"> <span>&raquo;</span></a></li>
+			<li><a href="/matefind/filterlist?curPage=${paging.curPage+1 }&party_location=${party_location}&category=${category}&meet_time=${meet_time}" aria-label="Next"> <span>&raquo;</span></a></li>
 		</c:if>
 		<c:if test="${paging.curPage eq paging.totalPage }">
 			<li class="disabled"><span>&raquo;</span></li>
@@ -62,7 +62,7 @@
 		<%-- 마지막 페이지 버튼 --%>
 		<%-- 마지막 페이지가 아닐 때 버튼 노출 --%>
 		<c:if test="${paging.curPage ne paging.totalPage }">
-			<li><a href="/matefind/listFilter?curPage=${paging.totalPage }&party_location=${party_location}"> <span>&rarr;</span></a></li>
+			<li><a href="/matefind/filterlist?curPage=${paging.totalPage }&party_location=${party_location}&category=${category}&meet_time=${meet_time}"> <span>&rarr;</span></a></li>
 		</c:if>
 		
 	</ul>

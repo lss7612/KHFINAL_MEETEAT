@@ -236,7 +236,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 	
 	
 	public String myMsg(ChatMessage chatMessage, String msgTime) {
-		
+		String control = chatMessage.getMsg().replaceAll("<", "&lt");
+		String control2 = control.replaceAll(">", "&gt");
+		chatMessage.setMsg(control2);
 		return "<div class=\"toMsg\">"
 				+ "<span class=\"toMsgTime\">"+msgTime+"</span>"
 				+ "<div class=\"toChatContent toBallon\">"+chatMessage.getMsg()+"</div>"
@@ -244,6 +246,9 @@ public class WebSocketHandler extends TextWebSocketHandler{
 	}
 	
 	public String otherMsg(ChatMessage chatMessage, String user_nick, String msgTime) {
+		String control = chatMessage.getMsg().replaceAll("<", "&lt");
+		String control2 = control.replaceAll(">", "&gt");
+		chatMessage.setMsg(control2);
 		
 		return "<div class=\"fromMsg\">"
 				+ "<img class=\"profileImg\" src=\"/resources/img/default_profile_img.jpg\">"
