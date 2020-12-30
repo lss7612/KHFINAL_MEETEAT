@@ -25,6 +25,8 @@ public class MateFindBoard {
 	private String party_location;		// 위치
 	private String meet_time;			// 약속시간
 
+//	채팅방 번호
+	private int chatting_no;
 	
 	
 // 메이트찾기 게시판 불필요 	
@@ -49,7 +51,7 @@ public class MateFindBoard {
 
 	public MateFindBoard(int article_no, int board_no, int user_no, Date create_date, Date revision_date, int file_no,
 			int is_delete, int article_hit, String mate_list, String article_title, String article_content,
-			String category, String party_location, String meet_time, Date terminate_date, String article_pw,
+			String category, String party_location, String meet_time, int chatting_no, Date terminate_date, String article_pw,
 			int post_group, int post_step, int post_indent, User user, Recommend recommend, File file) {
 		super();
 		this.article_no = article_no;
@@ -66,6 +68,7 @@ public class MateFindBoard {
 		this.category = category;
 		this.party_location = party_location;
 		this.meet_time = meet_time;
+		this.chatting_no = chatting_no;
 		this.terminate_date = terminate_date;
 		this.article_pw = article_pw;
 		this.post_group = post_group;
@@ -84,7 +87,7 @@ public class MateFindBoard {
 				+ ", create_date=" + create_date + ", revision_date=" + revision_date + ", file_no=" + file_no
 				+ ", is_delete=" + is_delete + ", article_hit=" + article_hit + ", mate_list=" + mate_list
 				+ ", article_title=" + article_title + ", article_content=" + article_content + ", category=" + category
-				+ ", party_location=" + party_location + ", meet_time=" + meet_time + ", terminate_date="
+				+ ", party_location=" + party_location + ", meet_time=" + meet_time + ", chatting_no="+ chatting_no +", terminate_date="
 				+ terminate_date + ", article_pw=" + article_pw + ", post_group=" + post_group + ", post_step="
 				+ post_step + ", post_indent=" + post_indent + ", user=" + user + ", recommend=" + recommend + ", file="
 				+ file + "]";
@@ -318,6 +321,19 @@ public class MateFindBoard {
 	public void setFile(File file) {
 		this.file = file;
 	}
+
+
+
+	public int getChatting_no() {
+		return chatting_no;
+	}
+
+
+
+	public void setChatting_no(int chatting_no) {
+		this.chatting_no = chatting_no;
+	}
+	
 	
 
 }

@@ -117,4 +117,8 @@
 	<delete id="exitChatRoomByUserNo" parameterType="hashmap">
 		delete tb_chattinguser2 where chatting_no = #{chatting_no} and user_no = #{user_no}
 	</delete>
+	
+	<insert id="createMateChatRoom" parameterType="hashmap">
+		insert into tb_chatting2(chatting_name, chatting_id) values(#{chatting_name}, #{chatting_id})
+	</insert>
 </mapper>
