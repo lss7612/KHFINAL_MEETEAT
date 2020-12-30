@@ -6,24 +6,7 @@
 
 <c:import url="/WEB-INF/views/layout/header.jsp"/>
 
-<style type="text/css">
-table {
-	table-layout: fixed;
-}
-
-table, th {
-	text-align: center;
-}
-
-td:nth-child(2) {
-	text-align: left;
-	
-	white-space:nowrap;	
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-</style>
-
+<link rel="stylesheet" href="/resources/css/notice/list.css">
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -35,11 +18,13 @@ $(document).ready(function() {
 
 </script>
 
+<br>
+
 <div class="container">
-	<h1 class="pull-left">공지사항 게시판</h1>
+	<h2 class="pull-left">공지사항 게시판</h2>
 	<div class="clearfix"></div>
-	<hr>
-	
+	<br>
+
 	<table class="table table-striped table-hover table-condensed">
 		<thead>
 			<tr>
@@ -54,7 +39,7 @@ $(document).ready(function() {
 			<c:forEach items="${list }" var="list">
 				<tr>
 					<td>${list.ARTICLE_NO }</td>
-					<td><a href="/notice/view?article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a></td>
+					<td><a href="/notice/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a></td>
 					<td>${list.USER_NICK }</td>
 					<td>
 						<fmt:formatDate value="${list.CREATE_DATE }" pattern="yy-MM-dd" />
@@ -69,30 +54,32 @@ $(document).ready(function() {
 	
 <!-- 관리자만 글 작성 버튼 보이기 -->
 <c:if test="${user_grade eq 0 }">
-	<button id="noticeWriteBtn" class="btn btn-primary pull-right">글작성</button>
+	<button id="noticeWriteBtn" class="btn btn-primary pull-right btn-sm">글작성</button>
 </c:if>
 
+<!-- 페이징 영역 -->
+<div id="paging_area">
+<jsp:include page="/WEB-INF/views/notice/noticePaging.jsp" />
+</div>
 
 <!-- 검색기능 -->
-
 <form action="/notice/list" method="get" class="form-inline text-center">
-	<div class="searchbox form-group">
+	<div class="searchbox form-group form-group-sm">
 		<select class="search form-control" style="width: 100px;" name="search" id="search">
 			<option value="article_title" <c:if test="${search == 'article_title' }">selected</c:if>>제목</option>		
 			<option value="article_content" <c:if test="${search == 'article_content' }">selected</c:if>>내용</option>		
 		</select>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group form-group-sm">
 		<input type="text" class="form-control" name="keyword" id="keyword" placeholder="검색어를 입력하세요." value="${keyword }" />
-		<button type="submit" class="btn" value="검색">검색</button>
+		<button type="submit" class="btn btn-sm" value="검색">검색</button>
 	</div>
 </form>
 
-<div id="paging_area">
-<jsp:include page="/WEB-INF/views/notice/noticePaging.jsp" />
-</div>
-
 </div> <!-- container end  -->
 
+<br><br><br>
+
+<!-- footer 영역 -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>

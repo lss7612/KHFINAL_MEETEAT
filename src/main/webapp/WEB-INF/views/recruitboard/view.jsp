@@ -33,7 +33,15 @@
 	<%-- 닉네임 조회수 덧글 시간 --%>
 	<div class="light_padding light_bar_height color-light">
 		<div  class="pull-left title_left" >
-			<span>${result.USER_NICK }</span>
+		<ul id="userMenuList">
+			<li id="userMenu">
+					<span style="cursor:pointer;">${result.USER_NICK }</span>
+					<ul id="userHiddenMenu" >
+					<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 값에 입력해준다. -->
+					<li onclick="createChat(this);" user_no="${result.USER_NO }">채팅하기</li>
+				</ul>
+			</li>
+		</ul>
 		</div>
 		<div class="pull-right title_right" style="text-align:right;" >
 			<span>조회수: ${result.ARTICLE_HIT }</span><span>덧글: ${result.CNT_COMMENT }</span>
@@ -113,6 +121,7 @@
 
 
 </div>
+
 <div style="width:90%; margin:0 auto;">
 <div class="col-md-4 pull-right"style="margin:5px 0 0 0; padding:10px 10px 0; font-size:20px;text-align:right;"><i id="refrash_comment_botton"  style="cursor: pointer;" class="fas fa-sync-alt"></i></div>
 <div class="col-md-4 pull-left" style="margin:5px 0 0 0; padding:14px 10px 0; font-size:18px;text-align:left;">${result.CNT_COMMENT }개의 덧글</div>

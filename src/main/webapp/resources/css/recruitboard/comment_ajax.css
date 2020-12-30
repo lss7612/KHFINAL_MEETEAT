@@ -15,3 +15,27 @@ span.cursorPointer {
 	border: 0px;
 	font-size : large;
 }
+
+.userMenuList{
+   list-style:none;
+   padding : 0 0 0 0;
+}
+
+.userHiddenMenu{ 
+	list-style:none;
+   	display:none;
+	padding : 0 0 0 40px; 
+	position : absolute; 
+} 
+
+.userHiddenMenu > li{
+	background-color : #F5DA81;
+	position : relative;
+	cursor : pointer;
+	border : solid 0px;
+	padding: 5px 10px 5px 10px;
+}
+
+.userHiddenMenu > li:hover{
+	background-color : #eee;
+}

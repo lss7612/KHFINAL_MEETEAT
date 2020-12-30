@@ -1,6 +1,19 @@
 
 $(document).ready(function(){
 	
+	$(".userMenu>span").click(function(){
+		
+		$('.userMenu > ul').slideUp();
+		
+		//2. 슬라이드 형식으로 나타나기
+		var submenu = $(this).next("ul");
+		if(submenu.is(":visible")){
+			submenu.slideUp();
+		} else{
+			submenu.slideDown();
+		}
+	})
+	
 	//코멘트영역으로 들어오면 시간과 답글수정삭제을 바까준다
 	$('#commentList').mouseenter(function(){
 		$('span.toggle_invisible').toggleClass('invisible')
@@ -74,7 +87,13 @@ $(document).ready(function(){
 	
 })
 
-
+//채팅하기 클릭시 동작하는 스크립트
+function createChat(e){
+	var user_no = $(e).attr("user_no")
+	console.log("usre_no : "+user_no)
+	window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
+			, "width = 710px, height = 665px");
+}
 
 function deleteComment(commentNo) {
 	$.ajax({

@@ -146,7 +146,13 @@
 	</td>
 	
 	<%-- 닉네임 --%>
-	<td>${list.USER_NICK }</td>
+	<td>
+		<span style="cursor:pointer;"class="user_nick_cell">${list.USER_NICK }</span>
+		<ul class="userHiddenMenu" >
+			<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 값에 입력해준다. -->
+			<li onclick="createChat(this);" user_no="${list.USER_NO }">채팅하기</li>
+		</ul>
+	</td>
 	
 	
 	<%-- 조회수 --%>

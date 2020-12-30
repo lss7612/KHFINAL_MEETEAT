@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.wrapper {
+	width:100%;
+	min-width:500px;
+	margin: 0 auto;
+}
+
+#deleteBtn {
+	margin-right : 3px;
+}
+
+#replybtn {
+	margin-right : 3px;
+}
+
+#modifybtn {
+	margin-right : 3px;
+}
+
+.table tr td {
+	text-align: center;
+}

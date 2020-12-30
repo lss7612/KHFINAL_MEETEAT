@@ -60,6 +60,20 @@ public interface NoticeBoardDao {
 	 */
 	public int getNextVal();
 
+	/**
+	 * 이전글 보기
+	 * @param map
+	 * @return
+	 */
+	public NoticeBoard getPrevArticle(HashMap<String, String> map);
+
+	/**
+	 * 다음글 보기
+	 * @param map
+	 * @return
+	 */
+	public NoticeBoard getNextArticle(HashMap<String, String> map);
+
 
 
 }

@@ -10,16 +10,16 @@
 
 		<%-- 처음 페이지 버튼 --%>
 		<c:if test="${paging.curPage ne 1 }">
-			<li><a href="/admin/board/list?${search}"><span>&larr;</span></a></li>
+			<li><a href="/admin/board/list?${search}"><span><i class="fas fa-angle-double-left"></i></span></a></li>
 		</c:if>
 
 
 		<%-- 이전 페이지 버튼 --%>
 		<c:if test="${paging.curPage ne 1 }">
-			<li><a href="/admin/board/list?curPage=${paging.curPage-1 }&${search} aria-label="Previous"> <span>&laquo;</span></a></li>
+			<li><a href="/admin/board/list?curPage=${paging.curPage-1 }&${search} aria-label="Previous"> <span><i class="fas fa-angle-left"></i></span></a></li>
 		</c:if>
 		<c:if test="${paging.curPage eq 1 }">
-			<li class="disabled"><span>&laquo;</span></li>
+			<li class="disabled"><span><i class="fas fa-angle-double-left"></i></span></li>
 		</c:if>
 
 
@@ -40,16 +40,16 @@
 
 		<%-- 다음 페이지 버튼 --%>
 		<c:if test="${paging.curPage ne paging.totalPage }">
-			<li><a href="/admin/board/list?curPage=${paging.curPage+1 }&${search} aria-label="Next"> <span>&raquo;</span></a></li>
+			<li><a href="/admin/board/list?curPage=${paging.curPage+1 }&${search} aria-label="Next"> <span><i class="fas fa-angle-right"></i></span></a></li>
 		</c:if>
 		<c:if test="${paging.curPage eq paging.totalPage }">
-			<li class="disabled"><span>&raquo;</span></li>
+			<li class="disabled"><span><i class="fas fa-angle-double-right"></i></span></li>
 		</c:if>
 		
 		
 		<%-- 마지막 페이지 버튼 --%>
 		<c:if test="${paging.curPage ne paging.totalPage }">
-			<li><a href="/admin/board/list?curPage=${paging.totalPage }&${search}"> <span>&rarr;</span></a></li>
+			<li><a href="/admin/board/list?curPage=${paging.totalPage }&${search}"> <span><i class="fas fa-angle-double-right"></i></span></a></li>
 		</c:if>
 		
 	</ul>

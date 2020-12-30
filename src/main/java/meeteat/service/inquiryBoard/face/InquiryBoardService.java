@@ -52,5 +52,21 @@ public interface InquiryBoardService {
 	 */
 	public Map<String, Object> getInquiryParam(int board_no, int article_no, HttpSession session, String post_group, String post_indent, String post_step);
 
+	/**
+	 * 이전글 보기
+	 * @param article_no
+	 * @param board_no
+	 * @return
+	 */
+	public InquiryBoard getPrevArticle(int article_no, int board_no);
+
+	/**
+	 * 다음글 보기
+	 * @param article_no
+	 * @param board_no
+	 * @return
+	 */
+	public InquiryBoard getNextArticle(int article_no, int board_no);
+
 
 }

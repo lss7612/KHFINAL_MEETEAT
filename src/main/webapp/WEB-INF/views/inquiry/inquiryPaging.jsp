@@ -16,7 +16,7 @@
 
 		<%-- 이전 페이지 버튼 --%>
 		<c:if test="${paging.curPage ne 1 }">
-			<li><a href="/inquiry/list?curPage=${paging.curPage-1 }&search=${param.search }&keyword=${keyword}" aria-label="Previous"> <span><i class="fas fa-angle-left"></i></span></a></li>
+			<li><a href="/inquiry/list?curPage=${paging.curPage-1 }&search=${param.search }&keyword=${keyword}" aria-label="Previous"><span><i class="fas fa-angle-left"></i></span></a></li>
 		</c:if>
 		<c:if test="${paging.curPage eq 1 }">
 			<li class="disabled"><span><i class="fas fa-angle-double-left"></i></span></li>
@@ -40,7 +40,7 @@
 
 		<%-- 다음 페이지 버튼 --%>
 		<c:if test="${paging.curPage ne paging.totalPage }">
-			<li><a href="/inquiry/list?curPage=${paging.curPage+1 }&search=${param.search }&keyword=${keyword}" aria-label="Next"> <span><i class="fas fa-angle-right"></i></span></a></li>
+			<li><a href="/inquiry/list?curPage=${paging.curPage+1 }&search=${param.search }&keyword=${keyword}" aria-label="Next"><span><i class="fas fa-angle-right"></i></span></a></li>
 		</c:if>
 		<c:if test="${paging.curPage eq paging.totalPage }">
 			<li class="disabled"><span><i class="fas fa-angle-double-right"></i></span></li>

@@ -31,4 +31,8 @@ public interface InquiryBoardDao {
 
 	public void replyByUpdate(InquiryBoard inquiryBoard);
 
+	public InquiryBoard getPrevArticle(HashMap<String, String> map);
+
+	public InquiryBoard getNextArticle(HashMap<String, String> map);
+
 }

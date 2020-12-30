@@ -22,6 +22,14 @@
 
 </script>
 
+<script type="text/javascript">
+	function stepView(article_no) {
+		var form = document.getElementById("viewForm");
+		form.article_no.value = article_no;
+		form.submit();
+	}
+</script>
+
 <br>
 
 <div class="container">
@@ -29,8 +37,7 @@
 	<div class="clearfix"></div>
 	<br>
 	
-	<!-- 게시글 내용 영역 -->
-	
+<!-- 게시글 내용 영역 -->
 		<div id="title">
 			<h4 style="font-weight:bold;">${result.ARTICLE_TITLE }</h4>
 		</div>
@@ -44,20 +51,41 @@
 			<span>조회수 : ${result.ARTICLE_HIT }</span>
 		</div>
 		
+		<br>
+		
 		<div id="content" class="light_margin bold_padding vertical_bold_margin" style="padding:5px; text-align:left; margin-top: 50px;">
 			<span>${result.ARTICLE_CONTENT }</span>
 		</div>
 		
+		<br><br><br>
+		
+		<form action="/inquiry/view" id="viewForm" method="get">
+		
+		<div id="next-prev">
+			<c:if test="${nextArticle != null }">
+				<p>다음글 : <a href="javascript:stepView('${nextArticle.article_no }')">${nextArticle.article_title }</a></p>
+			</c:if>
+			
+			<c:if test="${prevArticle != null }">
+				<p>이전글 : <a href="javascript:stepView('${prevArticle.article_no }')">${prevArticle.article_title }</a></p>
+			</c:if>
+		</div>		
+		
+			<p>
+				<input type="hidden" name="article_no" />
+				<input type="hidden" name="board_no" value="${result.BOARD_NO }" />
+			</p>
+		</form>
+		
 		<br><br>
 		
-	<!-- 버튼 영역 -->
+<!-- 버튼 영역 -->
 <div class="text-center form-group form-group-sm">
 
 		<a href="/inquiry/list"><button class="btn btn-primary btn-sm pull-left">목록</button></a>
 		
-		<!-- 본인과 관리자만 사용 가능 -->
+<!-- 본인과 관리자만 사용 가능 -->
 		<c:if test="${result.USER_NICK eq sessionScope.user_nick || user_grade eq 0}">
-			
 			
 			<form name="viewform" method="post">
 				<input type="button" class="btn btn-danger btn-sm pull-right" id="deleteBtn" value="삭제" />
@@ -67,6 +95,7 @@
 			
 			<a href="/inquiry/replyWrite?board_no=${result.BOARD_NO }&article_no=${result.ARTICLE_NO }&post_group=${result.POST_GROUP}&post_step=${result.POST_STEP}&post_indent=${result.POST_INDENT}">
 			<button id="replybtn" class="btn btn-primary btn-sm pull-right">답글</button></a>
+		
 		</c:if>
 		
 </div>
@@ -75,4 +104,5 @@
 
 <br><br>
 
+<!-- footer 영역 -->
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
