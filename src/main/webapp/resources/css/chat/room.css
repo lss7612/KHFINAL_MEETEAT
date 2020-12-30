@@ -20,6 +20,10 @@
 	margin-left : 5px;
 }
 
+#userCount{
+	vertical-align : middle;
+}
+
 #chattingContent{
 	width : 100%;
 	height : 520px;
