@@ -194,11 +194,17 @@ body {
   <!-- 네이버 로그인 창으로 이동 -->
 	<div id="naver_id_login" style="text-align:center">
 		<a href="${naverUrl }">
-			<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/>
+			<img width="223px" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/>
 		</a>
 	</div>
+	
 	<br>
 
+	<div id="kakao_id_login" align="center">
+	  <a href="${kakaoUrl }"><img width="223px" alt="카카오 로그인버튼" src="/resources/img/kakao_login_img.png"></a>
+    </div>
+
+	<br>
 
 <!-- 구글로그인버튼 -->
 <!-- 	<div class="g-signin2" data-onsuccess="onSignIn" style="width: 223px;"></div> -->

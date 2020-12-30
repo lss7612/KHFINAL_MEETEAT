@@ -3,6 +3,7 @@ package meeteat.dao.matefind.face;
 import java.util.HashMap;
 import java.util.List;
 
+import meeteat.dto.mateFindBoard.File;
 import meeteat.dto.mateFindBoard.MateFindBoard;
 import meeteat.dto.mateFindBoard.Paging;
 import meeteat.dto.mateFindBoard.Recommend;
@@ -46,5 +47,7 @@ public interface MateFindDao {
 	public int selectCntFilterList(HashMap<String, Object> pagingMap);
 
 	public List<MateFindBoard> filterPagingList(HashMap<String, Object> map);
+
+	public void writeWithFile(File file);
 
 }

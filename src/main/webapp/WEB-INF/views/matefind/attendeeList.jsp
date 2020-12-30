@@ -5,7 +5,7 @@
 
 <div class="row">
 	<div class="col">
-		<h3 style="float: left;">guest [ ${attendeeCount } / ${attendeeMax } ]</h3>
+		<h3 style="float: left;">참가자 [ ${attendeeCount } / ${attendeeMax } ]</h3>
 	</div>
 </div>
 

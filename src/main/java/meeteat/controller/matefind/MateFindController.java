@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.dto.mateFindBoard.MateFindBoard;
 import meeteat.dto.mateFindBoard.Paging;
@@ -112,7 +113,6 @@ public class MateFindController {
 		model.addAttribute("meet_time", meet_time);
 		
 		
-//		return "matefind/mateFindFilterList";
 		return "matefind/filterlistview";
 		
 	}
@@ -301,6 +301,35 @@ public class MateFindController {
 	public void mateFindWrite() {
 		
 	}
+
+//	사진첨부시
+/*
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
+	public String mateFindWriteProcess(MateFindBoard mateFindBoard
+										, @RequestParam("file") MultipartFile fileupload
+										, HttpSession session) {
+		
+		mateFindBoard.setUser_no((int)session.getAttribute("user_no"));
+		
+		logger.info(mateFindBoard.getCategory());
+		logger.info(mateFindBoard.getParty_location());
+		logger.info(mateFindBoard.getMeet_time());
+		
+		String mateTimeStr = mateFindBoard.getMeet_time();
+		mateTimeStr = mateTimeStr.replaceAll("-", "");
+		mateTimeStr = mateTimeStr.replaceAll("T", " ");
+		mateTimeStr = mateTimeStr.replaceAll(":", "");
+		logger.info(mateTimeStr);
+		
+		mateFindBoard.setMeet_time(mateTimeStr);
+		
+		mateFindService.write(mateFindBoard);
+//		mateFindService.writeWithFile(mateFindBoard, fileupload);
+		
+		return "redirect:/matefind/list";
+		
+	}
+*/
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String mateFindWriteProcess(MateFindBoard mateFindBoard, HttpSession session) {
@@ -350,12 +379,6 @@ public class MateFindController {
 			
 		}
 		
-		//mate_list 의 크기와
-		//Recommend count 숫자 비교하기
-		//Recommend한 user_no 을 통해 정보 가져오기
-		
-//		return "redirect:/matefind/view?article_no=" + mateFindBoard.getArticle_no();
-		
 	}
 	
 	@RequestMapping(value = "/attendeeList")
@@ -387,65 +410,6 @@ public class MateFindController {
 		
 		return "matefind/attendeeList";
 	}
-	
-	
-	@RequestMapping(value = "/sortajax")
-	public String sortAjax(@RequestParam("party_location") String party_location
-						, @RequestParam("meet_time") String meet_time
-						, @RequestParam("category") String category
-						, Paging curPage
-						, Model model) {
-		
-		logger.info(party_location);
-		logger.info(meet_time);
-		logger.info(category);
-		// if "" == isEmpty
-		
-		if("아침".equals(meet_time)) {
-			// 6 ~ 12 BETWEEN 06:00 AND 12:00
-			
-		} else if("점심".equals(meet_time)) {
-			// 12 ~ 18 BETWEEN 12:00 AND 18:00
-			
-		} else if("저녁".equals(meet_time)) {
-			// 18 ~ 24 BETWEEN 18:00 AND 00:00
-			
-		} else if("새벽".equals(meet_time)) {
-			// 24 ~ 6 BETWEEN 00:00 AND 06:00
-
-		}
-		
-		
-//Paging 위한
-		Paging paging = mateFindService.getPaging(curPage);
-		model.addAttribute("paging", paging);
-
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("party_location", party_location);
-		map.put("meet_time", meet_time);
-		map.put("category", category);
-		map.put("startNo", paging.getStartNo());
-		map.put("endNo", paging.getEndNo());
-		
-//		List<MateFindBoard> filterList = mateFindService.filterListPaging(map);
-		
-		MateFindBoard mateFindBoard = new MateFindBoard();
-		
-		mateFindBoard.setParty_location(party_location);
-		mateFindBoard.setCategory(category);
-//meet_time 미설정으로 해놨음!!
-		mateFindBoard.setMeet_time("");
-		
-		
-		List<MateFindBoard> filterList = mateFindService.filterList(mateFindBoard);
-		
-		model.addAttribute("mateFindList", filterList);
-		
-		return "matefind/matefindList";
-		
-		
-	}
-	
 	
 	@RequestMapping(value = "test")
 	public void justTest() {
