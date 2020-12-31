@@ -84,9 +84,10 @@ public interface ChatService {
 	/**
 	 * 전달받은 채팅방 번호로 과거 대화 이력을 갖고온다.
 	 * @param chatting_no : 채팅방번호
+	 * @param enterMsgNum : 입장 메시지 번호
 	 * @return : 과거 대화 이력
 	 */
-	public List<HashMap<String, Object>> getOldChatList(int chatting_no);
+	public List<HashMap<String, Object>> getOldChatList(int chatting_no, int enterMsgNum);
 
 	/**
 	 * 채팅방 참여 여부 확인
@@ -109,5 +110,21 @@ public interface ChatService {
 	 * @param chatting_id : 채팅방 고유  id
 	 */
 	public void createMateChatRoom(String chatting_name, String chatting_id);
+
+	/**
+	 * 입장 시점 구하기
+	 * @param user_no : 회원번호
+	 * @param chatting_no : 채팅방 번호
+	 * @return : 입장 메시지 번호
+	 */
+	public HashMap getEnterMsgNo(int user_no, int chatting_no);
+
+	/**
+	 * 기존에 퇴장 이력 구하기
+	 * @param user_no : 회원 번호
+	 * @param chatting_no : 채팅방 번호
+	 * @return : 퇴장 메시지 번호
+	 */
+	public HashMap getLeaveMsgNo(int user_no, int chatting_no);
 
 }

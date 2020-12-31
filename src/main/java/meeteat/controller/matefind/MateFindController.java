@@ -369,6 +369,7 @@ public class MateFindController {
 		int chatting_no = Integer.parseInt(""+roomInfo.get("CHATTING_NO"));
 		chatService.insertUserToChatNum(chatting_no, user_no);
 		
+		
 		//tb_board2에 채팅방 삽입
 		mateFindBoard.setChatting_no(chatting_no);
 		//------------메이트 찾기용 채팅방 개설 끝----------

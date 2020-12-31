@@ -42,6 +42,8 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public void insertUserToChatNum(int chatting_no, int user0) {
 		chatDao.insertUserToChatNum(chatting_no, user0);
+		String noticeMsg = user0+"번 회원 입장";
+		chatDao.insertNoticeMsgForEnter(user0, chatting_no, noticeMsg);
 	}
 	
 	@Override
@@ -75,8 +77,8 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public List<HashMap<String, Object>> getOldChatList(int chatting_no) {
-		return chatDao.getOldChatByRoomNo(chatting_no);
+	public List<HashMap<String, Object>> getOldChatList(int chatting_no, int enterMsgNum) {
+		return chatDao.getOldChatByRoomNo(chatting_no, enterMsgNum);
 	}
 	
 	@Override
@@ -86,6 +88,8 @@ public class ChatServiceImpl implements ChatService{
 		}
 		chatDao.joinChatRoomByUserNo(user_no, chatting_no);
 		if( chatDao.findUserAtRoomByUserNo(user_no, chatting_no) > 0) {
+			String noticeMsg = user_no+"번 회원 입장";
+			chatDao.insertNoticeMsgForEnter(user_no, chatting_no, noticeMsg);
 			return true;
 		}
 		return false;
@@ -100,6 +104,8 @@ public class ChatServiceImpl implements ChatService{
 		chatDao.exitChatRoomByUserNo(user_no, chatting_no);
 		if( chatDao.findUserAtRoomByUserNo(user_no, chatting_no) == 0) {
 			logger.info("> > > 회원이 채팅방에서 나갔습니다. < < < ");
+			String noticeMsg = user_no+"번 회원 퇴장";
+			chatDao.insertNoticeMsgForLeave(user_no, chatting_no, noticeMsg);
 			return true;
 		}
 		return false;
@@ -108,6 +114,16 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public void createMateChatRoom(String chatting_name, String chatting_id) {
 		chatDao.createMateChatRoom(chatting_name, chatting_id);
+	}
+	
+	@Override
+	public HashMap getEnterMsgNo(int user_no, int chatting_no) {
+		return chatDao.getEnterMsg(user_no, chatting_no);
+	}
+	
+	@Override
+	public HashMap getLeaveMsgNo(int user_no, int chatting_no) {
+		return chatDao.getLeaveMsg(user_no, chatting_no);
 	}
 	
 }

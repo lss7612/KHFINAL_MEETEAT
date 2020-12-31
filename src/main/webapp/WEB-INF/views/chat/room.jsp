@@ -209,9 +209,11 @@ function msgTypeAjax(msgType, writer_no, chatting_no){
 			<c:when test="${roomInfo.CHATTING_NAME eq null }">
 				<c:choose>
 					<c:when test="${chatUserList.size() eq 2 }">
-						<c:if test="${userList.USER_NO ne user_no}">
-							<span id="roomTitleContent">${userList.USER_NICK }님과 대화</span>
-						</c:if>
+						<c:forEach items="${chatUserList }" var="list">
+							<c:if test="${list.USER_NO ne user_no}">
+								<span id="roomTitleContent">${list.USER_NICK }님과 대화</span>
+							</c:if>
+						</c:forEach>
 					</c:when>
 					<c:when test="${chatUserList.size() gt 2 }">
 						<span id="roomTitleContent" >이름없는 대화방
@@ -271,7 +273,7 @@ function msgTypeAjax(msgType, writer_no, chatting_no){
 			<span id="chatUserListHead">유저목록</span>
 		</div>
 		<div id="userListArea">
-			<c:import url="/WEB-INF/views/chat/room_user_list.jsp"></c:import>
+			<c:import url="/WEB-INF/views/chat/room_user_list.jsp"/>
 		</div>
 		<br>
 		<button id="exitBtn" onclick="exitRoom()">나가기 </button>
