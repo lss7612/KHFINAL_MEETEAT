@@ -32,52 +32,9 @@ $(document).ready(function(){
   	//스크롤바 하단고정
     $('#chatting').scrollTop($('#chatting')[0].scrollHeight);
 
-	//mouseleave
-	$(".chatListUserMenu").mouseleave(function(){
-		if($(".userHiddenMenu").is(":visible")){
-			console.log("hidden menu close")
-			$(".chatListUserMenu >td").css({"padding" : "3px 3px 3px 3px"});
-			$(".userHiddenMenu").slideUp();
-		}
-	})
-	
-    //채팅목록에서 닉네임 클릭시 나타나는 유저메뉴
-    $(".chatListUserMenu >td>span").click(function(){
-    	console.log("---유저닉네임 클릭 감지---")
-    	var submenu = $(this).next().next("ul");
-    	var tbrow = $(this).parent();
-    	
-    	if(submenu.is(":visible")){
-			submenu.slideUp();
-			$(tbrow).css({"padding" : "3px 3px 3px 3px"});
-		} else{
-			//already open user hidden menu close
-			$(".chatListUserMenu >td").css({"padding" : "3px 3px 3px 3px"});
-			$(".chatListUserMenu >td>span").next().next("ul").slideUp();
-			console.log("already open hidden menu closed")
-			
-			submenu.slideDown();
-			$(submenu).css({"display" : "inline-block", "left" : "40px"});
-			$(tbrow).css({"padding" : "5px 3px 5px 3px"});
-			console.log("hidden menu open");
-		}
-    	
-    })
     
 })
 
-//회원 목록에서 채팅하기 클릭시 동작할 함수
-function createChat(e){
-	var user_no = $(e).attr("user_no")
-	var loginUserNo = $(e).attr("loginUserNo")
-	if(loginUserNo == user_no){
-		alert("자기 자신과는 대화할 수 없습니다!")
-		return false;
-	} else {
-		window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
-				, "width = 710px, height = 665px");
-	}
-}
 
 
 //input 박스에서 enter키 입력하면 동작하는 함수
@@ -110,7 +67,8 @@ function send(){
 function disconnect(){
 	var sendMsg = {chatRoomNo:${roomInfo.CHATTING_NO}, type:'LEAVE', writer:${user_no} }
     webSocket.send(JSON.stringify(sendMsg));
-    webSocket.close();
+//     webSocket.close();
+//     location.href="/chat/list"
 }
 
 //소켓 연결시 동작하는 함수
@@ -140,7 +98,13 @@ function onMessage(e){
     msgTypeAjax(msgType, writer_no, chatting_no);
    	lmd = dateSet(lmd, msgDate)
 
-    
+   	//전달된 메시지가 내가 나가는 경우 목록으로 이동
+    if(msgType == 'LEAVE' && writer_no == ${user_no}){
+    	console.log("채팅방을 나갑니다.")
+   	    webSocket.close();
+    	location.href="/chat/list";
+    }
+   	
 //    	console.log("lmd : "+lmd);
     chatroom = document.getElementById("chatting");
     chatroom.innerHTML = chatroom.innerHTML + jsonStr.msg;
@@ -161,7 +125,7 @@ function exitRoom(){
 	console.log(res);
 	if( res ){
 		disconnect();
-		location.href="/chat/list"
+// 	    location.href="/chat/list"
 	}
 }
 

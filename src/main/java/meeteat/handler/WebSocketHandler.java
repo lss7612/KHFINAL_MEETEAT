@@ -114,7 +114,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 					logger.info("> > > sessionid : "+session.getId()+" < < <");
 					
 					if(chatMessage.getType().equals("CHAT")) {
-						logger.info("> > > 내가 보낸 메시지 < < <");
+						logger.info("> > > 내가 보낸 메시지(CHAT) < < <");
 						String chatMsg = myMsg(chatMessage, msgTime);
 						cMsg.setChatRoomNo(chatting_no);
 						cMsg.setMsg(chatMsg);
@@ -127,7 +127,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						//*****메시지 세션에 뿌리는 방법 끝
 						
 					} else if(chatMessage.getType().equals("ENTER") && is_state == true) {
-						logger.info("> > > 내가 보낸 메시지 < < <");
+						logger.info("> > > 내가 보낸 메시지(ENTER) < < <");
 						logger.info("> > > 상태 : "+is_state+" < < <");
 						String enterMsg = enterMsgToMe(user_nick);
 						cMsg.setChatRoomNo(chatting_no);
@@ -137,6 +137,19 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						cMsg.setMsgDate(msgDate);
 						TextMessage tMsg = new TextMessage(mapper.writeValueAsBytes(cMsg));
 						sess.sendMessage(tMsg);
+					} else if(chatMessage.getType().equals("LEAVE") && is_state == true){
+						logger.info("> > > 내가 보낸 메시지(LEAVE) < < <");
+						logger.info("> > > 상태 : "+is_state+" < < <");
+						String leaveMsg = leaveMsgToMe();
+						cMsg.setChatRoomNo(chatting_no);
+						cMsg.setMsg(leaveMsg);
+						cMsg.setType("LEAVE");
+						cMsg.setWriter(writer);
+						cMsg.setMsgDate(msgDate);
+						TextMessage tMsg = new TextMessage(mapper.writeValueAsBytes(cMsg));
+						logger.info("> > > 전달 내용 : "+tMsg+" < < <");
+						sess.sendMessage(tMsg);
+						
 					}
 					
 				} else {
@@ -216,6 +229,10 @@ public class WebSocketHandler extends TextWebSocketHandler{
 	
 	public String enterMsgToRoom(String user_nick) {
 		return "<div class='noticeArea'><span>"+user_nick+"님이 채팅방에 입장하셨습니다.</span></div>";
+	}
+	
+	public String leaveMsgToMe() {
+		return "<div class='noticeArea'><span>채팅방에서 퇴장하셨습니다.</span></div>";
 	}
 	
 	public String leaveMsgToRoom(String user_nick) {
