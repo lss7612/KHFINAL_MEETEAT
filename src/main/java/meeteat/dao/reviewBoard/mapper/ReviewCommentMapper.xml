@@ -8,19 +8,19 @@
 <mapper namespace="meeteat.dao.reviewBoard.face.ReviewCommentDao">
 
 	<select id="selectComment" parameterType="meeteat.dto.reviewBoard.ReviewBoard" resultType="meeteat.dto.reviewBoard.ReviewComment">
-		SELECT * FROM (
-			SELECT rownum rnum, C.* FROM (
-				SELECT
+		select * from (
+			select rownum rnum, c.* from (
+				select
 					comment_no, b.article_no, board_no, comment_content, 
 					b.user_no, comment_order, create_date, is_delete
                  ,(select user_nick from tb_user2 u where u.user_no = b.user_no) user_nick
-				FROM tb_comment2 b
-				WHERE article_no = #{article_no}
+				from tb_comment2 b
+				where article_no = #{article_no}
 				and is_delete = 0
 				and board_no = 4
-				ORDER BY create_date
-			) C
-		) ORDER BY rnum
+				order by create_date
+			) c
+		) order by rnum
 	</select>
 	
 	<insert id="insertComment" parameterType="meeteat.dto.reviewBoard.ReviewComment">
@@ -40,7 +40,7 @@
 	
 	<select id="countComment" parameterType="meeteat.dto.reviewBoard.ReviewComment" resultType="int">
 		select count(*) from tb_comment2
-		where comment_no = #{comment_no}
+		where article_no = #{article_no}
 	</select>
 
 </mapper>
