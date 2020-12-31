@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -55,6 +55,40 @@ body {
 	border-radius:100px; 
 }
 
+#chattingDiv {
+	margin: 40px 0px;
+}
+
+/* 회원 아이디 클릭시 나타나는 목록 CSS */
+.userMenu{
+	display : inline-block;
+	width : 10%;
+	position : relative;
+}
+
+.userNickMenu{
+	cursor : pointer;
+}
+
+.userHiddenMenu{ 
+	list-style:none;
+   	display:none;
+	position : absolute; 
+	z-index : 1;
+} 
+
+.userHiddenMenu > li{
+	background-color : #F5DA81;
+	position : relative;
+	cursor : pointer;
+	border : solid 0px;
+	padding: 5px 10px 5px 10px;
+}
+
+.userHiddenMenu > li:hover{
+	background-color : #eee;
+}
+/* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
 
 </style>
 
@@ -80,7 +114,49 @@ $(document).ready(function() {
 		
 	})
 	
-})
+	
+	//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
+	
+	//userMenu mouseleave event
+	$(".userMenu").mouseleave(function(){
+		if($(".userHiddenMenu").is(":visible")){
+			console.log("hidden menu close")
+			$(".userHiddenMenu").slideUp();
+		}
+	})
+	
+	$(".userMenu>span").click(function(){
+		
+		var submenu = $(this).next("ul");
+		if(submenu.is(":visible")){
+			submenu.slideUp();
+		} else{
+			$(".userMenu > ul").slideUp();
+			submenu.slideDown();
+			//슬라이드 메뉴 조정할려면 left의 style값을 변경하면 됩니다.
+			$(submenu).css({"display" : "inline-block", "left" : "40px"});
+		}
+	})
+	
+	//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
+	
+});
+
+//채팅하기 클릭시 동작하는 스크립트
+function createChat(e){
+	var user_no = $(e).attr("user_no")
+	var loginUserNo = ${user_no}
+// 	var loginUserNo = $(e).attr("loginUserNo")
+	if(loginUserNo == user_no){
+		alert("자기 자신과는 대화할 수 없습니다!")
+		return false;
+	} else {
+		window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
+				, "width = 710px, height = 665px");
+	}
+}
+
+//채팅하기 클릭시 동작하는 스크립트 끝
 
 function joinChat(e){
 	var target = $(e).prev().val();
@@ -129,32 +205,8 @@ function joinChat(e){
 		<p>날짜　　<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일 HH시 mm분"/></p>
 		<p>장소　　${view.party_location }</p>
 		<p>유형　　${view.category }</p>
-		<!-- 모임 채팅방 참여 버튼 구역 -->
-		<form name="chatSubmitForm" method="post">
-			<input type="hidden" name="chatting_id" value="${chatting_id }" />
-			<button id="enterChatBtn" onclick="joinChat(this);">모임 채팅방</button>
-		</form>
-		<!-- 모임 채팅방 참여 버튼 구역 -->
-	
-	
-	</div>
-	
-	
-<!-- 	<div class="row"> -->
-<!-- 		<div align="left" class="col"> -->
 		
-<!-- 			<ul class="mateInfo"> -->
-<!-- 				<li>#${view.party_location }</li> -->
-<%-- 				<fmt:parseDate value="${jstlMeetTime }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/> --%>
-<%-- 				<li>#<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일"/></li> --%>
-<%-- 				<li>#<fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/></li> --%>
-<!-- 				<li>#${view.category }</li> -->
-<!-- 			</ul> -->
-			
-<!-- 		</div> -->
-<!-- 	</div> -->
-	
-	
+	</div>
 	
 	<hr>
 	<div class="row">
@@ -162,23 +214,39 @@ function joinChat(e){
 			<h3 style="float: left;">호스트</h3>
 		</div>
 	</div>
-	
-	
+
+<%-- 
+<div class="userMenu">
+	<span class="userNickMenu">작성자닉네임2</span>
+	<br>
+	<ul class="userHiddenMenu" >
+		<li onclick="createChat(this);" loginUserNo="${user_no }"  user_no="${user.USER_NO }">채팅하기</li>
+	</ul>
+</div>	
+--%>
+
 	<!-- host -->
-	<div class="row">
-	
-		<!-- user_no는 나중에 사진으로 대체 되어야함 -->
-		<div class="col-2">
-<%-- 			<img class="pof_pic" style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	 --%>
-			<img class="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${hostInfo.user_profilestored }" alt="유저프로필사진">	
-		</div>
-		
-		<div class="col-2">
-			<h3>${hostInfo.user_id }</h3>
-		</div>
-		<div class="col-2">
-			<h3>${hostInfo.user_nick }</h3>
-		</div>
+	<div class="row userMenu">
+		<span class="userNickMenu">
+			<!-- user_no는 나중에 사진으로 대체 되어야함 -->
+	<%-- 			<img class="pof_pic" style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	 --%>
+				<img class="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${hostInfo.user_profilestored }" alt="프로필">	
+<%-- 				<h4>${hostInfo.user_id }</h4> --%>
+				<h4>${hostInfo.user_nick }</h4>
+			<c:set value="${hostInfo.user_age }" var="ageRange"/>
+<%-- 				<h4>${fn:substring(ageRange,0,1) }0대</h4> --%>
+				
+			<c:set value="${hostInfo.user_gender }" var="gender"/>
+			<c:if test="${gender eq 'M' }">
+				<h4>${fn:substring(ageRange,0,1) }0대 🙍‍♂️</h4>
+			</c:if>
+			<c:if test="${gender eq 'F' }">
+				<h4>${fn:substring(ageRange,0,1) }0대 🙍‍♀️</h4>
+			</c:if>
+		</span>
+		<ul class="userHiddenMenu" >
+			<li onclick="createChat(this);" loginUserNo="${user_no }"  user_no="${view.user_no }">채팅하기</li>
+		</ul>
 	</div>
 	<!-- //host -->
 	
@@ -188,7 +256,19 @@ function joinChat(e){
 	
 	<!-- guest -->
 	<div id="attendeeAjax"></div>
-
+	
+	<hr>
+	
+	<div id="chattingDiv">
+		<!-- 모임 채팅방 참여 버튼 구역 -->
+		<form name="chatSubmitForm" method="post">
+			<h4>이 모임의 호스트와 이 모임에 관심있는 사람들과 대화를 나눠보세요!</h4> 
+			<input type="hidden" name="chatting_id" value="${chatting_id }" />
+			<button class="btn btn-info" id="enterChatBtn" onclick="joinChat(this);">모임 채팅방</button>
+		</form>
+		<!-- 모임 채팅방 참여 버튼 구역 -->
+	
+	</div>
 	
 	<hr>
 	

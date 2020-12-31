@@ -359,6 +359,8 @@
 		    r.user_no
 		    , u.user_id
 		    , u.user_nick
+		    , u.user_age
+		    , u.user_gender
 		    , u.user_profilestored
 		FROM tb_board2 mf
 		left JOIN tb_recommend2 r
