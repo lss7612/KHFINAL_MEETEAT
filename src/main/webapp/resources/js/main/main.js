@@ -3,46 +3,29 @@ $(document).ready(function(){
 	let viewHeight = window.innerHeight;
 	console.log(viewHeight)
 	
-	$('#goToSignUp').mouseenter(function(){
+	$('.mainBtn').mouseenter(function(){
 		let originObject = $(this)
 		
 		$(this).animate({
-			width:'100%'
-		})
+			width:'500px'
+		},100)
 				
 	})
 	
-	$('#goToSignUp').mouseleave(function(){
+	$('.mainBtn').mouseleave(function(){
 		$(this).animate({
 			width:'400px'
-		})
+		},100)
 	})
 	
 	$('#goToSignUp').click(function(){
-		
-		$('html').animate({scrollTop:'0'})
-		
-		$('#mainTextBox').css('background', '#f5da81')
-		
-		$('#mainTextBox').animate({
-			fontSize:'0'
-			,height:'1000px'
-			
-		})
-		
-		$(this).animate({
-			fontSize:'40px'
-			,height: '500px'
-		})
-		$(this).html('환영합니다!<br>가입하고 먹으러가요<br>'
-				+ '<img style="width:300px;" src="/resources/img/logo.png">'
-		)
-		
-		
-		setTimeout(() => {
-			location.href="/login/signup"
-		}, 1500);
-		
+		let originObject = $(this)
+		mainAnimate(originObject, '가입하고 먹으러가요','/login/signup')
+	})
+	
+	$('#goToSignIn').click(function(){
+		let originObject = $(this)
+		mainAnimate(originObject, '로그인하고 먹으러가요','/login/login')
 	})
 	
 	$('.border_circle').click(function(){
@@ -54,6 +37,45 @@ $(document).ready(function(){
 	
 	
 })
+
+function mainAnimate(originObject, msg, url){
+		
+		originObject.animate({
+			width:'100%'
+		})
+	
+		$('html').animate({scrollTop:'0'})
+		
+		setTimeout(() => {
+			
+			$('#mainTextBox').css('background', '#f5da81')
+			
+			$('#mainTextBox').animate({
+				fontSize:'0'
+				,height:'1000px'
+			},500)
+			
+			originObject.siblings().animate({
+				opacity:'0'
+			},500)
+			
+			originObject.animate({
+				fontSize:'40px'
+				,height: '500px'
+			})
+			originObject.html('환영합니다!<br>'+msg+'<br>'
+					+ '<img style="width:300px;" src="/resources/img/logo.png">'
+			)
+			
+			
+			setTimeout(() => {
+				location.href=url
+			}, 1500);
+			
+		}, 500);
+		
+		
+	}
 
 function mergePhoto(){
 	$('.border_circle').css('height','0')
