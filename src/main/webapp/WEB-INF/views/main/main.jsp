@@ -28,6 +28,7 @@
 		</div>
 		
 		<div id="goToSignUp" class="mainBtn longBtn" >같이드실래요?</div>
+		<div id="goToSignIn" class="mainBtn longBtn" >이미 회원이신가요?</div>
 		
 		
 	</div>
