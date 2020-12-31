@@ -34,7 +34,7 @@ public class KakaoRestApi {
 	        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 	        
 	        int responseCode = conn.getResponseCode();
-	        System.out.println("responseCode : " + responseCode);
+	        logger.info("responseCode : " + responseCode);
 	        
 	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	        
@@ -44,7 +44,7 @@ public class KakaoRestApi {
 	        while ((line = br.readLine()) != null) {
 	            result += line;
 	        }
-	        System.out.println(result);
+	        logger.info(result);
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
@@ -63,7 +63,7 @@ public class KakaoRestApi {
 			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 			
 	        int responseCode = conn.getResponseCode();
-	        System.out.println("responseCode : " + responseCode);
+	        logger.info("responseCode : " + responseCode);
 	        
 	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	        
@@ -72,7 +72,7 @@ public class KakaoRestApi {
 	        while ((line = br.readLine()) != null) {
 	            result += line;
 	        }
-	        System.out.println(result);
+	        logger.info(result);
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
 	        e.printStackTrace();
@@ -175,8 +175,7 @@ public class KakaoRestApi {
             String kakaoId = element.getAsJsonObject().get("id").toString();
             
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-//            String profileImage = properties.getAsJsonObject().get("profile_image").getAsString();
-//            String image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
+            String image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
             
             try {
             	String email = kakao_account.getAsJsonObject().get("email").getAsString();
@@ -196,8 +195,7 @@ public class KakaoRestApi {
             userInfo.put("id", kakaoId);
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
-//            userInfo.put("profileimage", profileImage);
-//            userInfo.put("image", image);
+            userInfo.put("image", image);
             userInfo.put("age", age);
             userInfo.put("gender", gender);
             userInfo.put("kakaoFail", false);
