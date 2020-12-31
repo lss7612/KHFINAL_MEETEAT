@@ -253,7 +253,7 @@ function createChat(e){
 	<div class="row">
 		<div class="col">
 		
-			<a href="/matefind/write"><button class="btn btn-primary" style="float: right; margin-bottom: 50px;">글쓰기</button></a>
+			<a href="/matefind/write"><button class="btn btn-primary" style="float: right;">글쓰기</button></a>
 		
 		</div>
 	</div>	
