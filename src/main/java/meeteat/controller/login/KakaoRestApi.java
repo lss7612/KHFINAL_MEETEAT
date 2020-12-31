@@ -24,6 +24,63 @@ public class KakaoRestApi {
 	
 	private static final Logger logger = LoggerFactory.getLogger(KakaoRestApi.class);
 	
+	
+	public void kakaoLogout(String accessToken) {
+	    String reqURL = "https://kapi.kakao.com/v1/user/logout";
+	    try {
+	        URL url = new URL(reqURL);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+	        
+	        int responseCode = conn.getResponseCode();
+	        System.out.println("responseCode : " + responseCode);
+	        
+	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        
+	        String result = "";
+	        String line = "";
+	        
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+	        System.out.println(result);
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+	}
+
+	
+	
+	public String breakAccessToken (String accessToken) {
+		String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+		String result = "";
+        try {
+        	URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+			
+	        int responseCode = conn.getResponseCode();
+	        System.out.println("responseCode : " + responseCode);
+	        
+	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        
+	        String line = "";
+			
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+	        System.out.println(result);
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+        return result;
+		
+	}
+	
     public String getAccessToken (String authorize_code) {
         String access_Token = "";
         String refresh_Token = "";
@@ -120,9 +177,21 @@ public class KakaoRestApi {
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             String profileImage = properties.getAsJsonObject().get("profile_image").getAsString();
             String image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
-            String email = kakao_account.getAsJsonObject().get("email").getAsString();
-            String age = kakao_account.getAsJsonObject().get("age_range").getAsString();
-            String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
+            
+            try {
+            	String email = kakao_account.getAsJsonObject().get("email").getAsString();
+            	String age = kakao_account.getAsJsonObject().get("age_range").getAsString();
+            	String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
+				
+			} catch (NullPointerException e) {
+				userInfo.put("kakaoFail", true);
+				return userInfo;
+			}
+            
+        	String email = kakao_account.getAsJsonObject().get("email").getAsString();
+        	String age = kakao_account.getAsJsonObject().get("age_range").getAsString();
+        	String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
+            
             
             userInfo.put("id", kakaoId);
             userInfo.put("nickname", nickname);
@@ -131,6 +200,7 @@ public class KakaoRestApi {
             userInfo.put("image", image);
             userInfo.put("age", age);
             userInfo.put("gender", gender);
+            userInfo.put("kakaoFail", false);
             
             
         } catch (IOException e) {
