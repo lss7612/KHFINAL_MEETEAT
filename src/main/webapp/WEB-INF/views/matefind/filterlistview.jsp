@@ -54,19 +54,24 @@ body {
 
 
 /* 회원 아이디 클릭시 나타나는 목록 CSS */
-#userMenuList{
-   list-style:none;
-   padding : 0 0 0 0;
+.userMenu{
+	display : inline-block;
+	width : 100%;
+	position : relative;
 }
 
-#userHiddenMenu{ 
+.userNickMenu{
+	cursor : pointer;
+}
+
+.userHiddenMenu{ 
 	list-style:none;
    	display:none;
-	padding : 0 0 0 40px; 
 	position : absolute; 
+	z-index : 1;
 } 
 
-#userHiddenMenu > li{
+.userHiddenMenu > li{
 	background-color : #F5DA81;
 	position : relative;
 	cursor : pointer;
@@ -74,7 +79,7 @@ body {
 	padding: 5px 10px 5px 10px;
 }
 
-#userHiddenMenu > li:hover{
+.userHiddenMenu > li:hover{
 	background-color : #eee;
 }
 /* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
@@ -133,33 +138,45 @@ $(document).ready(function(){
 
 	
 	//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
-	$("#userMenu>span").click(function(){
+	
+	//userMenu mouseleave event
+	$(".userMenu").mouseleave(function(){
+		if($(".userHiddenMenu").is(":visible")){
+			console.log("hidden menu close")
+			$(".userHiddenMenu").slideUp();
+		}
+	})
+	
+	$(".userMenu>span").click(function(){
 		
-		//2. 슬라이드 형식으로 나타나기
 		var submenu = $(this).next("ul");
 		if(submenu.is(":visible")){
 			submenu.slideUp();
 		} else{
+			$(".userMenu > ul").slideUp();
 			submenu.slideDown();
+			//슬라이드 메뉴 조정할려면 left의 style값을 변경하면 됩니다.
+			$(submenu).css({"display" : "inline-block", "left" : "40px"});
 		}
-	});
+	})
+	
 	//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
 
 })
 
 //채팅하기 클릭시 동작하는 스크립트
-
-// function createChat(){
-// 	window.open("http://localhost:8088/chat/create?user_no=${user_no}"
-// 			, "width = 710px, height = 665px");
-// }
-
 function createChat(e){
 	var user_no = $(e).attr("user_no")
-	console.log("usre_no : "+user_no)
-	window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
-			, "width = 710px, height = 665px");
+	var loginUserNo = $(e).attr("loginUserNo")
+	if(loginUserNo == user_no){
+		alert("자기 자신과는 대화할 수 없습니다!")
+		return false;
+	} else {
+		window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
+				, "width = 710px, height = 665px");
+	}
 }
+
 //채팅하기 클릭시 동작하는 스크립트 끝
 </script>
 

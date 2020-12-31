@@ -105,7 +105,7 @@ body {
   <div class="form-group">
     <label for="user_id">아이디</label>
     <input type="text" class="form-control" id="user_id" name="user_id" maxlength="15">
-    <p style="margin: 0;"> 영어소문자로 시작해야하며 영어소문자+숫자 15자 이내 </p>
+    <p style="margin: 0;"> 영어소문자로 시작해야하며 영어소문자+숫자 4자이상 15자 이내 </p>
 	  <div id="idCheckResult"></div>
   </div>
   
