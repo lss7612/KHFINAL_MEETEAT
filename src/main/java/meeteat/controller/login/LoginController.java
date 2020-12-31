@@ -66,7 +66,7 @@ public class LoginController {
 		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize"
 				+ "?response_type=code"
 				//추가 동의 요청
-//				+ "&scope=email,age_range,gender"
+//				+ "&scope=age_range,account_email,gender,profile"
 				+ "&client_id=895375f3d436ba0bf699c34807dffc98"
 				+ "&redirect_uri=http://localhost:8088/login/kakaocallback";
 
@@ -142,10 +142,10 @@ public class LoginController {
 		
 		if(hasToken){
 			// 연결끊기
-//			kakaoRestApi.breakAccessToken(accessToken);
+			kakaoRestApi.breakAccessToken(accessToken);
 			
 			// 로그아웃
-			kakaoRestApi.kakaoLogout(accessToken);
+//			kakaoRestApi.kakaoLogout(accessToken);
 		}
 		
 		
@@ -286,11 +286,6 @@ public class LoginController {
 		
 		logger.info("kakaoUserInfo : " + kakaoUserInfo);
 		
-		if(kakaoUserInfo.get("email") == null
-				|| kakaoUserInfo.get("age") == null) {
-			logger.info("kakaoEmail : " + kakaoUserInfo.get("email"));
-		}
-		
 		//카카오정보 들어간다
 		
 		//데이터베이스에 맞게 정보수정
@@ -304,6 +299,8 @@ public class LoginController {
 		}
 		
 		String convertAge = kakaoUserInfo.get("age").toString().replace("~", "-");
+		
+		
 		
 		
 		//카카오 정보 데이터베이스에 저장하기
@@ -320,8 +317,14 @@ public class LoginController {
 		user.setUser_gender(convertGender);
 		user.setUser_email(kakaoUserInfo.get("email").toString());
 		user.setUser_nick(kakaoUserInfo.get("nickname").toString());
-		user.setUser_profileorigin(kakaoUserInfo.get("image").toString());
-		user.setUser_profilestored(kakaoUserInfo.get("image").toString());
+		
+		try {
+			user.setUser_profileorigin(kakaoUserInfo.get("image").toString());
+			user.setUser_profilestored(kakaoUserInfo.get("image").toString());
+		} catch (NullPointerException e) {
+			user.setUser_profileorigin("기본이미지");
+			user.setUser_profilestored("기본이미지");
+		}
 		
 		
 		//로그인 시키기
@@ -337,16 +340,18 @@ public class LoginController {
 		session.setAttribute("isLogin", true);
 		session.setAttribute("snsLogin", true);
 		session.setAttribute("kakaoLogin", true);
+
 		session.setAttribute("user_no", user.getUser_no());
 		session.setAttribute("user_grade", user.getUser_grade());
+		session.setAttribute("user_id", user.getUser_id());
+		session.setAttribute("user_nick", user.getUser_nick());
+		session.setAttribute("user_gender", user.getUser_gender());
+		session.setAttribute("user_age", user.getUser_age());
+		session.setAttribute("user_email", user.getUser_email());
+		session.setAttribute("user_image", user.getUser_profilestored());
 		
-		session.setAttribute("user_id", kakaoUserInfo.get("id"));
-		session.setAttribute("user_nick", kakaoUserInfo.get("nickname"));
-		session.setAttribute("user_gender", convertGender);
-		session.setAttribute("user_age", convertAge);
-		session.setAttribute("user_email", kakaoUserInfo.get("email"));
-		session.setAttribute("user_image", kakaoUserInfo.get("image"));
 		session.setAttribute("accessToken", accessToken);
+		
 		
 		
 		return "redirect:/login/main";
