@@ -15,7 +15,7 @@ public class MainController {
 		if(session.getAttribute("isLogin")==null || session.getAttribute("isLogin")=="")
 			return "/main/main";
 		
-		return "/main/member";
+		return "/forTest/makeSession";
 		
 	}
 	
