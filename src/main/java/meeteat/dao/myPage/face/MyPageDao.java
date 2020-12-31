@@ -95,6 +95,16 @@ public interface MyPageDao {
 	 */
 	public void deleteMyCmmt(HashMap<String, Object> map);
 
+	/**
+	 * 결제 정보 조회 
+	 * @param user_no
+	 * @return
+	 */
+	public Map<String, Object> selectMyPayList(int user_no);
+
+
+	
+
 
 
 }

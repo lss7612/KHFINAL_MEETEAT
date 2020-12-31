@@ -22,10 +22,9 @@
 	</sql>
 	
 	<sql id="searchTitle">
-			AND is_delete = 0
- 		<if test='keyword != null and keyword.equals("")'>
-			AND (article_title LIKE '%'||#{keyword, jdbcType=VARCHAR}||'%' 
-			OR article_content LIKE '%'||#{keyword, jdbcType=VARCHAR}||'%') 
+ 		<if test='noticeKeyword != null and !noticeKeyword.equals("")'>
+			AND (article_title LIKE '%'||#{noticeKeyword}||'%' 
+			OR article_content LIKE '%'||#{noticeKeyword}||'%') 
 		</if>
 	</sql>
 	
@@ -35,6 +34,7 @@
 			<include refid="selectNotice"/>
 			WHERE board_no = 1
 				AND is_delete = 0
+				<include refid="searchTitle"></include>
 		)
 	</select>
 	
@@ -44,9 +44,11 @@
 		    FROM (
 			   <include refid="selectNotice"/>
 	        	WHERE board_no = #{board_no}
-					<include refid="searchTitle"/>
+	        		AND is_delete = 0
 		      	ORDER BY article_no DESC 
 		    ) N
+		    WHERE 1=1
+				<include refid="searchTitle"/>
 		    ORDER BY rnum
 		)R
 		<where> 

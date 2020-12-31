@@ -8,29 +8,39 @@
 
 
 <script>
-// function delEvent(){
-// 	alert("탈퇴가 완료되었습니다!")
-// }
+function delEvent(){
+	if(${pwChk}==true){		
+		alert("탈퇴가 완료되었습니다!")
+	}else{
+		alert("탈퇴에 실패하였습니다!")
+	}
+}
 </script>
 
 <script>
-$(document).ready(function() {
-	$('#submit').click(function(){
+// $(document).ready(function() {
+// 	$('#submit').click(function(){
 		
-		var idx = true;
+// 		var idx = true;
 		
-		if($.trim($('#user_pw').val()) == ''){
-			$('#user_pw').focus();
-			return false;
+// 		if($.trim($('#user_pw').val()) == ''){
+// 			$('#user_pw').focus();
+// 			return false;
 			
-		} 
-		else {
-			alert("탈퇴가 완료되었습니다.")
-			return true;
-		}
+// 		} 
+// 		else {
+			
+// 			if(${pwChk}==true){
+// 				alert("탈퇴가 완료되었습니다.")
+// 				return true;				
+// 			}else{
+// 				alert("탈퇴에 실패하였습니다")
+// 				return false;
+// 			}
+// 		}
 		
-	});
-})
+// 	});
+// })
 </script>
 
 <div id="divpage">
@@ -62,7 +72,7 @@ $(document).ready(function() {
 </div><br>
 <div style="text-align: center;">
 		<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm" id="back">돌아가기</a>
-		<button id="submit" name="submit" class="btn btn-danger btn-sm" onclick="delEvent();">탈퇴하기</button>
+		<button id="submit" name="submit" class="btn btn-danger btn-sm" onClick="delEvent();">탈퇴하기</button>
 </div>
 </form>
 </div>

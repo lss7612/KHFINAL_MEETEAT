@@ -167,6 +167,7 @@ function isDelete() {
 		</div>
 	</form>
 	
+	<br><br>
 	
 <!-- 게시물 목록 표시 -->
 	<form action="/admin/board/list" method="post">
@@ -196,6 +197,7 @@ function isDelete() {
 							</c:forEach>
 							RE : 
 						</c:if>
+						
 						<c:choose>
 							<c:when test="${list.BOARD_NO eq 1}">
 								<a href="/notice/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
@@ -252,6 +254,21 @@ function isDelete() {
 			</c:otherwise>
 		</c:choose>
 	</div>
+	
+	</form>
+	
+	<form action="" name="move" method="post">
+		<div>
+			<select class="col-md-2 input-sm form-group-sm" name="boardMove" id="boardMove" onchange="window.location.href=this.value">
+				<option value="" selected>이동할 게시판을 선택해주세요.</option>
+				<option value="http://localhost:8088/notice/list">공지사항 게시판 </option>
+				<option value="http://localhost:8088/matefind/list">메이트찾기 게시판</option>
+				<option value="http://localhost:8088/recruitboard/list">모집 게시판</option>
+				<option value="http://localhost:8088/notice/list">후기 게시판</option>
+				<option value="http://localhost:8088/inquiry/list">문의 게시판</option>
+				<option value="http://localhost:8088/eventboard/holding">이벤트등록 게시판</option>
+			</select>
+		</div>
 	
 	</form>
 

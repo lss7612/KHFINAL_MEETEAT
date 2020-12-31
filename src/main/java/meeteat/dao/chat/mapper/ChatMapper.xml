@@ -49,7 +49,7 @@
 	
 	<!-- chatting_no로 해당 채팅에 속해있는 회원 정보 조회 -->
 	<select id="getChatUserListByChatNum" parameterType="int" resultType="hashmap">
-		select cu.user_no, u.user_nick from tb_chattinguser2 cu
+		select cu.user_no, u.user_nick, u.user_gender from tb_chattinguser2 cu
 		inner join tb_user2 u
 		    on cu.user_no = u.user_no
 		where cu.chatting_no = #{chatting_no}
@@ -117,4 +117,8 @@
 	<delete id="exitChatRoomByUserNo" parameterType="hashmap">
 		delete tb_chattinguser2 where chatting_no = #{chatting_no} and user_no = #{user_no}
 	</delete>
+	
+	<insert id="createMateChatRoom" parameterType="hashmap">
+		insert into tb_chatting2(chatting_name, chatting_id) values(#{chatting_name}, #{chatting_id})
+	</insert>
 </mapper>

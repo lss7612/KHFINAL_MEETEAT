@@ -26,28 +26,27 @@
 
 body {
 	margin: 0 auto;
-	text-align: center;
+ 	text-align: center; 
 }
 
 .active {
 	color: gray;
 }
 
-.container hr {
-	align-content: center;
-	width: 100%;
-	height: 10px; 
-	border: 0;
-    border-top: 1px solid #abd5bd;
-    border-bottom: 1px solid #abd5bd;
-	background-color: #ced4da; margin: 8px 0px;
-}
+/* .container hr { */
+/* 	align-content: center; */
+/* 	width: 100%; */
+/* 	height: 10px;  */
+/* 	border: 0; */
+/*     border-top: 1px solid #abd5bd; */
+/*     border-bottom: 1px solid #abd5bd; */
+/* 	background-color: #ced4da; margin: 8px 0px; */
+/* } */
 
 .mateInfo {
 	float: left;
 	margin-top: 0px;
 	margin-bottom: 10px;
-	padding-right: 500px;
 }
 
 .pof_pic{
@@ -83,6 +82,20 @@ $(document).ready(function() {
 	
 })
 
+function joinChat(e){
+	var target = $(e).prev().val();
+	console.log($(e).prev())
+	console.log("target : "+target);
+
+	var frmPop = document.chatSubmitForm;
+	//팝업 
+	window.open("http://localhost:8088/chat/room", "chatRoom"
+			, "width=710px, height=665px");
+	frmPop.action = "http://localhost:8088/chat/room";
+	frmPop.target = "chatRoom";
+	frmPop.chatting_id.value = target
+}
+
 </script>
 
 </head>
@@ -93,42 +106,60 @@ $(document).ready(function() {
 <div class="container" id="divpage">
 
 	<div class="row">
-		<div class="col-2">
+		<div align="left" class="col-6">
 			<h4>글번호 [ ${view.article_no} ]</h4>
 			<input type="hidden" value="${view.article_no }" name="article_no" id="article_no">
 		</div>
-		<div class="col-8"></div>
-		<div class="col-2">
+		<div align="right" class="col-6">
 			<h4>조회수 [ ${view.article_hit} ]</h4>
 		</div>
 	</div>
 	
 <hr>
 
-	<div class="row" style="margin-bottom: 20px;">
+	<div class="row" style="margin-bottom: 50px;">
 		<div class="col">
-			<h1 style="float: left;">${view.article_title }</h1>
+			<h1 align="left">${view.article_title }</h1>
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col">
-			<h4 class="mateInfo">#${view.party_location }</h4>
-			
-			<fmt:parseDate value="${jstlMeetTime }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/>
-			<h4 class="mateInfo">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일"/></h4>
-			<h4 class="mateInfo">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/></h4>
-			
-			<h4 class="mateInfo">#${view.category }</h4>
-			
-		</div>
+	<div class="row" align="left" style="padding-left: 10px;">
+
+		<fmt:parseDate value="${jstlMeetTime }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/>
+		<p>날짜　　<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일 HH시 mm분"/></p>
+		<p>장소　　${view.party_location }</p>
+		<p>유형　　${view.category }</p>
+		<!-- 모임 채팅방 참여 버튼 구역 -->
+		<form name="chatSubmitForm" method="post">
+			<input type="hidden" name="chatting_id" value="${chatting_id }" />
+			<button id="enterChatBtn" onclick="joinChat(this);">모임 채팅방</button>
+		</form>
+		<!-- 모임 채팅방 참여 버튼 구역 -->
+	
+	
 	</div>
+	
+	
+<!-- 	<div class="row"> -->
+<!-- 		<div align="left" class="col"> -->
+		
+<!-- 			<ul class="mateInfo"> -->
+<!-- 				<li>#${view.party_location }</li> -->
+<%-- 				<fmt:parseDate value="${jstlMeetTime }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/> --%>
+<%-- 				<li>#<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일"/></li> --%>
+<%-- 				<li>#<fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/></li> --%>
+<!-- 				<li>#${view.category }</li> -->
+<!-- 			</ul> -->
+			
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
 	
 	
 	<hr>
 	<div class="row">
 		<div class="col-3">
-			<h3 style="float: left;">host</h3>
+			<h3 style="float: left;">호스트</h3>
 		</div>
 	</div>
 	
@@ -161,18 +192,14 @@ $(document).ready(function() {
 	
 	<hr>
 	
-	
-	
-	<div class="row">
-		<div class="col">
-			<h2 style="float: left;">내용</h2>
-		</div>
-	</div>
 
-	<div class="row" style="background-color: #E0E0E0 ;margin: 20px; 10px;">
-		${view.article_content }
-	</div>
-	
+		<div class="row" align="left">
+			<label for="content" class="form-label" style="float: left; margin-top: 20px;">내용</label>
+		</div>
+		
+		<div class="row" id="content" style="padding: 10px 20px;">
+			${view.article_content }
+		</div>
 	
 	<hr>
 	

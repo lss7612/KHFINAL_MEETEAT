@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import meeteat.dto.boardAdmin.BoardAdmin;
 import meeteat.dto.boardAdmin.BoardAdminParam;
 import meeteat.dto.noticeBoard.NoticeBoard;
+import meeteat.dto.noticeBoard.NoticeParam;
 import meeteat.util.Paging;
 
 public interface NoticeBoardService {
@@ -18,18 +19,20 @@ public interface NoticeBoardService {
 	/**
 	 * 페이징 처리
 	 * @param curPage 현재 목록
+	 * @param noticeParam 
 	 * @return 페이징 처리된 목록
 	 */
-	public Paging getNoticePaging(Paging curPage);
+	public Paging getNoticePaging(Paging curPage, NoticeParam noticeParam);
 
 	/**
 	 * 공지사항 리스트
 	 * @param paging 페이징 처리
 	 * @param board_no 게시판 번호
+	 * @param noticeParam 
 	 * @param session 
 	 * @return 조회된 공지사항 리스트
 	 */
-	public List<HashMap<String, String>> noticeList(Paging paging, int board_no);
+	public List<HashMap<String, String>> noticeList(Paging paging, int board_no, NoticeParam noticeParam);
 
 	/**
 	 * 공지사항 글 작성

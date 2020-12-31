@@ -92,14 +92,14 @@ $(document).ready(function() {
 <!-- 검색기능 -->
 <form action="/inquiry/list" method="get" class="form-inline text-center">
 	<div class="searchbox form-group form-group-sm ">
-		<select class="search form-control" style="width: 100px;" name="search" id="search">
-			<option value="article_title" <c:if test="${search == 'article_title' }">selected</c:if>>제목</option>		
-			<option value="article_content" <c:if test="${search == 'article_content' }">selected</c:if>>내용</option>		
+		<select class="search form-control" style="width: 100px;" name="inquirySearch" id="inquirySearch">
+			<option value="article_title" <c:if test="${inquiryParam.inquirySearch == 'article_title' }">selected</c:if>>제목</option>		
+			<option value="article_content" <c:if test="${inquiryParam.inquirySearch == 'article_content' }">selected</c:if>>내용</option>		
 		</select>
 	</div>
 	
 	<div class="form-group form-group-sm">
-		<input type="text" class="form-control" name="keyword" id="keyword" placeholder="검색어를 입력하세요." value="${keyword }" />
+		<input type="text" class="form-control" name="inquiryKeyword" id="inquiryKeyword" placeholder="검색" value="${inquiryParam.inquiryKeyword }" />
 		<button type="submit" class="btn btn-sm" id="btnsearch" value="검색">검색</button>
 	</div>
 </form>

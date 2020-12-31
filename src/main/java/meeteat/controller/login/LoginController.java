@@ -9,8 +9,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -27,7 +29,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import meeteat.dto.user.User;
@@ -40,6 +44,8 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Autowired private LoginService loginService;
+	@Autowired private KakaoRestApi kakaoRestApi;
+
 	
 	//네이버 로그인
 	private NaverLoginController naverLoginController;
@@ -57,7 +63,16 @@ public class LoginController {
 		
 		String naverUrl = naverLoginController.getAuthorizationUrl(session);
 		
+		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize"
+				+ "?response_type=code"
+				//추가 동의 요청
+//				+ "&scope=age_range,account_email,gender,profile"
+				+ "&client_id=895375f3d436ba0bf699c34807dffc98"
+				+ "&redirect_uri=http://localhost:8088/login/kakaocallback";
+
+		
 		model.addAttribute("naverUrl", naverUrl);
+		model.addAttribute("kakaoUrl", kakaoUrl);
 		
 		return "login/login";
 		
@@ -102,6 +117,7 @@ public class LoginController {
 			session.setAttribute("user_gender", user.getUser_gender());
 			session.setAttribute("user_age", user.getUser_age());
 			session.setAttribute("user_email", user.getUser_email());
+			session.setAttribute("kakaoLogin", false);
 			
 			logger.info("유저번호 : " + session.getAttribute("user_no"));
 			logger.info("유저닉네임 : " + session.getAttribute("user_nick"));
@@ -118,6 +134,20 @@ public class LoginController {
 	
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
+		
+		String accessToken = (String)session.getAttribute("accessToken");
+		
+		boolean hasToken = (boolean) session.getAttribute("kakaoLogin");
+		
+		
+		if(hasToken){
+			// 연결끊기
+			kakaoRestApi.breakAccessToken(accessToken);
+			
+			// 로그아웃
+//			kakaoRestApi.kakaoLogout(accessToken);
+		}
+		
 		
 		session.invalidate();
 		
@@ -195,15 +225,6 @@ public class LoginController {
 		String age = (String) response.get("age");
 		String image = (String) response.get("profile_image");
 		
-		session.setAttribute("isLogin", true);
-		session.setAttribute("user_id", id);
-		session.setAttribute("user_name", name);
-		session.setAttribute("user_nick", nick);
-		session.setAttribute("user_gender", gender);
-		session.setAttribute("user_age", age);
-		session.setAttribute("user_email", email);
-		session.setAttribute("user_image", image);
-		
 		
 		//네이버 회원 데이터베이스에 저장하기
 		User user = new User();
@@ -211,7 +232,7 @@ public class LoginController {
 		String[] naverId = new String[1];
 		naverId = email.split("@");
 				
-		user.setUser_id(naverId[0]);
+		user.setUser_id("N" + naverId[0]);
 		user.setUser_pw(id);
 		user.setUser_nick(nick);
 		user.setUser_age(age);
@@ -222,36 +243,128 @@ public class LoginController {
 		
 		boolean hasData = loginService.login(user);
 		
-		
-		if(hasData) {
-
-			user = loginService.selectUser(user);
-			session.setAttribute("isLogin", true);
-			session.setAttribute("user_no", user.getUser_no());
-			session.setAttribute("user_grade", user.getUser_grade());
-
-			return "redirect:/login/main";
-			
-		} else {
-			
+		if(!hasData) {
 			loginService.signUp(user);
-
-			user = loginService.selectUser(user);
-			session.setAttribute("isLogin", true);
-			session.setAttribute("user_no", user.getUser_no());
-			session.setAttribute("user_grade", user.getUser_grade());
-			
-			return "redirect:/login/main";
-			
 		}
+		
+		user = loginService.selectUser(user);
+		
+		session.setAttribute("isLogin", true);
+		session.setAttribute("user_no", user.getUser_no());
+		session.setAttribute("user_grade", user.getUser_grade());
+		session.setAttribute("snsLogin", true);
+		session.setAttribute("kakaoLogin", false);
+		session.setAttribute("user_id", id);
+		session.setAttribute("user_name", name);
+		session.setAttribute("user_nick", nick);
+		session.setAttribute("user_gender", gender);
+		session.setAttribute("user_age", age);
+		session.setAttribute("user_email", email);
+		session.setAttribute("user_image", image);
+
+		
+		return "redirect:/login/main";
 		
 		
 	}
+	
+	@RequestMapping(value = "/kakaocallback")
+	public String kakaoCallback(@RequestParam("code") String code, HttpSession session) {
+		
+		logger.info("kakao code : " + code );
+		
+		String accessToken = kakaoRestApi.getAccessToken(code);
+		logger.info("kakao accessToken : " + accessToken );
+		
+		HashMap<String, Object> kakaoUserInfo = kakaoRestApi.getUserInfo(accessToken);
+		
+		if(kakaoUserInfo.get("kakaoFail").equals(true)) {
+			kakaoRestApi.breakAccessToken(accessToken);
+			
+			return "/login/kakaofail";
+		}
+		
+		logger.info("kakaoUserInfo : " + kakaoUserInfo);
+		
+		//카카오정보 들어간다
+		
+		//데이터베이스에 맞게 정보수정
+		String convertGender = "";
+		if("male".equals(kakaoUserInfo.get("gender"))) {
+			convertGender = "M";
+		} else if("female".equals(kakaoUserInfo.get("gender"))) {
+			convertGender = "F";
+		} else {
+			convertGender = "U";
+		}
+		
+		String convertAge = kakaoUserInfo.get("age").toString().replace("~", "-");
+		
+		
+		
+		
+		//카카오 정보 데이터베이스에 저장하기
+		User user = new User();
+		
+		String[] kakaoId = new String[1];
+		kakaoId = kakaoUserInfo.get("email").toString().split("@");
+		
+		logger.info(kakaoId[0]);
+		
+		user.setUser_id("K" + kakaoId[0]);
+		user.setUser_pw(kakaoUserInfo.get("id").toString());
+		user.setUser_age(convertAge);
+		user.setUser_gender(convertGender);
+		user.setUser_email(kakaoUserInfo.get("email").toString());
+		user.setUser_nick(kakaoUserInfo.get("nickname").toString());
+		
+		try {
+			user.setUser_profileorigin(kakaoUserInfo.get("image").toString());
+			user.setUser_profilestored(kakaoUserInfo.get("image").toString());
+		} catch (NullPointerException e) {
+			user.setUser_profileorigin("기본이미지");
+			user.setUser_profilestored("기본이미지");
+		}
+		
+		
+		//로그인 시키기
+		
+		boolean hasData = loginService.login(user);
+		
+		if(!hasData) {
+			loginService.signUp(user);
+		}
+		
+		user = loginService.selectUser(user);
+		
+		session.setAttribute("isLogin", true);
+		session.setAttribute("snsLogin", true);
+		session.setAttribute("kakaoLogin", true);
+
+		session.setAttribute("user_no", user.getUser_no());
+		session.setAttribute("user_grade", user.getUser_grade());
+		session.setAttribute("user_id", user.getUser_id());
+		session.setAttribute("user_nick", user.getUser_nick());
+		session.setAttribute("user_gender", user.getUser_gender());
+		session.setAttribute("user_age", user.getUser_age());
+		session.setAttribute("user_email", user.getUser_email());
+		session.setAttribute("user_image", user.getUser_profilestored());
+		
+		session.setAttribute("accessToken", accessToken);
+		
+		
+		
+		return "redirect:/login/main";
+		
+	}
+	
+	
 
 	@RequestMapping(value = "/google")
 	public String google(HttpSession session) {
 		
 		session.setAttribute("isLogin", true);
+		session.setAttribute("snsLogin", true);
 		
 		return "redirect:/login/main";
 	}

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import meeteat.dao.inquiryBoard.face.InquiryBoardDao;
 import meeteat.dto.inquiryBoard.InquiryBoard;
+import meeteat.dto.inquiryBoard.InquiryParam;
 import meeteat.service.inquiryBoard.face.InquiryBoardService;
 import meeteat.util.Paging;
 
@@ -28,12 +29,12 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 
 	
 	@Override
-	public Paging getInquiryPaging(Paging curPage) {
+	public Paging getInquiryPaging(Paging curPage, InquiryParam inquiryParam) {
 		
 		System.out.println(curPage);
 		
 		//전체 게시글 수 조회
-		int totalCount = inquiryBoardDao.selectCntAll();  
+		int totalCount = inquiryBoardDao.selectCntAll(inquiryParam);  
 		
 		logger.info("check_getInquiryPaging" + totalCount);
 		
@@ -44,7 +45,12 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 	}
 
 	@Override
-	public List<HashMap<String, String>> InquiryList(Paging paging, int board_no, int article_secret) {
+	public List<HashMap<String, String>> InquiryList(
+				Paging paging
+				, int board_no
+				, int article_secret
+				, InquiryParam inquiryParam
+				) {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		
@@ -53,8 +59,8 @@ public class InquiryBoardServiceImpl implements InquiryBoardService {
 		map.put("article_secret", article_secret);
 		map.put("startNo", paging.getStartNo());
 		map.put("endNo", paging.getEndNo());
-		map.put("keyword", paging.getKeyword());
-		map.put("search", paging.getSearch());
+		map.put("inquiryKeyword", inquiryParam.getInquiryKeyword());
+		map.put("inquirySearch", inquiryParam.getInquirySearch());
 		
 		logger.info("check_inquiryList_article_secret" + article_secret);
 		

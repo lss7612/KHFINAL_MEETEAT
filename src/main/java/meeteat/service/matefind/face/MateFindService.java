@@ -3,6 +3,8 @@ package meeteat.service.matefind.face;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import meeteat.dto.mateFindBoard.MateFindBoard;
 import meeteat.dto.mateFindBoard.Paging;
 import meeteat.dto.mateFindBoard.Recommend;
@@ -48,6 +50,8 @@ public interface MateFindService {
 	public MateFindBoard boardSetByArticleNo(MateFindBoard viewBoard);
 
 	public List<MateFindBoard> filterPagingList(HashMap<String, Object> map);
+
+	public void writeWithFile(MateFindBoard mateFindBoard, MultipartFile fileupload);
 
 
 }

@@ -28,43 +28,13 @@ $(document).ready(function(){
 	    webSocket.onmessage = onMessage;
     	console.log(webSocket);
     }
+  	
+  	//스크롤바 하단고정
     $('#chatting').scrollTop($('#chatting')[0].scrollHeight);
-    
-    //채팅목록에서 닉네임 클릭시 나타나는 유저메뉴
-    
-    $(".chatListUserMenu >td>span").click(function(){
-    	
-    	var submenu = $(this).next().next("ul");
-    	var tbrow = $(this).parent();
-    	
-    	console.log(submenu);
-    	console.log($(submenu));
-    	
-    	console.log(tbrow);
-    	console.log($(tbrow));
-    	
-    	if(submenu.is(":visible")){
-			submenu.slideUp();
-			$(tbrow).css({"padding" : "3px 3px 3px 3px"});
-		} else{
-			submenu.slideDown();
-			$(submenu).css({"display" : "inline-block", "left" : "40px"});
-			$(tbrow).css({"padding" : "5px 3px 5px 3px"});
-			
-		}
-    	
-    })
+
     
 })
 
-//회원 목록에서 채팅하기 클릭시 동작할 함수
-function createChat(e){
-	var user_no = $(e).attr("user_no")
-	console.log("user_no : "+user_no);
-	window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
-			, "width = 710px, height = 665px");
-
-}
 
 
 //input 박스에서 enter키 입력하면 동작하는 함수
@@ -97,7 +67,8 @@ function send(){
 function disconnect(){
 	var sendMsg = {chatRoomNo:${roomInfo.CHATTING_NO}, type:'LEAVE', writer:${user_no} }
     webSocket.send(JSON.stringify(sendMsg));
-    webSocket.close();
+//     webSocket.close();
+//     location.href="/chat/list"
 }
 
 //소켓 연결시 동작하는 함수
@@ -109,23 +80,31 @@ function onOpen(){
 //메시지 도착시 동작하는 함수
 var lmd = "${lastMsgDate}";
 function onMessage(e){
-// 	console.log("lmd : "+lmd);
     data = e.data;
     console.log("e : "+e);
     console.log("data : "+data);
-//     console.log("웹소켓에서 전달해준 메세지 : "+data.msg);
     
-    var jsonStr = JSON.parse(data)
-    
-//     console.log("jsonStr : "+jsonStr);
-//     console.log("jsonStr.writer : "+jsonStr.writer);
-//     console.log("session user_no : "+${user_no});
-//     console.log("메시지 전송 날자 : "+jsonStr.msgDate);
-//     console.log("기존 기준 날자 : "+lmd);
+    var jsonStr = JSON.parse(data);
+    var chatting_no = jsonStr.chatRoomNo;
     var msgDate = jsonStr.msgDate;
+    var msgType = jsonStr.type;
+    var writer_no = jsonStr.writer;
+    
+    console.log("chatting_no : "+chatting_no);
+    console.log("msgDate : "+msgDate);
+    console.log("msgType : "+msgType);
+    console.log("writer_no : "+writer_no);
+    
+    msgTypeAjax(msgType, writer_no, chatting_no);
    	lmd = dateSet(lmd, msgDate)
 
-    
+   	//전달된 메시지가 내가 나가는 경우 목록으로 이동
+    if(msgType == 'LEAVE' && writer_no == ${user_no}){
+    	console.log("채팅방을 나갑니다.")
+   	    webSocket.close();
+    	location.href="/chat/list";
+    }
+   	
 //    	console.log("lmd : "+lmd);
     chatroom = document.getElementById("chatting");
     chatroom.innerHTML = chatroom.innerHTML + jsonStr.msg;
@@ -146,7 +125,7 @@ function exitRoom(){
 	console.log(res);
 	if( res ){
 		disconnect();
-		location.href="/chat/list"
+// 	    location.href="/chat/list"
 	}
 }
 
@@ -166,6 +145,58 @@ function dateSet(lmd, msgDate){
 		return lmd;
 	}
 }
+
+function msgTypeAjax(msgType, writer_no, chatting_no){
+	//회원목록 AJAX
+	$.ajax({
+		type : "get"
+		, url : "/chat/room/userlist"
+		, async : false
+		, data : {
+			chatting_no : chatting_no
+			, user_no : writer_no
+			, msgType : msgType
+		}
+		, dataType : "html"
+		, success : function(res){
+			console.log("ajax성공")
+			$("#userListArea").empty();
+			$("#userListArea").append(res);
+			//$("#roomTitleContent").empty();
+			$("#roomTitleContent").children().empty();
+			$("#roomTitleContent").children().html("(${chatUserList.size()})");
+			
+			//$("#roomTitleContent")
+			
+		}
+		, error : function(){
+			console.log("실패")
+		}
+	})
+	
+	$.ajax({
+		type : "get"
+		, url : "/chat/room/usercount"
+		, async : false
+		, data : {
+			chatting_no : chatting_no
+			, user_no : writer_no
+			, msgType : msgType
+		}
+		, dataType : "json"
+		, success : function(res){
+			var count = res.result;
+			console.log("ajax성공")
+			console.log(res);
+			//$("#roomTitleContent").empty();
+			$("#roomTitleContent").children().empty();
+			$("#roomTitleContent").children().html("("+count+")");
+		}
+		, error : function(){
+			console.log("실패")
+		}
+	})
+}
 </script>
 
 </head>
@@ -175,23 +206,25 @@ function dateSet(lmd, msgDate){
 		onclick="goChatList();">
 	<div id="roomTitle">
 		<c:choose>
-		<c:when test="${chatUserList.size() eq 2 }">
-			<c:forEach items="${chatUserList }" var="userList">
-					<c:if test="${userList.USER_NO ne user_no}">
-						<span id="roomTitleContent">${userList.USER_NICK }님과 대화</span>
-					</c:if>
-			</c:forEach>
-		</c:when>
-		<c:when test="${chatUserList.size() gt 2 }">
-			<c:choose>
-				<c:when test="${roomInfo.CHATTING_NAME eq null }">
-					<span id="roomTitleContent" >이름없는 대화방 (${chatUserList.size() })</span>
-				</c:when>
-				<c:otherwise>
-					<span id="roomTitleContent" >${roomInfo.CHATTING_NAME }</span>
-				</c:otherwise>
-			</c:choose>
-		</c:when>
+			<c:when test="${roomInfo.CHATTING_NAME eq null }">
+				<c:choose>
+					<c:when test="${chatUserList.size() eq 2 }">
+						<c:if test="${userList.USER_NO ne user_no}">
+							<span id="roomTitleContent">${userList.USER_NICK }님과 대화</span>
+						</c:if>
+					</c:when>
+					<c:when test="${chatUserList.size() gt 2 }">
+						<span id="roomTitleContent" >이름없는 대화방
+							<span id="userCount">(${chatUserList.size() })</span>
+						</span> 
+					</c:when>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+					<span id="roomTitleContent" >${roomInfo.CHATTING_NAME }
+						<span id="userCount">(${chatUserList.size() })</span>
+					</span> 
+			</c:otherwise>
 		</c:choose>
 	</div>
 </div>
@@ -238,32 +271,7 @@ function dateSet(lmd, msgDate){
 			<span id="chatUserListHead">유저목록</span>
 		</div>
 		<div id="userListArea">
-			<table id="chatUserList">
-<!-- 				<tr> -->
-<!-- 					<th id="chatUserListHead">회원 목록</th> -->
-<!-- 				</tr> -->
-				 <c:forEach items="${chatUserList }" var="user">
-				 <c:choose>
-				 	<c:when test="${user_no eq user.USER_NO }">
-						<tr>
-							<td>${user.USER_NICK } <span id="checkme">&lt;나&gt;</span></td>
-						</tr>
-				 	</c:when>
-				 	<c:when test="${user_no ne user.USER_NO }">
-						<tr class="chatListUserMenu">
-							<td style="position : relative;">
-								<span class="chatListUserNick">${user.USER_NICK }</span>
-								<br>
-								<ul class="userHiddenMenu">
-									<li onclick="createChat(this);" user_no="${user.USER_NO }">채팅하기</li>
-								</ul>
-							</td>
-						</tr>
-				 	
-				 	</c:when>
-				 </c:choose>
-				 </c:forEach>
-			</table>
+			<c:import url="/WEB-INF/views/chat/room_user_list.jsp"></c:import>
 		</div>
 		<br>
 		<button id="exitBtn" onclick="exitRoom()">나가기 </button>

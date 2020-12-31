@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.dto.inquiryBoard.InquiryBoard;
 import meeteat.dto.noticeBoard.NoticeBoard;
+import meeteat.dto.noticeBoard.NoticeParam;
 import meeteat.service.noticeBoard.face.NoticeBoardService;
 import meeteat.util.Paging;
 
@@ -34,10 +35,12 @@ public class NoticeBoardController {
 	public void noticeList(Model model
 				, Paging curPage
 				, HttpSession session
-				, HttpServletRequest request) {
+				, HttpServletRequest request
+				, NoticeParam noticeParam
+				) {
 		
 		//페이징 처리
-		Paging paging = noticeBoardService.getNoticePaging(curPage);
+		Paging paging = noticeBoardService.getNoticePaging(curPage ,noticeParam);
 		
 		//검색 목록 페이지
 		paging.setSearch(curPage.getSearch());
@@ -46,8 +49,9 @@ public class NoticeBoardController {
 		
 		///게시물 목록
 		int board_no = 1;
-		List<HashMap<String, String>> list = noticeBoardService.noticeList(paging, board_no);
+		List<HashMap<String, String>> list = noticeBoardService.noticeList(paging, board_no, noticeParam);
 		model.addAttribute("list", list);
+		model.addAttribute("noticeParam", noticeParam);
 		
 		//검색 기능
 		String keyword = request.getParameter("keyword");
