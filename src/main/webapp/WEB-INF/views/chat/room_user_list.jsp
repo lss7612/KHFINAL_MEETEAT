@@ -63,7 +63,7 @@ function createChat(e){
 	 			<c:otherwise>
 					<tr>
 						<td>
-							<span class="chatListUserNick"> 🙍‍♀️ ${user.USER_NICK } <span id="checkme">&lt;나&gt;</span></span>
+							<span class="chatListUserNick">🙍‍♀️ ${user.USER_NICK } <span id="checkme">&lt;나&gt;</span></span>
 						</td>
 					</tr>
 	 			</c:otherwise>

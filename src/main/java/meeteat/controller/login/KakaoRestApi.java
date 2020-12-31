@@ -175,8 +175,8 @@ public class KakaoRestApi {
             String kakaoId = element.getAsJsonObject().get("id").toString();
             
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-            String profileImage = properties.getAsJsonObject().get("profile_image").getAsString();
-            String image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
+//            String profileImage = properties.getAsJsonObject().get("profile_image").getAsString();
+//            String image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
             
             try {
             	String email = kakao_account.getAsJsonObject().get("email").getAsString();
@@ -196,8 +196,8 @@ public class KakaoRestApi {
             userInfo.put("id", kakaoId);
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
-            userInfo.put("profileimage", profileImage);
-            userInfo.put("image", image);
+//            userInfo.put("profileimage", profileImage);
+//            userInfo.put("image", image);
             userInfo.put("age", age);
             userInfo.put("gender", gender);
             userInfo.put("kakaoFail", false);
