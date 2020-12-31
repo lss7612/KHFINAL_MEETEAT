@@ -89,9 +89,10 @@ public interface ChatDao {
 	/**
 	 * 채팅방 번호로 해당 방의 과거 대화 이력 갖고오기.
 	 * @param chatting_no : 조회할 채팅방 번호
+	 * @param enterMsgNum 
 	 * @return 대화 리스트
 	 */
-	public List<HashMap<String, Object>> getOldChatByRoomNo(int chatting_no);
+	public List<HashMap<String, Object>> getOldChatByRoomNo(@Param("chatting_no")int chatting_no, @Param("enterMsgNo")int enterMsgNum);
 
 	/**
 	 * 채팅방 참여 여부 조사
@@ -122,5 +123,37 @@ public interface ChatDao {
 	 * @return
 	 */
 	public void createMateChatRoom(@Param("chatting_name")String chatting_name, @Param("chatting_id")String chatting_id);
+
+	/**
+	 * chattingcontent2 테이블에 notice msg작성
+	 * @param user_no : 회원번호
+	 * @param chatting_no : 채팅번호
+	 * @param noticeMsg : 안내내용
+	 */
+	public void insertNoticeMsgForEnter(@Param("user_no")int user_no, @Param("chatting_no")int chatting_no, @Param("msg_content")String noticeMsg);
+
+	/**
+	 * chattingcontent2 테이블에 notice msg 작성
+	 * @param user_no : 회원번호
+	 * @param chatting_no : 채팅번호
+	 * @param noticeMsg : 안내 내용
+	 */
+	public void insertNoticeMsgForLeave(@Param("user_no")int user_no, @Param("chatting_no")int chatting_no, @Param("msg_content")String noticeMsg);
+
+	/**
+	 * 입장 메시지 번호 구하기
+	 * @param user_no : 회원 번호
+	 * @param chatting_no : 채팅 번호
+	 * @return 채팅번호
+	 */
+	public HashMap getEnterMsg(@Param("user_no")int user_no, @Param("chatting_no")int chatting_no);
+
+	/**
+	 * 퇴장 메시지 번호 구하기
+	 * @param user_no : 회원 번호
+	 * @param chatting_no : 채팅 번호
+	 * @return 채팅 번호
+	 */
+	public HashMap getLeaveMsg(@Param("user_no")int user_no, @Param("chatting_no")int chatting_no);
 
 }

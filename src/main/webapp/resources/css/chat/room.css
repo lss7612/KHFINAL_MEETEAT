@@ -111,6 +111,8 @@
     text-align: center;
     margin-bottom: 1%;
     clear : both;
+    padding-top : 3px;
+    padding-bottom : 3px;
 }
 
 .fromMsg, .toMsg{
