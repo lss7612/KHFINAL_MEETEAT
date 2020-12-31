@@ -1,0 +1,47 @@
+#mainTextBox{
+	text-align: center;
+	height: 500px;
+	padding: 100px;
+}
+
+
+
+#mainImageBox{
+	margin: 20px 0;
+	height:400px;
+	background: #ccc;
+	overflow: hidden;
+}
+
+.bigText{
+	margin:20px;
+	font-size: 2em;
+}
+
+.smallText{
+	padding:10px;
+}
+
+a:link{
+	text-decoration: none;
+}
+
+.mainBtn{
+	cursor: pointer;
+}
+
+.longBtn{
+	margin: 20px auto;
+	width:300px;;
+	height: 50px;
+	font-size:20px;
+	padding: 10px 0;
+	background:#f5da81;
+	border-radius: 10px;
+	color: white;	
+}
+
+
+
+
+

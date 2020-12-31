@@ -25,6 +25,7 @@ $(document).ready(function(){
 
 
 function anyPopupList(){
+	console.log('popup')
 	$.ajax({
 		type: "get"
 		, url: "/eventboard/anypopuplist"
