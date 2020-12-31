@@ -45,6 +45,7 @@ public class LoginController {
 	
 	@Autowired private LoginService loginService;
 	@Autowired private KakaoRestApi kakaoRestApi;
+
 	
 	//네이버 로그인
 	private NaverLoginController naverLoginController;
@@ -116,6 +117,7 @@ public class LoginController {
 			session.setAttribute("user_gender", user.getUser_gender());
 			session.setAttribute("user_age", user.getUser_age());
 			session.setAttribute("user_email", user.getUser_email());
+			session.setAttribute("kakaoLogin", false);
 			
 			logger.info("유저번호 : " + session.getAttribute("user_no"));
 			logger.info("유저닉네임 : " + session.getAttribute("user_nick"));
@@ -132,6 +134,20 @@ public class LoginController {
 	
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
+		
+		String accessToken = (String)session.getAttribute("accessToken");
+		
+		boolean hasToken = (boolean) session.getAttribute("kakaoLogin");
+		
+		
+		if(hasToken){
+			// 연결끊기
+//			kakaoRestApi.breakAccessToken(accessToken);
+			
+			// 로그아웃
+			kakaoRestApi.kakaoLogout(accessToken);
+		}
+		
 		
 		session.invalidate();
 		
@@ -209,15 +225,6 @@ public class LoginController {
 		String age = (String) response.get("age");
 		String image = (String) response.get("profile_image");
 		
-		session.setAttribute("isLogin", true);
-		session.setAttribute("user_id", id);
-		session.setAttribute("user_name", name);
-		session.setAttribute("user_nick", nick);
-		session.setAttribute("user_gender", gender);
-		session.setAttribute("user_age", age);
-		session.setAttribute("user_email", email);
-		session.setAttribute("user_image", image);
-		
 		
 		//네이버 회원 데이터베이스에 저장하기
 		User user = new User();
@@ -236,30 +243,27 @@ public class LoginController {
 		
 		boolean hasData = loginService.login(user);
 		
-		
-		if(hasData) {
-
-			user = loginService.selectUser(user);
-			session.setAttribute("isLogin", true);
-			session.setAttribute("user_no", user.getUser_no());
-			session.setAttribute("user_grade", user.getUser_grade());
-			session.setAttribute("snsLogin", true);
-
-			return "redirect:/login/main";
-			
-		} else {
-			
+		if(!hasData) {
 			loginService.signUp(user);
-
-			user = loginService.selectUser(user);
-			session.setAttribute("isLogin", true);
-			session.setAttribute("user_no", user.getUser_no());
-			session.setAttribute("user_grade", user.getUser_grade());
-			session.setAttribute("snsLogin", true);
-			
-			return "redirect:/login/main";
-			
 		}
+		
+		user = loginService.selectUser(user);
+		
+		session.setAttribute("isLogin", true);
+		session.setAttribute("user_no", user.getUser_no());
+		session.setAttribute("user_grade", user.getUser_grade());
+		session.setAttribute("snsLogin", true);
+		session.setAttribute("kakaoLogin", false);
+		session.setAttribute("user_id", id);
+		session.setAttribute("user_name", name);
+		session.setAttribute("user_nick", nick);
+		session.setAttribute("user_gender", gender);
+		session.setAttribute("user_age", age);
+		session.setAttribute("user_email", email);
+		session.setAttribute("user_image", image);
+
+		
+		return "redirect:/login/main";
 		
 		
 	}
@@ -273,6 +277,12 @@ public class LoginController {
 		logger.info("kakao accessToken : " + accessToken );
 		
 		HashMap<String, Object> kakaoUserInfo = kakaoRestApi.getUserInfo(accessToken);
+		
+		if(kakaoUserInfo.get("kakaoFail").equals(true)) {
+			kakaoRestApi.breakAccessToken(accessToken);
+			
+			return "/login/kakaofail";
+		}
 		
 		logger.info("kakaoUserInfo : " + kakaoUserInfo);
 		
@@ -326,6 +336,7 @@ public class LoginController {
 		
 		session.setAttribute("isLogin", true);
 		session.setAttribute("snsLogin", true);
+		session.setAttribute("kakaoLogin", true);
 		session.setAttribute("user_no", user.getUser_no());
 		session.setAttribute("user_grade", user.getUser_grade());
 		
@@ -335,7 +346,7 @@ public class LoginController {
 		session.setAttribute("user_age", convertAge);
 		session.setAttribute("user_email", kakaoUserInfo.get("email"));
 		session.setAttribute("user_image", kakaoUserInfo.get("image"));
-		
+		session.setAttribute("accessToken", accessToken);
 		
 		
 		return "redirect:/login/main";
