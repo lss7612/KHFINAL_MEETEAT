@@ -19,7 +19,7 @@ public class MakeSessionController {
 	private static final Logger logger = LoggerFactory.getLogger(MakeSessionController.class);
 	
 	
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/testhome")
 	public String makeSessionMain() {
 		
 		return "/forTest/makeSession";

@@ -122,7 +122,6 @@ $(document).ready(function () {
 </head>
 <body>
 
-<header>
 	<img id="topupBtn" src="/resources/img/topicon.png" href="#">
 	
 	<div id="top_menu">
@@ -148,4 +147,3 @@ $(document).ready(function () {
 	</div>
 	</div>
 	
-</header>
