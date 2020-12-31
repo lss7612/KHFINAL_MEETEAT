@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="meeteat.dao.adminUser.face.AdminUserDao">
+
+	<select id="selectList" parameterType="hashmap" resultType="hashmap">
+		select * from
+			(select rownum rnum, t1.* from
+				(select user_no, user_id, user_nick, user_gender, user_age, user_blockcnt, user_email, user_grade
+				from tb_user2
+				order by user_no desc) t1
+			<where>
+				1=1
+				<if test="(user_search!=null and !user_search.equals('')) and (user_keyword!=null and !user_keyword.equals(''))">
+					and ${user_search} like '%${user_keyword}%'
+				</if>
+			</where>
+				)
+		where rnum between #{startNo} and #{endNo} 
+		order by rnum desc
+	</select>
+	
+	<select id="selectCntAll" parameterType="meeteat.dto.adminUser.UserSearch" resultType="int">
+		select count(*) from(
+			select user_no, user_id, user_nick
+				, user_gender, user_age, user_blockcnt, user_email, user_grade
+			from tb_user2)
+			<where>
+				1=1
+				<if test="(user_search!=null and !user_search.equals('')) and (user_keyword!=null and !user_keyword.equals(''))">
+					and ${user_search} like '%${user_keyword}%'
+				</if>
+			</where>
+		order by user_no desc
+	</select>
+
+</mapper>
+
