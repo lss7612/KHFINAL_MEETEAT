@@ -59,7 +59,7 @@ $(document).ready(function(){
 			$(".userMenu > ul").slideUp();
 			submenu.slideDown();
 			//슬라이드 메뉴 조정할려면 left의 style값을 변경하면 됩니다.
-			$(submenu).css({"display" : "inline-block", "left" : "30px"});
+			$(submenu).css({"display" : "inline-block", "left" : "20px"});
 		}
 	})
 	
@@ -131,6 +131,35 @@ function reportBtn(e){
 }
 /* 댓글 신고 CSS종료*/
 
+<style type="text/css">
+/* td.info { */
+/* 	width: 10%; */
+/* } */
+/* td:not(.info) { */
+/* 	width: 20%; */
+/* } */
+
+.info {
+	width: 100px;
+	text-align: center;
+}
+
+.cjaqn{
+	border: none;
+}
+
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th{
+	text-align: center;
+}
+
+.table>tbody>tr.info>td, .table>tbody>tr.info>th, .table>tbody>tr>td.info, .table>tbody>tr>th.info, .table>tfoot>tr.info>td, .table>tfoot>tr.info>th, .table>tfoot>tr>td.info, .table>tfoot>tr>th.info, .table>thead>tr.info>td, .table>thead>tr.info>th, .table>thead>tr>td.info, .table>thead>tr>th.info{
+	background-color: #F5ECCE;
+    width: 200px;
+    text-align: center;
+}	
+
+</style>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -159,36 +188,6 @@ $(document).ready(function() {
 	
 })
 </script>
-
-<style type="text/css">
-/* td.info { */
-/* 	width: 10%; */
-/* } */
-/* td:not(.info) { */
-/* 	width: 20%; */
-/* } */
-
-.info {
-	width: 100px;
-	text-align: center;
-}
-
-.cjaqn{
-	border: none;
-}
-
-.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th{
-	text-align: center;
-}
-
-.table>tbody>tr.info>td, .table>tbody>tr.info>th, .table>tbody>tr>td.info, .table>tbody>tr>th.info, .table>tfoot>tr.info>td, .table>tfoot>tr.info>th, .table>tfoot>tr>td.info, .table>tfoot>tr>th.info, .table>thead>tr.info>td, .table>thead>tr.info>th, .table>thead>tr>td.info, .table>thead>tr>th.info{
-	background-color: #F5ECCE;
-    width: 200px;
-    text-align: center;
-}	
-
-
-</style>
 
 <div class="container" id="divpage">
 
@@ -249,12 +248,11 @@ $(document).ready(function() {
 
 
 
-<!-- 댓글 리스트 -->
+<!-- 댓글  -->
 <div style="margin-top : 30px;">
 <table class="table table-condensed">
 <thead>
 <tr>
-<!-- 	<th style="width: 5%;">번호</th> -->
 	<th style="width: 10%;">작성자</th>
 	<th style="width: 50%;">댓글</th>
 	<th style="width: 20%;">작성일</th>
@@ -265,19 +263,18 @@ $(document).ready(function() {
 <c:forEach items="${commentList }" var="comment">
 <%-- <tr data-commentno="${comment.commentNo }"> --%>
 <%-- 	<td style="width: 5%;">${comment.rnum }</td> --%>
-	<td style="width: 10%;">${comment.user_nick }</td><!-- 닉네임으로 해도 좋음 -->
+	<td style="width: 10%;">${comment.user_nick }</td>
 	<td style="width: 50%; text-align: left; padding-left: 20px;">${comment.comment_content }</td>
 	<td style="width: 20%;"><fmt:formatDate value="${comment.create_date }" pattern="yy-MM-dd hh:mm" /></td>
 	<td style="width: 5%;">
 		<c:if test="${user_no eq comment.user_no }">
-		<button class="btn btn-default btn-xs"
-			onclick="deleteComment(${comment.comment_no });">삭제</button>
+			<a href="/review/comment/delete?article_no=${comment.article_no }" onclick="return confirm('삭제하시겠습니까?')">
+			<button class="btn btn-default btn-xs">삭제</button></a>
 		</c:if>
 	</td>
 	<td style="width: 3%;">
 		<div class="commentReport" style="display : inline-block;" >
 		<form method="POST">
-			<!-- ***** 댓글 내용 전달해주는 model객체 명에 맞게 변경해서 user_no를 갖고온다. *** -->
 			<input type="hidden" name="user_no" value="${comment.user_no }"/>
 			<input type="hidden" name="url" />
 			<button class="commentReportBtn" onclick="reportBtn(this)">🚨</button>
@@ -289,20 +286,18 @@ $(document).ready(function() {
 </tbody>
 </table>
 <br>
-<!-- 비로그인상태 -->
+
 <c:if test="${not isLogin }">
-<strong>로그인이 필요합니다</strong><br>
-<button onclick='location.href="#";'>로그인</button>
-<button onclick='location.href="#";'>회원가입</button>
+	<strong>로그인이 필요합니다</strong><br>
+	<button onclick='location.href="#";'>로그인</button>
+	<button onclick='location.href="#";'>회원가입</button>
 </c:if>
 
-<!-- 로그인상태 -->
 <c:if test="${isLogin }">
-<!-- 댓글 입력 -->
 <div class="form-inline text-center">
 	<textarea rows="2" cols="60" class="form-control" id="comment_content" style="width: 800px;"></textarea>
 	<button id="btnCommInsert" class="btn">입력</button>
-</div>	<!-- 댓글 입력 end -->
+</div>
 <br>
 </c:if>	
 </div>

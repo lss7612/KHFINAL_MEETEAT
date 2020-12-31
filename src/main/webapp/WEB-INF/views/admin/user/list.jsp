@@ -11,7 +11,7 @@ table {
 	table-layout: fixed;
 }
 
-table, th {
+table, th, td {
 	text-align: center;
 }
 
@@ -34,26 +34,28 @@ td:nth-child(2) {
 <thead>
 	<tr>
 		<th style="width: 10%">유저번호</th>
-		<th style="width: 45%">아이디</th>
-		<th style="width: 20%">닉네임</th>
-		<th style="width: 10%">성별</th>
-		<th style="width: 15%">나이</th>
-		<th style="width: 15%">경고카운트</th>
+		<th style="width: 15%">아이디</th>
+		<th style="width: 15%">닉네임</th>
+		<th style="width: 15%">성별</th>
+		<th style="width: 10%">나이</th>
+		<th style="width: 10%">경고카운트</th>
 		<th style="width: 15%">이메일</th>
-		<th style="width: 15%">등급</th>
+		<th style="width: 10%">등급</th>
+		<th style="width: 10%">게시글 관리</th>
 	</tr>
 </thead>
 <tbody>
 <c:forEach items="${list }" var="list">
 	<tr>
 		<td>${list.USER_NO }</td>
-		<td>${list.USER_ID }</td>
+		<td style="text-align: center;">${list.USER_ID }</td>
 		<td>${list.USER_NICK }</td>
 		<td>${list.USER_GENDER }</td>
 		<td>${list.USER_AGE }</td>
 		<td>${list.USER_BLOCKCNT }</td>
 		<td>${list.USER_EMAIL }</td>
 		<td>${list.USER_GRADE }</td>
+		<td><a href="http://localhost:8088/admin/board/list?manageCategory=&manageSearch=user_nick&manageKeyword=${list.USER_NICK }" /><button>이동</button></td>
 	</tr>
 </c:forEach>
 </tbody>

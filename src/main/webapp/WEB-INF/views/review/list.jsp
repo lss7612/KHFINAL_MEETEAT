@@ -87,7 +87,7 @@ $(document).ready(function(){
 			$(".userMenu > ul").slideUp();
 			submenu.slideDown();
 			//슬라이드 메뉴 조정할려면 left의 style값을 변경하면 됩니다.
-			$(submenu).css({"display" : "inline-block", "left" : "30px"});
+			$(submenu).css({"display" : "inline-block", "left" : "100px"});
 		}
 	})
 	
@@ -138,8 +138,7 @@ function createChat(e){
 		</span>
 			<br>
 			<ul class="userHiddenMenu" >
-				<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 property값에 입력해준다. -->
-				<li onclick="createChat(this);" loginUserNo="${user_no }"  user_no="${list.USER_NO }">채팅하기</li>
+				<li onclick="createChat(this);" loginUserNo="${user_no }" user_no="${list.USER_NO }">채팅하기</li>
 			</ul>
 		</div>
 		</td>
@@ -158,9 +157,12 @@ function createChat(e){
 <form action="/review/list" method="get" class="form-inline text-center">
 	<div class="searchbox form-group form-group-sm ">
 		<select class="search form-control" style="width: 100px;" name="review_search" id="review_search">
-			<option value="article_title" <c:if test="${reviewSearch.review_search == 'article_title' }">selected</c:if>>제목</option>		
-			<option value="article_content" <c:if test="${reviewSearch.review_search == 'article_content' }">selected</c:if>>내용</option>		
-			<option value="user_nick" <c:if test="${reviewSearch.review_search == 'user_nick' }">selected</c:if>>작성자</option>		
+			<option value="article_title" 
+				<c:if test="${reviewSearch.review_search == 'article_title' }">selected</c:if>>제목</option>		
+			<option value="article_content" 
+				<c:if test="${reviewSearch.review_search == 'article_content' }">selected</c:if>>내용</option>		
+			<option value="user_nick" 
+				<c:if test="${reviewSearch.review_search == 'user_nick' }">selected</c:if>>작성자</option>		
 		</select>
 	</div>
 	
