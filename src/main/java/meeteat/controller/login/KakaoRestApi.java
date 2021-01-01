@@ -175,7 +175,13 @@ public class KakaoRestApi {
             String kakaoId = element.getAsJsonObject().get("id").toString();
             
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-            String image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
+            
+            String image = "";
+            try {
+            	image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
+			} catch (NullPointerException e) {
+				image = "기본이미지";
+			}
             
             try {
             	String email = kakao_account.getAsJsonObject().get("email").getAsString();

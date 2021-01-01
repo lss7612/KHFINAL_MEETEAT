@@ -190,8 +190,9 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/main")
-	public void main() {
+	public String main() {
 		
+		return "redirect:/testhome";
 	}
 	
 	@RequestMapping(value = "/navercallback", produces = "application/json;charset=utf-8", method = {RequestMethod.GET, RequestMethod.POST})
@@ -318,13 +319,8 @@ public class LoginController {
 		user.setUser_email(kakaoUserInfo.get("email").toString());
 		user.setUser_nick(kakaoUserInfo.get("nickname").toString());
 		
-		try {
-			user.setUser_profileorigin(kakaoUserInfo.get("image").toString());
-			user.setUser_profilestored(kakaoUserInfo.get("image").toString());
-		} catch (NullPointerException e) {
-			user.setUser_profileorigin("기본이미지");
-			user.setUser_profilestored("기본이미지");
-		}
+		user.setUser_profileorigin(kakaoUserInfo.get("image").toString());
+		user.setUser_profilestored(kakaoUserInfo.get("image").toString());
 		
 		
 		//로그인 시키기
