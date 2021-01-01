@@ -38,7 +38,7 @@ public class BoardAdminServiceImpl implements BoardAdminService {
 		//전체 게시글 수 조회
 		int totalCount = boardAdminDao.selectBoardCntAll(boardAdminParam);  
 		
-		System.out.println("dkdkdkdkdkkddkkdkd" + totalCount);
+		logger.info("getBoardManagePaging/Service" + totalCount);
 		
 		//페이징 객체 생성
 		Paging paging = new Paging(totalCount, curPage.getCurPage());
@@ -64,15 +64,19 @@ public class BoardAdminServiceImpl implements BoardAdminService {
 		map.put("manageCategory", boardAdminParam.getManageCategory());
 		map.put("manageKeyword", boardAdminParam.getManageKeyword());
 		map.put("manageSearch", boardAdminParam.getManageSearch());
+		map.put("start_date", boardAdminParam.getStart_date());
+		map.put("end_date", boardAdminParam.getEnd_date());
 		
 		List<HashMap<String, String>> result = new ArrayList<>();
 		
 		result = boardAdminDao.getBoardAllList(map);
 		
-		logger.info("board_no : "+ board_no);
-		logger.info("getSearchCategory : "+ boardAdminParam.getManageCategory());
-		logger.info("getSearchKeyword : "+ boardAdminParam.getManageKeyword());
-		logger.info("getManageSearch : "+ boardAdminParam.getManageSearch());
+		logger.info("board_no1 : "+ board_no);
+		logger.info("getSearchCategory1 : "+ boardAdminParam.getManageCategory());
+		logger.info("getSearchKeyword1 : "+ boardAdminParam.getManageKeyword());
+		logger.info("getManageSearch1 : "+ boardAdminParam.getManageSearch());
+		logger.info("getStart_date1 : "+ boardAdminParam.getStart_date());	
+		logger.info("getEnd_date1 : "+ boardAdminParam.getEnd_date());	
 		
 		return result;
 	}
@@ -89,14 +93,6 @@ public class BoardAdminServiceImpl implements BoardAdminService {
 			boardAdminDao.deleteBoardManage(map);
 		}
 			
-		
 	}
 
 }
-
-
-
-
-
-
-

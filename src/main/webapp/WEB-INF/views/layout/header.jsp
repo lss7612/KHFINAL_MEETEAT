@@ -22,6 +22,11 @@
 <!-- FontAwsome -->
 <script src="https://kit.fontawesome.com/2dc2c9d106.js" crossorigin="anonymous"></script>
 
+<!-- DateTimePicker : 한국식 날짜 표기를 적용 -->
+<link rel="stylesheet" type="text/css" href="/resources/css/boardAdmin/daterangepicker.css">
+<script type="text/javascript" src="/resources/js/boardAdmin/moment.js"></script>
+<script type="text/javascript" src="/resources/js/boardAdmin/daterangepicker.js"></script>
+
 <script type="text/javascript">
 //채팅목록 팝업으로 띄워주는 함수
 function chatListPopup(){
@@ -167,8 +172,8 @@ $(document).ready(function () {
 			<li>
 				<a href="#">공지사항</a>
 				<ul class="subb">
-					<li><a href="#">공지사항</a>
-					<li><a href="#">1:1 문의</a>
+					<li><a href="/notice/list">공지사항</a>
+					<li><a href="/inquiry/list">1:1 문의</a>
 					<li><a href="/eventboard/holding">이벤트</a>
 				</ul>
 			</li>

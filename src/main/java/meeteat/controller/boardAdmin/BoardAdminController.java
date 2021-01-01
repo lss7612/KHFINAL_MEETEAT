@@ -51,6 +51,8 @@ public class BoardAdminController {
 	logger.info("controller getSearchCategory : "+ boardAdminParam.getManageCategory());
 	logger.info("getSearchKeyword : "+ boardAdminParam.getManageKeyword());
 	logger.info("getManageSearch : "+ boardAdminParam.getManageSearch());	
+	logger.info("getStart_date : "+ boardAdminParam.getStart_date());	
+	logger.info("getEnd_date : "+ boardAdminParam.getEnd_date());	
 		
 	//페이징 처리
 	Paging paging = boardAdminService.getBoardManagePaging(curPage, boardAdminParam);
@@ -65,11 +67,14 @@ public class BoardAdminController {
 	model.addAttribute("list", list);
 	
 	model.addAttribute("boardAdminParam", boardAdminParam);
-	
+
 	//검색 기능
 	String keyword = request.getParameter("keyword");
 	String search = request.getParameter("search");
 	String board_no = request.getParameter("board_no");
+	String start_date = request.getParameter("start_date");
+	String end_date = request.getParameter("end_date");
+	
 	
 	BoardAdmin boardAdminSearch = new BoardAdmin();
 	
@@ -84,6 +89,10 @@ public class BoardAdminController {
 			boardAdminSearch.setBoard_no('1');
 		} else if (board_no.equals("5")) {
 			boardAdminSearch.setBoard_no('5');
+		} else if (start_date.equals("start_date")) {
+			boardAdminParam.setStart_date("start_date");
+		} else if (end_date.equals("end_date")) {
+			boardAdminParam.setEnd_date("end_date");
 		}
 	}
 	}

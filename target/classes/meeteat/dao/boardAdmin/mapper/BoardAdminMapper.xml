@@ -22,18 +22,19 @@
 		FROM tb_board2 b
 	</sql>
 
-	<!-- 검색기능 -->
 	<sql id="searchTitle">
 		<where>
 				is_delete = 0
-			<!-- <if test="false">
-				WHERE board_no = #{searchBoard_no}		
-			</if> -->
 			<if test="(manageSearch!=null and !manageSearch.equals('')) and (manageKeyword!=null and !manageKeyword.equals(''))">
 				AND ${manageSearch} LIKE '%${manageKeyword}%'
 			</if>
 			<if test="manageCategory!=null and !manageCategory.equals('')">
 				AND board_no = #{manageCategory} 
+			</if>
+			<if test="(start_date !=null and !start_date.equals('')) and (end_date !=null and !end_date.equals(''))">
+				AND (create_date BETWEEN TO_DATE(#{start_date}, 'YYYY-MM-DD')
+					AND TO_DATE(#{end_date}, 'YYYY-MM-DD')+1
+				)
 			</if>
 		</where>
 	</sql>
