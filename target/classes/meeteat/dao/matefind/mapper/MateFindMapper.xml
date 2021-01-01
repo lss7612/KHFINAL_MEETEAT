@@ -242,6 +242,7 @@
 			, TO_CHAR(meet_time, 'YYYY-MM-DD HH24:MI') as meet_time
 <!-- 			, TO_CHAR(terminate_date, 'YYYY-MM-DD HH24:MI') as terminate_date -->
 			, mate_list
+			, chatting_no
 		FROM tb_board2
 		WHERE board_no = 2
 			AND article_no = #{article_no }
@@ -298,6 +299,7 @@
 					, revision_date
 					, is_delete
 					, article_hit
+					, chatting_no
 					)
 		VALUES (TB_BOARD_SEQ.nextval
 				, #{article_title}
@@ -314,6 +316,7 @@
 				, sysdate
 				, 0
 				, 0
+				, #{chatting_no}
 				)
 	</insert>
 
@@ -356,6 +359,8 @@
 		    r.user_no
 		    , u.user_id
 		    , u.user_nick
+		    , u.user_age
+		    , u.user_gender
 		    , u.user_profilestored
 		FROM tb_board2 mf
 		left JOIN tb_recommend2 r

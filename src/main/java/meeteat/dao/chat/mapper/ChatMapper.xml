@@ -87,8 +87,8 @@
 	</select>
 	
 	<insert id="insertMsgContent" parameterType="hashmap">
-		insert into tb_chattingcontent2 (chatting_no, user_no, msg_content, msg_date)
-		values (#{chatting_no}, #{user_no}, #{msg_content}, sysdate)
+		insert into tb_chattingcontent2 (chatting_no, user_no, msg_content, msg_date, msg_type)
+		values (#{chatting_no}, #{user_no}, #{msg_content}, sysdate, 'CHAT')
 	</insert>
 	
 	<select id="getUserNickByUserNo" parameterType="int" resultType="String">
@@ -96,11 +96,12 @@
 		where user_no = #{user_no}
 	</select>
 	
-	<select id="getOldChatByRoomNo" resultType="hashmap">
-		select cc.user_no, u.user_nick, cc.msg_content, cc.msg_date from tb_chattingcontent2 cc
+	<select id="getOldChatByRoomNo" parameterType="hashmap" resultType="hashmap">
+		select cc.user_no, u.user_nick, cc.msg_type, cc.msg_content, cc.msg_date from tb_chattingcontent2 cc
 		inner join tb_user2 u
 		    on cc.user_no = u.user_no
-		where chatting_no = #{chatting_no}    
+		where chatting_no = #{chatting_no}
+			and msg_no >= #{enterMsgNo}
 		order by cc.msg_date asc
 	</select>
 	
@@ -117,4 +118,38 @@
 	<delete id="exitChatRoomByUserNo" parameterType="hashmap">
 		delete tb_chattinguser2 where chatting_no = #{chatting_no} and user_no = #{user_no}
 	</delete>
+	
+	<insert id="createMateChatRoom" parameterType="hashmap">
+		insert into tb_chatting2(chatting_name, chatting_id) values(#{chatting_name}, #{chatting_id})
+	</insert>
+	
+	<insert id="insertNoticeMsgForEnter" parameterType="hashmap">
+		insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type)
+		values(#{chatting_no}, #{user_no}, #{msg_content}, sysdate, 'ENTER')
+	</insert>
+	
+	<insert id="insertNoticeMsgForLeave" parameterType="hashmap">
+		insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type)
+		values(#{chatting_no}, #{user_no}, #{msg_content}, sysdate, 'LEAVE')
+	</insert>
+	
+	<select id="getEnterMsg" parameterType="hashmap" resultType="hashmap">
+		select rownum rnum, t.msg_no from(
+			select * from tb_chattingcontent2
+			where user_no = #{user_no}
+			and chatting_no = #{chatting_no}
+			and msg_type like 'ENTER'
+			order by msg_no desc) t
+		where rownum = 1
+	</select>
+	
+	<select id="getLeaveMsg" parameterType="hashmap" resultType="hashmap">
+		select rownum rnum, t.msg_no from(
+			select * from tb_chattingcontent2
+			where user_no = #{user_no}
+			and chatting_no = #{chatting_no}
+			and msg_type like 'LEAVE'
+			order by msg_no desc) t
+		where rownum = 1
+	</select>
 </mapper>

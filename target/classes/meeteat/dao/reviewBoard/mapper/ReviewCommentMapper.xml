@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 마이바티스 3 Mapper DOCTYPE -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="meeteat.dao.reviewBoard.face.ReviewCommentDao">
+
+	<select id="selectComment" parameterType="meeteat.dto.reviewBoard.ReviewBoard" resultType="meeteat.dto.reviewBoard.ReviewComment">
+		select * from (
+			select rownum rnum, c.* from (
+				select
+					comment_no, b.article_no, board_no, comment_content, 
+					b.user_no, comment_order, create_date, is_delete
+                 ,(select user_nick from tb_user2 u where u.user_no = b.user_no) user_nick
+				from tb_comment2 b
+				where article_no = #{article_no}
+				and is_delete = 0
+				and board_no = 4
+				order by create_date
+			) c
+		) order by rnum
+	</select>
+	
+	<insert id="insertComment" parameterType="meeteat.dto.reviewBoard.ReviewComment">
+		insert into tb_comment2 (comment_no, article_no, board_no, comment_content, 
+				user_no, comment_order, create_date, is_delete)
+		values(rvcom_seq.nextval, #{article_no}, 4, #{comment_content}, #{user_no},
+			0, sysdate, 0)
+	</insert>
+	
+	<update id="deleteComment" parameterType="meeteat.dto.reviewBoard.ReviewComment">
+		update tb_comment2
+		set is_delete = 1
+		where board_no = 4
+			and article_no = #{article_no}
+			and comment_no = #{comment_no}
+	</update>
+	
+	<select id="countComment" parameterType="meeteat.dto.reviewBoard.ReviewComment" resultType="int">
+		select count(*) from tb_comment2
+		where article_no = #{article_no}
+	</select>
+
+</mapper>

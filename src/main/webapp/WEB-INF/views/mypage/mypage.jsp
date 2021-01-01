@@ -4,39 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
+<%-- <c:import url="/WEB-INF/views/layout/share.jsp" /> --%>
 <link rel="stylesheet" href="/resources/css/mypage/mypage.css">
 
-<style>
-td{
-	text-align: center;
-	
-	white-space:nowrap;	
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-td:nth-child(0) {
-	text-align: center;
-	
-	white-space:nowrap;	
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
 
 
-</style>
-<script type="text/javascript">
-
-// $(document).ready(function(){
-	
-// 	if(confirm('결제회원만 접근 가능합니다.\n 결제하시겠습니까?')){
-// 		location.href='/mypay/mypay'
-// 	} else {
-// 		window.history.back()
-// 	}
-	
-// })
-
-</script>
 <div id="divpage">
 
 <div class="c_header">
@@ -51,9 +23,10 @@ td:nth-child(0) {
 				<h2>내 프로필 정보 <a href="/mypage/myedit" class="btn btn-default pull-right btn-sm" role="button">수정하기</a></h2>	
 			</div><hr>
 
-			<div id="myinfo">
-				<div id="mypic"><img src="/resources/upload/${userinfo.USER_PROFILESTORED }" id="pof_pic">
+	<div id="myinfo">
+			<img src="/resources/upload/${userinfo.USER_PROFILESTORED }" id="pof_pic">
 			<div id="info_detail">
+
 				<div class="box_set">
 					<strong class="tit_set">닉네임</strong> <span class="txt_set">${userinfo.USER_NICK }</span>
 				</div>
@@ -67,8 +40,8 @@ td:nth-child(0) {
 					<strong class="tit_set">이메일</strong> <span class="txt_set">${userinfo.USER_EMAIL }</span>
 				</div>
 			</div>	
-			</div>
-			</div>
+			
+	</div>
 		</div><!-- 회원 정보 끝 -->
 		
 		<!-- 내 결제 정보 -->
@@ -94,7 +67,7 @@ td:nth-child(0) {
 					<h3>결제 정보가 없습니다</h3>							
 				</c:when>
 				<c:otherwise>
-					<table class="table table-condensed">
+					<table class="table table-condensed table-hover">
 						<tr>
 							<th style="width: 15%">회원등급</th>
 							<th style="width: 15%">결제 가격</th>
@@ -129,29 +102,21 @@ td:nth-child(0) {
 					<h3>등록하신 글이 없습니다</h3>
 				</c:when>
 				<c:otherwise>
-					<table class="table table-condensed">
+					<table class="table table-condensed table-hover">
 						<tr>
-							<th style="width: 20%">게시판 이름</th>
+							<th style="width: 30%">게시판 이름</th>
 							<th style="width: 50%">글 제목</th>
-							<th style="width: 30%">작성일</th>
+							<th style="width: 20%">작성일</th>
 						</tr>
 							<c:forEach items="${pList}" var="b" varStatus="status" begin="0" end="4">
 							<tr>
 								<td>${b.BOARD_NAME}</td>
-								<c:choose>
-									<c:when test="${b.IS_DELETE eq 0 }">
-										<td>${b.ARTICLE_TITLE}</td>
-									</c:when>
-									<c:otherwise>
-										<td style="color: red;">삭제된 게시글입니다.</td>
-									</c:otherwise>
-								</c:choose>
-								<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
+								<td>${b.ARTICLE_TITLE}</td>
+								<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd"/></td>
 							</tr>
 							</c:forEach>
 
 					</table>
-
 				</c:otherwise>
 			</c:choose>
 			</div>
@@ -169,24 +134,22 @@ td:nth-child(0) {
 					<h3>등록하신 글이 없습니다</h3>
 				</c:when>
 				<c:otherwise>
-					<table class="table table-condensed">
+					<table class="table table-condensed table-hover">
 						<tr>
-							<th style="width: 20%">게시판 이름</th>
-							<th style="width: 50%">댓글 제목</th>
-							<th style="width: 30%">작성일</th>
+							<th style="width: 30%">게시판 이름</th>
+							<th style="width: 50%">댓글 내용</th>
+							<th style="width: 20%">작성일</th>
 						</tr>
 							<c:forEach items="${cList}" var="c" varStatus="status" begin="0" end="4">
 							<tr>
 								<td>${c.BOARD_NAME}</td>
-								<c:choose>
-									<c:when test="${c.IS_DELETE eq 0 }">
+									<c:if test="${c.IS_POSTDELETE==0}">
 										<td>${c.COMMENT_CONTENT}</td>
-									</c:when>
-									<c:otherwise>
-										<td style="color: red;">삭제된 댓글입니다.</td>
-									</c:otherwise>
-								</c:choose>
-								<td><fmt:formatDate value="${c.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
+									</c:if>
+									<c:if test="${c.IS_POSTDELETE==1}">
+										<td>게시글이 삭제되었습니다.</td>
+									</c:if>
+								<td><fmt:formatDate value="${c.CREATE_DATE}" pattern="yy/MM/dd"/></td>
 							</tr>
 							</c:forEach>
 

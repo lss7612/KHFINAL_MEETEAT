@@ -4,11 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-
-<meta charset="UTF-8">
+<c:import url="/WEB-INF/views/layout/header.jsp" />
 
 <!-- jQuery 2.2.4.min -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -20,10 +16,8 @@
 <!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ncf9ktdc08"></script> -->
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ncf9ktdc08&submodules=geocoder"></script>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-
-
-<title>Insert title here</title>
+<!-- 부트스트랩 -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
 
 <style type="text/css">
 
@@ -52,18 +46,8 @@ function goList() {
 	location.href="/matefind/list";
 }
 
-function prevent() {
-	
-	if(window.event.keyCode == 13) {
-		window.event.keyCode = 0;
-	} else {
-		return;
-	}
-}
-
 /* 엔터금지 */
 $(document).keypress(function(e) { if (e.keyCode == 13) e.preventDefault(); });
-
 
 $(document).ready(function() {
 	
@@ -111,36 +95,31 @@ $(document).ready(function() {
 
 </script>
 
-</head>
-<body>
 
-<c:import url="/WEB-INF/views/layout/header.jsp" />
 
 <div class="container" id="divpage">
 
 <form action="/matefind/write" method="post" id="form">
 
-	
-	<div class="row">
-		<div class="col">
-			<h1>메이트찾기 글쓰기</h1>
-		</div>
-	</div>
-	
+
+<h1 align="left">메이트찾기 글쓰기</h1>
+
 <hr>
 
-	<div class="row" style="width: 150px;">
-		<div class="col">
-			<label class="input-group-text" for="category">만남유형</label>
-			<select class="form-select" name="category">
+	<div class="form-inline">
+		<div class="input-group mb-3">
+			<label class="input-group-text" for="categorySel">만남유형</label>
+			<select class="form-control" id="categorySel" name="category">
 				<option value="">선택</option>
 				<option value="식사">식사</option>
 				<option value="카페">카페</option>
 				<option value="술">술</option>
 			</select>
-			
+		</div>
+		
+		<div class="input-group mb-3">
 			<label class="input-group-text" for="mate_list">모집인원</label>
-			<select class="form-select" name="mate_list">
+			<select class="form-control" id="mate_list" name="mate_list">
 				<option value="">선택</option>
 				<option value="1">1명</option>
 				<option value="2">2명</option>
@@ -152,6 +131,8 @@ $(document).ready(function() {
 			</select>
 		</div>
 	</div>
+	
+<hr>
 
 	<label for="title" class="form-label" style="float: left; margin-top: 30px;">제목</label>
 	<input type="text" class="form-control noEmpty" id="title" name="article_title">	
@@ -182,13 +163,12 @@ $(document).ready(function() {
 	}
 	
 	</script>	
-	
-	<!-- 카테고리 시간 -->
-	<div class="row">
-		<div class="col">
-<!-- 			<input type="hidden" id="category" name="category" readonly="readonly"> -->
-		</div>
-	</div>
+<%--
+	<label for="title" class="form-label" style="float: left; margin-top: 30px;">메인이미지</label>
+	<input type="file" class="form-control" id="file" name="file" required accept="image/*">
+	<h5>* 메인이미지 미등록시 카테고리에 따른 기본이미지가 적용됩니다 *</h5>
+
+--%>
 	<hr>
 	
 	<label for="date" class="form-label" style="float: left; margin-top: 40px;">시간</label>
@@ -396,7 +376,7 @@ $(document).ready(function() {
 
 	<div class="row">
 		<div class="col">
-			<button class="btn btn-primary" id="btnWrite" onkeypress="prevent()" onkeydown="prevent()">작성하기</button>
+			<button class="btn btn-primary" id="btnWrite">작성하기</button>
 			<input type="reset" id="cancel" class="btn btn-secondary" value="취소하기">
 		</div>
 	</div>
@@ -404,24 +384,6 @@ $(document).ready(function() {
 
 </form>
 
-
-<!-- toast 메세지 -->
-<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
-  <div class="toast-header">
-    <img src="..." class="rounded mr-2" alt="...">
-    <strong class="mr-auto">MEET EAT</strong>
-    <small>11 mins ago</small>
-    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="toast-body">
-    빈칸이 없도록 입력해주세요.
-  </div>
-</div>
-<!--// toast 메세지 끝-->
-
-	
 
 
 </div><!-- //container -->

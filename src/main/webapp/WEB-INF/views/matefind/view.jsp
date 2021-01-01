@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -20,34 +21,31 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-<title>Insert title here</title>
-
 <style type="text/css">
 
 body {
 	margin: 0 auto;
-	text-align: center;
+ 	text-align: center; 
 }
 
 .active {
 	color: gray;
 }
 
-.container hr {
-	align-content: center;
-	width: 100%;
-	height: 10px; 
-	border: 0;
-    border-top: 1px solid #abd5bd;
-    border-bottom: 1px solid #abd5bd;
-	background-color: #ced4da; margin: 8px 0px;
-}
+/* .container hr { */
+/* 	align-content: center; */
+/* 	width: 100%; */
+/* 	height: 10px;  */
+/* 	border: 0; */
+/*     border-top: 1px solid #abd5bd; */
+/*     border-bottom: 1px solid #abd5bd; */
+/* 	background-color: #ced4da; margin: 8px 0px; */
+/* } */
 
 .mateInfo {
 	float: left;
 	margin-top: 0px;
 	margin-bottom: 10px;
-	padding-right: 500px;
 }
 
 .pof_pic{
@@ -56,6 +54,40 @@ body {
 	border-radius:100px; 
 }
 
+#chattingDiv {
+	margin: 40px 0px;
+}
+
+/* 회원 아이디 클릭시 나타나는 목록 CSS */
+.userMenu{
+	display : inline-block;
+	width : 10%;
+	position : relative;
+}
+
+.userNickMenu{
+	cursor : pointer;
+}
+
+.userHiddenMenu{ 
+	list-style:none;
+   	display:none;
+	position : absolute; 
+	z-index : 1;
+} 
+
+.userHiddenMenu > li{
+	background-color : #F5DA81;
+	position : relative;
+	cursor : pointer;
+	border : solid 0px;
+	padding: 5px 10px 5px 10px;
+}
+
+.userHiddenMenu > li:hover{
+	background-color : #eee;
+}
+/* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
 
 </style>
 
@@ -81,7 +113,63 @@ $(document).ready(function() {
 		
 	})
 	
-})
+	
+	//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
+	
+	//userMenu mouseleave event
+	$(".userMenu").mouseleave(function(){
+		if($(".userHiddenMenu").is(":visible")){
+			console.log("hidden menu close")
+			$(".userHiddenMenu").slideUp();
+		}
+	})
+	
+	$(".userMenu>span").click(function(){
+		
+		var submenu = $(this).next("ul");
+		if(submenu.is(":visible")){
+			submenu.slideUp();
+		} else{
+			$(".userMenu > ul").slideUp();
+			submenu.slideDown();
+			//슬라이드 메뉴 조정할려면 left의 style값을 변경하면 됩니다.
+			$(submenu).css({"display" : "inline-block", "left" : "40px"});
+		}
+	})
+	
+	//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
+	
+});
+
+//채팅하기 클릭시 동작하는 스크립트
+function createChat(e){
+	var user_no = $(e).attr("user_no")
+	var loginUserNo = ${user_no}
+// 	var loginUserNo = $(e).attr("loginUserNo")
+	if(loginUserNo == user_no){
+		alert("자기 자신과는 대화할 수 없습니다!")
+		return false;
+	} else {
+		window.open("http://localhost:8088/chat/create?user_no="+user_no, "chatCreate"
+				, "width = 710px, height = 665px");
+	}
+}
+
+//채팅하기 클릭시 동작하는 스크립트 끝
+
+function joinChat(e){
+	var target = $(e).prev().val();
+	console.log($(e).prev())
+	console.log("target : "+target);
+
+	var frmPop = document.chatSubmitForm;
+	//팝업 
+	window.open("http://localhost:8088/chat/room", "chatRoom"
+			, "width=710px, height=665px");
+	frmPop.action = "http://localhost:8088/chat/room";
+	frmPop.target = "chatRoom";
+	frmPop.chatting_id.value = target
+}
 
 </script>
 
@@ -93,61 +181,72 @@ $(document).ready(function() {
 <div class="container" id="divpage">
 
 	<div class="row">
-		<div class="col-2">
+		<div align="left" class="col-6">
 			<h4>글번호 [ ${view.article_no} ]</h4>
 			<input type="hidden" value="${view.article_no }" name="article_no" id="article_no">
 		</div>
-		<div class="col-8"></div>
-		<div class="col-2">
+		<div align="right" class="col-6">
 			<h4>조회수 [ ${view.article_hit} ]</h4>
 		</div>
 	</div>
 	
 <hr>
 
-	<div class="row" style="margin-bottom: 20px;">
+	<div class="row" style="margin-bottom: 50px;">
 		<div class="col">
-			<h1 style="float: left;">${view.article_title }</h1>
+			<h1 align="left">${view.article_title }</h1>
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col">
-			<h4 class="mateInfo">#${view.party_location }</h4>
-			
-			<fmt:parseDate value="${jstlMeetTime }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/>
-			<h4 class="mateInfo">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일"/></h4>
-			<h4 class="mateInfo">#<fmt:formatDate value="${parseDateMeetTime }" pattern ="HH시 mm분"/></h4>
-			
-			<h4 class="mateInfo">#${view.category }</h4>
-			
-		</div>
+	<div class="row" align="left" style="padding-left: 10px;">
+
+		<fmt:parseDate value="${jstlMeetTime }" var="parseDateMeetTime" pattern="yyyyMMddHHmm" scope="page"/>
+		<p>날짜　　<fmt:formatDate value="${parseDateMeetTime }" pattern ="yyyy년 MM월 dd일 HH시 mm분"/></p>
+		<p>장소　　${view.party_location }</p>
+		<p>유형　　${view.category }</p>
+		
 	</div>
-	
 	
 	<hr>
+	
 	<div class="row">
 		<div class="col-3">
-			<h3 style="float: left;">host</h3>
+			<h3 style="float: left;">호스트</h3>
 		</div>
 	</div>
-	
-	
+
+<%-- 
+<div class="userMenu">
+	<span class="userNickMenu">작성자닉네임2</span>
+	<br>
+	<ul class="userHiddenMenu" >
+		<li onclick="createChat(this);" loginUserNo="${user_no }"  user_no="${user.USER_NO }">채팅하기</li>
+	</ul>
+</div>	
+--%>
+
 	<!-- host -->
-	<div class="row">
-	
-		<!-- user_no는 나중에 사진으로 대체 되어야함 -->
-		<div class="col-2">
-<%-- 			<img class="pof_pic" style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	 --%>
-			<img class="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${hostInfo.user_profilestored }" alt="유저프로필사진">	
-		</div>
-		
-		<div class="col-2">
-			<h3>${hostInfo.user_id }</h3>
-		</div>
-		<div class="col-2">
-			<h3>${hostInfo.user_nick }</h3>
-		</div>
+	<div class="row userMenu">
+		<span class="userNickMenu">
+			<!-- user_no는 나중에 사진으로 대체 되어야함 -->
+	<%-- 			<img class="pof_pic" style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	 --%>
+				<img class="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${hostInfo.user_profilestored }" alt="프로필">	
+<%-- 				<h4>${hostInfo.user_id }</h4> --%>
+				<h4>${hostInfo.user_nick }</h4>
+			<c:set value="${hostInfo.user_age }" var="ageRange"/>
+<%-- 				<h4>${fn:substring(ageRange,0,1) }0대</h4> --%>
+				
+			<c:set value="${hostInfo.user_gender }" var="gender"/>
+			<c:if test="${gender eq 'M' }">
+				<h4>${fn:substring(ageRange,0,1) }0대 🙍‍♂️</h4>
+			</c:if>
+			<c:if test="${gender eq 'F' }">
+				<h4>${fn:substring(ageRange,0,1) }0대 🙍‍♀️</h4>
+			</c:if>
+		</span>
+		<ul class="userHiddenMenu" >
+			<li onclick="createChat(this);" loginUserNo="${user_no }"  user_no="${view.user_no }">채팅하기</li>
+		</ul>
 	</div>
 	<!-- //host -->
 	
@@ -157,22 +256,30 @@ $(document).ready(function() {
 	
 	<!-- guest -->
 	<div id="attendeeAjax"></div>
-
 	
 	<hr>
 	
+	<div id="chattingDiv">
+		<!-- 모임 채팅방 참여 버튼 구역 -->
+		<form name="chatSubmitForm" method="post">
+			<h4>이 모임의 호스트와 이 모임에 관심있는 사람들과 대화를 나눠보세요!</h4> 
+			<input type="hidden" name="chatting_id" value="${chatting_id }" />
+			<button class="btn btn-info" id="enterChatBtn" onclick="joinChat(this);">모임 채팅방</button>
+		</form>
+		<!-- 모임 채팅방 참여 버튼 구역 -->
 	
-	
-	<div class="row">
-		<div class="col">
-			<h2 style="float: left;">내용</h2>
-		</div>
 	</div>
+	
+	<hr>
+	
 
-	<div class="row" style="background-color: #E0E0E0 ;margin: 20px; 10px;">
-		${view.article_content }
-	</div>
-	
+		<div class="row" align="left">
+			<label for="content" class="form-label" style="float: left; margin-top: 20px;">내용</label>
+		</div>
+		
+		<div class="row" id="content" style="padding: 10px 20px;">
+			${view.article_content }
+		</div>
 	
 	<hr>
 	
@@ -180,8 +287,6 @@ $(document).ready(function() {
 	<input class="form-control" id="date" type="datetime-local" value="${view.meet_time}" readonly="readonly" style="tran">
 	
 	
-		<!-- 네이버지도 검색창 -->
-	<!-- #수정# absolute - relative 로 지도에 띄우기 -->
 	<label for="map" class="form-label" style="float: left; margin-top: 40px;">위치</label>
 
 	<!-- 네이버지도 -->
@@ -203,12 +308,6 @@ $(document).ready(function() {
 	};
 	
 	var map = new naver.maps.Map('map', mapOptions);
-	
-	
-// 	var marker = new naver.maps.Marker({
-// 	    position: position,
-// 	    map: map
-// 	});
 
 	var infoWindow = new naver.maps.InfoWindow({
 	  anchorSkew: true
@@ -245,16 +344,12 @@ $(document).ready(function() {
 		  $('#party_location').val(item.roadAddress)
 		  
 		  var addressResult = item.roadAddress.split(' ');
-		  var category = addressResult[0];
-		  $('#category').val(category);
 	      
 	    } else {
 	    	
 	    	$('#party_location').val(item.jibunAddress)
 	    	
 	    	  var addressResult = item.jibunAddress.split(' ');
-			  var category = addressResult[0];
-			  $('#category').val(category);
 	    	
 	    }
 	
@@ -279,24 +374,6 @@ $(document).ready(function() {
 	    return;
 	  }
 	
-// 	  map.addListener('click', function(e) {
-// 	    searchCoordinateToAddress(e.coord);
-// 	  });
-	
-// 	  $('#address').on('keydown', function(e) {
-// 	    var keyCode = e.which;
-	
-// 	    if (keyCode === 13) { // Enter Key
-// 	      searchAddressToCoordinate($('#address').val());
-// 	    }
-// 	  });
-	
-// 	  $('#submit').on('click', function(e) {
-// 	    e.preventDefault();
-	
-// 	    searchAddressToCoordinate($('#address').val());
-// 	  });
-	
 	  searchAddressToCoordinate($('#party_location').val());
 	}
 	
@@ -305,6 +382,12 @@ $(document).ready(function() {
 
 	</script>
 	
+		<hr>
+	
+	<div class="row">
+		<h4>공유하기</h4>
+		<c:import url="/WEB-INF/views/layout/share.jsp" />
+	</div>
 	
 	
 	
@@ -357,8 +440,7 @@ $(document).ready(function() {
 						<button onclick="reportPopup();" class="btn btn-danger" >신고</button>
 						</form>
 						<!-- 게시글 신고 버튼 구역  종료-->
-<!-- 						신고하기 버튼 만든걸로 수정 해야함 -->
-<!-- 						<button class="btn btn-danger">신고하기</button> -->
+						
 					</div>
 				</c:otherwise>
 			</c:choose>

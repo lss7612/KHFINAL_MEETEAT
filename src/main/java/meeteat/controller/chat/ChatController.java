@@ -1,5 +1,7 @@
 package meeteat.controller.chat;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,41 +121,60 @@ public class ChatController {
 		logger.info("> > > 채팅 참여자 리스트 < < < ");
 		logger.info(""+chatUserList);
 		
-		//방의 이전 메시지 로드(필요시 구현)
-		List<HashMap<String,Object>> oldChat;
-		oldChat = chatService.getOldChatList(chatting_no);
-		logger.info(" > > > 과거 메시지 < < <");
-		logger.info(""+oldChat);
-		
-		if(oldChat.size() != 0) {
-			logger.info("> > > 기존 대화가 존재합니다. < < <");
-			//채팅방의 마지막 메시지 전달 날자 저장하기
-			Date lastMsgDate = new Date();
-			String lmd = null;
-			lmd = getLastMsgDate(oldChat, lastMsgDate);
+		//방의 이전 메시지 로드
+		//	1. 입장 시점 구하기
+		HashMap enterMsg = chatService.getEnterMsgNo(user_no, chatting_no);
+		HashMap leaveMsg = chatService.getLeaveMsgNo(user_no, chatting_no);
+		if(enterMsg == null || 
+				(leaveMsg != null && Integer.parseInt(""+enterMsg.get("MSG_NO"))<Integer.parseInt(""+leaveMsg.get("MSG_NO")))
+				) {
+			logger.info("> > > 방에 처음 들어왔습니다. < < <");
+			logger.info("> > > eterMsdg : "+enterMsg+"<<<");
+			logger.info("> > > eterMsdg : "+leaveMsg+"<<<");
 			
-			System.out.println("마지막 메세지 전달 날자 : "+lmd);
-			
-			
-			//전달시각 저장
-			Date time = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("a hh:mm");
-			List<String> trimOldChat = oldChatTrim(oldChat, user_no, sdf);
-			
-			//model 객체 등록
 			model.addAttribute("roomInfo", roomInfo);
 			model.addAttribute("chatUserList", chatUserList);
-			model.addAttribute("lastMsgDate", lmd);
-			model.addAttribute("oldChat", trimOldChat);
-			
+			return "chat/room";
 		} else {
-			logger.info("> > > 이전 대화가 없습니다. < < <");
-			model.addAttribute("roomInfo", roomInfo);
-			model.addAttribute("chatUserList", chatUserList);
+			logger.info("> > >마지막 입장 메시지 번호 : "+enterMsg.get("MSG_NO")+"< < <");
 			
+			int enterMsgNum = Integer.parseInt(""+enterMsg.get("MSG_NO"));
+			
+			List<HashMap<String,Object>> oldChat;
+			oldChat = chatService.getOldChatList(chatting_no, enterMsgNum);
+			logger.info(" > > > 과거 메시지 < < <");
+			logger.info(""+oldChat);
+			
+			if(oldChat.size() != 0) {
+				logger.info("> > > 기존 대화가 존재합니다. < < <");
+				//채팅방의 마지막 메시지 전달 날자 저장하기
+				Date lastMsgDate = new Date();
+				String lmd = null;
+				lmd = getLastMsgDate(oldChat, lastMsgDate);
+				
+				System.out.println("마지막 메세지 전달 날자 : "+lmd);
+				
+				
+				//전달시각 저장
+				Date time = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("a hh:mm");
+				List<String> trimOldChat = oldChatTrim(oldChat, user_no, sdf);
+				
+				//model 객체 등록
+				model.addAttribute("roomInfo", roomInfo);
+				model.addAttribute("chatUserList", chatUserList);
+				model.addAttribute("lastMsgDate", lmd);
+				model.addAttribute("oldChat", trimOldChat);
+				
+			} else {
+				logger.info("> > > 이전 대화가 없습니다. < < <");
+				model.addAttribute("roomInfo", roomInfo);
+				model.addAttribute("chatUserList", chatUserList);
+			}
+			
+			return "chat/room";
 		}
 		
-		return "chat/room";
 	}
 	
 
@@ -196,6 +216,33 @@ public class ChatController {
 		model.addAttribute("roomUserInfo", roomNum);
 		
 		return "/chat/list";
+	}
+	
+	@RequestMapping(value="/room/userlist")
+	public String roomUserList(int user_no, int chatting_no, String msgType, Model model) {
+		logger.info("> > > AJAX 요청 < < <");
+		logger.info("> > > msgType : "+msgType+" < < <");
+		
+		List<HashMap<String, Object>> userList = chatService.getChattingUserList(chatting_no);
+		model.addAttribute("chatUserList", userList);
+		
+		return "/chat/room_user_list";
+	}
+	
+	@RequestMapping(value="/room/usercount")
+	public void roomUserCount(int user_no, int chatting_no, Writer out) {
+		logger.info("> > > AJAX 요청 < < <");
+		List<HashMap<String, Object>> userList = chatService.getChattingUserList(chatting_no);
+		
+		int count = userList.size();
+		logger.info("> > > 채팅방 참여 유저 수 : "+count+"< < <");
+		
+		try {
+			out.write("{\"result\":"+count+"}");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void getChatNewest(List<HashMap<String,Object>> roomNum, List<HashMap<String, Object>> chatList) {
@@ -254,19 +301,32 @@ public class ChatController {
 			
 			msgTime = sdf.format(time);
 			if(Integer.parseInt(""+oldChat.get(i).get("USER_NO")) == user_no) {
-				trim.add("<div class=\"toMsg\">"
-						+ "<span class=\"toMsgTime\">"+msgTime+"</span>"
-						+ "<div class=\"toChatContent toBallon\">"+oldChat.get(i).get("MSG_CONTENT")+"</div>"
-						+ "</div>");
+				if(oldChat.get(i).get("MSG_TYPE").equals("ENTER")) {
+					trim.add("<div class='noticeArea'><span> 채팅방에 입장하셨습니다.</span></div>");
+					
+				} else if(oldChat.get(i).get("MSG_TYPE").equals("CHAT")){
+					trim.add("<div class=\"toMsg\">"
+							+ "<span class=\"toMsgTime\">"+msgTime+"</span>"
+							+ "<div class=\"toChatContent toBallon\">"+oldChat.get(i).get("MSG_CONTENT")+"</div>"
+							+ "</div>");
+				} else {
+					continue;
+				}
 			} else {
-				trim.add("<div class=\"fromMsg\">"
-						+ "<img class=\"profileImg\" src=\"/resources/img/default_profile_img.jpg\">"
-						+ "<div class=\"fromMsgInfo\">"
-							+ "<strong><span>"+oldChat.get(i).get("USER_NICK")+"</span></strong>"
-						+ "</div>"
-						+ "<div class=\"fromChatContent fromBallon\">"+oldChat.get(i).get("MSG_CONTENT")+"</div>"
-						+ "<span class=\"fromMsgTime\">"+msgTime+"</span>"
-						+ "</div>");
+				if(oldChat.get(i).get("MSG_TYPE").equals("ENTER")) {
+					trim.add("<div class='noticeArea'><span>"+oldChat.get(i).get("USER_NICK")+"님이 채팅방에 입장하셨습니다.</span></div>");
+				} else if(oldChat.get(i).get("MSG_TYPE").equals("CHAT")){
+					trim.add("<div class=\"fromMsg\">"
+							+ "<img class=\"profileImg\" src=\"/resources/img/default_profile_img.jpg\">"
+							+ "<div class=\"fromMsgInfo\">"
+								+ "<strong><span>"+oldChat.get(i).get("USER_NICK")+"</span></strong>"
+							+ "</div>"
+							+ "<div class=\"fromChatContent fromBallon\">"+oldChat.get(i).get("MSG_CONTENT")+"</div>"
+							+ "<span class=\"fromMsgTime\">"+msgTime+"</span>"
+							+ "</div>");
+				} else {
+					trim.add("<div class='noticeArea'><span>"+oldChat.get(i).get("USER_NICK")+"님이 채팅방에서 퇴장하셨습니다.</span></div>");
+				}
 			}
 		}
 		return trim;
