@@ -3,7 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="search" value="manageCategory=${boardAdminParam.manageCategory}&manageKeyword=${boardAdminParam.manageKeyword}&manageSearch=${boardAdminParam.manageSearch }"/>
+<c:set var="search" value="manageCategory=${boardAdminParam.manageCategory}&manageKeyword=${boardAdminParam.manageKeyword}&manageSearch=${boardAdminParam.manageSearch }&start_date=${boardAdminParam.start_date}&end_date=${boardAdminParam.end_date}"/>
 
 <div class="paging text-center">
 	<ul class="pagination">
