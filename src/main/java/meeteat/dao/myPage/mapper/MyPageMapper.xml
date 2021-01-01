@@ -55,22 +55,26 @@
 			, (SELECT board_name FROM tb_boardclass2 WHERE board_no = board.board_no) board_name
 		FROM tb_board2 board
 		WHERE user_no = #{user_no}
-		ORDER BY article_no DESC
+		AND is_delete = 0
+		ORDER BY create_date DESC
 	</select>
 	
 	<select id="selectMyCommentByNo" parameterType="int" resultType="HashMap">
 		SELECT c.comment_content, c.create_date, is_delete
 	      , (SELECT board_name FROM tb_boardclass2  WHERE board_no = c.board_no) board_name
 	   	  , (SELECT article_title FROM tb_board2  WHERE article_no = c.article_no) article_title
+		  , (SELECT is_delete FROM tb_board2 WHERE article_no = c.article_no) is_postdelete
 		FROM tb_comment2 c
 		WHERE user_no = #{user_no}
-		ORDER BY c.comment_no DESC
+		AND is_delete = 0
+		ORDER BY c.create_date DESC
 	</select>
 	
 	<select id="selectCntAllPost" parameterType="meeteat.dto.myPage.MyPageParam" resultType="int">
 		SELECT count(*) from( 
 			SELECT * FROM tb_board2
 			WHERE user_no = #{user_no}
+			AND is_delete = 0
 			<include refid="search"/>
 <!-- 			<include refid="category"/> -->
 		)CNT
@@ -80,14 +84,14 @@
 		SELECT * FROM (
 				SELECT rownum rnum, B.*
 				FROM(
-					SELECT board.article_title, board.article_content, board.create_date , board.article_no, board.board_no, is_delete
+					SELECT board.article_title, board.article_content, board.create_date , board.article_no, board.board_no, is_delete, board.revision_date
 					, (SELECT board_name FROM tb_boardclass2 WHERE board_no = board.board_no) board_name
 					FROM tb_board2 board
 					WHERE user_no = #{user_no}
-
+					AND is_delete = 0
 					<include refid="search"/>
 <!-- 					<include refid="category"/> -->
-					ORDER BY article_no DESC
+					ORDER BY create_date DESC
 					
 				) B
 				ORDER BY rnum
@@ -114,6 +118,7 @@
 		SELECT count(*) from( 
 			SELECT * FROM tb_comment2
 			WHERE user_no = #{user_no}
+				AND is_delete = 0
 				<if test="postSearch != null and !''.equals(postSearch)">
 					AND comment_content Like '%'||#{postSearch}||'%'
 				</if> 
@@ -125,15 +130,17 @@
 		SELECT * FROM (
 				SELECT rownum rnum, B.*
 				FROM(
-					SELECT cmmt.comment_content, cmmt.comment_no, cmmt.create_date, cmmt.board_no, cmmt.article_no, cmmt.is_delete
+					SELECT cmmt.comment_content, cmmt.comment_no, cmmt.create_date, cmmt.board_no, cmmt.article_no, cmmt.is_delete, cmmt.revision_date
 	      			, (SELECT board_name FROM tb_boardclass2  WHERE board_no = cmmt.board_no) board_name
 	   	  			, (SELECT article_title FROM tb_board2  WHERE article_no = cmmt.article_no) article_title
+	   	  			, (SELECT is_delete FROM tb_board2 WHERE article_no = cmmt.article_no) is_postdelete
 					FROM tb_comment2 cmmt
-					WHERE user_no = #{user_no}							
+					WHERE user_no = #{user_no}
+						AND is_delete = 0				
 						<if test="postSearch != null and !''.equals(postSearch)">
 							AND comment_content Like '%'||#{postSearch}||'%'
 						</if> 
-					ORDER BY article_no DESC
+					ORDER BY create_date DESC
 					
 				) B
 				ORDER BY rnum
@@ -161,6 +168,5 @@
         INNER JOIN tb_grade2 g ON g.user_grade = u.user_grade
         WHERE p.user_no = #{user_no}
 	</select>
-
 	
 </mapper>

@@ -100,7 +100,7 @@ a: -webkit-any-link {
 }
 
 span{
-	padding-left: 70px;
+	padding-left: 125px;
 	text-align: right;
 	right: -5px;
 }
@@ -110,7 +110,7 @@ span{
 }
 
 .txt_set{
-	padding-bottom: 10px;
+	padding-bottom: 15px;
 	height: 10px;
 }
 
@@ -132,7 +132,7 @@ span{
 }
 #info_detail{
 	display: inline-block;
-	margin-left: 30px;
+	margin-left: 45px;
 	padding-top: 10px;
 }
 
@@ -140,5 +140,22 @@ span{
 	width: 120px;
 	height:120px; 
 	border-radius:100px; 
-	margin-bottom: 60px;
+	margin-bottom: 85px;
+	margin-rigt: 25px;
+	margin-left: 30px;
+}
+
+td{
+	text-align: center;
+	
+	white-space:nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+td:nth-child(0) {
+	text-align: center;
+	
+	white-space:nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
