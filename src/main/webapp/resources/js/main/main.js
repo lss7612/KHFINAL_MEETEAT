@@ -7,7 +7,7 @@ $(document).ready(function(){
 		let originObject = $(this)
 		
 		$(this).animate({
-			width:'500px'
+			width:'600px'
 		},100)
 				
 	})
@@ -51,26 +51,26 @@ function mainAnimate(originObject, msg, url){
 			$('#mainTextBox').css('background', '#f5da81')
 			
 			$('#mainTextBox').animate({
-				fontSize:'0'
+				fontSize:'0.1em'
 				,height:'1000px'
-			},500)
+			},800)
 			
-			originObject.siblings().animate({
+			$('#goToSignUp').siblings().animate({
 				opacity:'0'
-			},500)
+			},800)
 			
-			originObject.animate({
+			$('#goToSignUp').animate({
 				fontSize:'40px'
 				,height: '500px'
 			})
-			originObject.html('환영합니다!<br>'+msg+'<br>'
+			$('#goToSignUp').html('환영합니다!<br>'+msg+'<br>'
 					+ '<img style="width:300px;" src="/resources/img/logo.png">'
 			)
 			
 			
 			setTimeout(() => {
 				location.href=url
-			}, 1500);
+			}, 2000);
 			
 		}, 500);
 		
