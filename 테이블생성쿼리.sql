@@ -950,7 +950,7 @@ CREATE TABLE TB_POPUP2
     article_no       NUMBER    NOT NULL, 
     board_no         NUMBER    NOT NULL, 
     is_popup         NUMBER    NOT NULL, 
-    revision_date    DATE      NOT NULL
+    revision_date    DATE      NULL
 )
 /
 
