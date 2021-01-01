@@ -16,7 +16,6 @@
                  ,(select user_nick from tb_user2 u where u.user_no = b.user_no) user_nick
 				from tb_comment2 b
 				where article_no = #{article_no}
-				and is_delete = 0
 				and board_no = 4
 				order by create_date
 			) c
@@ -31,8 +30,7 @@
 	</insert>
 	
 	<update id="deleteComment" parameterType="meeteat.dto.reviewBoard.ReviewComment">
-		update tb_comment2
-		set is_delete = 1
+		delete tb_comment2
 		where board_no = 4
 			and article_no = #{article_no}
 			and comment_no = #{comment_no}

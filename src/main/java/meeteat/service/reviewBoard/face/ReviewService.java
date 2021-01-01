@@ -27,17 +27,21 @@ public interface ReviewService {
 
 	public void insertComment(ReviewComment comment);
 
-	public boolean deleteComment(ReviewComment comment);
+//	public boolean deleteComment(ReviewComment comment);
 
 	public List<ReviewComment> getCommentList(ReviewBoard reviewBoard);
 
-	public void filesave(MultipartFile fileupload);
+	public void filesave(MultipartFile fileupload, int article_no);
 
 	public List<ReviewImg> list();
 
 	public ReviewImg getFile(int file_no);
 
 	public List<HashMap<String, String>> list(Paging paging, ReviewSearch reviewSearch, int board_no);
+
+//	public void deleteComment(ReviewComment comment);
+
+	public boolean deleteComment(ReviewComment comment);
 
 
 

@@ -100,7 +100,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public void filesave(MultipartFile fileupload) {
+	public void filesave(MultipartFile fileupload, int article_no) {
 		
 		//파일이 저장될 경로(real path)
 		String storedPath = context.getRealPath("upload");
@@ -134,8 +134,13 @@ public class ReviewServiceImpl implements ReviewService {
 				
 		//DB에 기록하기
 		ReviewImg reviewImg = new ReviewImg();
+		logger.info("> > >reviewImg : "+reviewImg+"< < <");
+		logger.info("---------------------------------------------------- originname : "+fileupload.getOriginalFilename());
 		reviewImg.setFile_originname(fileupload.getOriginalFilename());
 		reviewImg.setFile_storedname(filename);
+		reviewImg.setArticle_no(article_no);
+		
+		logger.info("------------------------------------------------------------ : " + reviewImg);
 				
 		reviewDao.insertFile(reviewImg);
 	
@@ -168,6 +173,17 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		return listresult;
 	}
+
+//	@Override
+//	public void write(ReviewBoard reviewBoard, MultipartFile fileupload) {
+//		reviewDao.write(reviewBoard);
+//		
+//	}
+
+//	@Override
+//	public void deleteComment(ReviewComment comment) {
+//		reviewCommentDao.deleteComment(comment);
+//	}
 
 	
 
