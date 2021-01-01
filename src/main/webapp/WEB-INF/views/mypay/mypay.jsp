@@ -122,29 +122,19 @@ p{
 	padding: 0;
 }
 
-.payinfo{
-	border: 1px solid #F5DA81;
-	display: block;
-	text-align: center;
-}
-
 </style>
 
 <div id="divpage">
 
 <div class="c_header">
-	<h1>결제 페이지</h1>
-	<p class="contxt">결제를 진행하시면 1,900원이 결제되어 모든 게시판을 이용할 수 있습니다!<br>
+	<h1>결제 페이지<button id="check_module" type="button" class="btn btn-default pull-right" style="margin-right: 10px;">결제하기</button></h1>
+	<hr>
+	<p class="contxt">결제를 진행하시면 1,900원이 결제되며 모든 게시판을 이용할 수 있습니다!<br>
 					 결제를 진행하시면 환불하실 수 없으니 신중히 결제를 진행해주세요...!</p>
 </div><br>
 
 <div class="payinfo">
 	<img src="/resources/img/mypay.png" title="결제" class="pic">
-	<div class="btn">
-		<button id="check_module" type="button" class="btn btn-default btn-sm pull-right">결제하기</button>
-		<a href="/mypage/mypage" role="button" class="btn btn-default btn-sm pull-left">마이페이지 돌아가기</a>
-	</div>
-	
 </div>
 
 </div>

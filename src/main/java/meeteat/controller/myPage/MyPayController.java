@@ -75,7 +75,6 @@ public class MyPayController {
 				
 				out.write("{\"result\":true}");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -85,7 +84,6 @@ public class MyPayController {
 //				logger.info("payChk222222222222222222222222" + payChk);
 				out.write("{\"result\":false}");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -125,7 +123,7 @@ public class MyPayController {
 			session.setAttribute("user_grade", 2);
 
 			//메인으로 돌아가기
-			return "redirect:/mypage/mypage";
+			return "mypage/mypage";
 		}else {
 
 			return "redirect:/mypage/mypage";

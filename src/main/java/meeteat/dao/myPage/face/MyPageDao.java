@@ -103,8 +103,5 @@ public interface MyPageDao {
 	public Map<String, Object> selectMyPayList(int user_no);
 
 
-	
-
-
 
 }

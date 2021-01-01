@@ -107,4 +107,5 @@ public interface MyPageService {
 	public Map<String, Object> myPayList(int user_no);
 
 
+
 }
