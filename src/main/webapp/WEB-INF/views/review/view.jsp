@@ -66,7 +66,6 @@ $(document).ready(function(){
 })
 //작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트 끝
 
-
 //채팅하기 클릭시 동작하는 스크립트
 function createChat(e){
 	var user_no = $(e).attr("user_no")
@@ -100,7 +99,6 @@ function reportPopup(){
 // 신고하기 동작 함수 끝
 
 // 댓글 신고하기 버튼 클릭시 동작할 함수
-
 function reportBtn(e){
 	
 	var target = $(e).prev().prev().val();
@@ -184,9 +182,32 @@ $(document).ready(function() {
 		$(document.body).append($form);
 		$form.submit();
 		
-	});
+	});	
 	
 })
+
+function deleteComment(comment_no) {
+	$.ajax({
+		type: "post"
+		, url: "/review/comment/delete"
+		, dataType: "json"
+		, data: {
+			comment_no: comment_no
+		}
+		, success: function(data){
+			if(data.success) {
+				
+				$("[data-comment_no='"+comment_no+"']").remove();
+				
+			} else {
+				alert("댓글 삭제 실패");
+			}
+		}
+		, error: function() {
+			console.log("error");
+		}
+	});
+}
 </script>
 
 <div class="container" id="divpage">
@@ -220,19 +241,21 @@ $(document).ready(function() {
 <td class="info">조회수</td><td>${view.article_hit }</td>
 </tr>
 <tr>
-<td class="info">작성일</td><td><fmt:formatDate value="${view.create_date }" pattern="yy-MM-dd hh:mm" /></td>
+<td class="info">작성일</td><td><fmt:formatDate value="${view.create_date }" pattern="yy-MM-dd HH:mm" /></td>
 </tr>
 
 <tr>
 <td class="info">제목</td><td colspan="3">${view.article_title }</td>
 </tr>
 
-<!-- <tr><td class="info"  colspan="4">본문</td></tr> -->
-
 <tr><td colspan="4">${view.article_content }</td></tr>
 <c:forEach items="${list }" var="ReviewImg">
 <tr>
-	<td class="cjaqn"><a href="/review/download?file_no=${ReviewImg.file_no}">${ReviewImg.file_originname }</a></td>
+	<c:if test="${view.article_no eq ReviewImg.article_no }">
+	<td class="cjaqn">
+	<a href="/review/download?file_no=${ReviewImg.file_no}">${ReviewImg.file_originname }</a>
+	</td>
+	</c:if>
 </tr>
 </c:forEach>
 
@@ -242,7 +265,8 @@ $(document).ready(function() {
 	<a href="/review/list"><button class="btn btn-default">목록</button></a>
 	<c:if test="${user_no eq view.user_no }">
 		<a href="/review/update?article_no=${view.article_no }"><button class="btn btn-primary">수정</button></a>
-		<a href="/review/delete?article_no=${view.article_no }" onclick="return confirm('삭제하시겠습니까?')"><button class="btn btn-danger">삭제</button></a>
+		<a href="/review/delete?article_no=${view.article_no }" onclick="return confirm('삭제하시겠습니까?')">
+			<button class="btn btn-danger">삭제</button></a>
 	</c:if>
 </div>
 
@@ -260,17 +284,20 @@ $(document).ready(function() {
 </tr>
 </thead>
 <tbody id="commentBody">
+
 <c:forEach items="${commentList }" var="comment">
-<%-- <tr data-commentno="${comment.commentNo }"> --%>
-<%-- 	<td style="width: 5%;">${comment.rnum }</td> --%>
 	<td style="width: 10%;">${comment.user_nick }</td>
 	<td style="width: 50%; text-align: left; padding-left: 20px;">${comment.comment_content }</td>
-	<td style="width: 20%;"><fmt:formatDate value="${comment.create_date }" pattern="yy-MM-dd hh:mm" /></td>
+	<td style="width: 20%;"><fmt:formatDate value="${comment.create_date }" pattern="yy-MM-dd HH:mm" /></td>
 	<td style="width: 5%;">
-		<c:if test="${user_no eq comment.user_no }">
-			<a href="/review/comment/delete?article_no=${comment.article_no }" onclick="return confirm('삭제하시겠습니까?')">
-			<button class="btn btn-default btn-xs">삭제</button></a>
-		</c:if>
+<%-- 		<c:if test="${user_no eq comment.user_no }"> --%>
+<%-- 			<a href="/review/comment/delete?comment_no=${comment.comment_no }" onclick="return confirm('삭제하시겠습니까?')"> --%>
+<!-- 			<button class="btn btn-default btn-xs">삭제</button></a> -->
+<%-- 		</c:if> --%>
+			<c:if test="${user_no eq comment.user_no }">
+				<button class="btn btn-default btn-xs"
+					onclick="deleteComment(${comment.comment_no });">삭제</button>
+			</c:if>
 	</td>
 	<td style="width: 3%;">
 		<div class="commentReport" style="display : inline-block;" >
@@ -289,8 +316,6 @@ $(document).ready(function() {
 
 <c:if test="${not isLogin }">
 	<strong>로그인이 필요합니다</strong><br>
-	<button onclick='location.href="#";'>로그인</button>
-	<button onclick='location.href="#";'>회원가입</button>
 </c:if>
 
 <c:if test="${isLogin }">

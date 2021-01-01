@@ -23,25 +23,31 @@ td:nth-child(2) {
 	overflow: hidden;
 }
 </style>
+<script type="text/javascript">
+function userGradeSet(){
+	
+}
+</script>
 
 <div class="container" id="divpage">
 
 <h1 class="pull-left">유저 관리</h1>
 <div class="clearfix"></div>
 <hr>
-
+<form action="" method="">
 <table class="table table-striped table-hover table-condensed">
 <thead>
 	<tr>
 		<th style="width: 10%">유저번호</th>
 		<th style="width: 15%">아이디</th>
-		<th style="width: 15%">닉네임</th>
+		<th style="width: 15%">닉네임쓰</th>
 		<th style="width: 15%">성별</th>
 		<th style="width: 10%">나이</th>
 		<th style="width: 10%">경고카운트</th>
 		<th style="width: 15%">이메일</th>
 		<th style="width: 10%">등급</th>
 		<th style="width: 10%">게시글 관리</th>
+		<th style="width: 10%">등급조정</th>
 	</tr>
 </thead>
 <tbody>
@@ -56,14 +62,24 @@ td:nth-child(2) {
 		<td>${list.USER_EMAIL }</td>
 		<td>${list.USER_GRADE }</td>
 		<td><a href="http://localhost:8088/admin/board/list?manageCategory=&manageSearch=user_nick&manageKeyword=${list.USER_NICK }" /><button>이동</button></td>
+		<td>
+		<select name="grade">
+			<option value="999">---</option>
+			<option value="1">결제등급</option>
+			<option value="2">일반등급</option>
+			<option value="3">영구정지</option>
+		</select>
+		</td>
 	</tr>
 </c:forEach>
 </tbody>
 </table>
+<button onclick="userGradeSet();">등급처리 </button>
+</form>
 
 <div class="clearfix"></div>
 
-<form action="/adminuser/list" method="get" class="form-inline text-center">
+<form action="/admin/user/list" method="get" class="form-inline text-center">
 	<div class="searchbox form-group form-group-sm ">
 		<select class="search form-control" style="width: 100px;" name="user_search" id="user_search">
 			<option value="user_id" <c:if test="${userSearch.user_search == 'user_id' }">selected</c:if>>아이디</option>		

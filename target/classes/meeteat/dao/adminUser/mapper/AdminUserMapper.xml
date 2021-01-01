@@ -21,7 +21,7 @@
 			</where>
 				)
 		where rnum between #{startNo} and #{endNo} 
-		order by rnum desc
+		order by rnum
 	</select>
 	
 	<select id="selectCntAll" parameterType="meeteat.dto.adminUser.UserSearch" resultType="int">

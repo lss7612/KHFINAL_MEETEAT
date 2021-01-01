@@ -28,8 +28,6 @@ public class ReviewCommentController {
 	@RequestMapping(value = "/review/comment/insert")
 	public String insert(ReviewComment comment, Model model, HttpSession session) {
 		
-		logger.info("comment!! : " + comment);
-		
 		comment.setUser_no(Integer.parseInt(""+session.getAttribute("user_no")));
 		reviewService.insertComment(comment);
 		
@@ -49,6 +47,14 @@ public class ReviewCommentController {
 		}
 	}
 	
+//	@RequestMapping(value = "/review/comment/delete")
+//	public String delete(ReviewComment comment, Writer writer, Model Model) {
+//		
+//		reviewService.deleteComment(comment);
+//		
+//		return "redirect:/review/view?article_no=" + comment.getArticle_no();
+//	
+//	}
 
 }
 
