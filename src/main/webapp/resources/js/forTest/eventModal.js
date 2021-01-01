@@ -2,10 +2,19 @@ $(document).ready(function(){
 	
 	anyPopupList()
 	
-	console.log($(window).height());
-	
 	let windowHeight = $(window).height()
 	
+	//모달창 떠있는동안 스크롤 막기
+	$('#eventModalWrapper').on('scroll touchmove mousewheel', function(e) {
+		if(!$('#eventModalWrapper').hasClass('invisible')){
+			console.log('don\'t scroll now')
+			e.preventDefault()
+			e.stopPropagation()
+			return false
+		}
+	})
+	
+	$('#eventModalWrapper').css('width',$('html').height)
 	$('#eventModalWrapper').css('padding-top', windowHeight/6)
 	
 	$('#modalExitButtonDiv i').click(function(){
