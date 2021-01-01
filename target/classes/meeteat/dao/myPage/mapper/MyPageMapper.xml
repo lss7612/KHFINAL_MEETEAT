@@ -169,4 +169,9 @@
         WHERE p.user_no = #{user_no}
 	</select>
 	
+	<update id="editUser" parameterType="meeteat.dto.user.User">
+		UPDATE tb_user2
+			SET user_nick = #{user_nick}, user_email = #{user_email}, user_pw = #{user_pw}
+		WHERE user_no = #{user_no}	
+	</update>
 </mapper>

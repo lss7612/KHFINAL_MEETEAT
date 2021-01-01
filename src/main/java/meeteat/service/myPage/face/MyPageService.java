@@ -106,6 +106,12 @@ public interface MyPageService {
 	 */
 	public Map<String, Object> myPayList(int user_no);
 
+	/**
+	 * 프로필 사진은 안바꿀때
+	 * @param user
+	 */
+	public void myEdit(User user);
+
 
 
 }

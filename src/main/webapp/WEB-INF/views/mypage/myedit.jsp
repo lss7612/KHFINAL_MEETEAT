@@ -21,28 +21,6 @@ function checkEmail(str) {
 }
 
 $(document).ready(function() {
-// 	$('#user_pw').val('${userinfo.user_pw}');
-// 	$('#user_email').val('${userinfo.user_email}');
-// 	$('#user_nick').val('${userinfo.user_nick}');
-	
-// 	$("input").keyup(function(){
-// 	      var pw1 = $("#user_pw").val();
-// 	      var pw2 = $("#checkpw").val();
-// 	      var idx1 = true;
-	      
-// 	      if(pw1 != "" || pw2 != "") {
-// 	          if(pw1 == pw2){ 
-// 	             $('#alert-success').show();
-// 	             $('#alert-fail').hide();       
-// 	          } else{
-// 	             $('#alert-success').hide();
-// 	             $('#alert-fail').show();
-// 	             return false;
-// 	          }
-// 	       }
-// 	})
-	
-
 	
 	$('#editBtn').click(function(){
 		
@@ -71,8 +49,15 @@ $(document).ready(function() {
 			$('#submitResult').css("color", "red");
 			$('#user_email').focus;
 			return false;
-		}else {
-			$('#editForm').submit();
+		}		else {
+			if(checkEmail($('#user_email').val())) {
+				$('#submitResult').text("");
+				$('#editForm').submit();
+			} else {
+				$('#submitResult').text("이메일형식에 맞게 작성해주세요");
+				$('#submitResult').css("color", "red");
+				return false;
+			}
 		}
 		
 	});
@@ -122,7 +107,7 @@ $(document).ready(function() {
 			</p>
 		</div>
 		
-		<form action="/mypage/myedit" method="POST" id="editForm" enctype="multipart/form-data" autocomplete="off" autocomplete="off" class="editForm">
+		<form action="/mypage/myedit" method="POST" id="editForm" enctype="multipart/form-data" class="editForm">
 			<input type="hidden" name="user_no" id="user_no" value="${user_no} ">
 			<fieldset class="fs">
 			<div class="border">
