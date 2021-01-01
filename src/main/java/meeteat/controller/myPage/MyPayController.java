@@ -123,7 +123,7 @@ public class MyPayController {
 			session.setAttribute("user_grade", 2);
 
 			//메인으로 돌아가기
-			return "mypage/mypage";
+			return "redirect:/mypage/mypage";
 		}else {
 
 			return "redirect:/mypage/mypage";

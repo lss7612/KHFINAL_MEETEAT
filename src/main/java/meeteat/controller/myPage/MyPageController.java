@@ -69,9 +69,11 @@ public class MyPageController {
 			, @RequestParam("file") MultipartFile fileupload
 			,Model model) {
 		
-//		logger.info("user_no");
-		myPageService.myEdit(user, fileupload);
-		
+		if(fileupload.isEmpty() ) {
+			myPageService.myEdit(user);
+		}else {
+			myPageService.myEdit(user, fileupload);
+		}
 
 		return "redirect:/mypage/mypage";
 	}

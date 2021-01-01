@@ -33,14 +33,20 @@ $(document).ready(function() {
 	})
 })
 </script>
-
+<script>
+function init(){
+	str = removeHTML(str);
+}
+function removeHTML(text){
+	text = text.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig,"");
+	return text;
+}
+</script>
 <style>
 th, td, p {
 	text-align: center;
 }
 
-
-@charset "UTF-8";
 table {
  	table-layout: fixed;
  	max-width: 90% 
