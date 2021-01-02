@@ -2,64 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:import url="/WEB-INF/views/layout/headerForMember.jsp"/>
-<link rel="stylesheet" href="/resources/css/main/member.css"></link>
+<link rel="stylesheet" href="/resources/css/main/memberpreview.css"></link>
 <link rel="stylesheet" href="/resources/css/common/common.css"></link>
-<script type="text/javascript" src="/resources/js/main/member.js" ></script>
-<div id="divpage">
+<script type="text/javascript" src="/resources/js/main/memberpreview.js" ></script>
 
-
-<c:if test="${sessionScope.user_grade eq 0 }">
-
-<div style="width:20%; border: 1px solid #ccc; border-radius: 10px; text-align:center; cursor:pointer;" class="pull-right lighter_bar_height lighter_padding">
-<a href="/admin/main/imgchange">메인 이미지 변경</a>
+${isTempUploaded }
+<div class="bold_height_bar color_primary base_padding" style="text-align:center;">
+<span style="font-size:1.5em">미리보기입니다.</span>
 </div>
-
-<div class="clearfix"></div>
-</c:if>
-
 <%-- 회원 수 및 게시글 수 표시 --%>
 <div>
-<div id="animatedDivs" class="subDiv">
+<div id="animatedDivs" 
+	style='overflow:hidden;
+	height:400px;
+	background-image: url("/resources/img/loading.gif");
+	background-size: 30%;
+	background-repeat: no-repeat;'
+class="subDiv">
 	<div class="animatedNumbers" class="pull-left" style="float:left;width:45%;">
 	
-		<div class="">	
-			<div class="sub_title">
-			<div class="title"><span>MEETEAT의</span></div> 
-			<c:forEach begin="0" end="${userBoxCnt - 1}" var="i">
-				<div id="userNumberBox${i }" style="float:left" class="numberBox" boxCnt="${userBoxCnt }">${cntUsers_arr.get(i) }</div>
-			</c:forEach>
-			<div class="clearfix"></div>
-			<div><span>명의 회원들이</span></div>
-			</div>
-		</div>
 	
 	</div>
-	
-	<div class="animatedNumbers" class="pull-right" style="float:right;width:45%;text-align:right;">
-	
-		<div class="">	
-		<br><br>
-			<div class="sub_title">
-			<div class="title"><span>총</span></div> 
-			
-			<c:if test="${AppointmentBoxCnt eq 0 }">
-				<div id="appointmentNumberBox0" style="float:right" class="numberBox" boxCnt="1">0</div>
-			</c:if>
-			<c:if test="${AppointmentBoxCnt > 0 }">			
-			<c:forEach begin="0" end="${AppointmentBoxCnt - 1}" var="i">
-				<div id="appointmentNumberBox${i }" style="float:right" class="numberBox" boxCnt="${AppointmentBoxCnt }">${cntAppointment_arr.get(i) }</div>
-			</c:forEach>
-			
-			</c:if>
-			
-			<div class="clearfix"></div>
-			<div><span>개의 모임을 만들고 즐겼어요!</span></div>
-			</div>
-		</div>
-	
-	</div>
-	
 </div>
 </div>
 <div class="clearfix"></div>
@@ -130,6 +93,10 @@
 </div>
 
 
+<%-- 메인 이미지 박스 --%>
+<div id="mainImgBox" style="height:200px; overflow: hidden;">
+	<img src="/resources/img/main/membermain/main_image.jpg">
+</div>
 
 <%-- 많이 본 게시물 표시 박스 --%>
 <div>
@@ -194,8 +161,3 @@
 
 
 
-</div>
-
-
-
-<c:import url="/WEB-INF/views/layout/footer.jsp"/>

@@ -7,14 +7,15 @@
 
 	<select id="getPopularList" resultType="hashmap">
 		SELECT * FROM
-		(SELECT table1.*, rownum rnum FROM
+		(SELECT table2.*, rownum rnum FROM
+		(SELECT table1.* FROM
 		(SELECT
 		    article_no
 		    ,article_title
 		    ,board_no
 		    ,user_no
 		    ,article_hit
-		    ,(SELECT count(*) FROM tb_recommend2 r WHERE r.article_no = b.article_no AND r.board_no = b.board_no) recommentCnt
+		    ,(SELECT count(*) FROM tb_recommend2 r WHERE r.article_no = b.article_no AND r.board_no = b.board_no) recommendCnt
 		    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
 		    ,(SELECT board_name FROM tb_boardclass2 bc WHERE bc.board_no = b.board_no) board_name
 		FROM tb_board2 b
@@ -22,29 +23,30 @@
 		        7 > to_char(sysdate, 'yyyyMMdd')-to_char(b.create_date, 'yyyyMMdd')
 		        AND board_no IN (2,3,4)
 		) table1
-		ORDER BY recommentCnt DESC)
-		WHERE rnum between 1 AND 10
+		ORDER BY recommendCnt DESC)table2)
+		WHERE rnum BETWEEN 1 AND 10
 	</select>
 
 	<select id="getMostViewList" resultType="hashmap">
 		SELECT * FROM
-		(SELECT table1.*, rownum rnum FROM
+		(SELECT table2.*, rownum rnum FROM
+		(SELECT table1.* FROM
 		(SELECT
 		    article_no
 		    ,article_title
 		    ,board_no
 		    ,user_no
 		    ,article_hit
-		    ,(SELECT count(*) FROM tb_recommend2 r WHERE r.article_no = b.article_no AND r.board_no = b.board_no) recommentCnt
+		    ,(SELECT count(*) FROM tb_recommend2 r WHERE r.article_no = b.article_no AND r.board_no = b.board_no) recommendCnt
 		    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = b.user_no) user_nick
 		    ,(SELECT board_name FROM tb_boardclass2 bc WHERE bc.board_no = b.board_no) board_name
 		FROM tb_board2 b
 		    WHERE
 		        7 > to_char(sysdate, 'yyyyMMdd')-to_char(b.create_date, 'yyyyMMdd')
-		      	AND board_no IN (2,3,4)
+		        AND board_no IN (2,3,4)
 		) table1
-		ORDER BY article_hit DESC)
-		WHERE rnum between 1 AND 10
+		ORDER BY article_hit DESC)table2)
+		WHERE rnum BETWEEN 1 AND 10
 	</select>
 	
 	<select id="getTotalUserCnt" resultType="int">

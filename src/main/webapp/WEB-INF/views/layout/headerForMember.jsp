@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>MEET & EAT</title>
 
-<link rel="stylesheet" type="text/css" href="/resources/css/layout/css.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/layout/cssForMember.css" />
 
 <!-- jQuery 2.2.4 -->
 <script type="text/javascript"

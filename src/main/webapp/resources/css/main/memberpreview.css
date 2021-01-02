@@ -44,10 +44,6 @@ tbody tr td:nth-child(1)
 }
 
 #animatedDivs{
-	overflow:hidden;
-	height:400px;
-	background-image: url("/resources/img/main/membermain/animatedbackImg.jpg");
-	background-size: 100%;
 }
 
 #animatedDivs span {

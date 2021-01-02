@@ -2,7 +2,6 @@ let arr_numbers = [0,1,2,3,4,5,6,7,8,9]
 
 $(document).ready(function(){
 	
-	//스크롤이 어느정도 되었을 때로 바꿈
 	
 	for(let i =0; i<$('#userNumberBox1').attr('boxCnt');i++){
 		
@@ -19,7 +18,7 @@ $(document).ready(function(){
 	
 	setTimeout(() => {
 		
-		for(let i =0; i<$('#appointmentNumberBox1').attr('boxCnt');i++){
+		for(let i =0; i<$('#appointmentNumberBox0').attr('boxCnt');i++){
 			
 			let id = '#appointmentNumberBox'
 				setTimeout(() => {
