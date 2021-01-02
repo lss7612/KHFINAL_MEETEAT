@@ -212,7 +212,7 @@ function deleteComment(comment_no) {
 
 <div class="container" id="divpage">
 
-<h1 class="pull-left">게시글 상세보기</h1>
+<h3 class="pull-left">파티 후기</h3>
 <div class="clearfix"></div>
 <hr>
 
@@ -248,7 +248,9 @@ function deleteComment(comment_no) {
 <td class="info">제목</td><td colspan="3">${view.article_title }</td>
 </tr>
 
-<tr><td colspan="4">${view.article_content }</td></tr>
+<tr>
+<td colspan="4">${view.article_content }</td>
+</tr>
 <c:forEach items="${list }" var="ReviewImg">
 <tr>
 	<c:if test="${view.article_no eq ReviewImg.article_no }">
@@ -261,13 +263,18 @@ function deleteComment(comment_no) {
 
 </table>
 
-<div class="text-center">
+<div class="text-center" style="padding-bottom: 40px;">
 	<a href="/review/list"><button class="btn btn-default">목록</button></a>
 	<c:if test="${user_no eq view.user_no }">
 		<a href="/review/update?article_no=${view.article_no }"><button class="btn btn-primary">수정</button></a>
 		<a href="/review/delete?article_no=${view.article_no }" onclick="return confirm('삭제하시겠습니까?')">
 			<button class="btn btn-danger">삭제</button></a>
 	</c:if>
+	<form name="frmPopup" method="POST" style="display: inline-block;">
+		<input type="hidden" name= "user_no">
+		<input type="hidden" name= "url" />
+	<button onclick="reportPopup();" class="btn btn-danger" >신고</button>
+</form>
 </div>
 
 
@@ -328,11 +335,7 @@ function deleteComment(comment_no) {
 </div>
 
 <br>
-<form name="frmPopup" method="POST">
-		<input type="hidden" name= "user_no">
-		<input type="hidden" name= "url" />
-	<button onclick="reportPopup();" class="btn btn-danger" >신고</button>
-	</form>
+
 </div>	
 
 </div><!-- .container -->

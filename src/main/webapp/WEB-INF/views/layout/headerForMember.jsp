@@ -192,7 +192,21 @@ $(document).ready(function () {
 					<li><a href="/review/list">파티 후기</a>
 				</ul>
 			</li>
+			
 			<li onclick="chatListPopup();">채팅하기</a>
+			
+			<c:if test="${user_grade eq 0 }">
+			<li>
+				<a href="#">관리자페이지</a>
+				<ul class="subb">
+					<li><a href="/admin/user/list">유저 관리</a>
+					<li><a href="/admin/board/list">게시글 관리</a>
+					<li><a href="/admin/report/list">신고 목록</a>
+					<li><a href="/admin/report/result/list">신고 처리</a>
+				</ul>
+			</li>
+			</c:if>
+			
 		</ul>
 	</div>
 </header>
