@@ -54,7 +54,7 @@
 		<interceptor>
 			<mapping path="/recruitboard/**"/>
 			<mapping path="/matefind/**"/>
-			<mapping path="/review/**"/>
+<!-- 			<mapping path="/review/**"/> -->
 			<mapping path="/mypage/mypost"/>
 			<mapping path="/mypage/mycmmt"/>			
 			<exclude-mapping path="/interceptor/payfail"/>
