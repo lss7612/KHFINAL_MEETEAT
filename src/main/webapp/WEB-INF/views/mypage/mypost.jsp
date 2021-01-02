@@ -101,6 +101,9 @@ td{
       		<td>${b.BOARD_NAME}</td>
 	      	<td>
 	      		<c:choose>
+	      			<c:when test="${b.BOARD_NO eq 1 }"> <!-- 공지사항 게시판 -->   	
+	      				<a href="/notice/view?board_no=1&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
+	      			</c:when>
 	      			<c:when test="${b.BOARD_NO eq 2 }"> <!-- 메이트찾기 게시판 -->   	
 	      				<a href="/matefind/view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
 	      			</c:when>
@@ -112,6 +115,9 @@ td{
 		      		</c:when>
 		      		<c:when test="${b.BOARD_NO eq 5 }"> <!-- 문의게시판 -->
 		      			<a href="/inquiry/view?board_no=5&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
+	      			</c:when>
+		      		<c:when test="${b.BOARD_NO eq 6 }"> <!-- 이벤트게시판 -->
+		      			<a href="/eventboard/view?board_no=6&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
 	      			</c:when>
 	     		 </c:choose>
 	      </td>
