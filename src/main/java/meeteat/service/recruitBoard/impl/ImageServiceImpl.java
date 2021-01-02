@@ -63,6 +63,8 @@ public class ImageServiceImpl implements ImageService{
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
+				
+				
 			}
 		}
 		
