@@ -242,8 +242,9 @@ td:nth-child(0) {
 						<tr>
 							<td>${payList.GRADE_NAME }</td>
 							<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${payList.PRICE }"></fmt:formatNumber></td>
-							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="yy/MM/dd HH:mm"/></td>
-							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="yy/MM/dd HH:mm"/></td>
+							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="YYYY-MM-dd HH:mm"/></td>
+							<td>${payList.EXPIRE_DATE }</td>
+<%-- 							<td><fmt:formatDate value="${payList.EXPIRE_DATE s}" pattern="yy/MM/dd HH:mm"/></td> --%>
 						</tr>
 					</table>					
 				</c:otherwise>
