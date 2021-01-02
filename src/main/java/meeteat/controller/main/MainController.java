@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.service.main.face.MainService;
 
@@ -42,16 +44,26 @@ public class MainController {
 		int cntUsers = mainService.getTotalUserCnt();
 		model.addAttribute("cntUsers",cntUsers);
 		
+		
 		String cntUsers_str = ""+cntUsers;
 		ArrayList<String> cntUsers_arr = new ArrayList<String>(); 
-		for(int i=0; i<cntUsers_str.length();i++) {
-			cntUsers_arr.add(i, cntUsers_str.substring(i, i+1));
+		
+		if(cntUsers>=10) {
+			for(int i=0; i<cntUsers_str.length();i++) {
+				cntUsers_arr.add(i, cntUsers_str.substring(i, i+1));
+			}
+		} else {
+			cntUsers_arr.add(0,cntUsers_str);
 		}
+		
+		
+		
 		model.addAttribute("cntUsers_arr",cntUsers_arr);
+		
 		
 		int userBoxCnt = 0;
 		
-		for(int i = 0; i < 9; i++) {
+		for(int i = 0; i < 10; i++) {
 			if(cntUsers / (int) (Math.pow(10, i)) <= 0) {
 				userBoxCnt = i;
 				break;
@@ -78,7 +90,7 @@ public class MainController {
 		model.addAttribute("cntAppointment_arr",cntAppointment_arr);
 		
 		int AppointmentBoxCnt=0;
-		for(int i = 0; i < 9; i++) {
+		for(int i = 0; i < 10; i++) {
 			if(cntAppointment / (int) (Math.pow(10, i)) <= 0) {
 				AppointmentBoxCnt = i;
 				break;
@@ -88,6 +100,72 @@ public class MainController {
 		
 		
 		return "/main/member";
+	}
+	
+	@RequestMapping(value = "/admin/main/imgchange",method=RequestMethod.GET)
+	public String mainImgChange() {
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/admin/main/realimgchange",method=RequestMethod.GET)
+	public String mainImgChangeProc() {
+		
+		mainService.deleteMainImage();
+		mainService.moveTempFileToMainFile();
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/main/memberpreview")
+	public String mainPagePreview(
+			Boolean isTempUploaded
+			,Model model
+			) {
+
+		if(isTempUploaded != null) {
+			if(isTempUploaded) {
+				model.addAttribute("isTempUploaded",isTempUploaded);
+			}
+		}
+		List<HashMap<String,Object>> popularList = mainService.getPopularList();
+		model.addAttribute("popularList",popularList);
+		
+		List<HashMap<String,Object>> mostViewList = mainService.getMostViewList();
+		model.addAttribute("mostViewList",mostViewList);
+		
+		return null;
+	}
+	
+	@RequestMapping(value="/main/savepreviewimg")
+	public @ResponseBody HashMap<String,Object> saveTempPreviewImg(
+			MultipartFile previewImg
+			) {
+		HashMap<String,Object> result = new HashMap<String, Object>();
+	
+		Boolean isTempUploaded = false;
+		
+		result.put("waitSecond", 1);
+		logger.info(""+previewImg);
+		if(previewImg.getSize()!=0){
+			double fileSize = previewImg.getSize();
+			double waitSecond = fileSize / 1000000;
+			Math.round(waitSecond);
+			if(waitSecond<0) {
+				waitSecond = 1;
+			}
+			waitSecond += 5;
+			waitSecond = waitSecond*1000;
+			result.put("waitSecond", waitSecond);
+			
+			mainService.deleteTempImg();
+			mainService.saveTempImg(previewImg);
+			isTempUploaded = true;
+		}
+		
+		result.put("isTempUploaded", isTempUploaded);
+		
+		return result;
 	}
 	
 }

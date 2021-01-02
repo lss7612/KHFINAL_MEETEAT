@@ -9,6 +9,15 @@
 <div id="divpage">
 
 
+<c:if test="${sessionScope.user_grade eq 0 }">
+
+<div style="width:20%; border: 1px solid #ccc; border-radius: 10px; text-align:center; cursor:pointer;" class="pull-right lighter_bar_height lighter_padding">
+<a href="/admin/main/imgchange">메인 이미지 변경</a>
+</div>
+
+<div class="clearfix"></div>
+</c:if>
+
 <%-- 회원 수 및 게시글 수 표시 --%>
 <div>
 <div id="animatedDivs" class="subDiv">
@@ -33,9 +42,16 @@
 		<br><br>
 			<div class="sub_title">
 			<div class="title"><span>총</span></div> 
+			
+			<c:if test="${AppointmentBoxCnt eq 0 }">
+				<div id="appointmentNumberBox0" style="float:right" class="numberBox" boxCnt="1">0</div>
+			</c:if>
+			<c:if test="${AppointmentBoxCnt > 0 }">			
 			<c:forEach begin="0" end="${AppointmentBoxCnt - 1}" var="i">
 				<div id="appointmentNumberBox${i }" style="float:right" class="numberBox" boxCnt="${AppointmentBoxCnt }">${cntAppointment_arr.get(i) }</div>
 			</c:forEach>
+			</c:if>
+			
 			<div class="clearfix"></div>
 			<div><span>개의 모임을 만들고 즐겼어요!</span></div>
 			</div>
@@ -113,10 +129,6 @@
 </div>
 
 
-<%-- 메인 이미지 박스 --%>
-<div id="mainImgBox" style="height:200px; overflow: hidden;">
-	<img src="/resources/img/main/membermain/main_image.jpg">
-</div>
 
 <%-- 많이 본 게시물 표시 박스 --%>
 <div>
