@@ -50,6 +50,12 @@ public class AdminUserImpl implements AdminUserService {
 		return adminresult;
 	}
 
+
+	@Override
+	public void userGradeSetReportResult(int user_no) {
+		adminUserDao.userGradeUpdate(user_no);
+	}
+
 }
 
 

@@ -14,4 +14,6 @@ public interface AdminUserService {
 
 	List<HashMap<String, String>> list(Paging paging, AdminUser adminUser, UserSearch userSearch);
 
+	void userGradeSetReportResult(int parseInt);
+
 }

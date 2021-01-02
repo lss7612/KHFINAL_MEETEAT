@@ -191,7 +191,7 @@ $(document).ready(function () {
 				</ul>
 			</li>
 			
-			<li onclick="chatListPopup();">채팅하기</a>
+			<li style="cursor : pointer;" onclick="chatListPopup();">채팅하기</a>
 			
 			<c:if test="${user_grade eq 0 }">
 			<li>
