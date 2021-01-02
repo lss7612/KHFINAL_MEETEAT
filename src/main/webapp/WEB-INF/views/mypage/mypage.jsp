@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
-<%-- <c:import url="/WEB-INF/views/layout/share.jsp" /> --%>
+<c:import url="/WEB-INF/views/layout/share.jsp" />
 <link rel="stylesheet" href="/resources/css/mypage/mypage.css">
 
 <style>

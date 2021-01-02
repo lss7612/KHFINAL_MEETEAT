@@ -112,7 +112,7 @@ function createChat(e){
 
 <div class="container" id="divpage">
 
-<h1 class="pull-left">후기 게시판</h1>
+<h3 class="pull-left">파티 후기</h3>
 
 <div class="clearfix"></div>
 <hr>

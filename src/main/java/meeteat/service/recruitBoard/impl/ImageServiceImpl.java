@@ -45,6 +45,12 @@ public class ImageServiceImpl implements ImageService{
 			stored.mkdir();
 		}
 		
+		String pathToSave= context.getRealPath("resources/file/recruitboard/save");
+		File saved = new File(pathToSave);
+		if(!saved.exists()) {
+			saved.mkdir();
+		}
+		
 		
 		//각각의 파일들을 받을 인스턴스 생성
 		if(img1!=null) {
