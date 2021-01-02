@@ -25,7 +25,13 @@ td:nth-child(2) {
 </style>
 <script type="text/javascript">
 function userGradeSet(){
-	
+	var state = confirm("유저 등급을 바꾸시겠습니까?")
+	if (state){
+		alert("처리가 완료되었습니다.")
+		resultForm.submit();
+	} else {
+		return false;
+	}
 }
 </script>
 
@@ -63,16 +69,18 @@ function userGradeSet(){
 		<td>${list.USER_GRADE }</td>
 <%-- 		<td><a href="http://localhost:8088/admin/board/list?manageCategory=&manageSearch=user_nick&manageKeyword=${list.USER_NICK }" /><button>이동</button></td> --%>
 		<td><a href="/admin/board/list?manageCategory=&manageKeyword=${list.USER_NICK }&manageSearch=user_nick&start_date=&end_date="><button>이동</button></a></td>
-<form action="" method="">
+		
+	<form action="/admin/user/result" method="post" id="resultForm">
 		<td>
-		<select name="grade">
-			<option value="999">---</option>
-			<option value="1">결제등급</option>
-			<option value="2">일반등급</option>
-			<option value="3">영구정지</option>
-		</select>
+			<select name="${list.user_grade }">
+				<option value="999">---</option>
+				<option value="1">1:결제등급</option>
+				<option value="2">2:일반등급</option>
+				<option value="3">3:영구정지</option>
+			</select>
 		</td>
-</form>
+	</form>
+
 	</tr>
 </c:forEach>
 </tbody>
