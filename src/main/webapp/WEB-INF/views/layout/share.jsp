@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+  
    <script type="text/javascript" async>
       var url_default_ks = "https://story.kakao.com/share?url=";
       var url_default_fb = "https://www.facebook.com/sharer/sharer.php?u=";
@@ -58,6 +58,7 @@
 <!--          <img src="/resources/img/kakaostory_logo.png" title="카카오스토리로 공유하기" -->
 <!--          class="sharebtn_custom" style="width: 32px;"> -->
 <!--       </a> -->
+
       <!-- 네이버 공유 버튼 -->
       <a href=""
          onclick="window.open(url_combine_naver, '', 'scrollbars=no, width=600, height=600'); return false;">
