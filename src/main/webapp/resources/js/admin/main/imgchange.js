@@ -1,10 +1,16 @@
 $(document).ready(function(){
 
 	getPreview()
-	$('#previewCover').css('height',$('#preview').css('height'))
 	
 	$('#form_previewImg').change(function(){
 		saveTempPreviewImg();
+	})
+	
+	
+	$('#changeMain').click(function(){
+		if(confirm('정말 적용하실거에요?')){
+			location.href="/admin/main/realimgchange"
+		}
 	})
 	
 })
@@ -24,16 +30,14 @@ function saveTempPreviewImg(){
 		, success: function( res ){
 			console.log(res)
 			res.isTempUploaded
-			alert(res.isTempUploaded)
-			alert(res.waitSecond)
 			$('#preview').html(
-					'<div style="text-align:center;" class="bold_padding">'+
+					'<div style="text-align:center; width:300px; margin:0 auto;" class="bold_padding">'+
 					'<img src="/resources/img/loading.gif">'+
 					'</div>'
 			)
 			if(res.isTempUploaded){	
 				setTimeout(() => {
-					getPreview(res.isTempUploaded)
+					window.location.reload()
 				}, res.waitSecond);
 			}
 			
@@ -58,7 +62,6 @@ function getPreview(isTempUploaded){
 		, dataType:"html" //응답받은 데이터의 형식
 		, success: function( res ){
 			$('#preview').html(res)
-			$('#previewCover').css('height',$('#preview').css('height'))
 			$('#previewCover').css('width',$('#preview').css('width'))
 		}
 		, error: function(){

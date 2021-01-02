@@ -17,4 +17,10 @@ public interface MainService {
 
 	public void saveTempImg(MultipartFile previewImg);
 
+	public void deleteTempImg();
+
+	public void deleteMainImage();
+
+	public void moveTempFileToMainFile();
+
 }

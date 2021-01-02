@@ -105,13 +105,15 @@ public class MainController {
 	@RequestMapping(value = "/admin/main/imgchange",method=RequestMethod.GET)
 	public String mainImgChange() {
 		
-		
-		
 		return null;
 	}
 	
-	@RequestMapping(value = "/admin/main/imgchange",method=RequestMethod.POST)
+	@RequestMapping(value = "/admin/main/realimgchange",method=RequestMethod.GET)
 	public String mainImgChangeProc() {
+		
+		mainService.deleteMainImage();
+		mainService.moveTempFileToMainFile();
+		
 		return "redirect:/";
 	}
 	
@@ -123,7 +125,6 @@ public class MainController {
 
 		if(isTempUploaded != null) {
 			if(isTempUploaded) {
-				logger.info("여기까지 왔는가?"+isTempUploaded);
 				model.addAttribute("isTempUploaded",isTempUploaded);
 			}
 		}
@@ -157,6 +158,7 @@ public class MainController {
 			waitSecond = waitSecond*1000;
 			result.put("waitSecond", waitSecond);
 			
+			mainService.deleteTempImg();
 			mainService.saveTempImg(previewImg);
 			isTempUploaded = true;
 		}

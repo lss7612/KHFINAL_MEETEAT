@@ -93,68 +93,7 @@ class="subDiv">
 </div>
 
 
-<%-- 메인 이미지 박스 --%>
-<div id="mainImgBox" style="height:200px; overflow: hidden;">
-	<img src="/resources/img/main/membermain/main_image.jpg">
-</div>
 
-<%-- 많이 본 게시물 표시 박스 --%>
-<div>
-<div id="popularArticle" class="subDiv subArticleDiv">
-
-	<div class="bolder_bar_height vertical_base_padding title"><i class="fas fa-users"></i> 최고 조회수 TOP10</div>
-	<div class="bold_bar_height vertical_light_padding sub_title">일주일간 가장 많은 사람이 본 모임정보에요</div>
-	<div class="contentTitle">
-		<table class="table table-striped table-hover">
-			<thead>
-				<tr class="color_primary light_bar_height">
-					<th style="width:30%">게시판명</th>
-					<th style="width:60%">제목</th>
-					<th style="width:20%">작성자</th>
-				</tr>
-			</thead>
-			<tbody>
-			<c:forEach items="${mostViewList }" var="list">
-				<tr class="light_bar_height">
-					<td style="width:30%">${list.BOARD_NAME }</td>
-					<td style="width:50%">
-					
-					<c:choose>
-						<%-- 파티모집게시판 --%>
-						<c:when test="${list.BOARD_NO eq 3}">
-						<a href="/recruitboard/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO}">
-						<span>${list.ARTICLE_TITLE }</span>
-						</a>
-						</c:when>
-						<%-- 메이트찾기게시판 --%>
-						<c:when test="${list.BOARD_NO eq 2}">
-						<a href="/matefind/view?article_no=${list.ARTICLE_NO }">
-						<span>${list.ARTICLE_TITLE }</span>
-						</a>
-						</c:when>
-						<%-- 후기게시판 --%>
-						<c:when test="${list.BOARD_NO eq 4}">
-						<a href="/review/view?article_no=${list.ARTICLE_NO }">
-						<span>${list.ARTICLE_TITLE }</span>
-						</a>
-						</c:when>
-						<c:otherwise>
-						<a href="#">
-						<span>${list.ARTICLE_TITLE }</span>
-						</a>
-						</c:otherwise>
-					</c:choose>
-					
-					</td>
-					<td style="width:20%">${list.USER_NICK }</td>
-				</tr>			
-			</c:forEach>
-			</tbody>		
-		</table>
-	</div>
-
-</div>
-</div>
 
 
 

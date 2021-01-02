@@ -50,7 +50,6 @@
 			<c:forEach begin="0" end="${AppointmentBoxCnt - 1}" var="i">
 				<div id="appointmentNumberBox${i }" style="float:right" class="numberBox" boxCnt="${AppointmentBoxCnt }">${cntAppointment_arr.get(i) }</div>
 			</c:forEach>
-			
 			</c:if>
 			
 			<div class="clearfix"></div>
