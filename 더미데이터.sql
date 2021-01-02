@@ -428,10 +428,6 @@ commit;
 SELECT * FROM TB_USER2
 order by user_no asc;
 
-delete tb_user2
-where user_no < 329;
-delete tb_userreport2
-where user_no <400;
 --신고 테이블
 select * from tb_userreport2
 order by user_no asc;
