@@ -129,7 +129,7 @@ public class MyPageServiceImpl implements MyPageService{
 		map.put("postCategory", myPageParam.getPostCategory());
 		map.put("postSearch", myPageParam.getPostSearch());
 		
-		logger.info("보드 넘버" + myPageParam.getBoard_no());
+//		logger.info("보드 넘버" + myPageParam.getBoard_no());
 		List<HashMap<String, Object>> result = new ArrayList<>();
 		result = myPageDao.getAllPostList(map);
 		
@@ -163,7 +163,7 @@ public class MyPageServiceImpl implements MyPageService{
 		map.put("postCategory", myPageParam.getPostCategory());
 		map.put("postSearch", myPageParam.getPostSearch());
 		
-		logger.info("보드 넘버" + myPageParam.getBoard_no());
+//		logger.info("보드 넘버" + myPageParam.getBoard_no());
 		List<HashMap<String, Object>> result = new ArrayList<>();
 		result = myPageDao.getAllCmmtList(map);
 		

@@ -16,10 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import meeteat.dto.myPage.MyPageParam;
 import meeteat.dto.user.User;
+import meeteat.service.login.face.LoginService;
 import meeteat.service.myPage.face.MyPageService;
 import meeteat.util.Paging;
 
@@ -28,6 +30,7 @@ public class MyPageController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 	@Autowired MyPageService myPageService;
+	@Autowired private LoginService loginService;
 	
 	@RequestMapping(value="/mypage/mypage")
 	public void myPage(HttpSession session, Model model) {
@@ -82,10 +85,10 @@ public class MyPageController {
 	public void mydelete(HttpSession session, Model model) {
 		int user_no = Integer.parseInt(session.getAttribute("user_no").toString());
 
-		logger.info("유저번호 : " + user_no);
+//		logger.info("유저번호 : " + user_no);
 		Map<String, Object> user = myPageService.infoByNo(user_no);
 
-		logger.info("유저 정보 : " + user);
+//		logger.info("유저 정보 : " + user);
 
 		model.addAttribute("u", user);
 	}
@@ -120,7 +123,7 @@ public class MyPageController {
 		myPageParam.setUser_no(Integer.parseInt(session.getAttribute("user_no").toString()));
 //		myPageParam.setBoard_no(Integer.parseInt(req.getAttribute("board_no").toString()));
 	
-		logger.info("보드 넘버 " + myPageParam.getBoard_no());
+//		logger.info("보드 넘버 " + myPageParam.getBoard_no());
 		//페이징
 		Paging paging = myPageService.getPostPaging(curPage, myPageParam);
 		model.addAttribute("myPostPaging", paging);
@@ -140,7 +143,7 @@ public class MyPageController {
 	public String myPostProc(HttpServletRequest req) {
 		
 		String[] postArr = req.getParameterValues("checkbox");
-		System.out.println(Arrays.toString(postArr));
+//		System.out.println(Arrays.toString(postArr));
 
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("postArr", postArr);
@@ -160,7 +163,7 @@ public class MyPageController {
 		myPageParam.setUser_no(Integer.parseInt(session.getAttribute("user_no").toString()));
 //		myPageParam.setBoard_no(Integer.parseInt(req.getAttribute("board_no").toString()));
 		
-		logger.info("" + myPageParam);
+//		logger.info("" + myPageParam);
 		
 		//페이징
 		Paging paging = myPageService.getCmmtPaging(curPage, myPageParam);
@@ -185,7 +188,7 @@ public class MyPageController {
 	public String myCmmtProc(HttpServletRequest req) {
 		
 		String[] cmmtArr = req.getParameterValues("checkbox");
-		System.out.println(Arrays.toString(cmmtArr));
+//		System.out.println(Arrays.toString(cmmtArr));
 
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("cmmtArr", cmmtArr);
@@ -194,6 +197,13 @@ public class MyPageController {
 
 		return "redirect:/mypage/mycmmt";	
 	}
-
+	
+	@RequestMapping(value = "/mypage/nickcheck", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean nickCheck(@RequestParam("user_nick") String user_nick) {
+		
+		return loginService.userNickCheck(user_nick);
+		
+	}
 	
 }
