@@ -108,6 +108,8 @@ public class LoginController {
 			user = loginService.selectUser(user);
 			
 			session.setAttribute("isLogin", true);
+			session.setAttribute("snsLogin", false);
+			session.setAttribute("kakaoLogin", false);
 			
 			session.setAttribute("user_no", user.getUser_no());
 			session.setAttribute("user_id", user.getUser_id());
@@ -117,7 +119,6 @@ public class LoginController {
 			session.setAttribute("user_gender", user.getUser_gender());
 			session.setAttribute("user_age", user.getUser_age());
 			session.setAttribute("user_email", user.getUser_email());
-			session.setAttribute("kakaoLogin", false);
 			
 			logger.info("유저번호 : " + session.getAttribute("user_no"));
 			logger.info("유저닉네임 : " + session.getAttribute("user_nick"));

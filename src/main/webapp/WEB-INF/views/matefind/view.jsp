@@ -262,6 +262,7 @@ function joinChat(e){
 			<c:if test="${stored ne null && origin ne null}">
 				<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${hostInfo.user_profilestored }" alt="유저프로필" />
 			</c:if>
+			
 				<h4>${hostInfo.user_nick }</h4>
 			<c:set value="${hostInfo.user_age }" var="ageRange"/>
 <%-- 				<h4>${fn:substring(ageRange,0,1) }0대</h4> --%>
