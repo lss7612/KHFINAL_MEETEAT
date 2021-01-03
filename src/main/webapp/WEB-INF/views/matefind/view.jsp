@@ -268,10 +268,10 @@ function joinChat(e){
 <%-- 				<h4>${fn:substring(ageRange,0,1) }0대</h4> --%>
 				
 			<c:set value="${hostInfo.user_gender }" var="gender"/>
-			<c:if test="${gender eq 'M' }">
+			<c:if test="${gender eq 'M' || gender eq 'm'}">
 				<h4>${fn:substring(ageRange,0,1) }0대 🙍‍♂️</h4>
 			</c:if>
-			<c:if test="${gender eq 'F' }">
+			<c:if test="${gender eq 'F' || gender eq 'f'}">
 				<h4>${fn:substring(ageRange,0,1) }0대 🙍‍♀️</h4>
 			</c:if>
 		</span>
