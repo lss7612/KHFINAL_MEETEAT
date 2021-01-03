@@ -51,7 +51,7 @@ public class MyPayController {
 		String merchant_uid = req.getParameter("merchant_uid");
 		int user_no = Integer.parseInt(req.getParameter("buyer_name").toString());
 		
-		logger.info("imp_uid" + imp_uid);
+//		logger.info("imp_uid" + imp_uid);
 		
 		myPay.setImp_uid(imp_uid);
 		myPay.setMerchant_uid(merchant_uid);
@@ -99,10 +99,10 @@ public class MyPayController {
 	public void payCancel(HttpSession session, Model model) {		
 		int user_no = Integer.parseInt(session.getAttribute("user_no").toString());
 
-		logger.info("유저번호 : " + user_no);
+//		logger.info("유저번호 : " + user_no);
 		Map<String, Object> user = myPageService.infoByNo(user_no);
 
-		logger.info("유저 정보 : " + user);
+//		logger.info("유저 정보 : " + user);
 
 		model.addAttribute("u", user);
 	}

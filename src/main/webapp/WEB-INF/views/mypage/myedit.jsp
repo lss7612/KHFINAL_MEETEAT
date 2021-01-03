@@ -21,6 +21,43 @@ function checkEmail(str) {
 
 }
 
+function fnChkByte(obj, maxByte) {
+	
+    var str = obj.value;
+    var str_len = str.length;
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+    for(var i=0; i<str_len; i++) {
+    	
+        one_char = str.charAt(i);
+        
+        if(escape(one_char).length > 4) {
+            rbyte += 3;                                         //한글 3Byte
+        } else {
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+
+        if(rbyte <= maxByte) {
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+
+     if(rbyte > maxByte) {
+		  // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+// 		  alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+
+		  str2 = str.substr(0,rlen);                                  //문자열 자르기
+		  obj.value = str2;
+		  fnChkByte(obj, maxByte);
+     } else {
+//         document.getElementById('byteInfo').innerText = rbyte;
+     }
+}
+
 $(document).ready(function() {
 
 	$('#editBtn').click(function(){
@@ -63,6 +100,29 @@ $(document).ready(function() {
 		
 	});
 	
+	$('#user_nick').blur(function() {
+
+		var user_nick = $('#user_nick').val();
+		
+		$.ajax({
+			url: '/mypage/nickcheck?user_nick='+ user_nick,
+			type: "get",
+			success: function(checkResult) {
+				if(checkResult) {
+					$('#nickCheckResult').text("사용중인 닉네임입니다");
+					$('#nickCheckResult').css("color", "red");
+					$("#editBtn").attr("disabled", true);
+				} else {
+					$('#nickCheckResult').text("");					
+					$("#editBtn").attr("disabled", false);
+				}
+			},
+			error: function() {
+				console.log("[ajax] /mypage/nickcheck 전송실패")
+				
+			}
+		})
+	});	
 	$('#user_pw').blur(function() {
 		if($('#user_pw').val() != $('#checkpw').val()) {
 			$('#pwCheckResult').text("비밀번호가 다릅니다");
@@ -134,7 +194,7 @@ $(document).ready(function() {
 				</div>
 				<div class="box_set">
 					<strong class="tit_set">닉네임</strong>
-					<span class="txt_set"><input type="text" name="user_nick" id="user_nick" value="${userinfo.USER_NICK }"/></span>
+					<span class="txt_set"><input type="text" name="user_nick" id="user_nick" value="${userinfo.USER_NICK }" onKeyUp="javascript:fnChkByte(this,'20')"/></span>
 				</div>
 				<div></div>
 				<div class="box_set">
@@ -158,6 +218,7 @@ $(document).ready(function() {
 <!-- 					<div id = "alert-fail"><p style = "color: red; text-align: right;">비밀번호가 일치하지 않습니다.</p></div>	 -->
 					<div id="pwCheckResult" style="text-align: right;"></div>
 					<div id="submitResult" style="text-align: right;">　</div>
+					<div id="nickCheckResult" style="text-align: right;"></div>
 				</div>
 				
 			</div><br>
