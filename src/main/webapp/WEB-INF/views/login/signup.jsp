@@ -125,7 +125,7 @@ body {
   <div class="form-group">
     <label for="user_nick">닉네임</label>
     <input type="text" class="form-control" id="user_nick" name="user_nick"  onKeyUp="javascript:fnChkByte(this,'20')">
-	<p style="margin: 0;"> 닉네임은 20Bytes를 초과할 수 없습니다. </p>
+	<p style="margin: 0;"> 닉네임은 한글만 입력가능, 6자를 초과할 수 없습니다. </p>
 	  <div id="nickCheckResult"></div>
   </div>
 	
@@ -320,6 +320,15 @@ $(document).ready(function() {
 
 		var user_nick = $('#user_nick').val();
 		
+		var nickReg = /^[가-힣]+$/;
+		
+		if(!nickReg.test($('#user_nick').val())) {
+			$('#nickCheckResult').text("닉네임이 형식에 맞지 않습니다.");
+			$('#nickCheckResult').css("color", "red");
+			$("#signUpSubmit").attr("disabled", true);
+			
+		} else {
+		
 		$.ajax({
 			url: '/login/nickcheck?user_nick='+ user_nick,
 			type: "get",
@@ -338,6 +347,9 @@ $(document).ready(function() {
 				
 			}
 		})
+		
+	  }
+		
 	});
 	
 	

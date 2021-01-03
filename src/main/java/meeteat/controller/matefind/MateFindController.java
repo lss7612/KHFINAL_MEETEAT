@@ -3,6 +3,7 @@ package meeteat.controller.matefind;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -379,6 +380,89 @@ public class MateFindController {
 		return "redirect:/matefind/list";
 		
 	}
+	
+	@RequestMapping(value = "/autowriteview", method = RequestMethod.GET)
+	public void autoWriteView() {
+		
+	}
+	
+	@RequestMapping(value = "/autoWrite")
+	public String autoWrite() {
+		
+		Random random = new Random();
+		
+		//17개
+		String[] location = {"서울특별시", "부산광역시", "대구광역시", "인천광역시", "광주광역시", "대전광역시", "울산광역시", "세종특별자치시"
+				, "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주특별자치도"};
+		
+		String[] category = {"식사", "술", "카페"};
+		
+		String[] mate_list = {"1","2","3","4","5","6","7"};
+		
+		//20개
+		String[] title = {"재미나는 모임", "술마실분들 모집해요", "복날엔 역시 닭이지", "맛집 같이 가실분"
+				, "둘이서 5인분 드실분", "제목짓기어렵다", "케익에 아아드실분", "곱창 완전 땡기자너", "날씨도 우중충한데 막걸리한잔"
+				, "코로나 끝났으면 좋겠다", "커플세트 같이 드실분", "친목도모 하실분", "여기 3인분부터인데 같이가요", "혼자가기 싫어요"
+				, "너만오면 고", "일단 클릭해보세요", "카페에서 수다떠실분", "여기 요즘 핫한 술집", "비도오고 그래서"
+				, "간 안 보실분만"
+		};
+		
+		int[] userList = {2,6,7,11,12,13,15,16,17,18,20,21,22,23,24,25,27,28,29,30,31,35,36,40,43,46,51,54,55,56,57,59,60,63,64,65
+				,66,67,70,73,74,75,77,79,80,81,84,85,87,94,95,96,97,102,105,106,108,110,113,114,115,116,121,124,125,126,128,129,131,134
+				,135,136,137,140,142,143,145,147,148,152,155,156,158,160,163,165,167,168,169,170,172,176,179,180,181,183,185,186,187,188
+				,189,190,191,193,195,196,197,198,200,202,203,205,206,207,208,210,211,212,213,215,216,219,221,225,226,228,229,230,231,232,234
+				,235,236,238,239,241,244,245,246,247,249,251,252,253,255,257,264,265,267,268,274,276,277,278,280,284,285,287,288,289,291,295
+				,296,297,300,302,303,304,307,309,310,312,314,316,317};
+		
+		//새벽 아침 점심 저녁
+		String[] meetTime = {"20210105 0240", "20210105 0930", "20210105 1350", "20210105 2020"};
+		
+		
+		for(int i = 0; i < 20; i++) {
+			
+			MateFindBoard mateFindBoard = new MateFindBoard();
+			
+			String randomTitle = title[random.nextInt(20)];
+			int randomUser = userList[random.nextInt(175)];
+			
+			mateFindBoard.setArticle_title(randomTitle);
+			mateFindBoard.setArticle_content("이웃 말 않은 가을로 멀리 버리었습니다. 내일 마리아 지나가는 노새, 북간도에 옥 계십니다. 다 다하지 벌써 소학교 많은 멀리 덮어 있습니다."
+					+ "청춘이 오면 속의 보고, 이름과, 멀리 헤일 까닭이요, 까닭입니다. 애기 아무 아침이 별빛이 벌써 위에도 때 거외다."
+					+ "언덕 이 쉬이 밤이 했던 청춘이 봄이 계절이 계십니다. 다 아침이 파란 아직 추억과 릴케 있습니다.");
+			mateFindBoard.setParty_location(location[random.nextInt(17)]);
+			mateFindBoard.setCategory(category[random.nextInt(3)]);
+			mateFindBoard.setMate_list(mate_list[random.nextInt(7)]);
+			
+			mateFindBoard.setUser_no(randomUser);
+			mateFindBoard.setMeet_time(meetTime[random.nextInt(4)]);
+			
+			//------------메이트 찾기용 채팅방 개설----------
+			//모임 채팅방을 개설하기 위해 필요한 정보
+			String chatting_name = mateFindBoard.getArticle_title();
+			String chatting_id = UUID.randomUUID().toString().replace("-", "");
+			int user_no = mateFindBoard.getUser_no();
+			
+			chatService.createMateChatRoom(chatting_name, chatting_id);
+			HashMap roomInfo = chatService.getChatRoomInfoById(chatting_id);
+			int chatting_no = Integer.parseInt(""+roomInfo.get("CHATTING_NO"));
+			chatService.insertUserToChatNum(chatting_no, user_no);
+			
+			
+			//tb_board2에 채팅방 삽입
+			mateFindBoard.setChatting_no(chatting_no);
+			//------------메이트 찾기용 채팅방 개설 끝----------
+			
+			mateFindService.write(mateFindBoard);
+			
+
+		}
+		
+		
+		return "redirect:/matefind/list";
+		
+	}
+	
+	
 	
 	@RequestMapping(value = "/attend", method = RequestMethod.GET)
 	@ResponseBody
