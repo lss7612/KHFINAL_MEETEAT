@@ -75,8 +75,11 @@
 			</div>
 			<div class="col-md-3 form-group form-group-sm">
 				<select class="form-control input-sm form-group-sm" name="manageSearch" id="manageSearch">
+					<option value=""
+					<c:if test="${empty boardAdminParam.manageCategory }">selected</c:if>>키워드 선택</option>
+					
 					<option value="totalList"
-					<c:if test="${boardAdminParam.manageSearch == 'totalList' || empty boardAdminParam.manageCategory}">selected</c:if>>전체</option>
+					<c:if test="${boardAdminParam.manageSearch == 'totalList' }">selected</c:if>>전체</option>
 					
 					<option value="article_title" 
 					<c:if test="${boardAdminParam.manageSearch == 'article_title' }">selected</c:if>>제목</option>
@@ -148,7 +151,7 @@
 							</c:when>
 							
 							<c:when test="${list.BOARD_NO eq 4 }">
-								<a href="//view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
+								<a href="/review/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }">${list.ARTICLE_TITLE }</a>
 							</c:when>
 							
 							<c:when test="${list.BOARD_NO eq 5 }">
@@ -181,7 +184,7 @@
 				<option value="http://localhost:8088/notice/list">공지사항 게시판 </option>
 				<option value="http://localhost:8088/matefind/list">메이트찾기 게시판</option>
 				<option value="http://localhost:8088/recruitboard/list">모집 게시판</option>
-				<option value="http://localhost:8088/notice/list">후기 게시판</option>
+				<option value="http://localhost:8088/review/list">후기 게시판</option>
 				<option value="http://localhost:8088/inquiry/list">문의 게시판</option>
 				<option value="http://localhost:8088/eventboard/holding">이벤트등록 게시판</option>
 			</select>

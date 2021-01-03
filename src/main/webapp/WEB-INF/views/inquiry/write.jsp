@@ -64,12 +64,7 @@ $(document).ready(function() {
 			<input type="checkbox" name="secretchk" id="secretchk" /> 비밀글 설정
 		</div>
 		<br>
-		
-		<!-- <div class="form-group">
-			<label for="fileUpload">파일 첨부</label>
-			<input type="file" class="form-control" id="noticeFile" name="noticeFile"/>
-		</div> -->
-		
+
 		<div class="form-group">
 			<label for="content">내용</label>
 			<textarea rows="10" class="form-control" id="article_content" name="article_content" style="width: 100%" placeholder="내용을 입력하세요"></textarea>

@@ -122,11 +122,12 @@
 	
 	<insert id="replyArticle" parameterType="meeteat.dto.inquiryBoard.InquiryBoard" >
 		INSERT INTO tb_board2 (
-			article_no, article_title, article_content, board_no, user_no, create_date, revision_date, is_delete, article_hit, post_group, post_step, post_indent)
+			article_no, article_title, article_content, board_no, user_no, create_date, revision_date, is_delete, article_hit, post_group, post_step, post_indent, article_secret)
 		VALUES (tb_inquiryBoard_seq.nextval,  NVL(#{article_title}, '(제목없음)'), #{article_content}, 5, #{user_no}, SYSDATE, SYSDATE, #{is_delete}, #{article_hit}
 				, (SELECT post_group FROM tb_board2 WHERE board_no=#{board_no} AND article_no=#{article_no})
 				, (SELECT post_step FROM tb_board2 WHERE board_no=#{board_no} AND article_no=#{article_no})+1
-				, (SELECT post_indent FROM tb_board2 WHERE board_no=#{board_no} AND article_no=#{article_no})+1)
+				, (SELECT post_indent FROM tb_board2 WHERE board_no=#{board_no} AND article_no=#{article_no})+1
+				, #{article_secret})
 	</insert>
 	
 	<select id="articleno" parameterType="int" resultType="meeteat.dto.inquiryBoard.InquiryBoard">
