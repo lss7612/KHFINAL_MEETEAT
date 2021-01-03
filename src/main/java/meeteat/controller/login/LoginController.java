@@ -240,6 +240,7 @@ public class LoginController {
 		user.setUser_age(age);
 		user.setUser_gender(gender);
 		user.setUser_email(email);
+		user.setUser_profileorigin("snsLogin");
 		user.setUser_profilestored(image);
 		
 		boolean hasData = loginService.login(user);
@@ -319,7 +320,14 @@ public class LoginController {
 		user.setUser_email(kakaoUserInfo.get("email").toString());
 		user.setUser_nick(kakaoUserInfo.get("nickname").toString());
 		
-		user.setUser_profilestored(kakaoUserInfo.get("image").toString());
+		String image = kakaoUserInfo.get("image").toString();
+		
+		
+		if(!"".equals(image)) {
+			user.setUser_profileorigin("snsLogin");
+			user.setUser_profilestored(kakaoUserInfo.get("image").toString());
+		}
+			
 		
 		
 		//로그인 시키기

@@ -180,7 +180,7 @@ public class KakaoRestApi {
             try {
             	image = properties.getAsJsonObject().get("thumbnail_image").getAsString();
 			} catch (NullPointerException e) {
-				image = "기본이미지";
+				image = null;
 			}
             
             try {

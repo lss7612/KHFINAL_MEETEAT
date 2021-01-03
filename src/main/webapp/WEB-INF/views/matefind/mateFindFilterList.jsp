@@ -45,7 +45,6 @@
 						
 							<c:set value="${list.user.user_profileorigin }" var="origin" />
 							<c:set value="${list.user.user_profilestored }" var="stored" />
-							<c:set value="${snsLogin }" var="snsLogin" />
 
 							<!-- null일겨우 기본이미지 -->
 							<c:if test="${stored eq null && origin eq null }">
@@ -53,12 +52,12 @@
 							</c:if>
 
 							<!-- sns로그인 시 프로필사진 편집 전 -->
-							<c:if test="${stored ne null && origin eq null && snsLogin eq true }">
+							<c:if test="${stored ne null && origin eq 'snsLogin' }">
 								<img id="pof_pic" style="width: 50px; height: 50px;" src="${list.user.user_profilestored }" alt="유저프로필사진" />
 							</c:if>
 							
 							<!-- 프로필사진 편집 시 (sns동일) -->
-							<c:if test="${stored ne null && origin ne null}">
+							<c:if test="${stored ne null && origin ne null && origin ne 'snsLogin'}">
 								<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${list.user.user_profilestored }" alt="유저프로필사진" />
 							</c:if>
 							
