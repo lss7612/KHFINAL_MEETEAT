@@ -48,7 +48,7 @@ body {
 	margin-bottom: 10px;
 }
 
-.pof_pic{
+#pof_pic{
 	width: 120px;
 	height:120px; 
 	border-radius:100px; 
@@ -59,7 +59,7 @@ body {
 }
 
 /* 회원 아이디 클릭시 나타나는 목록 CSS */
-.userMenu{
+.userMenu, .attendeeMenu{
 	display : inline-block;
 	width : 10%;
 	position : relative;
@@ -69,7 +69,7 @@ body {
 	cursor : pointer;
 }
 
-.userHiddenMenu{ 
+.userHiddenMenu, .attendeeHiddenMenu{ 
 	list-style:none;
    	display:none;
 	position : absolute; 
@@ -87,7 +87,22 @@ body {
 .userHiddenMenu > li:hover{
 	background-color : #eee;
 }
+
+.attendeeHiddenMenu > li{
+	background-color : #F5DA81;
+	position : relative;
+	cursor : pointer;
+	border : solid 0px;
+	padding: 5px 10px 5px 10px;
+}
+
+.attendeeHiddenMenu > li:hover{
+	background-color : #eee;
+}
 /* 회원 아이디 클릭시 나타나는 목록 CSS 끝*/
+
+
+
 
 </style>
 
@@ -229,9 +244,24 @@ function joinChat(e){
 	<div class="row userMenu">
 		<span class="userNickMenu">
 			<!-- user_no는 나중에 사진으로 대체 되어야함 -->
-	<%-- 			<img class="pof_pic" style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	 --%>
-				<img class="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${hostInfo.user_profilestored }" alt="프로필">	
-<%-- 				<h4>${hostInfo.user_id }</h4> --%>
+			<c:set value="${hostInfo.user_profileorigin }" var="origin" />
+			<c:set value="${hostInfo.user_profilestored }" var="stored" />
+			<c:set value="${snsLogin }" var="snsLogin" />
+
+			<!-- null일겨우 기본이미지 -->
+			<c:if test="${stored eq null && origin eq null }">
+				<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/img/기본이미지.jpg" alt="기본프로필" />
+			</c:if>
+
+			<!-- sns로그인 시 프로필사진 편집 전 -->
+			<c:if test="${stored ne null && origin eq null && snsLogin eq true }">
+				<img id="pof_pic" style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="sns프로필" />
+			</c:if>
+			
+			<!-- 프로필사진 편집 시 (sns동일) -->
+			<c:if test="${stored ne null && origin ne null}">
+				<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${hostInfo.user_profilestored }" alt="유저프로필" />
+			</c:if>
 				<h4>${hostInfo.user_nick }</h4>
 			<c:set value="${hostInfo.user_age }" var="ageRange"/>
 <%-- 				<h4>${fn:substring(ageRange,0,1) }0대</h4> --%>

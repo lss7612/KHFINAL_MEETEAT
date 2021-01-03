@@ -192,7 +192,7 @@ public class LoginController {
 	@RequestMapping(value = "/main")
 	public String main() {
 		
-		return "redirect:/testhome";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/navercallback", produces = "application/json;charset=utf-8", method = {RequestMethod.GET, RequestMethod.POST})
@@ -239,7 +239,6 @@ public class LoginController {
 		user.setUser_age(age);
 		user.setUser_gender(gender);
 		user.setUser_email(email);
-		user.setUser_profileorigin(image);
 		user.setUser_profilestored(image);
 		
 		boolean hasData = loginService.login(user);
@@ -319,7 +318,6 @@ public class LoginController {
 		user.setUser_email(kakaoUserInfo.get("email").toString());
 		user.setUser_nick(kakaoUserInfo.get("nickname").toString());
 		
-		user.setUser_profileorigin(kakaoUserInfo.get("image").toString());
 		user.setUser_profilestored(kakaoUserInfo.get("image").toString());
 		
 		

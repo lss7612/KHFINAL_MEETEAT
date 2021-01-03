@@ -22,6 +22,36 @@ function checkEmail(str) {
 
 $(document).ready(function() {
 	
+
+// 	$('#user_pw').val('${userinfo.user_pw}');
+// 	$('#user_email').val('${userinfo.user_email}');
+// 	$('#user_nick').val('${userinfo.user_nick}');
+	
+	if(${snsLogin}) {
+		$('#user_pw').attr('readonly', 'readonly');
+		$('#checkpw').attr('readonly', 'readonly');
+		
+		$('#user_pw').val('${userinfo.USER_PW}');
+		$('#checkpw').val('${userinfo.USER_PW}');
+	}
+
+	$("input").keyup(function(){
+	      var pw1 = $("#user_pw").val();
+	      var pw2 = $("#checkpw").val();
+	      var idx1 = true;
+	      
+	      if(pw1 != "" || pw2 != "") {
+	          if(pw1 == pw2){ 
+	             $('#alert-success').show();
+	             $('#alert-fail').hide();       
+	          } else{
+	             $('#alert-success').hide();
+	             $('#alert-fail').show();
+	             return false;
+	          }
+	       }
+	})
+
 	$('#editBtn').click(function(){
 		
 		var idx = true;
