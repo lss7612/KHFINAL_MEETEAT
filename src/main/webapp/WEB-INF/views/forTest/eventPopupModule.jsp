@@ -12,7 +12,6 @@
 	
 	<div id="centerDiv">
 	</div>
-	
 	<div id="deleteTodayButton" style="cursor:pointer;">3분간 안보기<i class="far fa-times-circle"></i></div>
 	
 </div>

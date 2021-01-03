@@ -4,6 +4,7 @@ $(document).ready(function(){
 		
 		$('#animatedDivs').css('background-image','url("/resources/img/main/membermain/animatedbackImg_preview.jpg")')
 		$('#animatedDivs').css('background-size','100%')
-	}, 1000);
+		
+	}, 500);
 	
 })

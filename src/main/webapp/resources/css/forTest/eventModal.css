@@ -11,7 +11,7 @@
 #centerDiv{
 	overflow: hidden;
 	width: 805px;
-	height:500px;
+	height:400px;
 	border: 1px solid #ccc;
 	background-color: white;
 	margin:0 auto;
@@ -27,13 +27,12 @@
 }
 
 .eventPopupImg {
-/* 	left: 50px; */
 	width: 500px;
 }
 
 .eventListBox{
 	width:300px;
-	height:490px;
+	height:400px;
 	overflow:scroll;
 }
 

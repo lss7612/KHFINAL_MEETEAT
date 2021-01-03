@@ -1,5 +1,6 @@
 package meeteat.controller.main;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -113,6 +114,7 @@ public class MainController {
 		
 		mainService.deleteMainImage();
 		mainService.moveTempFileToMainFile();
+		mainService.deleteTempImg();
 		
 		return "redirect:/";
 	}
@@ -166,6 +168,18 @@ public class MainController {
 		result.put("isTempUploaded", isTempUploaded);
 		
 		return result;
+	}
+	
+	@RequestMapping(value = "/main/isTempFileExist")
+	public @ResponseBody HashMap<String,Object> isTempFileExist() {
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		Boolean isTempFileExist = mainService.isTempFileExist();
+		result.put("isTempFileExist", isTempFileExist);
+		
+		return result;
+		
 	}
 	
 }

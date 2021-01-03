@@ -122,4 +122,15 @@ public class MainServiceImpl implements MainService{
 		
 	}
 
+	@Override
+	public Boolean isTempFileExist() {
+		
+		String tempImgPath = context.getRealPath("resources/img/main/membermain");
+		File temp = new File(tempImgPath+"/animatedbackImg_preview.jpg");
+
+		
+		
+		return temp.exists();
+	}
+
 }
