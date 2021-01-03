@@ -11,20 +11,20 @@ $(document).ready(function() {
 	//작성자 정보 누르면 채팅메뉴 나타나게 동작하는 스크립트
 	
 	//userMenu mouseleave event
-	$(".userMenu").mouseleave(function(){
-		if($(".userHiddenMenu").is(":visible")){
+	$(".attendeeMenu").mouseleave(function(){
+		if($(".attendeeHiddenMenu").is(":visible")){
 			console.log("hidden menu close")
-			$(".userHiddenMenu").slideUp();
+			$(".attendeeHiddenMenu").slideUp();
 		}
 	})
 	
-	$(".userMenu>span").click(function(){
+	$(".attendeeMenu>span").click(function(){
 		
 		var submenu = $(this).next("ul");
 		if(submenu.is(":visible")){
 			submenu.slideUp();
 		} else{
-			$(".userMenu > ul").slideUp();
+			$(".attendeeMenu > ul").slideUp();
 			submenu.slideDown();
 			//슬라이드 메뉴 조정할려면 left의 style값을 변경하면 됩니다.
 			$(submenu).css({"display" : "inline-block", "left" : "40px"});
@@ -62,12 +62,29 @@ function createChat(e){
 
 <c:forEach items="${attendUserList }" var="attendUserList">
 
-	<div class="row userMenu">
+	<div class="row attendeeMenu">
 		<span class="userNickMenu">
+		
 			<!-- user_no는 나중에 사진으로 대체 되어야함 -->
-	<%-- 			<img class="pof_pic" style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="유저프로필사진">	 --%>
-				<img class="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${attendUserList.user.user_profilestored }" alt="프로필">	
-<%-- 				<h4>${hostInfo.user_id }</h4> --%>
+			<c:set value="${attendUserList.user.user_profileorigin }" var="origin" />
+			<c:set value="${attendUserList.user.user_profilestored }" var="stored" />
+			<c:set value="${snsLogin }" var="snsLogin" />
+
+			<!-- null일겨우 기본이미지 -->
+			<c:if test="${stored eq null && origin eq null }">
+				<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/img/기본이미지.jpg" alt="기본프로필" />
+			</c:if>
+
+			<!-- sns로그인 시 프로필사진 편집 전 -->
+			<c:if test="${stored ne null && origin eq null && snsLogin eq true }">
+				<img id="pof_pic" style="width: 50px; height: 50px;" src="${attendUserList.user.user_profilestored }" alt="sns프로필" />
+			</c:if>
+			
+			<!-- 프로필사진 편집 시 (sns동일) -->
+			<c:if test="${stored ne null && origin ne null}">
+				<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${attendUserList.user.user_profilestored }" alt="유저프로필" />
+			</c:if>
+							
 				<h4>${attendUserList.user.user_nick }</h4>
 			<c:set value="${attendUserList.user.user_age }" var="ageRange"/>
 			<c:set value="${attendUserList.user.user_gender }" var="gender"/>
@@ -79,7 +96,7 @@ function createChat(e){
 				<h4>${fn:substring(ageRange,0,1) }0대 🙍‍♀️</h4>
 			</c:if>
 		</span>
-		<ul class="userHiddenMenu" >
+		<ul class="attendeeHiddenMenu" >
 			<li onclick="createChat(this);" loginUserNo="${user_no }"  user_no="${attendUserList.user.user_no }">채팅하기</li>
 		</ul>
 	</div>

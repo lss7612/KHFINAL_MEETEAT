@@ -163,12 +163,13 @@ $(document).ready(function() {
 	}
 	
 	</script>	
-<%--
+	
+<%-- 
 	<label for="title" class="form-label" style="float: left; margin-top: 30px;">메인이미지</label>
 	<input type="file" class="form-control" id="file" name="file" required accept="image/*">
 	<h5>* 메인이미지 미등록시 카테고리에 따른 기본이미지가 적용됩니다 *</h5>
-
 --%>
+
 	<hr>
 	
 	<label for="date" class="form-label" style="float: left; margin-top: 40px;">시간</label>

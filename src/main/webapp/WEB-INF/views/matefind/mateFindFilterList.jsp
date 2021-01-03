@@ -21,9 +21,6 @@
 		<c:if test="${category eq '카페' }">
 			<img class="thumbnail-img" style="margin-bottom: 10px;" alt="썸네일이미지" src="/resources/img/카페.jpg">
 		</c:if>
-<!-- 		<img class="thumbnail-img" style="margin-bottom: 10px;" alt="썸네일이미지" src="/resources/술.jpeg"> -->
-<!-- 		<img class="thumbnail-img" style="margin-bottom: 10px;" alt="썸네일이미지" src="/resources/카페.jpg"> -->
-<!-- 		<img class="thumbnail-img" style="margin-bottom: 10px;" alt="썸네일이미지" src="https://www.bloter.net/wp-content/uploads/2016/08/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0-%EC%82%AC%EC%A7%84.jpg"> -->
 		<h2 id="title" style="white-space:nowrap; text-overflow: ellipsis; overflow: hidden;">${list.article_title }</h2>
 		
 	</a>
@@ -45,8 +42,26 @@
 				<ul id="userMenuList">
 					<li id="userMenu" class="userMenu">
 						<span class="user-left" style="float: right;">
-		<%-- 					<img style="width: 50px; height: 50px;" src="${list.user.user_profilestored }" alt="유저프로필사진"> --%>
-							<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${list.user.user_profilestored }" alt="유저프로필사진" />
+						
+							<c:set value="${list.user.user_profileorigin }" var="origin" />
+							<c:set value="${list.user.user_profilestored }" var="stored" />
+							<c:set value="${snsLogin }" var="snsLogin" />
+
+							<!-- null일겨우 기본이미지 -->
+							<c:if test="${stored eq null && origin eq null }">
+								<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/img/기본이미지.jpg" alt="유저프로필사진" />
+							</c:if>
+
+							<!-- sns로그인 시 프로필사진 편집 전 -->
+							<c:if test="${stored ne null && origin eq null && snsLogin eq true }">
+								<img id="pof_pic" style="width: 50px; height: 50px;" src="${list.user.user_profilestored }" alt="유저프로필사진" />
+							</c:if>
+							
+							<!-- 프로필사진 편집 시 (sns동일) -->
+							<c:if test="${stored ne null && origin ne null}">
+								<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${list.user.user_profilestored }" alt="유저프로필사진" />
+							</c:if>
+							
 						</span>
 				
 						<span>

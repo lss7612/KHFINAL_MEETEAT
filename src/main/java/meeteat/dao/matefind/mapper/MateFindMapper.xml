@@ -82,6 +82,7 @@
 			, mf.mate_list			as mate_list
 			, u.user_id				as user_id
 			, u.user_nick			as user_nick
+			, u.user_profileorigin	as user_profileorigin
 			, u.user_profilestored	as user_profilestored
 		FROM tb_board2 mf
 			JOIN tb_user2 u
@@ -122,6 +123,7 @@
 			, mf.mate_list			as mate_list
 			, u.user_id				as user_id
 			, u.user_nick			as user_nick
+			, u.user_profileorigin	as user_profileorigin
 			, u.user_profilestored	as user_profilestored
 		FROM tb_board2 mf
 			JOIN tb_user2 u
@@ -159,6 +161,7 @@
 					, mf.mate_list			as mate_list
 					, u.user_id				as user_id
 					, u.user_nick			as user_nick
+					, u.user_profileorigin	as user_profileorigin
 					, u.user_profilestored	as user_profilestored
 				FROM tb_board2 mf
 					JOIN tb_user2 u
@@ -207,6 +210,7 @@
 				, mf.mate_list			as mate_list
 				, u.user_id				as user_id
 				, u.user_nick			as user_nick
+				, u.user_profileorigin	as user_profileorigin
 				, u.user_profilestored	as user_profilestored
 			FROM tb_board2 mf
 				JOIN tb_user2 u
@@ -301,7 +305,7 @@
 					, article_hit
 					, chatting_no
 					)
-		VALUES (TB_BOARD_SEQ.nextval
+		VALUES (TB_BOARD2_SEQ.nextval
 				, #{article_title}
 				, #{article_content}
 				, 2
@@ -345,6 +349,7 @@
 			, mf.mate_list			as mate_list
 			, u.user_id				as user_id
 			, u.user_nick			as user_nick
+			, u.user_profileorigin	as user_profileorigin
 			, u.user_profilestored	as user_profilestored
 		FROM tb_board2 mf
 			JOIN tb_user2 u
@@ -361,6 +366,7 @@
 		    , u.user_nick
 		    , u.user_age
 		    , u.user_gender
+		    , u.user_profileorigin
 		    , u.user_profilestored
 		FROM tb_board2 mf
 		left JOIN tb_recommend2 r
@@ -377,21 +383,6 @@
 			AND article_no = #{article_no }
 	</select>
 	
-	
-	
-		
-<!-- 	<select id=""> -->
-<!-- 	SELECT * FROM TB_BOARD2 -->
-<!-- 		WHERE board_no = 2 -->
-<!-- 		<choose> -->
-<!-- 			<when test=""> -->
-			
-<!-- 			</when> -->
-<!-- 		</choose> -->
-<!-- 			AND SUBSTR(party_location, 0, INSTR(party_location, ' ', 1, 1) - 1) = #{party_location } -->
-			
-<!-- 	</select> -->
-
 
 
 <!-- TB_Recommend -->

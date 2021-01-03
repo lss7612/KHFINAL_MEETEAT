@@ -13,6 +13,14 @@ $(document).ready(function() {
 // 	$('#user_email').val('${userinfo.user_email}');
 // 	$('#user_nick').val('${userinfo.user_nick}');
 	
+	if(${snsLogin}) {
+		$('#user_pw').attr('readonly', 'readonly');
+		$('#checkpw').attr('readonly', 'readonly');
+		
+		$('#user_pw').val('${userinfo.USER_PW}');
+		$('#checkpw').val('${userinfo.USER_PW}');
+	}
+
 	$("input").keyup(function(){
 	      var pw1 = $("#user_pw").val();
 	      var pw2 = $("#checkpw").val();
