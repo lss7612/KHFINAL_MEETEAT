@@ -21,11 +21,24 @@ $(document).ready(function(){
 	$('#goToSignUp').click(function(){
 		let originObject = $(this)
 		mainAnimate(originObject, '가입하고 먹으러가요','/login/signup')
+		
+		$('#mainWrapper').on('scroll touchmove mousewheel', function(event) {
+		  event.preventDefault();
+		  event.stopPropagation();
+		  return false;
+		});
+		
 	})
 	
 	$('#goToSignIn').click(function(){
 		let originObject = $(this)
 		mainAnimate(originObject, '로그인하고 먹으러가요','/login/login')
+		
+		$('#mainWrapper').on('scroll touchmove mousewheel', function(event) {
+			  event.preventDefault();
+			  event.stopPropagation();
+			  return false;
+		});
 	})
 	
 	$('.border_circle').click(function(){
@@ -86,9 +99,9 @@ function mergePhoto(){
 	$('#clickImgText').animate({
 			fontSize:'40px'
 			,height: '400px'
-		})
-	$('#clickImgText').html('대충 모여먹으면 좋다는 글<br>' +
-			'<img style="width:500px;"src="/resources/img/main/party.jpg">'
+	})
+	$('#clickImgText').html('모여서 즐겁게 먹어요<br>' +
+			'<img style="width:450px;"src="/resources/img/main/party.jpg">'
 			)
 }
 	

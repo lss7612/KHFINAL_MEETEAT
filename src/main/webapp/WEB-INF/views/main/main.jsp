@@ -4,11 +4,7 @@
 <c:import url="/WEB-INF/views/layout/headerForMain.jsp"/>
 <link rel="stylesheet" href="/resources/css/main/main.css"></link>
 <link rel="stylesheet" href="/resources/css/common/common.css">
-<script type="text/javascript" src="/resources/js/main/main.js">
-<!--
-
-//-->
-</script>
+<script type="text/javascript" src="/resources/js/main/main.js"></script>
 
 <div id="backgroundImg">
 <img style="min-width:1750px;width:100%" src="/resources/img/main/Main.jpg">
@@ -22,12 +18,13 @@
 		</div>
 		
 		<div class="smallText">
-			맛있는 식사와 유쾌한 사람들<br>
-			대충로렘입숨 대충로렘입숨 대충로렘입숨<br>
-			대충로렘입숨 대충로렘입숨 대충로렘입숨
+			저희 MEETEAT은 혼자먹는 것이 외로운 당신에게<br>
+			유쾌한 사람과 따뜻한 식탁에 둘러앉아<br>
+			즐거운 식사자리를 만들 수 있도록 도와드리려고 해요
+			
 		</div>
 		
-		<div id="goToSignUp" class="mainBtn longBtn" >같이드실래요?</div>
+		<div id="goToSignUp" class="mainBtn longBtn" >가입하고 함께할래요</div>
 		<div id="goToSignIn" class="mainBtn longBtn" >이미 회원이신가요?</div>
 		
 		

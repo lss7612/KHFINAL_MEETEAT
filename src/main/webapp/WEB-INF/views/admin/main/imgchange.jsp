@@ -5,6 +5,14 @@
 <link rel="stylesheet" href="/resources/css/common/common.css"></link>
 <link rel="stylesheet" href="/resources/css/admin/main/imgchange.css"></link>
 <script type="text/javascript" src="/resources/js/admin/main/imgchange.js"></script>
+
+<%-- 로딩 모달 --%>
+<div class="modal_img_upload invisible">
+	<img alt="" src="/resources/img/loading.gif"><br>
+	<span style="font-weight:bold; font-size:30px;">등록중입니다..</span>
+</div>
+
+
 <div id="divpage">
 
 <div id="contentWrapper">
@@ -17,7 +25,7 @@
 	<h2>아래 태그에서 이미지를 선택하세요</h2>
 	<form id="mainForm"action="">
 		<div class="form-group">
-		    <label for="form_previewImg">변경할 이미지를 선택하세요. jpg 파일만 가능합니다.<br>높이 400px의 이미지가 적당해요</label>
+		    <label for="form_previewImg">변경할 이미지를 선택하세요. jpg 파일만 가능합니다.<br>길이 1100px, 높이 400px의 이미지가 적당해요</label>
 		    <input type="file" id="form_previewImg" name="previewImg" accept=".jpg" />
 		</div>
 	</form>
@@ -27,12 +35,12 @@
 
 	
 	
-	<h2 style="text-align:center;"><a id="changeMain">아래 이미지을 실제 메인에 적용하기</a></h2>
-	<h4 style="text-align:center;">미리보기에 선택한 이미지가 적용되지 않았을 시 컨트롤 f5로 새로고침하세요 (맥은 강력새로고침)</h4>
+	<h2 style="text-align:center;"><a id="changeMain">여기를 눌러 실제 메인에 적용하세요</a></h2>
+	<h4 id="refrashPreview" style="text-align:center;">미리보기에 선택한 이미지가 적용되지 않았을 시 여기를 눌러 새로고침하세요</h4>
 	
 	<div style="height:1200px">
 	
-		<div id="previewCover" style="height:1100px;">
+		<div id="previewCover" style="height:1200px;">
 		
 		</div>
 		

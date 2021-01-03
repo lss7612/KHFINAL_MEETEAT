@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="/resources/css/common/common.css"></link>
 <script type="text/javascript" src="/resources/js/main/memberpreview.js" ></script>
 
-${isTempUploaded }
 <div class="bold_height_bar color_primary base_padding" style="text-align:center;">
 <span style="font-size:1.5em">미리보기입니다.</span>
 </div>
@@ -15,14 +14,17 @@ ${isTempUploaded }
 <div id="animatedDivs" 
 	style='overflow:hidden;
 	height:400px;
-	background-image: url("/resources/img/loading.gif");
 	background-size: 30%;
 	background-repeat: no-repeat;'
 class="subDiv">
+	이미지 미리보기
+	
 	<div class="animatedNumbers" class="pull-left" style="float:left;width:45%;">
 	
 	
+	
 	</div>
+	
 </div>
 </div>
 <div class="clearfix"></div>

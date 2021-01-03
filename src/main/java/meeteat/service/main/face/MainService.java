@@ -23,4 +23,6 @@ public interface MainService {
 
 	public void moveTempFileToMainFile();
 
+	public Boolean isTempFileExist();
+
 }

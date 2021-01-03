@@ -11,10 +11,25 @@
 	
 }
 
+#refrashPreview{
+	cursor:pointer;
+}
+#refrashPreview:hover{
+	text-decoration: underline;
+}
+
 #preview{
 	z-index:-1;
 }
 
 a {
 	cursor:pointer;
+}
+
+.modal_img_upload{
+	position: fixed;
+	text-align: center;
+	opacity:0.8;
+	width: 100%;
+	height: 100%;
 }

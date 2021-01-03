@@ -126,22 +126,7 @@ $(document).ready(function () {
 	
 	<div id="top_menu">
 	<div class="top_menu_sub">
-	<a href="/WEB-INF/views/layout/404error.jsp" style="font-size: 3px; color: #170B3B;">404</a>
-	<a href="/WEB-INF/views/layout/500error.jsp" style="font-size: 3px; color: #170B3B;">500</a>
-		
-		<c:choose>
-		<c:when test="${empty isLogin }">
-			<a href="/login/signup">회원가입</a>
-			<a href="/login/login">로그인</a>
-		</c:when>
-		<c:otherwise>
-			<c:if test="${user_grade eq 0 }">
-				<a href="https://www.naver.com/">관리자페이지</a>
-			</c:if>
-	       		<a href="/mypage/mypage">마이페이지</a>
-				<a href="/login/logout">로그아웃</a>
-		</c:otherwise>
-	</c:choose>
+			
 
 
 	</div>

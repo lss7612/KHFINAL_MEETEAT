@@ -31,24 +31,36 @@
 	
 	
 	<%-- 닉네임 조회수 덧글 시간 --%>
-	<div class="light_padding light_bar_height color-light">
-		<div  class="pull-left title_left" >
-		<ul id="userMenuList">
-			<li id="userMenu">
-
-					<span style="cursor:pointer;">${result.USER_NICK }</span>
-
-					<ul id="userHiddenMenu" >
-					<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 값에 입력해준다. -->
-					<li onclick="createChat(this);" user_no="${result.USER_NO }">채팅하기</li>
-				</ul>
-			</li>
-		</ul>
+	<div class="light_padding bold_bar_height color-light">
+		<div style="width:5%">
+		<div class="profile_box pull-left">
+			<c:choose>
+				<c:when test="${empty result.USER_PROFILESTORED }">
+					<a href="/resources/img/default_profile_img.jpg"><img src="/resources/img/default_profile_img.jpg"></a>
+				</c:when>
+				<c:otherwise>
+					<a href="/resources/upload/${result.USER_PROFILESTORED }" ><img src="/resources/upload/${result.USER_PROFILESTORED }"></a>
+				</c:otherwise>	
+			</c:choose>
 		</div>
-		<div class="pull-right title_right" style="text-align:right;" >
+		</div>
+		<div  class="light_padding pull-left title_left" >
+			<ul id="userMenuList">
+				<li id="userMenu">
+						<span style="cursor:pointer;">${result.USER_NICK }</span>
+	
+						<ul id="userHiddenMenu" >
+						<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 값에 입력해준다. -->
+						<li onclick="createChat(this);" user_no="${result.USER_NO }">채팅하기</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="light_padding pull-right title_right" style="text-align:right;" >
 			<span>조회수: ${result.ARTICLE_HIT }</span><span>덧글: ${result.CNT_COMMENT }</span>
 			<span>작성: <fmt:formatDate value="${result.CREATE_DATE }" pattern="yy/MM/dd hh:mm" /></span>
 		</div>
+		<div></div>
 	</div>
 
 
