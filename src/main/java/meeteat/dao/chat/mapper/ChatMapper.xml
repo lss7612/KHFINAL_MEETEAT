@@ -57,20 +57,6 @@
 	
 	<!-- usre_no가 속한 채팅방 조회 -->
 	<select id="getUserJoinChatList" parameterType="int" resultType="hashmap">
-		--select b.*, u.user_nick from tb_user2 u
-		--inner join (select c.chatting_no, c.chatting_name, max(cu.user_no)user_no from tb_chatting2 c
-		--    inner join tb_chattinguser2 cu
-		--        on c.chatting_no = cu.chatting_no
-		--    where c.chatting_no in (    
-		--        select chatting_no from tb_chattinguser2
-		--        where user_no = user_no
-		--    )
-		--    and user_no != user_no
-		--    group by c.chatting_no, c.chatting_name
-		--    order by c.chatting_no
-		--    )b
-		--on u.user_no = b.user_no
-		--
 		select b.*, u.user_nick, u.user_profilestored from tb_user2 u
 		inner join 
 		    (select c.chatting_no, c.chatting_name, cu.user_no from tb_chatting2 c
@@ -95,6 +81,7 @@
 		    inner join tb_chatting2 c
 		        on cc.chatting_no = c.chatting_no
 		    where c.chatting_no= #{chatting_no}
+		    and msg_no > #{msg_no}
 		    and cc.msg_type like 'CHAT'
 		    order by msg_date desc
 			)t
@@ -171,5 +158,19 @@
 	<select id="getProfileImg" resultType="string">
 		select user_profilestored from tb_user2
 		where user_no = #{user_no}
+	</select>
+	
+	<select id="getChatNewestContentAtRoomAtEmpty" parameterType="hashmap" resultType="hashmap">
+		select rownum, t.* from (
+		    select c.chatting_no, c.user_total, c.chatting_name, c.chatting_id, cc.user_no, u.user_id, u.user_nick, cc.msg_date from tb_chattingcontent2 cc
+		    inner join tb_user2 u
+		        on cc.user_no = u.user_no
+		    inner join tb_chatting2 c
+		        on cc.chatting_no = c.chatting_no
+		    where c.chatting_no= #{chatting_no}
+		    and msg_no = #{msg_no}
+		    order by msg_date desc
+		    )t
+		where rownum =1
 	</select>
 </mapper>

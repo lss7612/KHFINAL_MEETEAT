@@ -62,8 +62,8 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public HashMap<String, Object> getChatContentNewestAtRoom(int chatting_no) {
-		return chatDao.getChatNewestContentAtRoom(chatting_no);
+	public HashMap<String, Object> getChatContentNewestAtRoom(int msg_no, int chatting_no) {
+		return chatDao.getChatNewestContentAtRoom(msg_no, chatting_no);
 	}
 
 	@Override
@@ -131,4 +131,8 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.getProfileImg(user_no);
 	}
 	
+	@Override
+	public HashMap<String, Object> getChatContentNewestAtRoomAtNoMsg(int msg_no, int chatting_no) {
+		return chatDao.getChatNewestContentAtRoomAtEmpty(msg_no, chatting_no);
+	}
 }

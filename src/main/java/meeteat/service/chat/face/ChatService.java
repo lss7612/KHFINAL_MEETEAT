@@ -62,10 +62,11 @@ public interface ChatService {
 
 	/**
 	 * 채팅방 번호로 최신 대화 갖고오기
+	 * @param object 
 	 * @param chatting_no : 조회할 채팅 방 번호
 	 * @return 최신 메시지 내용
 	 */
-	public HashMap<String, Object> getChatContentNewestAtRoom(int chatting_no);
+	public HashMap<String, Object> getChatContentNewestAtRoom(int msg_no, int chatting_no);
 
 	/**
 	 * 채팅 메시지를 DB에 저장한다.
@@ -133,5 +134,13 @@ public interface ChatService {
 	 * @return : 프로필사진 저장 이름
 	 */
 	public String getProfileImg(int user_no);
+
+	/**
+	 * 채팅방 최근 정보 갖고오기
+	 * @param msg_no : 기준 메시지 번호
+	 * @param chatting_no : 채팅방 번호
+	 * @return
+	 */
+	public HashMap<String, Object> getChatContentNewestAtRoomAtNoMsg(int msg_no, int chatting_no);
 
 }

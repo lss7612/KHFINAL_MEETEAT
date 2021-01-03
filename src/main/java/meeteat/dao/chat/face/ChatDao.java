@@ -68,9 +68,10 @@ public interface ChatDao {
 	/**
 	 * 채팅방의 최신 메시지 내용을 조회
 	 * @param chatting_no : 조회할 채팅방 번호
+	 * @param chatting_no2 
 	 * @return 채팅방 채팅 정보
 	 */
-	public HashMap<String, Object> getChatNewestContentAtRoom(int chatting_no);
+	public HashMap<String, Object> getChatNewestContentAtRoom(@Param("msg_no")int msg_no, @Param("chatting_no")int chatting_no);
 
 	/**
 	 * 채팅 메시지지를 db에 저장한다.
@@ -162,5 +163,13 @@ public interface ChatDao {
 	 * @return 프로필 사진
 	 */
 	public String getProfileImg(int user_no);
+
+	/**
+	 * 채팅방의 최근 메시지 갖고오기
+	 * @param msg_no : 기준 메시지 번호
+	 * @param chatting_no : 채팅방 번호
+	 * @return
+	 */
+	public HashMap<String, Object> getChatNewestContentAtRoomAtEmpty(@Param("msg_no")int msg_no, @Param("chatting_no")int chatting_no);
 
 }
