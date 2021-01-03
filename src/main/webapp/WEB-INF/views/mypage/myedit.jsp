@@ -10,7 +10,7 @@
 
 <script type="text/javascript">
 
-function checkEmail(str) {                                                 
+function checkEmail(str) {
      var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 
      if(!reg_email.test(str)) {   
@@ -22,6 +22,8 @@ function checkEmail(str) {
 }
 
 function fnChkByte(obj, maxByte) {
+// 	$('#user_nick').val('${userinfo.user_nick}');
+// 	$('#user_email').val('${userinfo.user_email}');
 	
     var str = obj.value;
     var str_len = str.length;

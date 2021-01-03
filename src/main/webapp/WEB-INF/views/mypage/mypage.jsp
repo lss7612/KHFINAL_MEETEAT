@@ -263,7 +263,7 @@ td:nth-child(0) {
 						<tr>
 							<td>${payList.GRADE_NAME }</td>
 							<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${payList.PRICE }"></fmt:formatNumber></td>
-							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="YYYY-MM-dd"/></td>
+							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="YYYY/MM/dd"/></td>
 							<td>${payList.EXPIRE_DATE }</td>
 <%-- 							<td><fmt:formatDate value="${payList.EXPIRE_DATE s}" pattern="yy/MM/dd HH:mm"/></td> --%>
 						</tr>
@@ -297,7 +297,28 @@ td:nth-child(0) {
 							<c:forEach items="${pList}" var="b" varStatus="status" begin="0" end="4">
 							<tr>
 								<td>${b.BOARD_NAME}</td>
-								<td>${b.ARTICLE_TITLE}</td>
+								<td>
+						      		<c:choose>
+						      			<c:when test="${b.BOARD_NO eq 1 }"> <!-- 공지사항 게시판 -->   	
+						      				<a href="/notice/view?board_no=1&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
+						      			</c:when>
+						      			<c:when test="${b.BOARD_NO eq 2 }"> <!-- 메이트찾기 게시판 -->   	
+						      				<a href="/matefind/view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
+						      			</c:when>
+							      		<c:when test="${b.BOARD_NO eq 3 }"> <!-- 파티모집 -->	
+							      			<a href="/recruitboard/view?board_no=3&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>     	
+							      		</c:when>
+							      		<c:when test="${b.BOARD_NO eq 4 }"> <!-- 후기게시판 -->
+							      			<a href="/review/view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
+							      		</c:when>
+							      		<c:when test="${b.BOARD_NO eq 5 }"> <!-- 문의게시판 -->
+							      			<a href="/inquiry/view?board_no=5&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
+						      			</c:when>
+							      		<c:when test="${b.BOARD_NO eq 6 }"> <!-- 이벤트게시판 -->
+							      			<a href="/eventboard/view?board_no=6&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
+						      			</c:when>
+						     		 </c:choose>
+						        </td>
 								<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd"/></td>
 							</tr>
 							</c:forEach>
@@ -330,7 +351,28 @@ td:nth-child(0) {
 							<tr>
 								<td>${c.BOARD_NAME}</td>
 									<c:if test="${c.IS_POSTDELETE==0}">
-										<td>${c.COMMENT_CONTENT}</td>
+									<td>
+										<c:choose>
+										    <c:when test="${c.BOARD_NO eq 1 }"> <!-- 공지사항 게시판 -->   	
+										      	<a href="/notice/view?board_no=1&article_no=${c.ARTICLE_NO}">${c.COMMENT_CONTENT}</a>    		
+										     </c:when>
+										    <c:when test="${c.BOARD_NO eq 2 }"> <!-- 메이트찾기 게시판 -->   	
+										      	<a href="/matefind/view?article_no=${c.ARTICLE_NO}">${c.COMMENT_CONTENT}</a>    		
+										     </c:when>
+											 <c:when test="${c.BOARD_NO eq 3 }"> <!-- 파티모집 -->	
+											     <a href="/recruitboard/view?board_no=3&article_no=${c.ARTICLE_NO}">${c.COMMENT_CONTENT}</a>     	
+											 </c:when>
+											 <c:when test="${c.BOARD_NO eq 4 }"> <!-- 후기게시판 -->
+											     <a href="/review/view?article_no=${c.ARTICLE_NO}">${c.COMMENT_CONTENT}</a> 
+											 </c:when>
+											 <c:when test="${c.BOARD_NO eq 5 }"> <!-- 문의게시판 -->
+											    <a href="/inquiry/view?board_no=5&article_no=${c.ARTICLE_NO}">${c.COMMENT_CONTENT}</a> 
+										     </c:when>
+											 <c:when test="${c.BOARD_NO eq 6 }"> <!-- 이벤트 게시판 -->
+											    <a href="/eventboard/view?board_no=6&article_no=${c.ARTICLE_NO}">${c.COMMENT_CONTENT}</a> 
+										     </c:when>
+									     </c:choose>
+									</td>
 									</c:if>
 									<c:if test="${c.IS_POSTDELETE==1}">
 										<td>게시글이 삭제되었습니다.</td>

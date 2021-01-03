@@ -154,7 +154,7 @@ th{
 						    <a href="/inquiry/view?board_no=5&article_no=${b.ARTICLE_NO}">${b.COMMENT_CONTENT}</a> 
 					     </c:when>
 						 <c:when test="${b.BOARD_NO eq 6 }"> <!-- 이벤트 게시판 -->
-						    <a href=/eventboard/view?board_no=6&article_no=${b.ARTICLE_NO}>${b.COMMENT_CONTENT}</a> 
+						    <a href="/eventboard/view?board_no=6&article_no=${b.ARTICLE_NO}">${b.COMMENT_CONTENT}</a> 
 					     </c:when>
 				     </c:choose>
 				</td>
