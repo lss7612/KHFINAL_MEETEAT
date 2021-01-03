@@ -34,11 +34,17 @@
 	
 	<insert id="signUp" parameterType="meeteat.dto.user.User">
 		INSERT INTO tb_user2 (user_no, user_id, user_pw, user_nick, user_age, user_gender, user_email
+		<if test="user_profileorigin != null">
+			, user_profileorigin
+		</if>
 		<if test="user_profilestored != null">
 			, user_profilestored
 		</if>
 		, user_blockcnt, user_grade)
 		VALUES (tb_user2_seq.nextval, #{user_id}, #{user_pw}, #{user_nick}, #{user_age}, #{user_gender}, #{user_email}
+		<if test="user_profileorigin != null">
+			, #{user_profileorigin}
+		</if>
 		<if test="user_profilestored != null">
 			, #{user_profilestored}
 		</if>

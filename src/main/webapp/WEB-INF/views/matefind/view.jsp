@@ -246,7 +246,6 @@ function joinChat(e){
 			<!-- user_no는 나중에 사진으로 대체 되어야함 -->
 			<c:set value="${hostInfo.user_profileorigin }" var="origin" />
 			<c:set value="${hostInfo.user_profilestored }" var="stored" />
-			<c:set value="${snsLogin }" var="snsLogin" />
 
 			<!-- null일겨우 기본이미지 -->
 			<c:if test="${stored eq null && origin eq null }">
@@ -254,12 +253,12 @@ function joinChat(e){
 			</c:if>
 
 			<!-- sns로그인 시 프로필사진 편집 전 -->
-			<c:if test="${stored ne null && origin eq null && snsLogin eq true }">
+			<c:if test="${stored ne null && origin eq 'snsLogin' }">
 				<img id="pof_pic" style="width: 50px; height: 50px;" src="${hostInfo.user_profilestored }" alt="sns프로필" />
 			</c:if>
 			
 			<!-- 프로필사진 편집 시 (sns동일) -->
-			<c:if test="${stored ne null && origin ne null}">
+			<c:if test="${stored ne null && origin ne null && origin ne 'snsLogin'}">
 				<img id="pof_pic" style="width: 50px; height: 50px;" src="/resources/upload/${hostInfo.user_profilestored }" alt="유저프로필" />
 			</c:if>
 			

@@ -458,7 +458,7 @@ public class MateFindController {
 		}
 		
 		
-		return "redirect:/matefind/list";
+		return "redirect:/matefind/filterlist?curPage=0&party_location=&category=&meet_time=";
 		
 	}
 	

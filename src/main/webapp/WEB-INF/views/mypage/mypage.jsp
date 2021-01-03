@@ -193,7 +193,6 @@ td:nth-child(0) {
 			<div id="myinfo">
                      <c:set value="${userinfo.USER_PROFILEORIGIN }" var="origin" />
                      <c:set value="${userinfo.USER_PROFILESTORED }" var="stored" />
-                     <c:set value="${snsLogin }" var="snsLogin" />
 
                      <!-- null일겨우 기본이미지 -->
                      <c:if test="${origin eq null && stored eq null }">
@@ -201,12 +200,12 @@ td:nth-child(0) {
                      </c:if>
 
                      <!-- sns로그인 시 프로필사진 편집 전 -->
-                     <c:if test="${stored ne null && origin eq null && snsLogin eq true }">
+                     <c:if test="${stored ne null && origin eq 'snsLogin'}">
                         <img id="pof_pic" src="${userinfo.USER_PROFILESTORED }" alt="유저프로필사진" class="img-thumbnail"/>
                      </c:if>
                      
                      <!-- 프로필사진 편집 시 (sns동일) -->
-                     <c:if test="${stored ne null && origin ne null}">
+                     <c:if test="${stored ne null && origin ne null && origin ne 'snsLogin'}">
                         <img id="pof_pic" src="/resources/upload/${userinfo.USER_PROFILESTORED }" alt="유저프로필사진" class="img-thumbnail"/>
                      </c:if>
 <%-- 				<img src="/resources/upload/${userinfo.USER_PROFILESTORED }" id="pof_pic" class="img-thumbnail"> --%>
