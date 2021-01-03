@@ -105,7 +105,7 @@ public class MyPageController {
 			myPageService.deleteUser(user);
 			
 			session.invalidate();
-			return "/";
+			return "redirect:/";
 		}else {
 
 			return "redirect:/mypage/mydelete";
