@@ -186,27 +186,36 @@ $(document).ready(function() {
 	
 })
 
-function deleteComment(comment_no) {
-	$.ajax({
-		type: "post"
-		, url: "/review/comment/delete"
-		, dataType: "json"
-		, data: {
-			comment_no: comment_no
+function deleteComment(e) {
+		console.log(e)
+		var comment_no = $(e).attr("comment_no")
+		console.log(comment_no)
+		var res = confirm("지우시겠습니까?")
+		if(res){
+			$.ajax({
+				type: "post"
+				, url: "/review/comment/delete"
+				, async: false
+				, dataType: "json"
+				, data: {comment_no: comment_no }
+				, success: function(data){
+					if(data.success) {
+						console.log("서ㅏㅇㅇ공")
+						$("[data-comment_no='"+comment_no+"']").remove();
+						location.reload(true);
+						
+					} else {
+						alert("댓글 삭제 실패");
+					}
+				}
+				, error: function() { 
+					console.log("error");
+				}
+			});
+		} else {
+			return false;
 		}
-		, success: function(data){
-			if(data.success) {
-				
-				$("[data-comment_no='"+comment_no+"']").remove();
-				
-			} else {
-				alert("댓글 삭제 실패");
-			}
-		}
-		, error: function() {
-			console.log("error");
-		}
-	});
+		
 }
 </script>
 
@@ -256,6 +265,7 @@ function deleteComment(comment_no) {
 	<c:if test="${view.article_no eq ReviewImg.article_no }">
 	<td class="cjaqn">
 	<a href="/review/download?file_no=${ReviewImg.file_no}">${ReviewImg.file_originname }</a>
+<%-- 	<a href="/resources/upload/${ReviewImg.file_storedname}">${ReviewImg.file_originname }</a> --%>
 	</td>
 	</c:if>
 </tr>
@@ -302,8 +312,8 @@ function deleteComment(comment_no) {
 <!-- 			<button class="btn btn-default btn-xs">삭제</button></a> -->
 <%-- 		</c:if> --%>
 			<c:if test="${user_no eq comment.user_no }">
-				<button class="btn btn-default btn-xs"
-					onclick="deleteComment(${comment.comment_no });">삭제</button>
+				<button comment_no = "${comment.comment_no }" class="btn btn-default btn-xs deleteComment"
+					onclick="deleteComment(this);">삭제</button>
 			</c:if>
 	</td>
 	<td style="width: 3%;">

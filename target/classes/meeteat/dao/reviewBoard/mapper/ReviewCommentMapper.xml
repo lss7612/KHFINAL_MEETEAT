@@ -32,7 +32,6 @@
 	<update id="deleteComment" parameterType="meeteat.dto.reviewBoard.ReviewComment">
 		delete tb_comment2
 		where board_no = 4
-			and article_no = #{article_no}
 			and comment_no = #{comment_no}
 	</update>
 	

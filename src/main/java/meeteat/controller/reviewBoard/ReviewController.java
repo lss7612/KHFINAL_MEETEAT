@@ -61,6 +61,8 @@ public class ReviewController {
 		ReviewImg file = reviewService.getFile(file_no);
 		model.addAttribute("downFile", file);
 		
+		logger.info("=============================================================file_no" + file_no);
+		
 		return "down";
 		
 	}
