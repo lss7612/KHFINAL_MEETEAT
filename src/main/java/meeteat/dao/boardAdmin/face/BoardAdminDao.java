@@ -28,12 +28,4 @@ public interface BoardAdminDao {
 	 */
 	public void deleteBoardManage(Map<String, Object> map);
 
-
-	/**
-	 * 게시물 수정 상세페이지
-	 * @param param
-	 * @return
-	 */
-//	public Map<String, Object> getBoardView(Map<String, Object> param);
-
 }

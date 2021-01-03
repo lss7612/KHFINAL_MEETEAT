@@ -22,6 +22,11 @@
 <!-- FontAwsome -->
 <script src="https://kit.fontawesome.com/2dc2c9d106.js" crossorigin="anonymous"></script>
 
+<!-- DateTimePicker : 한국식 날짜 표기를 적용 -->
+<link rel="stylesheet" type="text/css" href="/resources/css/boardAdmin/daterangepicker.css">
+<script type="text/javascript" src="/resources/js/boardAdmin/moment.js"></script>
+<script type="text/javascript" src="/resources/js/boardAdmin/daterangepicker.js"></script>
+
 <script type="text/javascript">
 //채팅목록 팝업으로 띄워주는 함수
 function chatListPopup(){
@@ -138,7 +143,7 @@ $(document).ready(function () {
 	<div id="top_menu">
 	<div class="top_menu_sub">
 	<a href="/WEB-INF/views/layout/404error.jsp" style="font-size: 3px; color: #170B3B;">404</a>
-	<a href="/WEB-INF/views/layout/500error.jsp" style="font-size: 3px; color: #170B3B;">500</a>
+	<a href="#" style="font-size: 3px; color: #170B3B;">500</a>
 		
 		<c:choose>
 		<c:when test="${empty isLogin }">
@@ -167,8 +172,8 @@ $(document).ready(function () {
 			<li>
 				<a href="#">공지사항</a>
 				<ul class="subb">
-					<li><a href="#">공지사항</a>
-					<li><a href="#">1:1 문의</a>
+					<li><a href="/notice/list">공지사항</a>
+					<li><a href="/inquiry/list">1:1 문의</a>
 					<li><a href="/eventboard/holding">이벤트</a>
 				</ul>
 			</li>
@@ -185,7 +190,21 @@ $(document).ready(function () {
 					<li><a href="/review/list">파티 후기</a>
 				</ul>
 			</li>
-			<li onclick="chatListPopup();">채팅하기</a>
+			
+			<li style="cursor : pointer;" onclick="chatListPopup();">채팅하기</a>
+			
+			<c:if test="${user_grade eq 0 }">
+			<li>
+				<a href="#">관리자페이지</a>
+				<ul class="subb">
+					<li><a href="/admin/user/list">유저 관리</a>
+					<li><a href="/admin/board/list">게시글 관리</a>
+					<li><a href="/admin/report/list">신고 목록</a>
+					<li><a href="/admin/report/result/list">신고 처리</a>
+				</ul>
+			</li>
+			</c:if>
+			
 		</ul>
 	</div>
 </header>

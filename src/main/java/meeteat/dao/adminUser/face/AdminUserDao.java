@@ -13,4 +13,6 @@ public interface AdminUserDao {
 
 	public List<HashMap<String, String>> selectList(HashMap<String, Object> listmap);
 
+	public void userGradeUpdate(int user_no);
+
 }

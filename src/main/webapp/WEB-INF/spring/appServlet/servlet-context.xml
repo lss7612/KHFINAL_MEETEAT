@@ -54,7 +54,7 @@
 		<interceptor>
 			<mapping path="/recruitboard/**"/>
 			<mapping path="/matefind/**"/>
-			<mapping path="/review/**"/>
+<!-- 			<mapping path="/review/**"/> -->
 			<mapping path="/mypage/mypost"/>
 			<mapping path="/mypage/mycmmt"/>			
 			<exclude-mapping path="/interceptor/payfail"/>
@@ -87,7 +87,7 @@
 	<!-- 파일업로드 요청(multipart/form-data)을 처리하는 클래스 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 메모리에서 처리할 수 있는 파일 사이즈 : 1MB -->
-		<beans:property name="maxInMemorySize" value="1048576"/>
+		<beans:property name="maxInMemorySize" value="10485760"/>
 		<!-- 한번 요청할 떄 파일의 최대 사이즈 제한: 10MB -->
 		<beans:property name="maxUploadSize" value="10485760"/>
 		<!-- 파일 당 최대 사이즈 제한 : 5MB -->

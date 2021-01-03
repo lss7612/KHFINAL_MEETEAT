@@ -179,5 +179,10 @@ public class MyPageServiceImpl implements MyPageService{
 	public Map<String, Object> myPayList(int user_no) {
 		return myPageDao.selectMyPayList(user_no);
 	}
+	
+	@Override
+	public void myEdit(User user) {
+		myPageDao.editUser(user);
+	}
 
 }

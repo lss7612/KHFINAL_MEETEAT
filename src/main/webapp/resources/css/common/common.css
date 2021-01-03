@@ -12,6 +12,23 @@
 	min-width:83px; width:10%; margin: 0 20px 0 0;
 }
 
+.profile_box{
+	overflow: hidden;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	background: #ccc;
+}
+
+.profile_box  img {
+	cursor: pointer;
+	width: 55px;
+}
+
 .bigImgBox {
 	cursor:pointer;
 	overflow: hidden;

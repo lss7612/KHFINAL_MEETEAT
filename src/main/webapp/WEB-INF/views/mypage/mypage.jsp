@@ -4,9 +4,158 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
+<c:import url="/WEB-INF/views/layout/share.jsp" />
 <link rel="stylesheet" href="/resources/css/mypage/mypage.css">
 
 <style>
+@charset "UTF-8";
+table {
+ 	table-layout: fixed;  
+}
+
+table, th {
+	text-align: center;
+}
+
+td:nth-child(1) {
+	text-align: center;
+	
+	white-space:nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+td:nth-child(2) {
+	text-align: center;
+	
+	white-space:nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+th{
+
+	background-color: #F5DA81;
+}
+
+#container {
+	position: relative;
+ 	z-index: 20; 
+	max-width: 954px;
+	margin-top: 100px 0 0 ;
+}
+
+#content.section_home {
+	line-height: 0px;
+	padding: 10px 0px 40px;
+}
+
+#content {
+	positioin: relative;
+}
+
+.column {
+	float: none;
+	width: 100%;
+	display: flex;
+}
+
+.sh_group .sh_content {
+	min-height: 185px;
+	padding-top: 9px;
+}
+
+.sh_group {
+	margin: 16px 8px 0;
+	padding: 32px 29px 30px;
+	text-align: left;
+	border: 1px solid #F5DA81;
+	border-radius: 2px;
+	background: #fff;
+	width: 50%;
+}
+
+.section_home {
+	padding: 17px 0 0 1px;
+}
+
+.sh_header .btn_update {
+	position: absolute;
+	top: -4px;
+	right: -4px;
+	padding: 5px;
+}
+
+a {
+	text-decoration: none;
+}
+
+a: -webkit-any-link {
+	color: -webkit-link;
+	cursor: pointer;
+}
+
+.box_set{
+	top: 10px;
+	display: grid;
+	font-size: 13px;
+	color: #252525;
+	right: 20px;
+	width: 100px;
+	padding-inline-start: 0.75em;
+	padding-inline-end: 0.75em;
+	padding-block-start: 0.35em;
+	padding-block-end: 0.625em;
+	min-inline-size: fit-content;
+	
+}
+
+span{
+	padding-left: 125px;
+	text-align: right;
+	right: -5px;
+}
+.tit_set{
+	width: 50%;
+	padding-top: 5px;
+}
+
+.txt_set{
+	padding-bottom: 15px;
+	height: 10px;
+}
+
+.c_header{
+	padding-bottom: -10px;
+	line-height: 19px;
+	padding-top: -19px;
+	letter-spacing: 3px;
+	color: #666;
+}
+
+#myinfo{
+	hieght: 50%;
+	
+}
+#mypic{
+	text-align: left;
+
+}
+#info_detail{
+	display: inline-block;
+	margin-left: 0px;
+	padding-top: 10px;
+	padding-left: 25px;
+}
+
+#pof_pic{
+	width: 120px;
+	height:120px; 
+	border-radius:100px; 
+	margin-bottom: 85px;
+	margin-rigt: 25px;
+	margin-left: 10px;
+}
+
 td{
 	text-align: center;
 	
@@ -21,22 +170,9 @@ td:nth-child(0) {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
-
-
 </style>
-<script type="text/javascript">
 
-// $(document).ready(function(){
-	
-// 	if(confirm('결제회원만 접근 가능합니다.\n 결제하시겠습니까?')){
-// 		location.href='/mypay/mypay'
-// 	} else {
-// 		window.history.back()
-// 	}
-	
-// })
 
-</script>
 <div id="divpage">
 
 <div class="c_header">
@@ -51,9 +187,10 @@ td:nth-child(0) {
 				<h2>내 프로필 정보 <a href="/mypage/myedit" class="btn btn-default pull-right btn-sm" role="button">수정하기</a></h2>	
 			</div><hr>
 
-			<div id="myinfo">
-				<div id="mypic"><img src="/resources/upload/${userinfo.USER_PROFILESTORED }" id="pof_pic">
+	<div id="myinfo">
+			<img src="/resources/upload/${userinfo.USER_PROFILESTORED }" id="pof_pic">
 			<div id="info_detail">
+
 				<div class="box_set">
 					<strong class="tit_set">닉네임</strong> <span class="txt_set">${userinfo.USER_NICK }</span>
 				</div>
@@ -67,8 +204,8 @@ td:nth-child(0) {
 					<strong class="tit_set">이메일</strong> <span class="txt_set">${userinfo.USER_EMAIL }</span>
 				</div>
 			</div>	
-			</div>
-			</div>
+			
+	</div>
 		</div><!-- 회원 정보 끝 -->
 		
 		<!-- 내 결제 정보 -->
@@ -94,7 +231,7 @@ td:nth-child(0) {
 					<h3>결제 정보가 없습니다</h3>							
 				</c:when>
 				<c:otherwise>
-					<table class="table table-condensed">
+					<table class="table table-condensed table-hover">
 						<tr>
 							<th style="width: 15%">회원등급</th>
 							<th style="width: 15%">결제 가격</th>
@@ -105,8 +242,9 @@ td:nth-child(0) {
 						<tr>
 							<td>${payList.GRADE_NAME }</td>
 							<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${payList.PRICE }"></fmt:formatNumber></td>
-							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="yy/MM/dd HH:mm"/></td>
-							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="yy/MM/dd HH:mm"/></td>
+							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="YYYY-MM-dd HH:mm"/></td>
+							<td>${payList.EXPIRE_DATE }</td>
+<%-- 							<td><fmt:formatDate value="${payList.EXPIRE_DATE s}" pattern="yy/MM/dd HH:mm"/></td> --%>
 						</tr>
 					</table>					
 				</c:otherwise>
@@ -129,29 +267,21 @@ td:nth-child(0) {
 					<h3>등록하신 글이 없습니다</h3>
 				</c:when>
 				<c:otherwise>
-					<table class="table table-condensed">
+					<table class="table table-condensed table-hover">
 						<tr>
-							<th style="width: 20%">게시판 이름</th>
+							<th style="width: 30%">게시판 이름</th>
 							<th style="width: 50%">글 제목</th>
-							<th style="width: 30%">작성일</th>
+							<th style="width: 20%">작성일</th>
 						</tr>
 							<c:forEach items="${pList}" var="b" varStatus="status" begin="0" end="4">
 							<tr>
 								<td>${b.BOARD_NAME}</td>
-								<c:choose>
-									<c:when test="${b.IS_DELETE eq 0 }">
-										<td>${b.ARTICLE_TITLE}</td>
-									</c:when>
-									<c:otherwise>
-										<td style="color: red;">삭제된 게시글입니다.</td>
-									</c:otherwise>
-								</c:choose>
-								<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
+								<td>${b.ARTICLE_TITLE}</td>
+								<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd"/></td>
 							</tr>
 							</c:forEach>
 
 					</table>
-
 				</c:otherwise>
 			</c:choose>
 			</div>
@@ -169,24 +299,22 @@ td:nth-child(0) {
 					<h3>등록하신 글이 없습니다</h3>
 				</c:when>
 				<c:otherwise>
-					<table class="table table-condensed">
+					<table class="table table-condensed table-hover">
 						<tr>
-							<th style="width: 20%">게시판 이름</th>
-							<th style="width: 50%">댓글 제목</th>
-							<th style="width: 30%">작성일</th>
+							<th style="width: 30%">게시판 이름</th>
+							<th style="width: 50%">댓글 내용</th>
+							<th style="width: 20%">작성일</th>
 						</tr>
 							<c:forEach items="${cList}" var="c" varStatus="status" begin="0" end="4">
 							<tr>
 								<td>${c.BOARD_NAME}</td>
-								<c:choose>
-									<c:when test="${c.IS_DELETE eq 0 }">
+									<c:if test="${c.IS_POSTDELETE==0}">
 										<td>${c.COMMENT_CONTENT}</td>
-									</c:when>
-									<c:otherwise>
-										<td style="color: red;">삭제된 댓글입니다.</td>
-									</c:otherwise>
-								</c:choose>
-								<td><fmt:formatDate value="${c.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
+									</c:if>
+									<c:if test="${c.IS_POSTDELETE==1}">
+										<td>게시글이 삭제되었습니다.</td>
+									</c:if>
+								<td><fmt:formatDate value="${c.CREATE_DATE}" pattern="yy/MM/dd"/></td>
 							</tr>
 							</c:forEach>
 

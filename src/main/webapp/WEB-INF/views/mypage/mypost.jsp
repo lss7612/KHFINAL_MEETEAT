@@ -17,9 +17,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	console.log('${boardAdminParam}')
-	if('${myParam.postCategory}'==$("#postCategory > option").val())
-		$(this).attr('selected','selected')
+// 	console.log('${boardAdminParam}')
+// 	if('${myParam.postCategory}'==$("#postCategory > option").val())
+// 		$(this).attr('selected','selected')
 		
 	//검색 버틀 클릭
 	$("#btnSearch").click(function() {
@@ -47,6 +47,10 @@ $(document).ready(function() {
 <style>
 th{
 	text-align: center;
+}
+td{
+	text-align: center;
+
 }
 </style>
 
@@ -77,28 +81,19 @@ th{
 </div><br>
 
 <form action="/mypage/mypost" method="POST">
-<table class="table table-condensed"	>
+<table class="table table-condensed table-hover">
    <tr>
       <th style="width: 5%">선택</th>
       <th style="width: 5%">글번호</th>
-      <th style="width: 10%">게시판 이름</th>
+      <th style="width: 15%">게시판 이름</th>
       <th style="width: 20%">글 제목</th>
-      <th style="width: 45%">글 내용</th>
-      <th style="width: 15%">작성일</th>
+      <th style="width: 35%">글 내용</th>
+      <th style="width: 10%">작성일</th>
+      <th style="width: 10%">수정일</th>
    </tr>
 
 <c:forEach items="${postAllList}" var="b">
    <tr>      
-      <c:choose>
-      	<c:when test="${b.IS_DELETE eq 1 }">
-      		<td></td>
-      		<td>${b.ARTICLE_NO }</td>
-      		<td>${b.BOARD_NAME}</td>
-      		<td style="text-align: center; color: red;">삭제된 게시글입니다.</td>
-      		<td style="text-align: center; color: red;">삭제된 게시글입니다.</td>
-      		<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>      		
-      	</c:when>
-      	<c:otherwise>
       		<td>
       			<input type="checkbox" name="checkbox" id="checkbox" value="${b.ARTICLE_NO}">
       		</td>
@@ -106,6 +101,9 @@ th{
       		<td>${b.BOARD_NAME}</td>
 	      	<td>
 	      		<c:choose>
+	      			<c:when test="${b.BOARD_NO eq 1 }"> <!-- 공지사항 게시판 -->   	
+	      				<a href="/notice/view?board_no=1&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
+	      			</c:when>
 	      			<c:when test="${b.BOARD_NO eq 2 }"> <!-- 메이트찾기 게시판 -->   	
 	      				<a href="/matefind/view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
 	      			</c:when>
@@ -113,26 +111,28 @@ th{
 		      			<a href="/recruitboard/view?board_no=3&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>     	
 		      		</c:when>
 		      		<c:when test="${b.BOARD_NO eq 4 }"> <!-- 후기게시판 -->
-		      			<a href="/">${b.ARTICLE_TITLE}</a> 
+		      			<a href="/review/view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
 		      		</c:when>
 		      		<c:when test="${b.BOARD_NO eq 5 }"> <!-- 문의게시판 -->
 		      			<a href="/inquiry/view?board_no=5&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
 	      			</c:when>
+		      		<c:when test="${b.BOARD_NO eq 6 }"> <!-- 이벤트게시판 -->
+		      			<a href="/eventboard/view?board_no=6&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
+	      			</c:when>
 	     		 </c:choose>
 	      </td>
-	      <td>${b.ARTICLE_CONTENT}</td>
-	      <td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>
-      	</c:otherwise>
-      </c:choose>
+	      <td>${b.ARTICLE_CONTENT }</td>
+	      <td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd"/></td>
+	      <td><fmt:formatDate value="${b.REVISION_DATE}" pattern="yy/MM/dd"/></td>
    </tr>
 </c:forEach>
 </table>
-<button class="btn btn-danger btn-sm pull-right" id="deleteBtn">선택한 게시글 삭제</button>
+<button class="btn btn-danger btn-sm pull-left" id="deleteBtn">선택한 게시글 삭제</button>
 </form>
 
  
 <div class="form-inline">
-	<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm pull-left">돌아가기</a>
+	<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm pull-right">돌아가기</a>
  </div>
 
 <jsp:include page="/WEB-INF/views/mypage/mypost_paging.jsp" />

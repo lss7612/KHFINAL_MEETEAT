@@ -28,6 +28,23 @@
 	background-color : #eee;
 }
 
+.profile_box{
+	overflow: hidden;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	background: #ccc;
+}
+
+.profile_box  img {
+	cursor: pointer;
+	width: 60px;
+}
+
 .imgBox {
 	cursor:pointer;
 	overflow: hidden;
@@ -164,11 +181,11 @@
 
 
 .title_left{
-	width:30%;
+	width:40%;
 }
 
 .title_right{
-	width:60%;
+	width:45%;
 }
 
 #view_title_bar div span{

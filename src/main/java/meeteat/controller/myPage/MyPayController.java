@@ -75,7 +75,6 @@ public class MyPayController {
 				
 				out.write("{\"result\":true}");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -85,7 +84,6 @@ public class MyPayController {
 //				logger.info("payChk222222222222222222222222" + payChk);
 				out.write("{\"result\":false}");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

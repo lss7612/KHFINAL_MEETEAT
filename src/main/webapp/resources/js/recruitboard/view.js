@@ -7,6 +7,7 @@ $(document).ready(function(){
 	
 	/* 게시글 영역 */
 	
+	
 	$("#userMenu>span").click(function(){
 		
 		//2. 슬라이드 형식으로 나타나기

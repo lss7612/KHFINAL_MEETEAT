@@ -112,7 +112,7 @@ function createChat(e){
 
 <div class="container" id="divpage">
 
-<h1 class="pull-left">후기 게시판</h1>
+<h3 class="pull-left">파티 후기</h3>
 
 <div class="clearfix"></div>
 <hr>
@@ -150,6 +150,7 @@ function createChat(e){
 </table>
 
 
+<a href="/review/write"><button class="btn btn-primary pull-right">글쓰기</button></a>
 <%-- <span class="pull-left">total : ${paging.totalCount }</span> --%>
 
 <div class="clearfix"></div>
@@ -175,7 +176,6 @@ function createChat(e){
 <jsp:include page="/WEB-INF/views/review/paging.jsp" />
 
 
-<a href="/review/write"><button class="btn btn-primary pull-right">글쓰기</button></a>
 
 </div><!-- .container -->
 

@@ -32,6 +32,15 @@ $(document).ready(function(){
   	//스크롤바 하단고정
     $('#chatting').scrollTop($('#chatting')[0].scrollHeight);
 
+    $(function(){
+		$("#writeMsg").on('input', function(){
+			if($("#writeMsg").val()==''){
+				$("#sendBtn").attr("disabled", true);
+			} else {
+				$("#sendBtn").attr("disabled", false);
+			}
+		})
+	})
     
 })
 
@@ -196,6 +205,9 @@ function msgTypeAjax(msgType, writer_no, chatting_no){
 			console.log("실패")
 		}
 	})
+	
+	
+	
 }
 </script>
 
@@ -265,7 +277,7 @@ function msgTypeAjax(msgType, writer_no, chatting_no){
 		</div>
 		<div id="usingArea">
 			<input type="text" id="writeMsg" onKeyDown="enterKeyAtChat();" />
-			<button type="button" id="sendBtn" onclick="send();">전송</button>
+			<button disabled = "true" type="button" id="sendBtn" onclick="send();">전송</button>
 		</div>
 	</div>
 	<div id="etcArea">

@@ -4,13 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
-<link rel="stylesheet" href="/resources/css/mypage/mypost.css">
 
 <script type="text/javascript">
 $(document).ready(function() {
-	console.log('${boardAdminParam}')
-	if('${myParam.postCategory}'==$("#postCategory > option").val())
-		$(this).attr('selected','selected')
+// 	console.log('${boardAdminParam}')
+// 	if('${myParam.postCategory}'==$("#postCategory > option").val())
+// 		$(this).attr('selected','selected')
 		
 	//검색 버틀 클릭
 	$("#btnSearch").click(function() {
@@ -34,12 +33,62 @@ $(document).ready(function() {
 	})
 })
 </script>
-
+<script>
+function init(){
+	str = removeHTML(str);
+}
+function removeHTML(text){
+	text = text.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig,"");
+	return text;
+}
+</script>
 <style>
 th, td, p {
 	text-align: center;
 }
 
+table {
+ 	table-layout: fixed;
+ 	max-width: 90% 
+}
+
+table, th, td {
+	text-align: center;
+}
+td:nth-child(4) {
+	white-space: nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+td:nth-child(3) {
+	white-space: nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+td:nth-child(2) {
+	white-space: nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+td:nth-child(5) {
+	
+	white-space:nowrap;	
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.sh_header {
+	top: -4px;
+	right: -4px;
+	padding: 5px;
+	padding: 5px;
+/* 	line-height: 19px; */
+/* 	letter-spacing: 3px; */
+	color: #666;
+}
+th{
+	background-color: #F5DA81;
+}
 </style>
 
 <div id="divpage">
@@ -69,63 +118,61 @@ th, td, p {
 </div><br>
 
 <form action="/mypage/mycmmt" method="POST">
-<table class="table table-condensed"	>
+<table class="table table-condensed table-hover">
    <tr>
       <th style="width: 5%">선택</th>
-      <th style="width: 10%">댓글번호</th>
-      <th style="width: 10%">게시판 이름</th>
-      <th style="width: 30%">글 제목</th>
-      <th style="width: 40%">댓글 내용</th>
-      <th style="width: 15%">작성일</th>
+      <th style="width: 5%">글번호</th>
+      <th style="width: 15%">게시판 이름</th>
+      <th style="width: 20%">글 제목</th>
+      <th style="width: 35%">댓글 내용</th>
+      <th style="width: 10%">작성일</th>
+      <th style="width: 10%">수정일</th>
    </tr>
 
 <c:forEach items="${cmmtAllList}" var="b">
    <tr>     
-   			<c:choose>
-   				<c:when test="${b.IS_DELETE eq 0 }">
-		      		<td><input type="checkbox" name="checkbox" id="checkbox" value="${b.COMMENT_NO}"></td>
-   				</c:when>
-   				<c:otherwise>
-   					<td></td>
-   				</c:otherwise>
-   			</c:choose>  		
+		    <td><input type="checkbox" name="checkbox" id="checkbox" value="${b.COMMENT_NO}"></td>		
       		<td>${b.COMMENT_NO }</td>
       		<td>${b.BOARD_NAME}</td>
-
-			<td>
-			   <c:choose>
-			      	<c:when test="${b.BOARD_NO eq 2 }"> <!-- 메이트찾기 게시판 -->   	
-			      		<a href="/matefind/view?article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>    		
-			      	</c:when>
-				    <c:when test="${b.BOARD_NO eq 3 }"> <!-- 파티모집 -->	
-				      	<a href="/recruitboard/view?board_no=3&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a>     	
-				    </c:when>
-				    <c:when test="${b.BOARD_NO eq 4 }"> <!-- 후기게시판 -->
-				      	<a href="/">${b.ARTICLE_TITLE}</a> 
-				    </c:when>
-				    <c:when test="${b.BOARD_NO eq 5 }"> <!-- 문의게시판 -->
-				      	<a href="/inquiry/view?board_no=5&article_no=${b.ARTICLE_NO}">${b.ARTICLE_TITLE}</a> 
-			      	</c:when>
-			     </c:choose>
-			</td>		
-			<c:choose>
-				<c:when test="${b.IS_DELETE eq 0 }">
-					<td>${b.COMMENT_CONTENT}</td>
-				</c:when>
-				<c:otherwise>
-   					<td style="text-align: center; color: red;">삭제된 댓글입니다.</td> 									
-				</c:otherwise>
-			</c:choose>
-	      	<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd HH:mm"/></td>   		
+			<td>${b.ARTICLE_TITLE}</td>	
+			<c:if test="${b.IS_POSTDELETE==0}">	
+				<td>
+					<c:choose>
+					    <c:when test="${b.BOARD_NO eq 1 }"> <!-- 공지사항 게시판 -->   	
+					      	<a href="/notice/view?board_no=1&article_no=${b.ARTICLE_NO}">${b.COMMENT_CONTENT}</a>    		
+					     </c:when>
+					    <c:when test="${b.BOARD_NO eq 2 }"> <!-- 메이트찾기 게시판 -->   	
+					      	<a href="/matefind/view?article_no=${b.ARTICLE_NO}">${b.COMMENT_CONTENT}</a>    		
+					     </c:when>
+						 <c:when test="${b.BOARD_NO eq 3 }"> <!-- 파티모집 -->	
+						     <a href="/recruitboard/view?board_no=3&article_no=${b.ARTICLE_NO}">${b.COMMENT_CONTENT}</a>     	
+						 </c:when>
+						 <c:when test="${b.BOARD_NO eq 4 }"> <!-- 후기게시판 -->
+						     <a href="/review/view?article_no=${b.ARTICLE_NO}">${b.COMMENT_CONTENT}</a> 
+						 </c:when>
+						 <c:when test="${b.BOARD_NO eq 5 }"> <!-- 문의게시판 -->
+						    <a href="/inquiry/view?board_no=5&article_no=${b.ARTICLE_NO}">${b.COMMENT_CONTENT}</a> 
+					     </c:when>
+						 <c:when test="${b.BOARD_NO eq 6 }"> <!-- 이벤트 게시판 -->
+						    <a href=/eventboard/view?board_no=6&article_no=${b.ARTICLE_NO}>${b.COMMENT_CONTENT}</a> 
+					     </c:when>
+				     </c:choose>
+				</td>
+			</c:if>
+			<c:if test="${b.IS_POSTDELETE==1}">
+				<td>게시글이 삭제되었습니다.</td>
+			</c:if>
+	      	<td><fmt:formatDate value="${b.CREATE_DATE}" pattern="yy/MM/dd"/></td>      	 		
+	      	<td><fmt:formatDate value="${b.REVISION_DATE}" pattern="yy/MM/dd"/></td>      	 		
    </tr>
 </c:forEach>
 </table>
-<button class="btn btn-danger btn-sm pull-right" id="deleteBtn">선택한 댓글 삭제</button>
+<button class="btn btn-danger btn-sm pull-left" id="deleteBtn">선택한 댓글 삭제</button>
 </form>
 
  
 <div class="form-inline">
-	<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm pull-left">돌아가기</a>
+	<a href="/mypage/mypage" role="button" class="btn btn-primary btn-sm pull-right">돌아가기</a>
  </div>
 
 </div>

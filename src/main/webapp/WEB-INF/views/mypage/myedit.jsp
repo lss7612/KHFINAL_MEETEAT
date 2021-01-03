@@ -1,14 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-  
+<c:import url="/WEB-INF/views/layout/header.jsp" />
+<link rel="stylesheet" href="/resources/css/mypage/myedit.css">
+
 <!-- jQuery 2.2.4.min -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>  
 
 <script type="text/javascript">
 
+function checkEmail(str) {                                                 
+     var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+     if(!reg_email.test(str)) {   
+          return false;       
+     } else {               
+          return true;         
+     }                            
+
+}
+
 $(document).ready(function() {
 	
+
 // 	$('#user_pw').val('${userinfo.user_pw}');
 // 	$('#user_email').val('${userinfo.user_email}');
 // 	$('#user_nick').val('${userinfo.user_nick}');
@@ -37,7 +51,7 @@ $(document).ready(function() {
 	          }
 	       }
 	})
-	
+
 	$('#editBtn').click(function(){
 		
 		var idx = true;
@@ -65,24 +79,52 @@ $(document).ready(function() {
 			$('#submitResult').css("color", "red");
 			$('#user_email').focus;
 			return false;
-		} else if($.trim($('#file').val()) == '') {
-			$('#submitResult').text("프로필 사진을 선택해주세요");
-			$('#submitResult').css("color", "red");
-			$('#file').focus;
-			return false;
-		
-		}else {
-			$('#editForm').submit();
+		}		else {
+			if(checkEmail($('#user_email').val())) {
+				$('#submitResult').text("");
+				$('#editForm').submit();
+			} else {
+				$('#submitResult').text("이메일형식에 맞게 작성해주세요");
+				$('#submitResult').css("color", "red");
+				return false;
+			}
 		}
 		
 	});
+	
+	$('#user_pw').blur(function() {
+		if($('#user_pw').val() != $('#checkpw').val()) {
+			$('#pwCheckResult').text("비밀번호가 다릅니다");
+			$('#pwCheckResult').css("color", "red");
+			$("#editBtn").attr("disabled", true);
+		} else {
+			if(!$.trim($('#user_pw').val()) == '') {
+				$('#pwCheckResult').text("비밀번호가 일치합니다");
+				$('#pwCheckResult').css("color", "blue");
+				$("#editBtn").attr("disabled", false);
+			}
+		}
+	})
+	
+	$('#checkpw').blur(function() {
+		if($('#user_pw').val() != $('#checkpw').val()) {
+			$('#pwCheckResult').text("비밀번호가 다릅니다");
+			$('#pwCheckResult').css("color", "red");
+			$("#editBtn").attr("disabled", true);
+		} else {
+			if(!$.trim($('#checkpw').val()) == '') {
+				$('#pwCheckResult').text("비밀번호가 일치합니다");
+				$('#pwCheckResult').css("color", "blue");
+				$("#editBtn").attr("disabled", false);
+			}
+		}
+	})
 	
 })
 
 </script>
 
-<c:import url="/WEB-INF/views/layout/header.jsp" />
-<link rel="stylesheet" href="/resources/css/mypage/myedit.css">
+
 
 <div id="divpage">
 <div id="container">
@@ -95,15 +137,17 @@ $(document).ready(function() {
 			</p>
 		</div>
 		
-		<form action="/mypage/myedit" method="POST" enctype="multipart/form-data" id="editForm" autocomplete="off">
+		<form action="/mypage/myedit" method="POST" id="editForm" enctype="multipart/form-data" class="editForm">
 			<input type="hidden" name="user_no" id="user_no" value="${user_no} ">
 			<fieldset class="fs">
 			<div class="border">
+				
 				<div class="box_set">
 					<strong class="tit_set">프로필 사진</strong>
 					<span class="txt_set">
-						<label for="file"></label>
-						<input type="file" name="file" id="file" required accept="image/*"/>
+						<input type="hidden" name="user_no" id="user_no" value="${userinfo.USER_NO} ">
+						<label for="file" class="input-file-button"></label>
+						<input type="file" name="file" id="file" required accept="image/*" />
 					</span>
 				</div>
 				<div class="box_set">
@@ -132,8 +176,9 @@ $(document).ready(function() {
 					<span class="txt_set"><input type="password" name="checkpw" id = "checkpw"/></span>
 				</div>
 				<div class="box_set">					
-					<div id = "alert-success"><p style = "color: blue; text-align: right;">비밀번호가 일치합니다.</p></div>
-					<div id = "alert-fail"><p style = "color: red; text-align: right;">비밀번호가 일치하지 않습니다.</p></div>	
+<!-- 					<div id = "alert-success"><p style = "color: blue; text-align: right;">비밀번호가 일치합니다.</p></div> -->
+<!-- 					<div id = "alert-fail"><p style = "color: red; text-align: right;">비밀번호가 일치하지 않습니다.</p></div>	 -->
+					<div id="pwCheckResult" style="text-align: right;"></div>
 					<div id="submitResult" style="text-align: right;">　</div>
 				</div>
 				

@@ -76,11 +76,12 @@ public class ReviewController {
 		reviewBoard.setUser_no((int)session.getAttribute("user_no"));
 		
 		reviewService.write(reviewBoard);
+		int article_no = reviewBoard.getArticle_no();
+		logger.info("--------------------------------------NO" + article_no);
 		
-		
-		logger.info("======================fileupload! : " +fileupload );
+//		logger.info("======================fileupload! : " +fileupload );
 		if(fileupload.getOriginalFilename()!=null && fileupload.getOriginalFilename()!="") {
-			reviewService.filesave(fileupload);
+			reviewService.filesave(fileupload, article_no);
 		}
 		
 		return "redirect:/review/list";

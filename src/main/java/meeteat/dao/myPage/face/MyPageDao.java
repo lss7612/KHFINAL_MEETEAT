@@ -103,7 +103,11 @@ public interface MyPageDao {
 	public Map<String, Object> selectMyPayList(int user_no);
 
 
-	
+	/**
+	 * 프사 안바꾸고 회원정보 수정
+	 * @param user
+	 */
+	public void editUser(User user);
 
 
 

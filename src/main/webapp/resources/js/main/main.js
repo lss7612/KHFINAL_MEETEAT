@@ -7,7 +7,7 @@ $(document).ready(function(){
 		let originObject = $(this)
 		
 		$(this).animate({
-			width:'500px'
+			width:'600px'
 		},100)
 				
 	})
@@ -21,11 +21,24 @@ $(document).ready(function(){
 	$('#goToSignUp').click(function(){
 		let originObject = $(this)
 		mainAnimate(originObject, '가입하고 먹으러가요','/login/signup')
+		
+		$('#mainWrapper').on('scroll touchmove mousewheel', function(event) {
+		  event.preventDefault();
+		  event.stopPropagation();
+		  return false;
+		});
+		
 	})
 	
 	$('#goToSignIn').click(function(){
 		let originObject = $(this)
 		mainAnimate(originObject, '로그인하고 먹으러가요','/login/login')
+		
+		$('#mainWrapper').on('scroll touchmove mousewheel', function(event) {
+			  event.preventDefault();
+			  event.stopPropagation();
+			  return false;
+		});
 	})
 	
 	$('.border_circle').click(function(){
@@ -51,26 +64,26 @@ function mainAnimate(originObject, msg, url){
 			$('#mainTextBox').css('background', '#f5da81')
 			
 			$('#mainTextBox').animate({
-				fontSize:'0'
+				fontSize:'0.1em'
 				,height:'1000px'
-			},500)
+			},800)
 			
-			originObject.siblings().animate({
+			$('#goToSignUp').siblings().animate({
 				opacity:'0'
-			},500)
+			},800)
 			
-			originObject.animate({
+			$('#goToSignUp').animate({
 				fontSize:'40px'
 				,height: '500px'
 			})
-			originObject.html('환영합니다!<br>'+msg+'<br>'
+			$('#goToSignUp').html('환영합니다!<br>'+msg+'<br>'
 					+ '<img style="width:300px;" src="/resources/img/logo.png">'
 			)
 			
 			
 			setTimeout(() => {
 				location.href=url
-			}, 1500);
+			}, 2000);
 			
 		}, 500);
 		
@@ -86,9 +99,9 @@ function mergePhoto(){
 	$('#clickImgText').animate({
 			fontSize:'40px'
 			,height: '400px'
-		})
-	$('#clickImgText').html('대충 모여먹으면 좋다는 글<br>' +
-			'<img style="width:500px;"src="/resources/img/main/party.jpg">'
+	})
+	$('#clickImgText').html('모여서 즐겁게 먹어요<br>' +
+			'<img style="width:450px;"src="/resources/img/main/party.jpg">'
 			)
 }
 	

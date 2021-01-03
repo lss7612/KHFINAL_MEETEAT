@@ -21,7 +21,7 @@
 			</where>
 				)
 		where rnum between #{startNo} and #{endNo} 
-		order by rnum desc
+		order by rnum
 	</select>
 	
 	<select id="selectCntAll" parameterType="meeteat.dto.adminUser.UserSearch" resultType="int">
@@ -37,6 +37,12 @@
 			</where>
 		order by user_no desc
 	</select>
+	
+	<update id="userGradeUpdate" parameterType="int">
+		update tb_user2
+		set user_grade = #{user_grade}
+		where user_no = #{user_no}
+	</update>
 
 </mapper>
 
