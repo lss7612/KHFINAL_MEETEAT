@@ -27,7 +27,7 @@ $(document).ready(function() {
 // 	$('#user_email').val('${userinfo.user_email}');
 // 	$('#user_nick').val('${userinfo.user_nick}');
 	
-	if(${snsLogin}) {
+	if(${snsLogin}){
 		$('#user_pw').attr('readonly', 'readonly');
 		$('#checkpw').attr('readonly', 'readonly');
 		
@@ -35,22 +35,22 @@ $(document).ready(function() {
 		$('#checkpw').val('${userinfo.USER_PW}');
 	}
 
-	$("input").keyup(function(){
-	      var pw1 = $("#user_pw").val();
-	      var pw2 = $("#checkpw").val();
-	      var idx1 = true;
+// 	$("input").keyup(function(){
+// 	      var pw1 = $("#user_pw").val();
+// 	      var pw2 = $("#checkpw").val();
+// 	      var idx1 = true;
 	      
-	      if(pw1 != "" || pw2 != "") {
-	          if(pw1 == pw2){ 
-	             $('#alert-success').show();
-	             $('#alert-fail').hide();       
-	          } else{
-	             $('#alert-success').hide();
-	             $('#alert-fail').show();
-	             return false;
-	          }
-	       }
-	})
+// 	      if(pw1 != "" || pw2 != "") {
+// 	          if(pw1 == pw2){ 
+// 	             $('#alert-success').show();
+// 	             $('#alert-fail').hide();       
+// 	          } else{
+// 	             $('#alert-success').hide();
+// 	             $('#alert-fail').show();
+// 	             return false;
+// 	          }
+// 	       }
+// 	})
 
 	$('#editBtn').click(function(){
 		
@@ -118,7 +118,6 @@ $(document).ready(function() {
 				$("#editBtn").attr("disabled", false);
 			}
 		}
-	})
 	
 })
 
@@ -145,9 +144,9 @@ $(document).ready(function() {
 				<div class="box_set">
 					<strong class="tit_set">프로필 사진</strong>
 					<span class="txt_set">
-						<input type="hidden" name="user_no" id="user_no" value="${userinfo.USER_NO} ">
+<%-- 						<input type="hidden" name="user_no" id="user_no" value="${userinfo.USER_NO} "> --%>
 						<label for="file" class="input-file-button"></label>
-						<input type="file" name="file" id="file" required accept="image/*" />
+						<input type="file" name="file" id="file" accept="image/*" />
 					</span>
 				</div>
 				<div class="box_set">
