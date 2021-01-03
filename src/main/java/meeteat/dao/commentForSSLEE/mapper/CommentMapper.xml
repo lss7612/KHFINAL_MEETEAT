@@ -24,6 +24,8 @@
 	    c.*
 	    ,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = c.user_no) user_nick
 	    ,(SELECT count(*) FROM tb_comment2 c2 WHERE c.comment_no = c2.comment_originno) cntreply
+	    ,(SELECT user_profilestored FROM tb_user2 u WHERE u.user_no = c.user_no) user_profilestored
+	    ,(SELECT user_profileorigin FROM tb_user2 u WHERE u.user_no = c.user_no) user_profileorigin
 	FROM tb_comment2 c
 	WHERE article_no = #{article_no}
 	    AND board_no = #{board_no}
@@ -53,6 +55,8 @@
 	SELECT 
 		c.*
 		,(SELECT user_nick FROM tb_user2 u WHERE u.user_no = c.user_no) user_nick 
+		,(SELECT user_profilestored FROM tb_user2 u WHERE u.user_no = c.user_no) user_profilestored
+	    ,(SELECT user_profileorigin FROM tb_user2 u WHERE u.user_no = c.user_no) user_profileorigin
 	FROM tb_comment2 c
 	WHERE comment_originno = ${comment_originno}
 </select>

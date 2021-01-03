@@ -32,10 +32,27 @@ $(document).ready(function(){
 <c:forEach items="${list }" var="list" >
 <div class="border comment_lump" style="margin:5px;">
 
-	<div class="light_padding color_base light_bar_height">
+	<div class="light_padding color_base bold_bar_height">
+	
+		<%-- 프로필사진 --%>
+		<div style="width:5%">
+			<div class="profile_box pull-left">
+				<c:choose>
+					<c:when test="${list.USER_PROFILESTORED eq null and list.USER_PROFILEORIGIN eq null}">
+						<img src="/resources/img/기본이미지.jpg">
+					</c:when>
+					<c:when test="${list.USER_PROFILESTORED eq null and list.USER_PROFILEORIGIN eq null && sessionScope.snsLogin eq true}">
+						<img src="/resources/img/${result.USER_PROFILESTORED }">
+					</c:when>
+					<c:otherwise>
+						<img src="/resources/upload/${list.USER_PROFILESTORED }">
+					</c:otherwise>	
+				</c:choose>
+			</div>
+		</div>
 	
 		<%-- 댓글 정보 --%>
-		<div id="" class=".col-md-4 pull-left commendWriter">
+		<div id="" class=".col-md-4 light_padding pull-left commendWriter">
 		<c:if test="${list.IS_DELETE eq 0 }">
 			<ul class="userMenuList">
 				<li class="userMenu">
