@@ -16,7 +16,7 @@
 				<c:when test="${list.CHATTING_NAME eq null }">
 					<c:forEach items="${roomUserInfo}" var="info">
 						<c:if test="${info.CHATTING_NO eq list.CHATTING_NO }">
-							<span class="roomName"><strong>${info.USER_NICK }님과의 대화</strong></span>
+							<span class="roomName"><strong>${info.USER_NICK }님과의 대화</strong><span>&nbsp;&nbsp;👨‍👦‍👦${list.USER_TOTAL }</span></span>
 						</c:if>
 					</c:forEach>
 				</c:when>
@@ -25,20 +25,54 @@
 				</c:when>
 			</c:choose>
 			<br>
-			<c:forEach items="${roomUserInfo }" var="info">
-				<c:if test="${info.CHATTING_NO eq list.CHATTING_NO}">
-					<c:choose>
-						<c:when test="${info.USER_PROFILESTORED eq null }">
-							<img class="profileImg" src="/resources/img/기본이미지.jpg"/>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</c:when>
-						<c:otherwise>
-							<img class="profileImg" src="/resources/upload/${info.USER_PROFILESTORED }"/>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</c:otherwise>
-					</c:choose>
-				</c:if>
-			</c:forEach>
+			<c:choose>
+				<c:when test="${roomUserInfo.size() gt 4 }">
+					<c:forEach items="${roomUserInfo }" var="info" begin="0" end="4">
+						<c:if test="${info.CHATTING_NO eq list.CHATTING_NO}">
+							<c:choose>
+								<c:when test="${info.USER_PROFILESTORED eq null }">
+									<img class="profileImg" src="/resources/img/기본이미지.jpg"/>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</c:when>
+								<c:otherwise>
+									<img class="profileImg" src="/resources/upload/${info.USER_PROFILESTORED }"/>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+					</c:forEach>
+				</c:when>
+					<c:otherwise>
+						<c:forEach items="${roomUserInfo }" var="info" >
+							<c:if test="${info.CHATTING_NO eq list.CHATTING_NO}">
+								<c:choose>
+									<c:when test="${info.USER_PROFILESTORED eq null }">
+										<img class="profileImg" src="/resources/img/기본이미지.jpg"/>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</c:when>
+									<c:otherwise>
+										<img class="profileImg" src="/resources/upload/${info.USER_PROFILESTORED }"/>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+<%-- 			<c:forEach items="${roomUserInfo }" var="info" > --%>
+<%-- 				<c:if test="${info.CHATTING_NO eq list.CHATTING_NO}"> --%>
+<%-- 					<c:choose> --%>
+<%-- 						<c:when test="${info.USER_PROFILESTORED eq null }"> --%>
+<!-- 							<img class="profileImg" src="/resources/img/기본이미지.jpg"/> -->
+<!-- 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+<%-- 						</c:when> --%>
+<%-- 						<c:otherwise> --%>
+<%-- 							<img class="profileImg" src="/resources/upload/${info.USER_PROFILESTORED }"/> --%>
+<!-- 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+<%-- 						</c:otherwise> --%>
+<%-- 					</c:choose> --%>
+<%-- 				</c:if> --%>
+<%-- 			</c:forEach> --%>
 			<div class="innerContentArea">
 				<c:choose>
 					<c:when test="${list.MSG_CONTENT ne null }">
