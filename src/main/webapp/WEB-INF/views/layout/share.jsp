@@ -4,11 +4,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-  
-   <script type="text/javascript" async>
+<title></title>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script type="text/javascript">
+//   Kakao.init('370684e37c6264052a9adc0a38ef6f62'); // 초기화
+
+//   Kakao.Link.sendDefault({
+// 	        container : '#kakao_btn',
+// 	        objectType: 'feed',
+// 	        content: {
+// 	            title: 'MEET&EAT',
+// 	            imageUrl: '/resources/img/logo.png',
+// 	            link: {
+// 	                webUrl: 'http://localhost'
+// 	            }
+// 	        },
+// 	        buttons: [
+// 	            {
+// 	                title: 'MEET&EAT',
+// 	                link: {
+// 	                    webUrl: 'http://localhost',
+// 	                }
+// 	            }
+// 	        ]
+// 	    })
+	
+
+// 	function shareStoryWeb() {
+// 	    Kakao.Story.share({
+// 	        url: location.href,
+// 	        text: document.title,
+// 	    })
+// 	}
+</script>
+   <script>
       var url_default_ks = "https://story.kakao.com/share?url=";
       var url_default_fb = "https://www.facebook.com/sharer/sharer.php?u=";
       var url_default_tw_txt = "https://twitter.com/intent/tweet?text=";
@@ -36,6 +65,9 @@
           document.location = shareURL;
         }
    </script>
+</head>
+<body>
+  
 
 
    <!-- SNS버튼 시작 -->
@@ -53,12 +85,15 @@
          class="sharebtn_custom" style="width: 32px;">
       </a>
       <!-- 카카오 스토리 공유 버튼 -->
-<!--       <a href="" -->
-<!--          onclick="window.open(url_combine_ks, '', 'scrollbars=no, width=600, height=600'); return false;"> -->
-<!--          <img src="/resources/img/kakaostory_logo.png" title="카카오스토리로 공유하기" -->
-<!--          class="sharebtn_custom" style="width: 32px;"> -->
-<!--       </a> -->
-
+      <a href=""
+         onclick="window.open(url_combine_ks, '', 'scrollbars=no, width=600, height=600'); return false;">
+         <img src="/resources/img/kakaostory_logo.png" title="카카오스토리로 공유하기"
+         class="sharebtn_custom" style="width: 32px;">
+      </a>
+<!--       	<a id="kakao_btn" href="javascript:;"> -->
+<!-- 		<img src="/resources/img/kakaostory_logo.png" title="카카오스토리로 공유하기" -->
+<!--         	 class="sharebtn_custom" style="width: 32px;"> -->
+<!-- 		</a> -->
       <!-- 네이버 공유 버튼 -->
       <a href=""
          onclick="window.open(url_combine_naver, '', 'scrollbars=no, width=600, height=600'); return false;">
@@ -73,6 +108,13 @@
       </a> <span id="shareAddrCopy" class="shareBtn" title="주소 복사"></span>
    </div>
    <!-- 공유 끝 -->
+   
+
+   
+<!--    <div> -->
+<!--   		<a href="javascript:shareStoryWeb()"><img src="/resources/img/kakaostory_logo.png" /></a> -->
+<!--   		<a href="javascript:sendLink()"><img src="/resources/img/kakaostory_logo.png" /></a> -->
+<!-- 	</div> -->
 
 </body>
 </html>

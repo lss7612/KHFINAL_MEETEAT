@@ -44,6 +44,10 @@ $(document).ready(function() {
 })
 </script>
 
+<script> 
+// 	${b.ARTICLE_TITLE} = text.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+</script>
+
 <style>
 th{
 	text-align: center;

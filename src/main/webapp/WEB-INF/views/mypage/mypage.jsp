@@ -4,8 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
-<c:import url="/WEB-INF/views/layout/share.jsp" />
-<link rel="stylesheet" href="/resources/css/mypage/mypage.css">
+<%-- <c:import url="/WEB-INF/views/layout/share.jsp" /> --%>
+<!-- <link rel="stylesheet" href="/resources/css/mypage/mypage.css"> -->
 
 <style>
 @charset "UTF-8";
@@ -171,6 +171,9 @@ td:nth-child(0) {
 	overflow: hidden;
 }
 </style>
+<script>
+
+</script>
 
 
 <div id="divpage">
@@ -187,8 +190,26 @@ td:nth-child(0) {
 				<h2>내 프로필 정보 <a href="/mypage/myedit" class="btn btn-default pull-right btn-sm" role="button">수정하기</a></h2>	
 			</div><hr>
 
-	<div id="myinfo">
-			<img src="/resources/upload/${userinfo.USER_PROFILESTORED }" id="pof_pic">
+			<div id="myinfo">
+                     <c:set value="${userinfo.USER_PROFILEORIGIN }" var="origin" />
+                     <c:set value="${userinfo.USER_PROFILESTORED }" var="stored" />
+                     <c:set value="${snsLogin }" var="snsLogin" />
+
+                     <!-- null일겨우 기본이미지 -->
+                     <c:if test="${stored eq null }">
+                        <img id="pof_pic" src="/resources/img/기본이미지.jpg" alt="유저프로필사진" class="img-thumbnail"/>
+                     </c:if>
+
+                     <!-- sns로그인 시 프로필사진 편집 전 -->
+                     <c:if test="${stored ne null && origin eq null && snsLogin eq true }">
+                        <img id="pof_pic" src="${userinfo.USER_PROFILESTORED }" alt="유저프로필사진" class="img-thumbnail"/>
+                     </c:if>
+                     
+                     <!-- 프로필사진 편집 시 (sns동일) -->
+                     <c:if test="${stored ne null && origin ne null}">
+                        <img id="pof_pic" src="/resources/upload/${userinfo.USER_PROFILESTORED }" alt="유저프로필사진" class="img-thumbnail"/>
+                     </c:if>
+<%-- 				<img src="/resources/upload/${userinfo.USER_PROFILESTORED }" id="pof_pic" class="img-thumbnail"> --%>
 			<div id="info_detail">
 
 				<div class="box_set">
@@ -219,7 +240,7 @@ td:nth-child(0) {
 						<a href="/mypay/payCancel" class="btn btn-default pull-right btn-sm" role="button">결제 해지</a>
 					</c:if>
 					<c:if test="${userinfo.USER_GRADE eq 3}">
-						<div>결제 정보가 없습니다</div>
+						<h3 style="text-align: center; color: #005398; padding-top: 75px;">결제 정보가 없습니다</h3>
 					</c:if>				
 				</h2>
 <!-- 				<a href="/mypage/mypay" class="btn btn-default pull-right btn-sm" role="button">결제하기</a> -->
@@ -228,21 +249,21 @@ td:nth-child(0) {
 			<div class="content">
 			<c:choose>
 				<c:when test="${empty payList}">									
-					<h3>결제 정보가 없습니다</h3>							
+					<h3 style="text-align: center; color: #005398; padding-top: 75px;">결제 정보가 없습니다</h3>							
 				</c:when>
 				<c:otherwise>
 					<table class="table table-condensed table-hover">
 						<tr>
 							<th style="width: 15%">회원등급</th>
-							<th style="width: 15%">결제 가격</th>
-							<th style="width: 35%">결제일</th>
-							<th style="width: 35%">만료일</th>
+							<th style="width: 25%">결제 가격</th>
+							<th style="width: 30%">결제일</th>
+							<th style="width: 30%">만료일</th>
 						</tr>
 
 						<tr>
 							<td>${payList.GRADE_NAME }</td>
 							<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${payList.PRICE }"></fmt:formatNumber></td>
-							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="YYYY-MM-dd HH:mm"/></td>
+							<td><fmt:formatDate value="${payList.PAY_DATE }" pattern="YYYY-MM-dd"/></td>
 							<td>${payList.EXPIRE_DATE }</td>
 <%-- 							<td><fmt:formatDate value="${payList.EXPIRE_DATE s}" pattern="yy/MM/dd HH:mm"/></td> --%>
 						</tr>
@@ -264,7 +285,7 @@ td:nth-child(0) {
 			<div class="sh_content">
 			<c:choose>
 				<c:when test="${empty pList }">
-					<h3>등록하신 글이 없습니다</h3>
+					<h3 style="text-align: center; color: #005398; padding-top: 40px;">등록하신 글이 없습니다</h3>
 				</c:when>
 				<c:otherwise>
 					<table class="table table-condensed table-hover">
@@ -290,13 +311,13 @@ td:nth-child(0) {
 		<!-- 내가 작성한 댓글 -->	
 		<div class="sh_group">
 			<div class="sh_header">
-				<h2>내가 작성한 댓글<a href="/mypage/mycmmt" class="btn btn-default pull-right btn-sm" role="button">더 보기</a></h2>
+				<h2 >내가 작성한 댓글<a href="/mypage/mycmmt" class="btn btn-default pull-right btn-sm" role="button">더 보기</a></h2>
 			</div><hr>
 			
 			<div class="sh_content">
 			<c:choose>
 				<c:when test="${empty cList }">
-					<h3>등록하신 글이 없습니다</h3>
+					<h3 style="text-align: center; color: #005398; padding-top: 40px;">등록하신 댓글이 없습니다</h3>
 				</c:when>
 				<c:otherwise>
 					<table class="table table-condensed table-hover">
