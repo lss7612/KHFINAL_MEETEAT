@@ -34,8 +34,8 @@ insert into tb_chattinguser2 (chatting_no, user_no) values( (select chatting_no 
 
 insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type) values( (select chatting_no from tb_chatting2 where chatting_id like '852943e9d4cb4392ab0a8f22e9a28c23'),6, '6번회원 입장', sysdate,'ENTER');
 insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type) values( (select chatting_no from tb_chatting2 where chatting_id like '852943e9d4cb4392ab0a8f22e9a28c23'),7, '7번회원 입장', sysdate,'ENTER');
-insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type) values( (select chatting_no from tb_chatting2 where chatting_id like 'b7c15cbf9504bf3826208098fe91f25'),6, '6번회원 입장', sysdate,'ENTER');
-insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type) values( (select chatting_no from tb_chatting2 where chatting_id like 'b7c15cbf9504bf3826208098fe91f25'),9, '9번회원 입장', sysdate,'ENTER');
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type) values( (select chatting_no from tb_chatting2 where chatting_id like 'bb7c15cbf9504bf3826208098fe91f25'),6, '6번회원 입장', sysdate,'ENTER');
+insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type) values( (select chatting_no from tb_chatting2 where chatting_id like 'bb7c15cbf9504bf3826208098fe91f25'),9, '9번회원 입장', sysdate,'ENTER');
 insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type) values( (select chatting_no from tb_chatting2 where chatting_id like 'c3a616c31ecb4c929a13b26a528e8asd'),6, '6번회원 입장', sysdate,'ENTER');
 insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type) values( (select chatting_no from tb_chatting2 where chatting_id like 'c3a616c31ecb4c929a13b26a528e8asd'),7, '7번회원 입장', sysdate,'ENTER');
 insert into tb_chattingcontent2(chatting_no, user_no, msg_content, msg_date, msg_type) values( (select chatting_no from tb_chatting2 where chatting_id like 'c3a616c31ecb4c929a13b26a528e8asd'),8, '8번회원 입장', sysdate,'ENTER');
