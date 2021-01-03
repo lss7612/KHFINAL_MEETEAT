@@ -22,30 +22,6 @@ function checkEmail(str) {
 }
 
 $(document).ready(function() {
-	
-// 	$('#user_pw').val('${userinfo.USER_PW}');
-// 	$('#checkpw').val('${userinfo.USER_PW}');
-
-// 	$('#user_pw').val('${userinfo.user_pw}');
-// 	$('#user_email').val('${userinfo.user_email}');
-// 	$('#user_nick').val('${userinfo.user_nick}');
-
-	$("input").keyup(function(){
-	      var pw1 = $("#user_pw").val();
-	      var pw2 = $("#checkpw").val();
-	      var idx1 = true;
-	      
-	      if(pw1 != "" || pw2 != "") {
-	          if(pw1 == pw2){ 
-	             $('#alert-success').show();
-	             $('#alert-fail').hide();       
-	          } else{
-	             $('#alert-success').hide();
-	             $('#alert-fail').show();
-	             return false;
-	          }
-	       }
-	})
 
 	$('#editBtn').click(function(){
 		
@@ -113,6 +89,7 @@ $(document).ready(function() {
 				$("#editBtn").attr("disabled", false);
 			}
 		}
+
 	})
 
 	if(${sessionScope.snsLogin}) {
@@ -146,9 +123,9 @@ $(document).ready(function() {
 				<div class="box_set">
 					<strong class="tit_set">프로필 사진</strong>
 					<span class="txt_set">
-						<input type="hidden" name="user_no" id="user_no" value="${userinfo.USER_NO} ">
+<%-- 						<input type="hidden" name="user_no" id="user_no" value="${userinfo.USER_NO} "> --%>
 						<label for="file" class="input-file-button"></label>
-						<input type="file" name="file" id="file" required accept="image/*" />
+						<input type="file" name="file" id="file" accept="image/*" />
 					</span>
 				</div>
 				<div class="box_set">
