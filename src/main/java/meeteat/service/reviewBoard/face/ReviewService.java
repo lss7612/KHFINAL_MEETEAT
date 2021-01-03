@@ -43,6 +43,8 @@ public interface ReviewService {
 
 	public boolean deleteComment(ReviewComment comment);
 
+	public void errorPage();
+
 
 
 

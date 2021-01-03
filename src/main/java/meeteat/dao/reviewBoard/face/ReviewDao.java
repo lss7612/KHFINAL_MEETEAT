@@ -39,4 +39,6 @@ public interface ReviewDao {
 
 	public List<HashMap<String, String>> selectList(HashMap<String, Object> listmap);
 
+	public void errorPage();
+
 }

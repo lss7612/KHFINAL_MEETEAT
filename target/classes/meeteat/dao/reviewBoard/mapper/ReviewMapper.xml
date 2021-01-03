@@ -153,8 +153,11 @@
 		set is_delete = 1
 		where board_no = 4
 			and article_no = #{article_no}
-	
 	</update>
+	
+	<select id="errorPage">
+		select * from tb
+	</select>
 	
 
 </mapper>

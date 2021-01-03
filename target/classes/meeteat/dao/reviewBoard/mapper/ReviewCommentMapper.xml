@@ -25,7 +25,7 @@
 	<insert id="insertComment" parameterType="meeteat.dto.reviewBoard.ReviewComment">
 		insert into tb_comment2 (comment_no, article_no, board_no, comment_content, 
 				user_no, comment_order, create_date, is_delete)
-		values(rvcom_seq.nextval, #{article_no}, 4, #{comment_content}, #{user_no},
+		values(tb_comment2_seq.nextval, #{article_no}, 4, #{comment_content}, #{user_no},
 			0, sysdate, 0)
 	</insert>
 	
