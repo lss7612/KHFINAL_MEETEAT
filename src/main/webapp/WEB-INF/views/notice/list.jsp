@@ -50,8 +50,6 @@ $(document).ready(function() {
 		</tbody>
 	</table>
 	
-<!-- 	<button id="noticeWriteBtn" class="btn btn-primary pull-right">글작성</button> -->
-	
 <!-- 관리자만 글 작성 버튼 보이기 -->
 <c:if test="${user_grade eq 0 }">
 	<button id="noticeWriteBtn" class="btn btn-primary pull-right btn-sm">글작성</button>

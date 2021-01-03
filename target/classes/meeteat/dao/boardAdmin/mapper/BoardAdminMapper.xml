@@ -25,7 +25,12 @@
 	<sql id="searchTitle">
 		<where>
 				is_delete = 0
-			<if test="(manageSearch!=null and !manageSearch.equals('')) and (manageKeyword!=null and !manageKeyword.equals(''))">
+			<if test="manageSearch!=null and manageSearch.equals('totalList')">
+				AND article_title LIKE '%${manageKeyword}%'
+					OR article_content LIKE '%${manageKeyword}%'
+					OR user_nick LIKE '%${manageKeyword}%'
+			</if>
+			<if test="(manageSearch!=null and !manageSearch.equals('')) and (manageKeyword!=null and !manageKeyword.equals('')) and !manageSearch.equals('totalList')">
 				AND ${manageSearch} LIKE '%${manageKeyword}%'
 			</if>
 			<if test="manageCategory!=null and !manageCategory.equals('')">

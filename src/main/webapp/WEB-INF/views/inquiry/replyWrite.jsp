@@ -6,12 +6,19 @@
 
 <c:import url="/WEB-INF/views/layout/header.jsp"/>
 
+<%-- 스마트에디터 --%>
+<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	
 	$("#writeBtn").click(function() {
 		//스마트에디터의 내용을 <textare>에 적용하기
 		submitContents( $("#writeBtn") );
+		
+		if($("#article_secret").prop("checked")){
+			$("#article_secret").val(1);
+		}
 		
 		//form submit 수행하기
 		$("form").submit();
@@ -40,6 +47,7 @@ $(document).ready(function() {
 		<input type="hidden" name="post_group" value="${result.POST_GROUP }">
 		<input type="hidden" name="post_step" value="${result.POST_STEP }">
 		<input type="hidden" name="post_indent" value="${result.POST_INDENT }">
+		<input type="hidden" name="article_secret" id="article_secret" value="0"/>
 		
 	
 		<div class="form-group">
@@ -47,15 +55,10 @@ $(document).ready(function() {
 			<input type="text" class="form-control" id="article_title" name="article_title" placeholder="제목을 입력하세요"/>
 		</div>
 		
-		<!-- <div class="form-group">
-			<label for="title">작성자</label>
-			<input type="text" class="form-control" id="article_title" name="article_title" placeholder="제목을 입력하세요"/>
-		</div> -->
-		
-		<!-- <div class="form-group">
-			<label for="fileUpload">파일 첨부</label>
-			<input type="file" class="form-control" id="noticeFile" name="noticeFile"/>
-		</div> -->
+		<div>
+			<input type="checkbox" name="secretchk" id="secretchk" /> 비밀글 설정
+		</div>
+		<br>
 		
 		<div class="form-group">
 			<label for="content">내용</label>

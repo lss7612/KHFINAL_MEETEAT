@@ -131,7 +131,7 @@ function createChat(e){
 <c:forEach items="${list }" var="list">
 	<tr>
 		<td>${list.ARTICLE_NO }</td>
-		<td><a href="/review/view?article_no=${list.ARTICLE_NO }" class="titlecss">${list.ARTICLE_TITLE }</a></td>
+		<td><a href="/review/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }" class="titlecss">${list.ARTICLE_TITLE }</a></td>
 		<td>
 		<div class="userMenu">
 		<span class="userNickMenu">${list.USER_NICK }
