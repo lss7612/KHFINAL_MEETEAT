@@ -25,7 +25,7 @@ function submitChatForm(e){
 
 <div id="chatList">
 	<c:choose>
-		<c:when test="${chatList.size() eq 0 }">
+		<c:when test="${roomUserInfo.size() eq 0 }">
 			<div id="imgArea">
 				<img id="noneListImg" src="/resources/img/no_chat_list_img.png">
 			</div>

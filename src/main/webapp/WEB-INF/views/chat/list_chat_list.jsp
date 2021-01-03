@@ -21,7 +21,7 @@
 					</c:forEach>
 				</c:when>
 				<c:when test="${list.CHATTING_NAME ne null }">
-						<span class="roomName"><strong>${list.CHATTING_NAME }</strong><span>&nbsp;(${list.USER_TOTAL })</span></span>
+						<span class="roomName"><strong>${list.CHATTING_NAME }</strong><span>&nbsp;&nbsp;👨‍👦‍👦${list.USER_TOTAL }</span></span>
 				</c:when>
 			</c:choose>
 			<br>
@@ -40,26 +40,34 @@
 				</c:if>
 			</c:forEach>
 			<div class="innerContentArea">
-				<span class="innerTime">
-				<!-- 날자 비교해서 오늘 / 어제/ 기타로 출력 -->
-				<fmt:formatDate value="${list.MSG_DATE }" var="msg_date" pattern="yyMMdd"/>
-				<fmt:parseNumber value="${msg_date }" integerOnly="true" var="itDate" />
 				<c:choose>
-					<c:when test="${today eq msg_date }">
-						오늘
-						<fmt:formatDate value="${list.MSG_DATE }" type="both" pattern="a"/>
-						<fmt:formatDate value="${list.MSG_DATE }" pattern="HH:mm"/>
-					</c:when>
-					<c:when test="${isDate - itDate eq 1}">
-						어제
-						<fmt:formatDate value="${list.MSG_DATE }" type="both" pattern="a"/>
-						<fmt:formatDate value="${list.MSG_DATE }" pattern="HH:mm"/>
+					<c:when test="${list.MSG_CONTENT ne null }">
+						<span class="innerTime">
+						<!-- 날자 비교해서 오늘 / 어제/ 기타로 출력 -->
+						<fmt:formatDate value="${list.MSG_DATE }" var="msg_date" pattern="yyMMdd"/>
+						<fmt:parseNumber value="${msg_date }" integerOnly="true" var="itDate" />
+						<c:choose>
+							<c:when test="${today eq msg_date }">
+								오늘
+								<fmt:formatDate value="${list.MSG_DATE }" type="both" pattern="a"/>
+								<fmt:formatDate value="${list.MSG_DATE }" pattern="HH:mm"/>
+							</c:when>
+							<c:when test="${isDate - itDate eq 1}">
+								어제
+								<fmt:formatDate value="${list.MSG_DATE }" type="both" pattern="a"/>
+								<fmt:formatDate value="${list.MSG_DATE }" pattern="HH:mm"/>
+							</c:when>
+							<c:otherwise>
+								<fmt:formatDate value="${list.MSG_DATE }" pattern="yy/MM/dd HH:mm"/>
+							</c:otherwise>
+						</c:choose>
+						</span>
 					</c:when>
 					<c:otherwise>
-						<fmt:formatDate value="${list.MSG_DATE }" pattern="yy/MM/dd HH:mm"/>
+						<span class="innerTime">
+						</span>
 					</c:otherwise>
 				</c:choose>
-				</span>
 				<span class="innerContent">
 					${list.MSG_CONTENT }
 				</span>

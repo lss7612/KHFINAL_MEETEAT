@@ -189,9 +189,10 @@ public class ChatController {
 		logger.info("> > > roomNum < < <");
 		logger.info(""+roomNum);
 	
+		
 		//접속한 회원이 속한 채팅방의 가장 최신 대화만 갖고오기.
 		List<HashMap<String, Object>> chatList = new ArrayList<HashMap<String, Object>>();
-		getChatNewest(roomNum, chatList);
+		getChatNewest(user_no, roomNum, chatList);
 		
 		logger.info("> > > 참여 채팅방 최신 대화 목록 < < < ");
 		logger.info(""+chatList);
@@ -249,7 +250,7 @@ public class ChatController {
 		}
 	}
 
-	public void getChatNewest(List<HashMap<String,Object>> roomNum, List<HashMap<String, Object>> chatList) {
+	public void getChatNewest(int user_no, List<HashMap<String,Object>> roomNum, List<HashMap<String, Object>> chatList) {
 		int chatting_no = 0;
 		HashMap<String, Object> content = null;
 		for(int i=0; i<roomNum.size(); i++) {
@@ -258,9 +259,16 @@ public class ChatController {
 			} else {
 				logger.info(""+roomNum.get(i));
 				chatting_no = Integer.parseInt(""+(roomNum.get(i).get("CHATTING_NO")) );
-				content = chatService.getChatContentNewestAtRoom(chatting_no);
+				
+				//입장메시지 번호 구하기
+				HashMap enterMsg = chatService.getEnterMsgNo(user_no, chatting_no);
+				int msg_no = Integer.parseInt(""+enterMsg.get("MSG_NO"));
+				content = chatService.getChatContentNewestAtRoom(msg_no, chatting_no);
 				logger.info("> > > content < < <");
 				logger.info(""+content);
+				if(content == null) {
+					content = chatService.getChatContentNewestAtRoomAtNoMsg(msg_no, chatting_no);
+				}
 			}
 			if(content != null ) {
 				chatList.add(content);
@@ -287,7 +295,7 @@ public class ChatController {
 		String msgTime = null;
 		Date time = null;
 		
-		//날자 변경 안내를 위한 초기값 설정
+		//날짜 변경 안내를 위한 초기값 설정
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
 		time =(Date)oldChat.get(0).get("MSG_DATE");
 		String standard = sdf2.format(time);
@@ -357,7 +365,7 @@ public class ChatController {
 		return trim;
 	}
 	
-	//채팅방의 마지막 메세지 날자 갖고오기
+	//채팅방의 마지막 메세지 날짜 갖고오기
 	private String getLastMsgDate(List<HashMap<String, Object>> oldChat, Date lastMsgDate) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
 		for(int i=oldChat.size()-1; i < oldChat.size();i++ ) {
