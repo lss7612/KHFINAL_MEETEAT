@@ -196,7 +196,7 @@ td:nth-child(0) {
                      <c:set value="${snsLogin }" var="snsLogin" />
 
                      <!-- null일겨우 기본이미지 -->
-                     <c:if test="${stored eq null }">
+                     <c:if test="${origin eq null && stored eq null }">
                         <img id="pof_pic" src="/resources/img/기본이미지.jpg" alt="유저프로필사진" class="img-thumbnail"/>
                      </c:if>
 
