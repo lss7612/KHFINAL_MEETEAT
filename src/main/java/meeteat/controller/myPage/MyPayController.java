@@ -26,7 +26,7 @@ import meeteat.service.myPage.face.MyPayService;
 public class MyPayController {
 	private static final Logger logger = LoggerFactory.getLogger(MyPayController.class);
 	@Autowired private MyPayService myPayService;
-	@Autowired MyPageService myPageService;
+	@Autowired private MyPageService myPageService;
 	
 	@RequestMapping(value="/mypay/mypay")
 	public void myPayGet(HttpSession session, Model model) {

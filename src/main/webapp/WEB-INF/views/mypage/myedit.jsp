@@ -160,7 +160,7 @@ $(document).ready(function() {
 		$('#user_email').attr('readonly', 'readonly');
 	};
 
-})
+});
 
 </script>
 

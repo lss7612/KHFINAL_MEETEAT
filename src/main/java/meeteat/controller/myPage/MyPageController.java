@@ -23,14 +23,16 @@ import meeteat.dto.myPage.MyPageParam;
 import meeteat.dto.user.User;
 import meeteat.service.login.face.LoginService;
 import meeteat.service.myPage.face.MyPageService;
+import meeteat.service.myPage.face.MyPayService;
 import meeteat.util.Paging;
 
 @Controller
 public class MyPageController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
-	@Autowired MyPageService myPageService;
+	@Autowired private MyPageService myPageService;
 	@Autowired private LoginService loginService;
+	@Autowired private MyPayService myPayService;
 	
 	@RequestMapping(value="/mypage/mypage")
 	public void myPage(HttpSession session, Model model) {
@@ -102,6 +104,8 @@ public class MyPageController {
 
 		if(pwChk) {
 			
+			myPayService.deletePayInfo(user);
+
 			myPageService.deleteUser(user);
 			
 			session.invalidate();
