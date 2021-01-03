@@ -212,6 +212,10 @@ public class ChatController {
 		}
 		
 		//전달값 저장하기
+		logger.info("> > > chatList < < <");
+		logger.info(""+chatList);
+		logger.info("> > > roomNum < < < ");
+		logger.info(""+roomNum);
 		model.addAttribute("chatList", chatList);
 		model.addAttribute("roomUserInfo", roomNum);
 		
@@ -249,11 +253,15 @@ public class ChatController {
 		int chatting_no = 0;
 		HashMap<String, Object> content = null;
 		for(int i=0; i<roomNum.size(); i++) {
-			logger.info(""+roomNum.get(i));
-			chatting_no = Integer.parseInt(""+(roomNum.get(i).get("CHATTING_NO")) );
-			content = chatService.getChatContentNewestAtRoom(chatting_no);
-			logger.info("> > > content < < <");
-			logger.info(""+content);
+			if(chatting_no == Integer.parseInt(""+roomNum.get(i).get("CHATTING_NO")) ) {
+				continue;
+			} else {
+				logger.info(""+roomNum.get(i));
+				chatting_no = Integer.parseInt(""+(roomNum.get(i).get("CHATTING_NO")) );
+				content = chatService.getChatContentNewestAtRoom(chatting_no);
+				logger.info("> > > content < < <");
+				logger.info(""+content);
+			}
 			if(content != null ) {
 				chatList.add(content);
 			}
@@ -301,6 +309,7 @@ public class ChatController {
 			
 			msgTime = sdf.format(time);
 			if(Integer.parseInt(""+oldChat.get(i).get("USER_NO")) == user_no) {
+				//내가 보낸 메시지 처리
 				if(oldChat.get(i).get("MSG_TYPE").equals("ENTER")) {
 					trim.add("<div class='noticeArea'><span> 채팅방에 입장하셨습니다.</span></div>");
 					
@@ -313,17 +322,33 @@ public class ChatController {
 					continue;
 				}
 			} else {
+				//남이 보낸 메시지 처리
 				if(oldChat.get(i).get("MSG_TYPE").equals("ENTER")) {
 					trim.add("<div class='noticeArea'><span>"+oldChat.get(i).get("USER_NICK")+"님이 채팅방에 입장하셨습니다.</span></div>");
 				} else if(oldChat.get(i).get("MSG_TYPE").equals("CHAT")){
-					trim.add("<div class=\"fromMsg\">"
-							+ "<img class=\"profileImg\" src=\"/resources/img/default_profile_img.jpg\">"
-							+ "<div class=\"fromMsgInfo\">"
+					//프로필 사진이 없을 때
+					if(oldChat.get(i).get("USER_PROFILEORIGIN") == null && oldChat.get(i).get("USER_PROFILESTORED") == null){
+						trim.add("<div class=\"fromMsg\">"
+								+ "<img class=\"profileImg\" src=\"/resources/img/기본이미지.jpg\">"
+								+ "<div class=\"fromMsgInfo\">"
 								+ "<strong><span>"+oldChat.get(i).get("USER_NICK")+"</span></strong>"
-							+ "</div>"
-							+ "<div class=\"fromChatContent fromBallon\">"+oldChat.get(i).get("MSG_CONTENT")+"</div>"
-							+ "<span class=\"fromMsgTime\">"+msgTime+"</span>"
-							+ "</div>");
+								+ "</div>"
+								+ "<div class=\"fromChatContent fromBallon\">"+oldChat.get(i).get("MSG_CONTENT")+"</div>"
+								+ "<span class=\"fromMsgTime\">"+msgTime+"</span>"
+								+ "</div>");
+						
+					} else {
+						//프로필 사진이 있을 때
+						String fileName = ""+oldChat.get(i).get("USER_PROFILESTORED");
+						trim.add("<div class=\"fromMsg\">"
+								+ "<img class=\"profileImg\" src=\"/resources/upload/"+fileName+"\">"
+								+ "<div class=\"fromMsgInfo\">"
+								+ "<strong><span>"+oldChat.get(i).get("USER_NICK")+"</span></strong>"
+								+ "</div>"
+								+ "<div class=\"fromChatContent fromBallon\">"+oldChat.get(i).get("MSG_CONTENT")+"</div>"
+								+ "<span class=\"fromMsgTime\">"+msgTime+"</span>"
+								+ "</div>");
+					}
 				} else {
 					trim.add("<div class='noticeArea'><span>"+oldChat.get(i).get("USER_NICK")+"님이 채팅방에서 퇴장하셨습니다.</span></div>");
 				}

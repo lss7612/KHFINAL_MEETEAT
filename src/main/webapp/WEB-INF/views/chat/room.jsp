@@ -69,6 +69,7 @@ function send(){
     webSocket.send(JSON.stringify(sendMsg));
 	msg ="";
 	$("#writeMsg").val('');
+	$("#sendBtn").attr("disabled", true);
 	$("#writeMsg").focus();
 }
 
@@ -277,7 +278,7 @@ function msgTypeAjax(msgType, writer_no, chatting_no){
 		</div>
 		<div id="usingArea">
 			<input type="text" id="writeMsg" onKeyDown="enterKeyAtChat();" />
-			<button disabled = "true" type="button" id="sendBtn" onclick="send();">전송</button>
+			<button disabled="true" type="button" id="sendBtn" onclick="send();">전송</button>
 		</div>
 	</div>
 	<div id="etcArea">

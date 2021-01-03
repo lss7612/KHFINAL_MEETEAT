@@ -156,4 +156,11 @@ public interface ChatDao {
 	 */
 	public HashMap getLeaveMsg(@Param("user_no")int user_no, @Param("chatting_no")int chatting_no);
 
+	/**
+	 * 회원의 프로필 사진 정보 갖고오기
+	 * @param user_no : 회원 번호
+	 * @return 프로필 사진
+	 */
+	public String getProfileImg(int user_no);
+
 }
