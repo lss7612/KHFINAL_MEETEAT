@@ -127,4 +127,11 @@ public interface ChatService {
 	 */
 	public HashMap getLeaveMsgNo(int user_no, int chatting_no);
 
+	/**
+	 * 회ㅏ원의 프로필 사진 갖고오기
+	 * @param user_no : 해당회원
+	 * @return : 프로필사진 저장 이름
+	 */
+	public String getProfileImg(int user_no);
+
 }

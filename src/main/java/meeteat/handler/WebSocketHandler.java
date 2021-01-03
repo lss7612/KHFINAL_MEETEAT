@@ -88,7 +88,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 		int writer = chatMessage.getWriter();
 		int chatting_no = chatMessage.getChatRoomNo();
 		String user_nick = chatService.getUserNick(chatMessage.getWriter());
-		
+		String file_name = chatService.getProfileImg(chatMessage.getWriter());
 		
 		//MessageType으로 db값 설정
 		is_state = chatDBset(chatMessage);
@@ -191,7 +191,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 						//*****메시지 세션에 뿌리는 방법 끝
 					} else if(chatMessage.getType().equals("CHAT")) {
 						//*****메시지 세션에 뿌리는 방법
-						String chatMsg = otherMsg(chatMessage, user_nick, msgTime);
+						String chatMsg = otherMsg(chatMessage, user_nick, msgTime, file_name);
 						cMsg.setChatRoomNo(chatting_no);
 						cMsg.setMsg(chatMsg);
 						cMsg.setWriter(writer);
@@ -271,18 +271,30 @@ public class WebSocketHandler extends TextWebSocketHandler{
 				+ "</div>";
 	}
 	
-	public String otherMsg(ChatMessage chatMessage, String user_nick, String msgTime) {
+	public String otherMsg(ChatMessage chatMessage, String user_nick, String msgTime, String file_name) {
 		String control = chatMessage.getMsg().replaceAll("<", "&lt");
 		String control2 = control.replaceAll(">", "&gt");
 		chatMessage.setMsg(control2);
 		
-		return "<div class=\"fromMsg\">"
-				+ "<img class=\"profileImg\" src=\"/resources/img/default_profile_img.jpg\">"
-				+ "<div class=\"fromMsgInfo\">"
+		if(file_name == null) {
+			return "<div class=\"fromMsg\">"
+					+ "<img class=\"profileImg\" src=\"/resources/img/기본이미지.jpg\">"
+					+ "<div class=\"fromMsgInfo\">"
 					+ "<strong><span>"+user_nick+"</span></strong>"
-				+ "</div>"
-				+ "<div class=\"fromChatContent fromBallon\">"+chatMessage.getMsg()+"</div>"
-				+ "<span class=\"fromMsgTime\">"+msgTime +"</span>"
-				+ "</div>";
+					+ "</div>"
+					+ "<div class=\"fromChatContent fromBallon\">"+chatMessage.getMsg()+"</div>"
+					+ "<span class=\"fromMsgTime\">"+msgTime +"</span>"
+					+ "</div>";
+		} else {
+			return "<div class=\"fromMsg\">"
+					+ "<img class=\"profileImg\" src=\"/resources/upload/"+file_name+"\">"
+					+ "<div class=\"fromMsgInfo\">"
+					+ "<strong><span>"+user_nick+"</span></strong>"
+					+ "</div>"
+					+ "<div class=\"fromChatContent fromBallon\">"+chatMessage.getMsg()+"</div>"
+					+ "<span class=\"fromMsgTime\">"+msgTime +"</span>"
+					+ "</div>";
+			
+		}
 	}
 }

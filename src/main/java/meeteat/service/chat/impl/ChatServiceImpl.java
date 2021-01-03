@@ -126,4 +126,9 @@ public class ChatServiceImpl implements ChatService{
 		return chatDao.getLeaveMsg(user_no, chatting_no);
 	}
 	
+	@Override
+	public String getProfileImg(int user_no) {
+		return chatDao.getProfileImg(user_no);
+	}
+	
 }
