@@ -4,6 +4,7 @@
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 <link rel="stylesheet" href="/resources/css/mypage/myedit.css">
 
+
 <!-- jQuery 2.2.4.min -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>  
 
@@ -22,18 +23,12 @@ function checkEmail(str) {
 
 $(document).ready(function() {
 	
+// 	$('#user_pw').val('${userinfo.USER_PW}');
+// 	$('#checkpw').val('${userinfo.USER_PW}');
 
 // 	$('#user_pw').val('${userinfo.user_pw}');
 // 	$('#user_email').val('${userinfo.user_email}');
 // 	$('#user_nick').val('${userinfo.user_nick}');
-	
-	if(${snsLogin}) {
-		$('#user_pw').attr('readonly', 'readonly');
-		$('#checkpw').attr('readonly', 'readonly');
-		
-		$('#user_pw').val('${userinfo.USER_PW}');
-		$('#checkpw').val('${userinfo.USER_PW}');
-	}
 
 	$("input").keyup(function(){
 	      var pw1 = $("#user_pw").val();
@@ -119,7 +114,13 @@ $(document).ready(function() {
 			}
 		}
 	})
-	
+
+	if(${sessionScope.snsLogin}) {
+		$('#user_pw').attr('readonly', 'readonly');
+		$('#checkpw').attr('readonly', 'readonly');
+		$('#user_email').attr('readonly', 'readonly');
+	};
+
 })
 
 </script>
@@ -169,11 +170,11 @@ $(document).ready(function() {
 				</div>
 				<div class="box_set">
 					<strong class="tit_set">비밀번호</strong>
-					<span class="txt_set"><input type="password" name="user_pw" id = "user_pw" required/></span>
+					<span class="txt_set"><input type="password" name="user_pw" id = "user_pw" value="${userinfo.USER_PW }" required/></span>
 				</div>		
 				<div class="box_set">
 					<strong class="tit_set">비밀번호 확인</strong>
-					<span class="txt_set"><input type="password" name="checkpw" id = "checkpw"/></span>
+					<span class="txt_set"><input type="password" name="checkpw" id = "checkpw" value="${userinfo.USER_PW }"/></span>
 				</div>
 				<div class="box_set">					
 <!-- 					<div id = "alert-success"><p style = "color: blue; text-align: right;">비밀번호가 일치합니다.</p></div> -->
