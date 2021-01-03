@@ -38,9 +38,9 @@
 		order by user_no desc
 	</select>
 	
-	<update id="userGradeUpdate" parameterType="int">
+	<update id="userGradeUpdate" parameterType="HashMap">
 		update tb_user2
-		set user_grade = #{user_grade}
+		set user_grade = #{grade_no}
 		where user_no = #{user_no}
 	</update>
 

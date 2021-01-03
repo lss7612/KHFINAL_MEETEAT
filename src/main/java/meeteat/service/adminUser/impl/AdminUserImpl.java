@@ -52,9 +52,10 @@ public class AdminUserImpl implements AdminUserService {
 
 
 	@Override
-	public void userGradeSetReportResult(int user_no) {
-		adminUserDao.userGradeUpdate(user_no);
+	public void userGradeSet(int user_no, int grade_no) {
+		adminUserDao.userGradeUpdate(user_no, grade_no);
 	}
+
 
 }
 

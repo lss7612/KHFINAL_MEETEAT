@@ -69,7 +69,36 @@ public class AdminUserController {
 	@RequestMapping(value="/admin/user/result", method = RequestMethod.POST)
 	public String userGrade(@RequestParam HashMap<Object, Object> map) {
 
-
+		logger.info("" + "==========================================" + map);
+		
+		List userList = new ArrayList();
+		List gradeList = new ArrayList();
+		
+		for(Entry<Object, Object> entry : map.entrySet()	) {
+			int key_integer = Integer.parseInt("" + entry.getKey());
+			String key = "" + key_integer;
+			
+			if(!map.get(key).equals("999")) {
+				logger.info("key : "+entry.getKey()+", value : "+entry.getValue());
+				//logger.info(" > > >등급 조정할 회원 번호 < < <");
+				userList.add(entry.getKey());
+				gradeList.add(entry.getValue());
+			}
+			
+		}
+		
+		logger.info("> > >"+userList);
+		logger.info("> > >"+gradeList);
+		
+		for(int i=0; i<userList.size(); i++) {
+			logger.info(i+"번째 반복");
+			for(int j=i; j<=i ; j++) {
+				logger.info(" userList : "+userList.get(i));
+				logger.info("gradeList : "+gradeList.get(j));
+				
+				adminUserService.userGradeSet(Integer.parseInt("" + userList.get(i)), Integer.parseInt("" + gradeList.get(j)));
+			}
+		}
 		return "redirect:/admin/user/list";
 		
 	}

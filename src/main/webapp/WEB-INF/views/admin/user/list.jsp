@@ -40,7 +40,7 @@ function userGradeSet(){
 <h1 class="pull-left">유저 관리</h1>
 <div class="clearfix"></div>
 <hr>
-
+	<form action="/admin/user/result" method="post" id="resultForm">
 <table class="table table-striped table-hover table-condensed">
 <thead>
 	<tr>
@@ -70,22 +70,21 @@ function userGradeSet(){
 <%-- 		<td><a href="http://localhost:8088/admin/board/list?manageCategory=&manageSearch=user_nick&manageKeyword=${list.USER_NICK }" /><button>이동</button></td> --%>
 		<td><a href="/admin/board/list?manageCategory=&manageKeyword=${list.USER_NICK }&manageSearch=user_nick&start_date=&end_date="><button>이동</button></a></td>
 		
-	<form action="/admin/user/result" method="post" id="resultForm">
+
 		<td>
-			<select name="${list.user_grade }">
+			<select name="${list.USER_NO }">
 				<option value="999">---</option>
 				<option value="1">1:결제등급</option>
 				<option value="2">2:일반등급</option>
 				<option value="3">3:영구정지</option>
 			</select>
 		</td>
-	</form>
-
 	</tr>
 </c:forEach>
 </tbody>
 </table>
 <button onclick="userGradeSet();">등급처리 </button>
+</form>
 
 <div class="clearfix"></div>
 
