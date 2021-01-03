@@ -70,5 +70,5 @@ function getPopupEvent(){
 }
 
 function setCookie(){
-	document.cookie = "popup=n; path=/; max-age=180";
+	document.cookie = "popup=n; path=/; max-age=600";
 }

@@ -29,6 +29,7 @@ $(document).ready(function(){
 
 
 </script>
+
 <div class="eventImgBox pull-left">
 	<c:choose>
 	<c:when test="${not empty list.get(0).STORED_NAME }">

@@ -30,20 +30,26 @@
 	</div>
 	
 	
-	<%-- 닉네임 조회수 덧글 시간 --%>
+	<%-- 프로필사진 닉네임 조회수 덧글 시간 --%>
 	<div class="light_padding bold_bar_height color-light">
+		<%-- 프로필사진 --%>
 		<div style="width:5%">
-		<div class="profile_box pull-left">
-			<c:choose>
-				<c:when test="${empty result.USER_PROFILESTORED }">
-					<a href="/resources/img/default_profile_img.jpg"><img src="/resources/img/default_profile_img.jpg"></a>
-				</c:when>
-				<c:otherwise>
-					<a href="/resources/upload/${result.USER_PROFILESTORED }" ><img src="/resources/upload/${result.USER_PROFILESTORED }"></a>
-				</c:otherwise>	
-			</c:choose>
+			<div class="profile_box pull-left">
+				<c:choose>
+					<c:when test="${result.USER_PROFILESTORED eq null and result.USER_PROFILEORIGIN eq null}">
+						<img src="/resources/img/기본이미지.jpg">
+					</c:when>
+					<c:when test="${result.USER_PROFILESTORED eq null and result.USER_PROFILEORIGIN eq null && sessionScope.snsLogin eq true}">
+						<img src="/resources/img/${result.USER_PROFILESTORED }">
+					</c:when>
+					<c:otherwise>
+						<img src="/resources/upload/${result.USER_PROFILESTORED }">
+					</c:otherwise>	
+				</c:choose>
+			</div>
 		</div>
-		</div>
+		
+		<%-- 유저닉네임 --%>
 		<div  class="light_padding pull-left title_left" >
 			<ul id="userMenuList">
 				<li id="userMenu">
