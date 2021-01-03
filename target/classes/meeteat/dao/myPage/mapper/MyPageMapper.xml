@@ -163,7 +163,7 @@
 	
 	<select id="selectMyPayList" parameterType="int" resultType="HashMap">
 		SELECT p.pay_date, p.price, p.pay_status, u.user_grade, g.grade_name
-			,(SELECT to_char(add_months(sysdate, 1),'YYYY/MM/DD HH24:MI') from dual) expire_date
+			,(SELECT to_char(add_months(sysdate, 1),'YYYY/MM/DD') from dual) expire_date
         FROM tb_payment2 p
         INNER JOIN tb_user2 u  ON u.user_no = p.user_no
         INNER JOIN tb_grade2 g ON g.user_grade = u.user_grade
