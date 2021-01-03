@@ -158,6 +158,12 @@ public class ReviewController {
 	}
 	
 	
+	
+	@RequestMapping(value = "/layout/error500")
+	public void errorPage() {
+		reviewService.errorPage();
+	}
+	
 
 	
 	

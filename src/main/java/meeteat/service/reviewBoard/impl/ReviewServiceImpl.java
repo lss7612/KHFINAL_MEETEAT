@@ -174,6 +174,11 @@ public class ReviewServiceImpl implements ReviewService {
 		return listresult;
 	}
 
+	@Override
+	public void errorPage() {
+		reviewDao.errorPage();
+	}
+
 //	@Override
 //	public void write(ReviewBoard reviewBoard, MultipartFile fileupload) {
 //		reviewDao.write(reviewBoard);
