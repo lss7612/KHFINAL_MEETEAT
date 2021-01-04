@@ -176,7 +176,6 @@ function joinChat(e){
 	var target = $(e).prev().val();
 	console.log($(e).prev())
 	console.log("target : "+target);
-
 	var frmPop = document.chatSubmitForm;
 	//팝업 
 	window.open("http://localhost:8088/chat/room", "chatRoom"
@@ -190,7 +189,6 @@ function joinChat(e){
 
 </head>
 <body>
-
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 
 <div class="container" id="divpage">
