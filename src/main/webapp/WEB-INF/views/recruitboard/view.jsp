@@ -39,8 +39,8 @@
 					<c:when test="${result.USER_PROFILESTORED eq null and result.USER_PROFILEORIGIN eq null}">
 						<img src="/resources/img/기본이미지.jpg">
 					</c:when>
-					<c:when test="${result.USER_PROFILESTORED eq null and result.USER_PROFILEORIGIN eq null && sessionScope.snsLogin eq true}">
-						<img src="/resources/img/${result.USER_PROFILESTORED }">
+					<c:when test="${result.USER_PROFILEORIGIN eq 'snsLogin' and result.USER_PROFILEORIGIN ne null}">
+						<img src="${result.USER_PROFILESTORED }">
 					</c:when>
 					<c:otherwise>
 						<img src="/resources/upload/${result.USER_PROFILESTORED }">

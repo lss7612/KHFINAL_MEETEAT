@@ -10,6 +10,10 @@
 $(document).ready(function(){
 	
 	$('.eventTitle').click(function(){
+		
+		$('.eventTitle').css('font-weight','normal')
+		$(this).css('font-weight','bold')
+		
 		let article_no = $(this).attr('article_no')
 		let eventNo = $(this).attr('storedName')
 		console.log(eventNo)
@@ -45,8 +49,15 @@ $(document).ready(function(){
 	</c:choose>
 </div>
 <div class="eventListBox pull-left base_padding">
-	<c:forEach items="${list }" var="list">
-		<div article_no="${list.ARTICLE_NO }" storedName="${list.STORED_NAME }" class="eventTitle"><span style="cursor:pointer">${list.ARTICLE_TITLE }</span></div>
+	<c:forEach items="${list }" var="list" varStatus="stat" >
+		<c:choose>
+			<c:when test="${stat.index eq 0 }">
+				<div article_no="${list.ARTICLE_NO }" storedName="${list.STORED_NAME }" style="font-weight:bold;" class="eventTitle"><span style="cursor:pointer">${list.ARTICLE_TITLE }</span></div>
+			</c:when>
+			<c:otherwise>
+				<div article_no="${list.ARTICLE_NO }" storedName="${list.STORED_NAME }" class="eventTitle"><span style="cursor:pointer">${list.ARTICLE_TITLE }</span></div>
+			</c:otherwise>
+		</c:choose>
 		<hr>
 	</c:forEach>	
 </div>
