@@ -47,7 +47,11 @@ $(document).ready(function() {
 						</c:if>
 
 						<c:choose>
-							<c:when test="${user_grade eq 0 }">
+							<c:when test="${user_grade eq 0 && list.ARTICLE_SECRET eq 1 }">
+								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}"><i class="fas fa-lock"></i>&nbsp;&nbsp;${list.ARTICLE_TITLE }</a>
+							</c:when>
+							
+							<c:when test="${user_grade eq 0 && list.ARTICLE_SECRET eq 0 }">
 								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}">${list.ARTICLE_TITLE }</a>
 							</c:when>
 							
@@ -60,7 +64,7 @@ $(document).ready(function() {
 							</c:when>
 							
 							<c:when test="${list.USER_NICK eq sessionScope.user_nick && list.ARTICLE_SECRET eq 1 }">
-								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}">${list.ARTICLE_TITLE }</a>
+								<a href="/inquiry/view?board_no=${list.BOARD_NO }&article_no=${list.ARTICLE_NO }&article_secret=${list.ARTICLE_SECRET}"><i class="fas fa-lock"></i>&nbsp;&nbsp;${list.ARTICLE_TITLE }</a>
 							</c:when>
 							
 							<c:when test="${list.USER_NICK eq sessionScope.user_nick && list.ARTICLE_SECRET eq 0 }">
