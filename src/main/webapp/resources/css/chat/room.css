@@ -2,6 +2,7 @@
 	width : 42px;
 	height : 39px;
 	float : left;
+	cursor: pointer;
 }
 
 * {
@@ -52,6 +53,11 @@
 	height: 50px;
 	margin-bottom : 10px;
 	font-size : 1.1em;
+	cursor: pointer;
+}
+
+#exitBtn:hover{
+	background-color : #e85959;
 }
 
 #checkme{
