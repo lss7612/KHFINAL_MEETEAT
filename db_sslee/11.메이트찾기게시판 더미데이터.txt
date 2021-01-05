@@ -1,0 +1,2 @@
+서버실행하고 아래 URL 접근하여 받는다.
+/matefind/autowriteview
