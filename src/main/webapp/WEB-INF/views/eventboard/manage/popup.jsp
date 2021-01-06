@@ -33,7 +33,7 @@
 	<%--왼쪽 박스 --%>
 	<div id="popup" class="workBox bold_padding">
 		
-		<div id="addOrDelete" class="light_padding eventManageButton">팝업 해제화면으로 전환</div>
+		<div id="addOrDelete" class="light_padding eventManageButton">팝업 해제하러 갈래요</div>
 		<hr>
 		
 		<div id="List">

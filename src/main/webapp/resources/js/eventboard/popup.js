@@ -7,12 +7,12 @@ $(document).ready(function(){
 		let text = $('#addOrDelete').text()
 		console.log(text)
 		
-		if(text=='팝업 등록화면으로 전환') {
-			$('#addOrDelete').text('팝업 해제화면으로 전환')
+		if(text=='팝업 등록하러 갈래요') {
+			$('#addOrDelete').text('팝업 해제하러 갈래요')
 			getList(0);
 		}
-		if(text=='팝업 해제화면으로 전환'){ 
-			$('#addOrDelete').text('팝업 등록화면으로 전환')
+		if(text=='팝업 해제하러 갈래요'){ 
+			$('#addOrDelete').text('팝업 등록하러 갈래요')
 			getList(1);
 		}
 		

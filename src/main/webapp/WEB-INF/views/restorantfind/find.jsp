@@ -13,6 +13,11 @@
 <script type="text/javascript" src="/resources/js/restorantfind/find.js"></script>
 <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=el0h9yyc4x"></script>
 
+<style type="text/css">
+
+a{cursor:pointer;}
+</style>
+
 </head>
 <body>
 
@@ -61,11 +66,11 @@
 	<div id="resultList" style="width:35%;" class="pull-left">
 	
 		<div id="restorant1" class="restorantInfoBox light_padding">
-			<h3 class="title"><a href="#"></a></h3><%-- 제목 --%>
+			<h3 class="title"><a></a></h3><%-- 제목 --%>
 			
 			<%-- 아이콘들 --%>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
-			<div class="map pull-left" style="width:30px; text-align:center;"><a href="#"></a></div>
+			<div class="map pull-left" style="width:30px; text-align:center;"><a></a></div>
 			<div class="clearfix"></div>
 			
 			<div class="category"></div>
@@ -73,36 +78,36 @@
 		</div>
 		
 		<div id="restorant2" class="restorantInfoBox light_padding">
-			<h3 class="title"><a href="#"></a></h3>
+			<h3 class="title"><a></a></h3>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
-			<div class="map pull-left" style="width:30px; text-align:center;"><a href="#"></a></div>
+			<div class="map pull-left" style="width:30px; text-align:center;"><a></a></div>
 			<div class="clearfix"></div>
 			<div class="category"></div>
 			<div class="address"></div>
 		</div>
 		
 		<div id="restorant3" class="restorantInfoBox light_padding">
-			<h3 class="title"><a href="#"></a></h3>
+			<h3 class="title"><a></a></h3>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
-			<div class="map pull-left" style="width:30px; text-align:center;"><a href="#"></a></div>
+			<div class="map pull-left" style="width:30px; text-align:center;"><a></a></div>
 			<div class="clearfix"></div>
 			<div class="category"></div>
 			<div class="address"></div>
 		</div>
 		
 		<div id="restorant4" class="restorantInfoBox light_padding">
-			<h3 class="title"><a href="#"></a></h3>
+			<h3 class="title"><a></a></h3>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
-			<div class="map pull-left" style="width:30px; text-align:center;"><a href="#"></a></div>
+			<div class="map pull-left" style="width:30px; text-align:center;"><a></a></div>
 			<div class="clearfix"></div>
 			<div class="category"></div>
 			<div class="address"></div>
 		</div>
 		
 		<div id="restorant5" class="restorantInfoBox light_padding">
-			<h3 class="title"><a href="#"></a></h3>
+			<h3 class="title"><a></a></h3>
 			<div class="homepage pull-left" style="width:30px; text-align:center;"><a></a></div>
-			<div class="map pull-left" style="width:30px; text-align:center;"><a href="#"></a></div>
+			<div class="map pull-left" style="width:30px; text-align:center;"><a></a></div>
 			<div class="clearfix"></div>
 			<div class="category"></div>
 			<div class="address"></div>	

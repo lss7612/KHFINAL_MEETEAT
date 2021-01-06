@@ -17,6 +17,11 @@
 	text-align:center;
 }
 
+.eventManageButton:hover{
+	font-weight: bold;
+	border: 2px solid #ccc;
+}
+
 #workBoxes{
 	width:70%;
 	min-width:785px;
@@ -25,6 +30,7 @@
 #popup{
 	width: 70%;
 	border:1px solid #ccc;
+	border-radius: 10px;
 	height:680px;
 	overflow: scroll;
 	margin: 0 auto;
@@ -46,12 +52,12 @@
 }
 
 .willAdd {
-	background:#b2fef7;
-	border: 1px solid #b2fef7;
+	background:#f5da81;
+	border: 1px solid #f5da81;
 }
 .willDelete {
-	background:#f06292;
-	border: 1px solid #f06292;
+	background:#c0a952;
+	border: 1px solid #c0a952;
 }
 
 .notSelected{

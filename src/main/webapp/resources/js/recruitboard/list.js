@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	
+	//유저닉네임 클릭 시 채팅하기 버튼 나오게하는 코드
 	$(".user_nick_cell").click(function(){
 		
 		// 열려있는 모든 슬라이드 닫기

@@ -26,7 +26,6 @@ $(document).ready(function(){
 	})
 	
 	$('#popupSubmit').click(function(){
-		console.log('clicked')
 		
 		let addArray = new Array();
 		
@@ -34,8 +33,6 @@ $(document).ready(function(){
 			addArray.push($(this).attr('article_no'))
 		})
 		
-		console.log('addArray')
-		console.log(addArray)
 		popupSubmit(1, addArray)
 	})
 	
@@ -44,8 +41,10 @@ $(document).ready(function(){
 
 function popupSubmit(isPopup, List){
 	
-	console.log(isPopup)
-	console.log(List)
+	if(List.length == 0){
+		alert('먼저 이벤트를 선택해주세요')
+		return
+	}
 	
 	$.ajax({
 		type: "get"

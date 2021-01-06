@@ -49,8 +49,6 @@ $(document).ready(function(){
 		$('.restorantInfoBox').css('background','');
 		$(this).parent().parent().css('background','#ccc');
 		
-		console.log(mapX)
-		console.log(mapY)
 		getRestorantLocation(mapX,mapY)
 	})
 	
@@ -87,6 +85,7 @@ $(document).ready(function(){
 function search(Query_location,Query_food, Sort){
 	
 	$('#blogResult').html('')
+	
 	$.ajax({
 		type: "POST"
 		, url: "/restorantfind/find"
@@ -103,7 +102,7 @@ function search(Query_location,Query_food, Sort){
 				$('#beforeSearch').addClass('invisible')
 				$('#beforeSearch').addClass('none_height')
 				$('.restorantInfoBox').css('background','');
-				$('#resultList > div:nth-child(1)').css('background','#ccc');
+				$('#mapResult').html('')
 //				$('#resultList > div:nth-child(1) > .map > a').click();
 			}
 		}
@@ -140,7 +139,7 @@ function listup(res){
 		}
 		
 	}
-	$('#resultList > div:nth-child(1) > .map > a').click();
+//	$('#resultList > div:nth-child(1) > .map > a').click();
 	
 }
 
