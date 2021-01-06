@@ -15,6 +15,7 @@
 <div class="none-height">
 	<input class="invisible" type="text" value="${searchParam.searchKeyword }" id="searchParam.searchKeyword">
 	<input class="invisible" type="text" value="${searchParam.searchCategory }" id="searchParam.searchCategory">
+	<input class="invisible" type="text" value="${searchParam.searchLocation }" id="searchParam.searchLocation">
 </div>
 
 <c:set var="now" value="<%= new Date() %>"/>
@@ -39,17 +40,88 @@
 <%-- + + + + + + + + + + + + + + + + 지역영역 + + + + + + + + + + + + + + + + + + + +  --%>
 <div id="location" class="">
 	<table>
-	<tr>
-		<td><span>전체</span></td>
-		<td><span>서울</span></td>
-		<td><span>인천</span></td>
-		<td><span>경기</span></td>
-		<td><span>경상</span></td>
-		<td><span>전라</span></td>
-		<td><span>충청</span></td>
-		<td><span>강원</span></td>
-		<td><span>제주</span></td>
-	</tr>
+		<tr>
+			<c:choose>
+				<c:when test="${empty searchParam.searchLocation}">
+					<td><span style="font-weight:bold">전체</span></td>
+				</c:when>
+				<c:otherwise>
+					<td><span>전체</span></td>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${searchParam.searchLocation eq '서울'}">
+					<td><span style="font-weight:bold">서울</span></td>
+				</c:when>
+				<c:otherwise>
+					<td><span>서울</span></td>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${searchParam.searchLocation eq '인천'}">
+					<td><span style="font-weight:bold">인천</span></td>
+				</c:when>
+				<c:otherwise>
+					<td><span>인천</span></td>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${searchParam.searchLocation eq '경기'}">
+					<td><span style="font-weight:bold">경기</span></td>
+				</c:when>
+				<c:otherwise>
+					<td><span>경기</span></td>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${searchParam.searchLocation eq '경상'}">
+					<td><span style="font-weight:bold">경상</span></td>
+				</c:when>
+				<c:otherwise>
+					<td><span>경상</span></td>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${searchParam.searchLocation eq '전라'}">
+					<td><span style="font-weight:bold">전라</span></td>
+				</c:when>
+				<c:otherwise>
+					<td><span>전라</span></td>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${searchParam.searchLocation eq '충청'}">
+					<td><span style="font-weight:bold">충청</span></td>
+				</c:when>
+				<c:otherwise>
+					<td><span>충청</span></td>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${searchParam.searchLocation eq '강원'}">
+					<td><span style="font-weight:bold">강원</span></td>
+				</c:when>
+				<c:otherwise>
+					<td><span>강원</span></td>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${searchParam.searchLocation eq '제주'}">
+					<td><span style="font-weight:bold">제주</span></td>
+				</c:when>
+				<c:otherwise>
+					<td><span>제주</span></td>
+				</c:otherwise>
+			</c:choose>
+		</tr>
 	</table>
 </div>
 <div class="clearfix"></div>

@@ -11,7 +11,7 @@
 <c:when test="${empty popupList && empty notPopupList }">
 
 <div class="bold_padding" style="text-align:center;">
-암것도엄서용
+아무 이벤트가 없습니다.
 </div>
 
 </c:when>
@@ -20,7 +20,7 @@
 	<c:if test="${empty popupList }">
 		<script type="text/javascript" src="/resources/js/eventboard/notPopup_ajax.js" ></script>
 		<h3>POPUP 등록</h3>
-		팝업등록할 이벤트 선택
+		팝업등록할 이벤트를 선택하세요
 		<hr>
 		<div id="ajaxList">	
 		<c:forEach items="${notPopupList }" var="list">
@@ -35,13 +35,13 @@
 		</div>
 		<hr>
 		<div id="popupSubmit" class="eventManageButton light_padding">
-			선택반영!
+			등록
 		</div>
 	</c:if>
 	<c:if test="${empty notPopupList }">
 		<script type="text/javascript" src="/resources/js/eventboard/popup_ajax.js" ></script>
 		<h3>POPUP 해제</h3>
-		팝업해제할 이벤트 선택
+		팝업해제할 이벤트를 선택하세요
 		<hr>
 		<div id="ajaxList">	
 		<c:forEach items="${popupList }" var="list">
@@ -56,7 +56,7 @@
 		</div>
 		<hr>
 		<div id="popupSubmit" class="eventManageButton light_padding">
-			선택반영!
+			해제
 		</div>
 	</c:if>
 </c:otherwise>

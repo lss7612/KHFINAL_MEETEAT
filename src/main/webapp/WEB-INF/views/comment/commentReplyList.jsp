@@ -56,9 +56,6 @@ $(document).ready(function(){
 		<c:if test="${list.IS_DELETE eq 0 }">
 			<ul class="userMenuList">
 				<li class="userMenu">
-					<c:if test="${user_nick eq list.USER_NICK }">
-						<i style="color:blue; "class="fas fa-user-edit"></i>
-					</c:if>
 					<span style="cursor:pointer;">${list.USER_NICK }</span>
 					<ul class="userHiddenMenu" >
 					<!-- model에서 작성자의 회원번호값을 갖고오는 객체를 user_no의 값에 입력해준다. -->
