@@ -37,7 +37,6 @@
 
 <%-- 본문 부분 --%>
 <div id="eventContent" class="pull-right light_padding">
-본문
 
 <%-- 게시판 테이블 --%>
 <table class="table table-striped" style="width:100%; margin:0 auto;">
