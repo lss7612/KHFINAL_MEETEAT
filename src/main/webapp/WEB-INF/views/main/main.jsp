@@ -2,12 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <c:import url="/WEB-INF/views/layout/headerForMain.jsp"/>
-<link rel="stylesheet" href="/resources/css/main/main.css"></link>
-<link rel="stylesheet" href="/resources/css/common/common.css">
-<script type="text/javascript" src="/resources/js/main/main.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/main.css"></link>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/common.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/main/main.js"></script>
 
 <div id="backgroundImg">
-<img style="min-width:1750px;width:100%" src="/resources/img/main/Main.jpg">
+<img style="min-width:1750px;width:100%" src="${pageContext.request.contextPath}/resources/img/main/Main.jpg">
 </div>
 <div id="mainWrapper">
 	<div id="mainTextBox" class="TextBox1">
