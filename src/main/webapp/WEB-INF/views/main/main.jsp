@@ -35,19 +35,19 @@
 	<div style="margin:0 auto; padding:0 20%;">
 		<div style="width:33%;" class="pull-left">
 			<div style="margin:0 auto;" class="veiled border_circle">
-				<img style="width:200px;" src="/resources/img/main/first.jpg">
+				<img style="width:200px;" src="${pageContext.request.contextPath}/resources/img/main/first.jpg">
 			</div>
 		</div>
 		
 		<div style="width:33%;" class="pull-left">
 			<div style="margin:0 auto;" class="veiled border_circle">
-				<img style="width:220px;" src="/resources/img/main/second.jpg">
+				<img style="width:220px;" src="${pageContext.request.contextPath}/resources/img/main/second.jpg">
 			</div>
 		</div>
 		
 		<div style="width:33%;" class="pull-right">
 			<div style="margin:0 auto;" class="veiled border_circle">
-				<img style="width:200px;" src="/resources/img/main/third.jpg">
+				<img style="width:200px;" src="${pageContext.request.contextPath}/resources/img/main/third.jpg">
 			</div>
 		</div>
 		
