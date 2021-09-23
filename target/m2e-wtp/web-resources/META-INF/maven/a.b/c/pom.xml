@@ -233,6 +233,15 @@
 		</dependency>        
 	</dependencies>
     <build>
+    	<finalName>MEET-EAT</finalName>
+    	<resources>
+    		<resource>
+    			<directory>src/main/resources</directory>
+    		</resource>
+    		<resource>
+    			<directory>src/main/resources-${env}</directory>
+    		</resource>
+    	</resources>
         <plugins>
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -270,4 +279,22 @@
             </plugin>
         </plugins>
     </build>
+    
+    <profiles>
+    	<profile>
+    		<id>local</id>
+    		<activation>
+    			<activeByDefault>true</activeByDefault>
+    		</activation>
+    		<properties>
+    			<env>local</env>
+    		</properties>
+    	</profile>
+    	<profile>
+    		<id>release</id>
+    		<properties>
+    			<env>release</env>
+    		</properties>
+    	</profile>
+    </profiles>
 </project>
