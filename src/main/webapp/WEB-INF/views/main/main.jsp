@@ -4,6 +4,9 @@
 <c:import url="/WEB-INF/views/layout/headerForMain.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main/main.css"></link>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common/common.css">
+<script>
+	const contextPath = `${pageContext.request.contextPath}`;
+</script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/main/main.js"></script>
 
 <div id="backgroundImg">

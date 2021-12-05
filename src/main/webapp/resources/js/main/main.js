@@ -77,7 +77,7 @@ function mainAnimate(originObject, msg, url){
 				,height: '500px'
 			})
 			$('#goToSignUp').html('환영합니다!<br>'+msg+'<br>'
-					+ '<img style="width:300px;" src="/resources/img/logo.png">'
+					+ `<img style="width:300px;" src="${contextPath}/resources/img/logo.png">`
 			)
 			
 			
